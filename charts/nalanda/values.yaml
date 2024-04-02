@@ -25,7 +25,9 @@ serviceAccount:
   # If not set and create is true, a name is generated using the fullname template
   name: ""
 
-podAnnotations: {}
+podAnnotations:
+  prometheus.io/scrape: "true"
+  prometheus.io/port: "8001"
 podLabels: {}
 
 podSecurityContext: {}
@@ -38,6 +40,18 @@ securityContext: {}
   # readOnlyRootFilesystem: true
   # runAsNonRoot: true
   # runAsUser: 1000
+
+autoSetup:
+  debug: true
+  enabled: true
+  image:
+    repository: 078489433560.dkr.ecr.ap-south-1.amazonaws.com/nalanda
+    pullPolicy: IfNotPresent
+    tag: "latest"
+  command: ["/nalanda", "--init"]
+  args: ["echo 'Auto setup is disabled'"]
+  annotations:
+    sidecar.istio.io/inject: "false"
 
 service:
   type: ClusterIP
@@ -97,19 +111,19 @@ autoscaling:
   # targetMemoryUtilizationPercentage: 80
 
 # Additional volumes on the output Deployment definition.
-volumes:
-- name: nalanda-cm-volume
-  configMap:
-    name: nalanda-dev
-    items:
-      - key: envFile
-        path: envFile
-- name: license-private-key
-  secret:
-    secretName: license-private-key
-    items:
-      - key: private.key
-        path: private.key
+volumes: []
+# - name: nalanda-cm-volume
+#   configMap:
+#     name: nalanda-dev
+#     items:
+#       - key: envFile
+#         path: envFile
+# - name: license-private-key
+#   secret:
+#     secretName: license-private-key
+#     items:
+#       - key: private.key
+#         path: private.key
 
 # Additional volumeMounts on the output Deployment definition.
 volumeMounts:
