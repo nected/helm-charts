@@ -1,0 +1,14 @@
+apiVersion: v1
+entries:
+  nalanda:
+  - apiVersion: v2
+    appVersion: 1.16.1
+    created: "2024-04-02T09:04:30.714859336Z"
+    description: A Helm chart for Kubernetes
+    digest: 22baf80c21d87f40819bcd86300bea9c5eeccda2e8a49a438bed880ff545e145
+    name: nalanda
+    type: application
+    urls:
+    - https://github.com/nected/helm-charts/releases/download/nalanda-0.1.1/nalanda-0.1.1.tgz
+    version: 0.1.1
+generated: "2024-04-02T09:04:30.714864085Z"
