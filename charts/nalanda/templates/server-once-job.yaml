@@ -1,0 +1,40 @@
+{{- if .Values.autoSetup.enabled }}
+apiVersion: batch/v1
+kind: Job
+metadata:
+  name: {{ include "nalanda.fullname" . }}-setup
+  labels:
+    {{- include "nalanda.labels" . | nindent 4 }}
+  annotations:    
+    {{- include "nalanda.autoSetupPodAnnotationsHook" . | nindent 4 }}
+spec:
+  backoffLimit: {{ .Values.autoSetup.backoffLimit }}
+  template:
+    metadata:
+      name: {{ include "nalanda.fullname" . }}-setup
+      labels:
+          {{- include "nalanda.labels" . | nindent 12 }}
+    spec:
+        containers:
+            - name: setup
+              image: {{ .Values.autoSetup.image.repository }}:{{ .Values.autoSetup.image.tag }}
+              imagePullPolicy: {{ .Values.autoSetup.image.pullPolicy }}
+              env:
+                - name: NALANDA_DB_HOST
+                  value: {{ include "nalanda.fullname" . }}-service
+                - name: NALANDA_DB_PORT
+                  value: {{ .Values.service.port }}
+                - name: NALANDA_DB_USER
+                  value: {{ .Values.service.user }}
+                - name: NALANDA_DB_PASSWORD
+                  value: {{ .Values.service.password }}
+                - name: NALANDA_DB_NAME
+                  value: {{ .Values.service.database }}
+                - name: NALANDA_DB_SSL
+                  value: {{ .Values.service.ssl }}
+            {{- with .Values.autoSetup.resources }}
+            resources:
+                {{- toYaml . | nindent 12 }}
+            {{- end }}
+        restartPolicy: OnFailure
+{{- end}}
