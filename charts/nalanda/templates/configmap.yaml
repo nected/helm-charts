@@ -1,13 +1,14 @@
-{{- $staticCmap := include "nalanda.staticConfig" . }} # least priority 0
-{{- $defaultConfig := include "nalanda.defaultConfig" . }} # priority 1
-{{- $envConfigMap := include "nalanda.configMap" . -}} # priority 2
+{{- $staticCmap := include "nalanda.staticConfig" . }} 
+{{- $defaultConfig := include "nalanda.defaultConfig" . }} 
+{{- $envConfigMap := include "nalanda.configMap" . -}} 
 
 {{- $finalCMap := include "common.tplvalues.merge" ( dict "values" ( list $envConfigMap $defaultConfig  $staticCmap ) "context" . ) }}
 apiVersion: v1
 kind: ConfigMap
 metadata:
-  name: {{ include "nalanda.fullname" . }}
+  name: {{ include "nalanda.name" . }}
   labels:
     {{- include "nalanda.labels" . | nindent 4 }}
 data:
-    {{- include "common.tplvalues.render" ( dict "value" $finalCMap "context" $) | nindent 2 }}
+    envFile: |
+    {{- include "common.tplvalues.render" ( dict "value" $finalCMap "context" .) | nindent 4 }}

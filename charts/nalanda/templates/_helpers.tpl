@@ -110,8 +110,8 @@ Create nalanda default configmap from values.config
 Create nalanda default configmap from values.config
 */}}
 {{- define "nalanda.staticConfig" -}}
-SERVER_HOST: 0.0.0.0
-SERVER_PORT: 8001
+SERVER_HOST: "0.0.0.0"
+SERVER_PORT: "8001"
 ASSETS_BASE_URL: https://assets.dev.nected.io
 KONARK_RESET_PASSWORD_PATH: /reset-password/
 KONARK_EMAIL_VERIFICATION_PATH: /verify/signup/email/
@@ -121,12 +121,12 @@ NECTED_USER_EMAIL: dev@nected.ai
 NECTED_USER_PASSWORD: password
 MASTER_DB_NAME: nected
 MASTER_DB_USER: nected
-MASTER_DB_CONNS_POOL_ENABLE: true
-MASTER_DB_MAX_IDLE_CONNS: 5
-MASTER_DB_MAX_OPEN_CONNS: 10
+MASTER_DB_CONNS_POOL_ENABLE: "true"
+MASTER_DB_MAX_IDLE_CONNS: "5"
+MASTER_DB_MAX_OPEN_CONNS: "10"
 MASTER_DB_CONN_MAX_LIFETIME: 1h
 MASTER_DB_CONN_MAX_IDLE_TIME: 30m
-REDIS_DATABASE: 0
+REDIS_DATABASE: "0"
 ELASTIC_ADUIT_PATTERN: audit-*
 ELASTIC_ENTITY_AUDIT_INDEX: audit-log-nalanda
 VIDHAAN_INTERNAL_API_PATH: /nected/test
