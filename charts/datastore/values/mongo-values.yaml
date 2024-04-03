@@ -1,0 +1,22 @@
+architecture: standalone
+useStatefulSet: true
+auth:
+  enabled: true
+  rootUser: root
+  rootPassword: "7sdhT599nflY433"
+  username: "nected"
+  password: "Ne9ctg87$sdf8"
+  database: "nected"
+  
+persistence:
+  enabled: true
+  storageClass: "default"
+  accessModes:
+    - ReadWriteOnce
+  size: 8Gi
+  persistentVolumeClaimRetentionPolicy:
+    enabled: true
+    whenScaled: Retain
+    whenDeleted: Delete
+volumePermissions:
+  enabled: true
