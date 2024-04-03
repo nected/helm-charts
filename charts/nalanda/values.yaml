@@ -14,6 +14,28 @@ imagePullSecrets: []
 nameOverride: ""
 fullnameOverride: ""
 
+defaultConfig:
+  ALLOWED_HOSTS: license.dev.nected.io,api.dev.nected.io
+  ALLOWED_CORS_ORIGIN: http://localhost:8001,http://localhost:3000,http://localhost:3001,https://konark.dev.nected.io,https://editor.dev.nected.io,https://nalanda.dev.nected.io
+  SEND_EMAIL: True
+  AES_SECRET: tfgoS4EzPPuBJjBLFgmluy7ukW9o2PYy
+  EMAIL_VERIFICATION_EXP_DURATION: 1296000
+  WORKSPACE_INVITE_LINK_EXP_DURATION: 1296000
+  EXTERNAL_PERMISSION_URL: https://vidhaan.dev.nected.io/nected/rule/64e76df6faa1c1282b709fdd
+  DEMO_CONNECTOR_TEMPLATE_ID: 6543955b23969da4104a6363
+  USECASE_VALUES_CONFIG_DOCUMENT_NAME: usecase_template_ids
+  CONFIG_COLLECTION_NAME: config
+  USECASE_DATABASE_NAME: nected
+  SKIP_LOG_PATHS: /health/live,/health/ready,/vidhaan/agent/sync/data
+  RESET_PASSWORD_MAX_LIMIT: 3
+  SUPER_ADMIN_USER_IDS: 1,2,73
+  SERVER_HOST: "localhost"
+envVars:
+  ENV_FILE: "/tmp/envFile"
+
+
+envVarsConfigMap: "nalanda-dev"
+
 serviceAccount:
   # Specifies whether a service account should be created
   create: false
@@ -111,19 +133,19 @@ autoscaling:
   # targetMemoryUtilizationPercentage: 80
 
 # Additional volumes on the output Deployment definition.
-volumes: []
-# - name: nalanda-cm-volume
-#   configMap:
-#     name: nalanda-dev
-#     items:
-#       - key: envFile
-#         path: envFile
-# - name: license-private-key
-#   secret:
-#     secretName: license-private-key
-#     items:
-#       - key: private.key
-#         path: private.key
+volumes:
+  - name: nalanda-cm-volume
+    configMap:
+      name: nalanda-dev
+      items:
+        - key: envFile
+          path: envFile
+  - name: license-private-key
+    secret:
+      secretName: license-private-key
+      items:
+        - key: private.key
+          path: private.key
 
 # Additional volumeMounts on the output Deployment definition.
 volumeMounts:
