@@ -5,10 +5,20 @@ secret:
   enabled: true
   password: "asdkjhkj5h6j45rthjr"
 
+persistence:
+  enabled: true
+  labels:
+    enabled: false
+  persistentVolumeClaimRetentionPolicy:
+    enabled: true
+    whenScaled: Retain
+    whenDeleted: Delete
+
 volumeClaimTemplate:
   accessModes: ["ReadWriteOnce"]
   storageClassName: "default"
-  persistentVolumeReclaimPolicy: Delete
   resources:
     requests:
       storage: 30Gi
+
+esMajorVersion: "8"
