@@ -21,9 +21,17 @@ jobs:
         run: |
             git config user.name "$GITHUB_ACTOR"
             git config user.email "$GITHUB_ACTOR@users.noreply.github.com"
-      - name: Push to Public Repo
+      - name: Make trigger changes
         run: |
             echo '('`date +"%s.%N"` ' * 1000000)/1' | bc > release
-            git add .
-            git commit -m "Release Charts $(cat release)"
-            git push
+      - name: Commit and push changes
+        uses: cpina/github-action-push-to-another-repository@main
+        env:
+          API_TOKEN_GITHUB: ${{ secrets.API_TOKEN_GITHUB }}
+        with:
+          source-directory: .
+          destination-github-username: nected
+          destination-repository-name: charts-public
+          target-branch: main
+          user-email: "${{ secrets.GITHUB_ACTOR }}@users.noreply.github.com"
+          
