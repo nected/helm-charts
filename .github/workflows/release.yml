@@ -26,6 +26,18 @@ jobs:
       - name: Install Helm
         uses: azure/setup-helm@v4
 
+      - name: Install YQ
+        run: |
+          sudo add-apt-repository ppa:rmescandon/yq
+          sudo apt update
+          sudo apt install yq -y
+      
+      - name: Initialize custom helm repo (Helm V3 Bug)
+        run: |
+            if [ -f "./Chart.lock" ]; then
+              yq --indent 0 '.dependencies | map(["helm", "repo", "add", .name, .repository] | join(" ")) | .[]' "./Chart.lock"  | sh --;
+            fi
+
       - name: Run chart-releaser
         uses: helm/chart-releaser-action@v1.6.0
         env:
