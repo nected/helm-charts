@@ -18,6 +18,17 @@ entries:
     urls:
     - https://github.com/nected/helm-charts/releases/download/common-0.1.0/common-0.1.0.tgz
     version: 0.1.0
+  konark:
+  - apiVersion: v2
+    appVersion: 1.16.0
+    created: "2024-04-04T11:45:28.518647361Z"
+    description: A Helm chart for Kubernetes
+    digest: 6075a79c76762d2c27532ba6ea60dcd1f5e030d598ed35546213a1f35fcc86fd
+    name: konark
+    type: application
+    urls:
+    - https://github.com/nected/helm-charts/releases/download/konark-0.1.0/konark-0.1.0.tgz
+    version: 0.1.0
   nalanda:
   - apiVersion: v2
     appVersion: 1.16.1
@@ -29,4 +40,48 @@ entries:
     urls:
     - https://github.com/nected/helm-charts/releases/download/nalanda-0.1.1/nalanda-0.1.1.tgz
     version: 0.1.1
-generated: "2024-04-04T11:00:20.602338199Z"
+  nected-editor:
+  - apiVersion: v2
+    appVersion: 1.16.0
+    created: "2024-04-04T11:45:28.758948518Z"
+    description: A Helm chart for Kubernetes
+    digest: 81f15dcc349cecf91764dca5f73330e1386a80611e60d9767d77d2d4ea559b00
+    name: nected-editor
+    type: application
+    urls:
+    - https://github.com/nected/helm-charts/releases/download/nected-editor-0.1.0/nected-editor-0.1.0.tgz
+    version: 0.1.0
+  sql-linter:
+  - apiVersion: v2
+    appVersion: 1.16.0
+    created: "2024-04-04T11:45:28.869511624Z"
+    description: A Helm chart for Kubernetes
+    digest: 6c2413f6d6604f0d49cfbe5814523da521338d98e553f134c8f994aac536eb2b
+    name: sql-linter
+    type: application
+    urls:
+    - https://github.com/nected/helm-charts/releases/download/sql-linter-0.1.0/sql-linter-0.1.0.tgz
+    version: 0.1.0
+  vidhaan-executer:
+  - apiVersion: v2
+    appVersion: 1.16.0
+    created: "2024-04-04T11:45:28.981546734Z"
+    description: A Helm chart for Kubernetes
+    digest: 41e390fac0a19d5a233983ba15b07dc17569fbfe489ff849d9ad4faf6e837a5d
+    name: vidhaan-executer
+    type: application
+    urls:
+    - https://github.com/nected/helm-charts/releases/download/vidhaan-executer-0.1.0/vidhaan-executer-0.1.0.tgz
+    version: 0.1.0
+  vidhaan-router:
+  - apiVersion: v2
+    appVersion: 1.16.0
+    created: "2024-04-04T11:45:29.107329974Z"
+    description: A Helm chart for Kubernetes
+    digest: 17001f688ffc534cc625814d149fa9faf3fff736a8d07b2e7f394f16c69a67bd
+    name: vidhaan-router
+    type: application
+    urls:
+    - https://github.com/nected/helm-charts/releases/download/vidhaan-router-0.1.0/vidhaan-router-0.1.0.tgz
+    version: 0.1.0
+generated: "2024-04-04T11:45:29.107338339Z"
