@@ -26,8 +26,6 @@ jobs:
             echo '('`date +"%s.%N"` ' * 1000000)/1' | bc > release
       - name: Commit and push changes
         uses: cpina/github-action-push-to-another-repository@main
-        env:
-          API_TOKEN_GITHUB: ${{ secrets.CI_GITHUB_SECRET }}
         with:
           source-directory: .
           destination-github-username: nected
