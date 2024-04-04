@@ -1,0 +1,10 @@
+{{- if .Values.configMap.enabled -}}
+apiVersion: v1
+kind: ConfigMap
+metadata:
+  name: {{ include "konark.fullname" . }}
+  labels:
+    {{- include "konark.labels" . | nindent 4 }}
+data:
+  envFile: | {{ .Values.configMap.envFile | nindent 4  }}
+{{- end }}
