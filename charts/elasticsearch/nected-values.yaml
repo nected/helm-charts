@@ -5,6 +5,7 @@ secret:
   enabled: true
   password: "asdkjhkj5h6j45rthjr"
 
+protocol: http
 persistence:
   enabled: true
   labels:
@@ -21,4 +22,6 @@ volumeClaimTemplate:
     requests:
       storage: 30Gi
 
-esMajorVersion: "8"
+networkPolicy:
+  http:
+    enabled: true
