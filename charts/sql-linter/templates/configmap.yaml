@@ -1,0 +1,15 @@
+{{- include "inherited.defaultConfig" . -}}
+{{- $staticCmap := include "sql-linter.staticConfig" . }} 
+{{- $defaultConfig := include "sql-linter.defaultConfig" . }} 
+
+
+{{- $finalCMap := include "common.tplvalues.merge" ( dict "values" ( list $defaultConfig  $staticCmap ) "context" . ) }}
+apiVersion: v1
+kind: ConfigMap
+metadata:
+  name: {{ include "sql-linter.name" . }}
+  labels:
+    {{- include "sql-linter.labels" . | nindent 4 }}
+data:
+    envFile: |
+    {{- include "common.tplvalues.render" ( dict "value" $finalCMap "context" .) | nindent 4 }}

@@ -1,9 +1,9 @@
 apiVersion: v1
 kind: Pod
 metadata:
-  name: "{{ include "vidhaan-executer.fullname" . }}-test-connection"
+  name: "{{ include "nalanda.fullname" . }}-test-connection"
   labels:
-    {{- include "vidhaan-executer.labels" . | nindent 4 }}
+    {{- include "nalanda.labels" . | nindent 4 }}
   annotations:
     "helm.sh/hook": test
 spec:
@@ -11,5 +11,5 @@ spec:
     - name: wget
       image: busybox
       command: ['wget']
-      args: ['{{ include "vidhaan-executer.fullname" . }}:{{ .Values.service.port }}']
+      args: ['{{ include "nalanda.fullname" . }}:{{ .Values.service.port }}']
   restartPolicy: Never

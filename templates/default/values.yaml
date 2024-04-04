@@ -5,7 +5,7 @@
 replicaCount: 1
 
 image:
-  repository: 078489433560.dkr.ecr.ap-south-1.amazonaws.com/nalanda
+  repository: 078489433560.dkr.ecr.ap-south-1.amazonaws.com/<CHARTNAME>
   pullPolicy: IfNotPresent
   # Overrides the image tag whose default is the chart appVersion.
   tag: "latest"
@@ -17,7 +17,7 @@ fullnameOverride: ""
 
 envVars:
   ALLOWED_HOSTS: license.dev.nected.io,api.dev.nected.io
-  ALLOWED_CORS_ORIGIN: http://localhost:8001,http://localhost:3000,http://localhost:3001,https://konark.dev.nected.io,https://editor.dev.nected.io,https://nalanda.dev.nected.io
+  ALLOWED_CORS_ORIGIN: http://localhost:8001,http://localhost:3000,http://localhost:3001,https://konark.dev.nected.io,https://editor.dev.nected.io,https://<CHARTNAME>.dev.nected.io
   SEND_EMAIL: "True"
   AES_SECRET: tfgoS4EzPPuBJjBLFgmluy7ukW9o2PYy
   EMAIL_VERIFICATION_EXP_DURATION: "1296000"
@@ -33,7 +33,7 @@ envVars:
   SERVER_HOST: "localhost"
 
 
-envVarsConfigMap: "nalanda-dev"
+envVarsConfigMap: "<CHARTNAME>-dev"
 
 serviceAccount:
   # Specifies whether a service account should be created
@@ -66,10 +66,10 @@ autoSetup:
   debug: false
   enabled: false
   image:
-    repository: 078489433560.dkr.ecr.ap-south-1.amazonaws.com/nalanda
+    repository: 078489433560.dkr.ecr.ap-south-1.amazonaws.com/<CHARTNAME>
     pullPolicy: IfNotPresent
     tag: "latest"
-  command: ["/nalanda", "--init"]
+  command: ["/<CHARTNAME>", "--init"]
   args: ["echo 'Auto setup is disabled'"]
   annotations:
     sidecar.istio.io/inject: "false"
@@ -94,7 +94,7 @@ ingress:
     alb.ingress.kubernetes.io/certificate-arn: arn:aws:acm:ap-south-1:078489433560:certificate/25273f82-9b5c-41f5-8d4f-332da72cc31a
     alb.ingress.kubernetes.io/subnets: subnet-010e96a64f7a1fb28,subnet-060bedf77998c8988,subnet-0a512abb270641390
   hosts:
-    - host: nalanda1.dev.nected.io
+    - host: <CHARTNAME>1.dev.nected.io
       paths:
         - path: /
           pathType: Prefix
@@ -133,9 +133,9 @@ autoscaling:
 
 # Additional volumes on the output Deployment definition.
 volumes:
-  - name: nalanda-cm-volume
+  - name: <CHARTNAME>-cm-volume
     configMap:
-      name: nalanda
+      name: <CHARTNAME>
   - name: license-private-key
     secret:
       secretName: license-private-key
@@ -146,7 +146,7 @@ volumes:
 # Additional volumeMounts on the output Deployment definition.
 volumeMounts:
 - mountPath: /tmp
-  name: nalanda-cm-volume
+  name: <CHARTNAME>-cm-volume
 - mountPath: /tmp/license
   name: license-private-key
   readOnly: true
