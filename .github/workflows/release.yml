@@ -16,7 +16,7 @@ jobs:
       - name: Checkout
         uses: actions/checkout@v4
         with:
-          repository: nected/helm-charts
+          repository: nected/charts-public
       - name: List Files
         run: ls -la
         shell: bash
