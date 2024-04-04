@@ -103,7 +103,7 @@ autoscaling:
 volumes:
   - name: konark-cm-volume
     configMap:
-      name: konark-dev
+      name: konark
       items:
         - key: envFile
           path: envFile
