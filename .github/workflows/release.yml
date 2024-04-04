@@ -17,6 +17,13 @@ jobs:
         uses: actions/checkout@v4
         with:
           repository: nected/charts-public
-      - name: List Files
-        run: ls -la
-        shell: bash
+      - name: Configure Git
+        run: |
+            git config user.name "$GITHUB_ACTOR"
+            git config user.email "$GITHUB_ACTOR@users.noreply.github.com"
+      - name: Push to Public Repo
+        run: |
+            echo '('`date +"%s.%N"` ' * 1000000)/1' | bc > release
+            git add .
+            git commit -m "Release Charts $(cat release)"
+            git push
