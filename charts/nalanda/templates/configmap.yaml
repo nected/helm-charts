@@ -1,8 +1,9 @@
+{{- include "inherited.defaultConfig" . -}}
 {{- $staticCmap := include "nalanda.staticConfig" . }} 
 {{- $defaultConfig := include "nalanda.defaultConfig" . }} 
-{{- $envConfigMap := include "nalanda.configMap" . -}} 
 
-{{- $finalCMap := include "common.tplvalues.merge" ( dict "values" ( list $envConfigMap $defaultConfig  $staticCmap ) "context" . ) }}
+
+{{- $finalCMap := include "common.tplvalues.merge" ( dict "values" ( list $defaultConfig  $staticCmap ) "context" . ) }}
 apiVersion: v1
 kind: ConfigMap
 metadata:

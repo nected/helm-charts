@@ -14,7 +14,8 @@ imagePullSecrets: []
 nameOverride: ""
 fullnameOverride: ""
 
-defaultConfig:
+
+envVars:
   ALLOWED_HOSTS: license.dev.nected.io,api.dev.nected.io
   ALLOWED_CORS_ORIGIN: http://localhost:8001,http://localhost:3000,http://localhost:3001,https://konark.dev.nected.io,https://editor.dev.nected.io,https://nalanda.dev.nected.io
   SEND_EMAIL: "True"
@@ -30,8 +31,6 @@ defaultConfig:
   RESET_PASSWORD_MAX_LIMIT: "3"
   SUPER_ADMIN_USER_IDS: "1,2,73"
   SERVER_HOST: "localhost"
-envVars:
-  ENV_FILE: "/tmp/envFile"
 
 
 envVarsConfigMap: "nalanda-dev"

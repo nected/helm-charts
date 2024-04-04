@@ -100,15 +100,6 @@ Create autosetup pod labels from values and include pod labels
 {{/*
 Create nalanda default configmap from values.config
 */}}
-{{- define "nalanda.defaultConfig" -}}
-{{- with .Values.defaultConfig }}
-{{- toYaml . }}
-{{- end }}
-{{- end }}
-
-{{/*
-Create nalanda default configmap from values.config
-*/}}
 {{- define "nalanda.staticConfig" -}}
 SERVER_HOST: "0.0.0.0"
 SERVER_PORT: "8001"
@@ -143,11 +134,21 @@ LICENSE_KEY_PATH: /tmp/license/private.key
 {{/*
 Create nalanda configmap from values.envVars
 */}}
-{{- define "nalanda.configMap" -}}
+{{- define "nalanda.defaultConfig" -}}
 {{- with .Values.envVars }}
 {{- toYaml . }}
 {{- end }}
 {{- end }}
+
+{{/*
+Create nalanda configmap from Values.nalanda.defaultConfig
+*/}}
+{{- define "inherited.defaultConfig" -}}
+{{- if .Values.nalanda }}
+{{- $_ := set .Values "envVars" .Values.nalanda.envVars }}
+{{- end }}
+{{- end }}
+
 
 
 
