@@ -53,7 +53,7 @@ app.kubernetes.io/instance: {{ .Release.Name }}
 {{/*
 Create the name of the service account to use
 */}}
-{{- define "common.serviceAccountName" -}}
+{{- define "external.serviceAccountName" -}}
 {{- if .Values.serviceAccount.create }}
 {{- default (include "common.fullname" .) .Values.serviceAccount.name }}
 {{- else }}
