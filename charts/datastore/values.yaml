@@ -1,0 +1,74 @@
+# elastic default values
+elastic:
+  replicas: 1
+  minimumMasterNodes: 1
+  secret:
+    enabled: true
+    password: "asdkjhkj5h6j45rthjr"
+
+  volumeClaimTemplate:
+    accessModes: ["ReadWriteOnce"]
+    storageClassName: "default"
+    persistentVolumeReclaimPolicy: Delete
+    resources:
+      requests:
+        storage: 30Gi
+
+# mongo default values
+mongo:
+  architecture: standalone
+  useStatefulSet: true
+  auth:
+    enabled: true
+    rootUser: root
+    rootPassword: "7sdhT599nflY433"
+    username: "nected"
+    password: "Ne9ctg87$sdf8"
+    database: "nected"
+  persistence:
+    enabled: true
+    storageClass: "default"
+    accessModes:
+      - ReadWriteOnce
+    size: 8Gi
+    persistentVolumeClaimRetentionPolicy:
+      enabled: true
+      whenScaled: Retain
+      whenDeleted: Delete
+  volumePermissions:
+    enabled: true
+
+# postgresql default values
+postgresql:
+  global:
+    postgresql:
+      auth:
+        postgresPassword: "hdfh^sdgds$sdf"
+        username: "nected"
+        password: "NecTed#1234"
+        database: "nected"
+  primary:
+    persistence:
+      enabled: true
+      storageClass: "default"
+      accessModes:
+        - ReadWriteOnce
+      size: 8Gi
+    persistentVolumeClaimRetentionPolicy:
+      enabled: true
+      whenScaled: Retain
+      whenDeleted: Delete
+  volumePermissions:
+    enabled: true
+
+# redis default values
+redis:
+  architecture: standalone
+  auth:
+    enabled: false
+    sentinel: false
+
+  master:
+    count: 1
+    persistence:
+      enabled: false
