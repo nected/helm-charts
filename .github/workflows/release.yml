@@ -16,22 +16,17 @@ jobs:
       - name: Checkout
         uses: actions/checkout@v4
         with:
-          repository: nected/charts-public
+          fetch-depth: 0
+
       - name: Configure Git
         run: |
-            git config user.name "$GITHUB_ACTOR"
-            git config user.email "$GITHUB_ACTOR@users.noreply.github.com"
-      - name: Make trigger changes
-        run: |
-            echo '('`date +"%s.%N"` ' * 1000000)/1' | bc > release
-      - name: Commit and push changes
-        uses: cpina/github-action-push-to-another-repository@main
+          git config user.name "$GITHUB_ACTOR"
+          git config user.email "$GITHUB_ACTOR@users.noreply.github.com"
+
+      - name: Install Helm
+        uses: azure/setup-helm@v4
+
+      - name: Run chart-releaser
+        uses: helm/chart-releaser-action@v1.6.0
         env:
-          SSH_DEPLOY_KEY: ${{ secrets.SSH_DEPLOY_KEY }}
-        with:
-          source-directory: .
-          destination-github-username: nected
-          destination-repository-name: charts-public
-          target-branch: main
-          user-email: "${{ env.GITHUB_ACTOR }}@users.noreply.github.com"
-          
+          CR_TOKEN: "${{ secrets.GITHUB_TOKEN }}"
