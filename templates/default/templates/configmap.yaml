@@ -1,0 +1,15 @@
+{{- include "inherited.defaultConfig" . -}}
+{{- $staticCmap := include "<CHARTNAME>.staticConfig" . }} 
+{{- $defaultConfig := include "<CHARTNAME>.defaultConfig" . }} 
+
+
+{{- $finalCMap := include "common.tplvalues.merge" ( dict "values" ( list $defaultConfig  $staticCmap ) "context" . ) }}
+apiVersion: v1
+kind: ConfigMap
+metadata:
+  name: {{ include "<CHARTNAME>.name" . }}
+  labels:
+    {{- include "<CHARTNAME>.labels" . | nindent 4 }}
+data:
+    envFile: |
+    {{- include "common.tplvalues.render" ( dict "value" $finalCMap "context" .) | nindent 4 }}

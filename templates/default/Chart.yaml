@@ -1,6 +1,6 @@
 apiVersion: v2
-name: nalanda
-description: A Helm chart for Kubernetes
+name: <CHART_NAME>
+description: <CHART_DESCRIPTION>
 
 # A chart can be either an 'application' or a 'library' chart.
 #
