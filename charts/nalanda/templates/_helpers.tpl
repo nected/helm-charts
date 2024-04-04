@@ -144,12 +144,10 @@ Create nalanda configmap from values.envVars
 Create nalanda configmap from Values.nalanda.defaultConfig
 */}}
 {{- define "inherited.defaultConfig" -}}
-{{- if .Values.nalanda }}
+{{- if .Values.nalanda.envVars }}
 {{- $_ := set .Values "envVars" .Values.nalanda.envVars }}
 {{- end }}
 {{- end }}
-
-
 
 
 
