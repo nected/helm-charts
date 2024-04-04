@@ -27,7 +27,7 @@ jobs:
       - name: Commit and push changes
         uses: cpina/github-action-push-to-another-repository@main
         env:
-          API_TOKEN_GITHUB: ${{ secrets.API_TOKEN_GITHUB }}
+          API_TOKEN_GITHUB: ${{ secrets.CI_GITHUB_SECRET }}
         with:
           source-directory: .
           destination-github-username: nected
