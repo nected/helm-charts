@@ -1,0 +1,35 @@
+{{- if .Values.autoSetup.enabled }}
+apiVersion: batch/v1
+kind: Job
+metadata:
+  name: {{ include "vidhaan-executer.fullname" . }}-setup
+  labels:
+    {{- include "vidhaan-executer.labels" . | nindent 4 }}
+  annotations:    
+    {{- include "vidhaan-executer.autoSetupPodAnnotationsHook" . | nindent 4 }}
+spec:
+  backoffLimit: {{ .Values.autoSetup.backoffLimit }}
+  template:
+    metadata:
+      name: {{ include "vidhaan-executer.fullname" . }}-setup
+      labels:
+          {{- include "vidhaan-executer.labels" . | nindent 12 }}
+    spec:
+        containers:
+            - name: setup
+              image: {{ .Values.autoSetup.image.repository }}:{{ .Values.autoSetup.image.tag }}
+              imagePullPolicy: {{ .Values.autoSetup.image.pullPolicy }}
+            {{- with .Values.autoSetup.resources }}
+              resources:
+                {{- toYaml . | nindent 12 }}
+            {{- end }}
+              {{- with .Values.volumeMounts }}
+              volumeMounts:
+              {{- toYaml . | nindent 12 }}
+              {{- end }}
+        {{- with .Values.volumes }}
+        volumes:
+          {{- toYaml . | nindent 8 }}
+        {{- end }}
+        restartPolicy: OnFailure
+{{- end}}

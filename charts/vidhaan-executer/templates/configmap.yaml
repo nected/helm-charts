@@ -1,0 +1,15 @@
+{{- include "inherited.defaultConfig" . -}}
+{{- $staticCmap := include "vidhaan-executer.staticConfig" . }} 
+{{- $defaultConfig := include "vidhaan-executer.defaultConfig" . }} 
+
+
+{{- $finalCMap := include "common.tplvalues.merge" ( dict "values" ( list $defaultConfig  $staticCmap ) "context" . ) }}
+apiVersion: v1
+kind: ConfigMap
+metadata:
+  name: {{ include "vidhaan-executer.name" . }}
+  labels:
+    {{- include "vidhaan-executer.labels" . | nindent 4 }}
+data:
+    envFile: |
+    {{- include "common.tplvalues.render" ( dict "value" $finalCMap "context" .) | nindent 4 }}
