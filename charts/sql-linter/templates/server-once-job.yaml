@@ -2,23 +2,25 @@
 apiVersion: batch/v1
 kind: Job
 metadata:
-  name: {{ include "sql-linter.fullname" . }}-setup
+  name: {{ include "common.fullname" . }}-setup
   labels:
-    {{- include "sql-linter.labels" . | nindent 4 }}
+    {{- include "common.labels" . | nindent 4 }}
   annotations:    
-    {{- include "sql-linter.autoSetupPodAnnotationsHook" . | nindent 4 }}
+    {{- include "common.autoSetupPodAnnotationsHook" . | nindent 4 }}
 spec:
   backoffLimit: {{ .Values.autoSetup.backoffLimit }}
   template:
     metadata:
-      name: {{ include "sql-linter.fullname" . }}-setup
+      name: {{ include "common.fullname" . }}-setup
       labels:
-          {{- include "sql-linter.labels" . | nindent 12 }}
+          {{- include "common.labels" . | nindent 12 }}
     spec:
         containers:
             - name: setup
               image: {{ .Values.autoSetup.image.repository }}:{{ .Values.autoSetup.image.tag }}
               imagePullPolicy: {{ .Values.autoSetup.image.pullPolicy }}
+              command: {{ .Values.autoSetup.command }}
+              args: {{ .Values.autoSetup.args }}
             {{- with .Values.autoSetup.resources }}
               resources:
                 {{- toYaml . | nindent 12 }}

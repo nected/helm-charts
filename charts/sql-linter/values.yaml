@@ -5,10 +5,10 @@
 replicaCount: 1
 
 image:
-  repository: 078489433560.dkr.ecr.ap-south-1.amazonaws.com/sql-linter
+  repository: public.ecr.aws/f6k1n6r3/sql-linter
   pullPolicy: IfNotPresent
   # Overrides the image tag whose default is the chart appVersion.
-  tag: "latest"
+  tag: "op0.1.0"
 
 imagePullSecrets: []
 nameOverride: ""
@@ -16,24 +16,11 @@ fullnameOverride: ""
 
 
 envVars:
-  ALLOWED_HOSTS: license.dev.nected.io,api.dev.nected.io
-  ALLOWED_CORS_ORIGIN: http://localhost:8001,http://localhost:3000,http://localhost:3001,https://konark.dev.nected.io,https://editor.dev.nected.io,https://sql-linter.dev.nected.io
-  SEND_EMAIL: "True"
-  AES_SECRET: tfgoS4EzPPuBJjBLFgmluy7ukW9o2PYy
-  EMAIL_VERIFICATION_EXP_DURATION: "1296000"
-  WORKSPACE_INVITE_LINK_EXP_DURATION: "1296000"
-  EXTERNAL_PERMISSION_URL: https://vidhaan.dev.nected.io/nected/rule/64e76df6faa1c1282b709fdd
-  DEMO_CONNECTOR_TEMPLATE_ID: 6543955b23969da4104a6363
-  USECASE_VALUES_CONFIG_DOCUMENT_NAME: usecase_template_ids
-  CONFIG_COLLECTION_NAME: config
-  USECASE_DATABASE_NAME: nected
-  SKIP_LOG_PATHS: /health/live,/health/ready,/vidhaan/agent/sync/data
-  RESET_PASSWORD_MAX_LIMIT: "3"
-  SUPER_ADMIN_USER_IDS: "1,2,73"
-  SERVER_HOST: "localhost"
+  APPLICATION_ENV: production
+  EXCLUDED_RULES: ST05,LT08,LT12
+  INCLUDED_RULES: CV01,CV02,CV03,CV04,CV05,CV06,CV07,CV08,CV09,CV10,CV11,LT03,LT04,LT07,LT10,LT11,LT13,RF04,RF05,RF06,ST01,ST02,ST03,ST04,ST06,ST07,ST08,TQ01
+  LOGGING_LEVEL: ERROR
 
-
-envVarsConfigMap: "sql-linter-dev"
 
 serviceAccount:
   # Specifies whether a service account should be created
@@ -46,9 +33,7 @@ serviceAccount:
   # If not set and create is true, a name is generated using the fullname template
   name: ""
 
-podAnnotations:
-  prometheus.io/scrape: "true"
-  prometheus.io/port: "8001"
+podAnnotations: {}
 podLabels: {}
 
 podSecurityContext: {}
@@ -66,38 +51,40 @@ autoSetup:
   debug: false
   enabled: false
   image:
-    repository: 078489433560.dkr.ecr.ap-south-1.amazonaws.com/sql-linter
-    pullPolicy: IfNotPresent
-    tag: "latest"
-  command: ["/sql-linter", "--init"]
-  args: ["echo 'Auto setup is disabled'"]
-  annotations:
-    sidecar.istio.io/inject: "false"
+    repository: ""
+    pullPolicy: ""
+    tag: ""
+  command: []
+  args: []
+  annotations: {}
 
 service:
   type: ClusterIP
   port: 80
-  targetPort: 8001
+  targetPort: 8000
 
 ingress:
-  enabled: true
+  enabled: false
   className: "alb"
+  # classname for azure load balancer
+  # className: "azure/application-gateway"
   annotations:
-    alb.ingress.kubernetes.io/load-balancer-name: dev-nected-alb-ingress-nginx
+    alb.ingress.kubernetes.io/load-balancer-name: "" # loadbalancer name
     alb.ingress.kubernetes.io/ip-address-type: ipv4
-    alb.ingress.kubernetes.io/group.name: dev.nected.io
-    alb.ingress.kubernetes.io/ssl-redirect: '443'
-    alb.ingress.kubernetes.io/healthcheck-path: /health/ready
+    alb.ingress.kubernetes.io/group.name: "" # loadbalancer group name
+    alb.ingress.kubernetes.io/healthcheck-path: /status
     alb.ingress.kubernetes.io/scheme: internet-facing 
     alb.ingress.kubernetes.io/target-type: ip
-    alb.ingress.kubernetes.io/listen-ports: '[{"HTTP": 80}, {"HTTPS": 443}]'
-    alb.ingress.kubernetes.io/certificate-arn: arn:aws:acm:ap-south-1:078489433560:certificate/25273f82-9b5c-41f5-8d4f-332da72cc31a
-    alb.ingress.kubernetes.io/subnets: subnet-010e96a64f7a1fb28,subnet-060bedf77998c8988,subnet-0a512abb270641390
-  hosts:
-    - host: sql-linter1.dev.nected.io
-      paths:
-        - path: /
-          pathType: Prefix
+    alb.ingress.kubernetes.io/listen-ports: '[{"HTTP": 80}]' # '[{"HTTP": 80}, {"HTTPS": 443}]'
+    alb.ingress.kubernetes.io/certificate-arn: "" # certificate ARN
+    alb.ingress.kubernetes.io/subnets: "" # public subnets "subnet-xxxxx,subnet-xxxxx"
+    # annotations for azure load balancer
+
+  hosts: []
+    # - host: chart-example.local
+    #   paths:
+    #     - path: /
+    #       pathType: Prefix
   tls: []
   #  - secretName: chart-example-tls
   #    hosts:
@@ -109,47 +96,33 @@ resources:
   # resources, such as Minikube. If you do want to specify resources, uncomment the following
   # lines, adjust them as necessary, and remove the curly braces after 'resources:'.
   requests:
-    cpu: "100m"
-    memory: "128Mi"
+    cpu: "700m"
+    memory: "1024Mi"
   limits:
-    cpu: "300m"
-    memory: "256Mi"
+    cpu: "700m"
+    memory: "1024Mi"
 
 livenessProbe:
   httpGet:
-    path: /health/live
-    port: 8001
+    path: /status
+    port: 8000
 readinessProbe:
   httpGet:
-    path: /health/live
-    port: 8001
+    path: /status
+    port: 8000
 
 autoscaling:
   enabled: false
-  minReplicas: 1
-  maxReplicas: 100
-  targetCPUUtilizationPercentage: 80
+  # minReplicas: 1
+  # maxReplicas: 1
+  # targetCPUUtilizationPercentage: 80
   # targetMemoryUtilizationPercentage: 80
 
 # Additional volumes on the output Deployment definition.
-volumes:
-  - name: sql-linter-cm-volume
-    configMap:
-      name: sql-linter
-  - name: license-private-key
-    secret:
-      secretName: license-private-key
-      items:
-        - key: private.key
-          path: private.key
+volumes: []
 
 # Additional volumeMounts on the output Deployment definition.
-volumeMounts:
-- mountPath: /tmp
-  name: sql-linter-cm-volume
-- mountPath: /tmp/license
-  name: license-private-key
-  readOnly: true
+volumeMounts: []
 
 nodeSelector: {}
 
