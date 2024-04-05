@@ -27,18 +27,24 @@ jobs:
         uses: azure/setup-helm@v4
 
       - name: Install YQ
+        env:
+          VERSION: v4.43.1
+          BINARY: yq_linux_amd64
         run: |
-          sudo add-apt-repository ppa:rmescandon/yq
-          sudo apt update
-          sudo apt install yq -y
+          wget https://github.com/mikefarah/yq/releases/download/${VERSION}/${BINARY}.tar.gz -O - |\
+          tar xz && mv ${BINARY} /usr/bin/yq
       
       - name: Initialize custom helm repo (Helm V3 Bug)
         run: |
-            if [ -f "./Chart.lock" ]; then
-              yq --indent 0 '.dependencies | map(["helm", "repo", "add", .name, .repository] | join(" ")) | .[]' "./Chart.lock"  | sh --;
-            fi
+            for d in charts/*/ ; do
+              if [ -f "$d/Chart.lock" ]; then
+                cat "$d/Chart.lock"
+                yq --indent 0 '.dependencies | map(["helm", "repo", "add", .name, .repository] | join(" ")) | .[]' "$d/Chart.lock" | sh --;
+              fi
+            done
 
       - name: Run chart-releaser
         uses: helm/chart-releaser-action@v1.6.0
         env:
           CR_TOKEN: "${{ secrets.GITHUB_TOKEN }}"
+
