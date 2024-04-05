@@ -3,6 +3,23 @@ entries:
   common:
   - apiVersion: v2
     appVersion: 1.16.0
+    created: "2024-04-05T07:56:32.06911477Z"
+    dependencies:
+    - alias: external
+      name: common
+      repository: https://charts.bitnami.com/bitnami
+      tags:
+      - bitnami-common
+      version: 2.x.x
+    description: A Helm chart for Kubernetes
+    digest: 4b9c6a1aaf4b1e4708e1f77c68c6f1595d9546e8bd61765e91cc08da89ab6dcf
+    name: common
+    type: application
+    urls:
+    - https://github.com/nected/helm-charts/releases/download/common-0.1.1/common-0.1.1.tgz
+    version: 0.1.1
+  - apiVersion: v2
+    appVersion: 1.16.0
     created: "2024-04-04T11:00:20.602332618Z"
     dependencies:
     - alias: external
@@ -18,6 +35,59 @@ entries:
     urls:
     - https://github.com/nected/helm-charts/releases/download/common-0.1.0/common-0.1.0.tgz
     version: 0.1.0
+  datastore:
+  - apiVersion: v2
+    appVersion: 1.0.0
+    created: "2024-04-05T07:56:32.26109597Z"
+    dependencies:
+    - condition: postgresql.enabled
+      name: postgresql
+      repository: https://charts.bitnami.com/bitnami
+      version: 15.2.2
+    - condition: mongodb.enabled
+      name: mongodb
+      repository: https://charts.bitnami.com/bitnami
+      version: 15.1.1
+    - condition: redis.enabled
+      name: redis
+      repository: https://charts.bitnami.com/bitnami
+      version: 19.0.2
+    description: A Datastore Helm chart for Nected Platform
+    digest: 0f92ae41a931dcac60faf9ae203cb4eae2c2d2d6cf4e55319bbcf1f923f4d20c
+    home: https://nected.ai/
+    keywords:
+    - datastore
+    - nected
+    - workflow
+    - BRE
+    - DMS
+    maintainers:
+    - name: Socioverse Tech Private Ltd.
+      url: https://nected.ai/
+    name: datastore
+    sources:
+    - https://charts.nected.io
+    type: application
+    urls:
+    - https://github.com/nected/helm-charts/releases/download/datastore-1.0.0/datastore-1.0.0.tgz
+    version: 1.0.0
+  elasticsearch:
+  - apiVersion: v1
+    appVersion: 8.5.1
+    created: "2024-04-05T07:56:32.423547661Z"
+    description: Official Elastic helm chart for Elasticsearch
+    digest: cd0922e55bb3a6cb7df5636983d6d863415fe5213aa3d23a3e7ceed56e0891a3
+    home: https://github.com/elastic/helm-charts
+    icon: https://helm.elastic.co/icons/elasticsearch.png
+    maintainers:
+    - email: helm-charts@elastic.co
+      name: Elastic
+    name: elasticsearch
+    sources:
+    - https://github.com/elastic/elasticsearch
+    urls:
+    - https://github.com/nected/helm-charts/releases/download/elasticsearch-8.5.1/elasticsearch-8.5.1.tgz
+    version: 8.5.1
   konark:
   - apiVersion: v2
     appVersion: 1.16.0
@@ -40,6 +110,16 @@ entries:
     urls:
     - https://github.com/nected/helm-charts/releases/download/nalanda-0.1.1/nalanda-0.1.1.tgz
     version: 0.1.1
+  - apiVersion: v2
+    appVersion: 1.16.0
+    created: "2024-04-05T07:56:32.741373428Z"
+    description: A Helm chart for Kubernetes
+    digest: 82f07eec7e79d2ac80bd04dda6b408fb803b879887d6dd6f8b419e7c1520b963
+    name: nalanda
+    type: application
+    urls:
+    - https://github.com/nected/helm-charts/releases/download/nalanda-0.0.1/nalanda-0.0.1.tgz
+    version: 0.0.1
   nected-editor:
   - apiVersion: v2
     appVersion: 1.16.0
@@ -84,4 +164,4 @@ entries:
     urls:
     - https://github.com/nected/helm-charts/releases/download/vidhaan-router-0.1.0/vidhaan-router-0.1.0.tgz
     version: 0.1.0
-generated: "2024-04-04T11:45:29.107338339Z"
+generated: "2024-04-05T07:56:33.399850442Z"
