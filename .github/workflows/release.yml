@@ -38,6 +38,7 @@ jobs:
         run: |
             helm repo add bitnami https://charts.bitnami.com/bitnami
             helm repo add nected https://charts.nected.io
+            helm repo add lemontech https://charts.lemontech.engineering
 
       - name: Run chart-releaser
         uses: helm/chart-releaser-action@v1.6.0
