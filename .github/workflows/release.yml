@@ -36,12 +36,8 @@ jobs:
       
       - name: Initialize custom helm repo (Helm V3 Bug)
         run: |
-            for d in charts/*/ ; do
-              if [ -f "$d/Chart.lock" ]; then
-                cat "$d/Chart.lock"
-                /tmp/yq --indent 0 '.dependencies | map(["helm", "repo", "add", .name, .repository] | join(" ")) | .[]' "$d/Chart.lock" | sh --;
-              fi
-            done
+            helm repo add bitnami https://charts.bitnami.com/bitnami
+            helm repo add nected https://charts.nected.io
 
       - name: Run chart-releaser
         uses: helm/chart-releaser-action@v1.6.0
