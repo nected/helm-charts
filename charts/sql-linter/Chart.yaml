@@ -1,5 +1,5 @@
 apiVersion: v2
-description: Official nected sql-linter helm chart for Elasticsearch
+description: Official nected sql-linter helm chart
 home: https://github.com/nected/helm-charts
 maintainers:
 - email: devops@nected.ai
@@ -9,11 +9,11 @@ sources:
 - https://github.com/nected/sql-linter
 appVersion: 0.1.0
 type: application
-version: 0.1.1
+version: 0.1.2
 
 dependencies:
 - name: common
   repository: https://charts.nected.io/
   tags:
   - nected-common
-  version: 0.x.x
+  version: 0.1.0

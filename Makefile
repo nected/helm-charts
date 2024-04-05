@@ -55,4 +55,20 @@ create_app: checks ## Create a new project
 		$(HELM_BIN) create $(APP_PATH); \
 	fi
 
+.PHONY: test_charts
+test_charts: ## Test the helm chart
+	@echo "Testing helm chart"
+	@for chart in $(HELM_CHART_DIR)/*; do \
+		echo "Testing $$chart"; \
+		$(HELM_BIN) template $$chart; \
+	done
+
+.PHONY: build_dependencies
+build_dependencies: ## Build the dependencies
+	@echo "Building dependencies"
+	@for chart in $(HELM_CHART_DIR)/*; do \
+		echo "Building dependencies for $$chart"; \
+		$(HELM_BIN) dependency update $$chart; \
+	done
+
 
