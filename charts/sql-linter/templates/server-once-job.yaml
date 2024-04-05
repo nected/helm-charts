@@ -16,22 +16,22 @@ spec:
           {{- include "common.labels" . | nindent 12 }}
     spec:
         containers:
-            - name: setup
-              image: {{ .Values.autoSetup.image.repository }}:{{ .Values.autoSetup.image.tag }}
-              imagePullPolicy: {{ .Values.autoSetup.image.pullPolicy }}
-              command: {{ .Values.autoSetup.command }}
-              args: {{ .Values.autoSetup.args }}
+          - name: setup
+            image: {{ .Values.autoSetup.image.repository }}:{{ .Values.autoSetup.image.tag }}
+            imagePullPolicy: {{ .Values.autoSetup.image.pullPolicy }}
+            command: {{ .Values.autoSetup.command }}
+            args: {{ .Values.autoSetup.args }}
             {{- with .Values.autoSetup.resources }}
-              resources:
-                {{- toYaml . | nindent 12 }}
+            resources:
+              {{- toYaml . | nindent 14 }}
             {{- end }}
-              {{- with .Values.volumeMounts }}
-              volumeMounts:
-              {{- toYaml . | nindent 12 }}
-              {{- end }}
+            {{- with .Values.volumeMounts }}
+            volumeMounts:
+            {{- toYaml . | nindent 14 }}
+            {{- end }}
         {{- with .Values.volumes }}
         volumes:
-          {{- toYaml . | nindent 8 }}
+          {{- toYaml . | nindent 10 }}
         {{- end }}
         restartPolicy: OnFailure
 {{- end}}
