@@ -38,6 +38,41 @@ entries:
   datastore:
   - apiVersion: v2
     appVersion: 1.0.0
+    created: "2024-04-05T10:56:08.048238667Z"
+    dependencies:
+    - condition: postgresql.enabled
+      name: postgresql
+      repository: https://charts.bitnami.com/bitnami
+      version: 15.2.2
+    - condition: mongodb.enabled
+      name: mongodb
+      repository: https://charts.bitnami.com/bitnami
+      version: 15.1.1
+    - condition: redis.enabled
+      name: redis
+      repository: https://charts.bitnami.com/bitnami
+      version: 19.0.2
+    description: A Datastore Helm chart for Nected Platform
+    digest: 8231a647fa9a7fd3e0882c1e8f340e5b02b7147c2b4ff6574016935d1e2b8021
+    home: https://nected.ai/
+    keywords:
+    - datastore
+    - nected
+    - workflow
+    - BRE
+    - DMS
+    maintainers:
+    - name: Socioverse Tech Private Ltd.
+      url: https://nected.ai/
+    name: datastore
+    sources:
+    - https://charts.nected.io
+    type: application
+    urls:
+    - https://github.com/nected/helm-charts/releases/download/datastore-1.0.1/datastore-1.0.1.tgz
+    version: 1.0.1
+  - apiVersion: v2
+    appVersion: 1.0.0
     created: "2024-04-05T07:56:32.26109597Z"
     dependencies:
     - condition: postgresql.enabled
@@ -147,6 +182,28 @@ entries:
     version: 0.1.0
   sql-linter:
   - apiVersion: v2
+    appVersion: 0.1.0
+    created: "2024-04-05T10:56:08.294172905Z"
+    dependencies:
+    - name: common
+      repository: https://charts.nected.io/
+      tags:
+      - nected-common
+      version: 0.x.x
+    description: Official nected sql-linter helm chart for Elasticsearch
+    digest: 6f6d94e44d9bf7457456d68ecba3008a265416463728e270c9e9b6f2bb30f6cd
+    home: https://github.com/nected/helm-charts
+    maintainers:
+    - email: devops@nected.ai
+      name: Nected Devops
+    name: sql-linter
+    sources:
+    - https://github.com/nected/sql-linter
+    type: application
+    urls:
+    - https://github.com/nected/helm-charts/releases/download/sql-linter-0.1.1/sql-linter-0.1.1.tgz
+    version: 0.1.1
+  - apiVersion: v2
     appVersion: 1.16.0
     created: "2024-04-04T11:45:28.869511624Z"
     description: A Helm chart for Kubernetes
@@ -178,4 +235,4 @@ entries:
     urls:
     - https://github.com/nected/helm-charts/releases/download/vidhaan-router-0.1.0/vidhaan-router-0.1.0.tgz
     version: 0.1.0
-generated: "2024-04-05T07:58:32.104261615Z"
+generated: "2024-04-05T10:56:08.294198092Z"
