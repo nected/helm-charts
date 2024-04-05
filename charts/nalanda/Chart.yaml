@@ -24,8 +24,6 @@ version: 0.0.1
 appVersion: "1.16.0"
 
 dependencies:
-- name: common
+- name: nected-common
   repository: https://charts.nected.io/
-  tags:
-  - nected-common
   version: 0.x.x
