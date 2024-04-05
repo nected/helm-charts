@@ -147,6 +147,20 @@ entries:
     version: 0.1.1
   - apiVersion: v2
     appVersion: 1.16.0
+    created: "2024-04-05T12:40:08.895659408Z"
+    dependencies:
+    - name: common
+      repository: https://charts.nected.io/
+      version: 0.1.0
+    description: A Helm chart for Kubernetes
+    digest: 4cebe123b2ff269b008e58d1e5e7b9b5eb55f845e25584dcedd3d75065f809e2
+    name: nalanda
+    type: application
+    urls:
+    - https://github.com/nected/helm-charts/releases/download/nalanda-0.0.3/nalanda-0.0.3.tgz
+    version: 0.0.3
+  - apiVersion: v2
+    appVersion: 1.16.0
     created: "2024-04-05T07:58:32.104219075Z"
     dependencies:
     - name: common
@@ -181,6 +195,28 @@ entries:
     - https://github.com/nected/helm-charts/releases/download/nected-editor-0.1.0/nected-editor-0.1.0.tgz
     version: 0.1.0
   sql-linter:
+  - apiVersion: v2
+    appVersion: 0.1.0
+    created: "2024-04-05T12:40:08.995113363Z"
+    dependencies:
+    - name: common
+      repository: https://charts.nected.io/
+      tags:
+      - nected-common
+      version: 0.1.0
+    description: Official nected sql-linter helm chart
+    digest: 40c06bf3720067494fb3156c74e5a155bd39ea21fe66de344d65a17b11eef504
+    home: https://github.com/nected/helm-charts
+    maintainers:
+    - email: devops@nected.ai
+      name: Nected Devops
+    name: sql-linter
+    sources:
+    - https://github.com/nected/sql-linter
+    type: application
+    urls:
+    - https://github.com/nected/helm-charts/releases/download/sql-linter-0.1.2/sql-linter-0.1.2.tgz
+    version: 0.1.2
   - apiVersion: v2
     appVersion: 0.1.0
     created: "2024-04-05T10:56:08.294172905Z"
@@ -235,4 +271,4 @@ entries:
     urls:
     - https://github.com/nected/helm-charts/releases/download/vidhaan-router-0.1.0/vidhaan-router-0.1.0.tgz
     version: 0.1.0
-generated: "2024-04-05T10:56:08.294198092Z"
+generated: "2024-04-05T12:40:08.99515473Z"
