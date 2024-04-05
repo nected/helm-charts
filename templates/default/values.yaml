@@ -57,7 +57,7 @@ service: {}
   # port: 80
   # targetPort: 8001
 
-ingress: {}
+ingress:
   # enabled: true
   # className: "alb"
   # classname for azure load balancer
