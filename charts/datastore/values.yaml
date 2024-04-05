@@ -61,3 +61,33 @@ redis:
     count: 1
     persistence:
       enabled: false
+
+# Elasticsearch Chart Values
+elasticsearch:
+  enabled: true
+  replicas: 1
+  minimumMasterNodes: 1
+  secret:
+    enabled: true
+    password: "asdkjhkj5h6j45rthjr"
+
+  protocol: http
+  persistence:
+    enabled: true
+    labels:
+      enabled: false
+    persistentVolumeClaimRetentionPolicy:
+      enabled: true
+      whenScaled: Retain
+      whenDeleted: Delete
+
+  volumeClaimTemplate:
+    accessModes: ["ReadWriteOnce"]
+    storageClassName: "default"
+    resources:
+      requests:
+        storage: 30Gi
+
+  networkPolicy:
+    http:
+      enabled: true
