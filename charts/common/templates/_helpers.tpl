@@ -79,7 +79,9 @@ Create autosetup pod annotations from values  and include pod annotations
 {{- define "common.autoSetupPodAnnotations" -}}
 {{- if .Values.autoSetup.enabled }}
 {{- include "common.podAnnotations" . }}
-{{ toYaml .Values.autoSetup.annotations }}
+{{- with .Values.autoSetup.annotations }}
+{{- toYaml . -}}
+{{- end -}}
 {{- end }}
 {{- end }}
 
@@ -87,13 +89,14 @@ Create autosetup pod annotations from values  and include pod annotations
 Create autosetup pod labels from values and include pod labels
 */}}
 {{- define "common.autoSetupPodAnnotationsHook" -}}
-{{- include "common.podAnnotations" . }}
 {{- if .Values.autoSetup.enabled }}
-{{- include "common.autoSetupPodAnnotations" . }}
+{{- include "common.autoSetupPodAnnotations" . -}}
+{{ else }}
+{{- include "common.podAnnotations" . -}}
+{{ end }}
 "helm.sh/hook": pre-install
 "helm.sh/hook-weight": "0"
 {{- if not .Values.autoSetup.debug }}
 "helm.sh/hook-delete-policy": hook-succeeded,hook-failed
-{{- end }}
-{{- end }}
-{{- end }}
+{{- end -}}
+{{- end -}}
