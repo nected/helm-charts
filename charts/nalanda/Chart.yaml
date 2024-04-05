@@ -23,7 +23,3 @@ version: 0.0.1
 # It is recommended to use it with quotes.
 appVersion: "1.16.0"
 
-dependencies:
-- name: common
-  repository: https://charts.nected.io/
-  version: 0.x.x
