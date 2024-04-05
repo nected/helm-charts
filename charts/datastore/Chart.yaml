@@ -31,7 +31,11 @@ dependencies:
     version: "19.0.2"
     repository: https://charts.bitnami.com/bitnami
     condition: redis.enabled
+  - name: elasticsearch
+    version: "8.5.1"
+    repository: https://charts.nected.io/
+    condition: elasticsearch.enabled
 
 type: application
-version: 1.0.0
+version: 1.0.1
 appVersion: "1.0.0"
