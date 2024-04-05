@@ -2,34 +2,45 @@
 apiVersion: batch/v1
 kind: Job
 metadata:
-  name: {{ include "nalanda.fullname" . }}-setup
+  name: {{ include "common.fullname" . }}-setup
   labels:
-    {{- include "nalanda.labels" . | nindent 4 }}
+    {{- include "common.labels" . | nindent 4 }}
   annotations:    
-    {{- include "nalanda.autoSetupPodAnnotationsHook" . | nindent 4 }}
+    {{- include "common.autoSetupPodAnnotationsHook" . | nindent 4 }}
 spec:
   backoffLimit: {{ .Values.autoSetup.backoffLimit }}
   template:
     metadata:
-      name: {{ include "nalanda.fullname" . }}-setup
+      name: {{ include "common.fullname" . }}-setup
       labels:
-          {{- include "nalanda.labels" . | nindent 12 }}
+          {{- include "common.labels" . | nindent 12 }}
     spec:
         containers:
-            - name: setup
-              image: {{ .Values.autoSetup.image.repository }}:{{ .Values.autoSetup.image.tag }}
-              imagePullPolicy: {{ .Values.autoSetup.image.pullPolicy }}
+          - name: setup
+            image: {{ .Values.autoSetup.image.repository }}:{{ .Values.autoSetup.image.tag }}
+            imagePullPolicy: {{ .Values.autoSetup.image.pullPolicy }}
+            command: {{ .Values.autoSetup.command }}
+            args: {{ .Values.autoSetup.args }}
             {{- with .Values.autoSetup.resources }}
-              resources:
-                {{- toYaml . | nindent 12 }}
+            resources:
+              {{- toYaml . | nindent 14 }}
             {{- end }}
-              {{- with .Values.volumeMounts }}
-              volumeMounts:
-              {{- toYaml . | nindent 12 }}
+            volumeMounts:
+              {{- if .Values.mountConfigMap }}
+              - mountPath: /tmp
+              name: {{ include "common.name" . }}-cm-volume
               {{- end }}
-        {{- with .Values.volumes }}
+              {{- toYaml .Values.volumeMounts | nindent 14 }}
         volumes:
-          {{- toYaml . | nindent 8 }}
+          {{- if .Values.mountConfigMap }}
+          - name: {{ include "common.name" . }}-cm-volume
+            configMap:
+              name: {{ include "common.fullname" . }}
+              items:
+                - key: envFile
+                  path: envFile
+          {{- end }}
+          {{- toYaml .Values.volumes| nindent 8 }}
         {{- end }}
         restartPolicy: OnFailure
 {{- end}}
