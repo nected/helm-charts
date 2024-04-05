@@ -1,0 +1,6 @@
+dependencies:
+- name: common
+  repository: https://charts.nected.io/
+  version: 0.1.1
+digest: sha256:6ff35fdfb12d28f80631d45dfda9841d0eac0d8020f27e8a42826b45bb80614f
+generated: "2024-04-05T13:27:36.066535253+05:30"
