@@ -112,6 +112,20 @@ entries:
     version: 0.1.1
   - apiVersion: v2
     appVersion: 1.16.0
+    created: "2024-04-05T07:58:32.104219075Z"
+    dependencies:
+    - name: common
+      repository: https://charts.nected.io/
+      version: 0.x.x
+    description: A Helm chart for Kubernetes
+    digest: 1ccb900e07cbe5a2d827f4597ff0e332fd6399bda2f1a0cefecf39fd93def45e
+    name: nalanda
+    type: application
+    urls:
+    - https://github.com/nected/helm-charts/releases/download/nalanda-0.0.2/nalanda-0.0.2.tgz
+    version: 0.0.2
+  - apiVersion: v2
+    appVersion: 1.16.0
     created: "2024-04-05T07:56:32.741373428Z"
     description: A Helm chart for Kubernetes
     digest: 82f07eec7e79d2ac80bd04dda6b408fb803b879887d6dd6f8b419e7c1520b963
@@ -164,4 +178,4 @@ entries:
     urls:
     - https://github.com/nected/helm-charts/releases/download/vidhaan-router-0.1.0/vidhaan-router-0.1.0.tgz
     version: 0.1.0
-generated: "2024-04-05T07:56:33.399850442Z"
+generated: "2024-04-05T07:58:32.104261615Z"
