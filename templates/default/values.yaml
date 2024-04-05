@@ -1,39 +1,21 @@
-# Default values for <CHARTNAME>.
+# Default values for <CHART_NAME>.
 # This is a YAML-formatted file.
 # Declare variables to be passed into your templates.
 
 replicaCount: 1
 
 image:
-  repository: 078489433560.dkr.ecr.ap-south-1.amazonaws.com/<CHARTNAME>
+  repository: public.ecr.aws/f6k1n6r3/<CHART_NAME>
   pullPolicy: IfNotPresent
   # Overrides the image tag whose default is the chart appVersion.
-  tag: "latest"
+  tag: "op0.1.0"
 
 imagePullSecrets: []
 nameOverride: ""
 fullnameOverride: ""
 
 
-envVars:
-  ALLOWED_HOSTS: license.dev.nected.io,api.dev.nected.io
-  ALLOWED_CORS_ORIGIN: http://localhost:8001,http://localhost:3000,http://localhost:3001,https://konark.dev.nected.io,https://editor.dev.nected.io,https://<CHARTNAME>.dev.nected.io
-  SEND_EMAIL: "True"
-  AES_SECRET: tfgoS4EzPPuBJjBLFgmluy7ukW9o2PYy
-  EMAIL_VERIFICATION_EXP_DURATION: "1296000"
-  WORKSPACE_INVITE_LINK_EXP_DURATION: "1296000"
-  EXTERNAL_PERMISSION_URL: https://vidhaan.dev.nected.io/nected/rule/64e76df6faa1c1282b709fdd
-  DEMO_CONNECTOR_TEMPLATE_ID: 6543955b23969da4104a6363
-  USECASE_VALUES_CONFIG_DOCUMENT_NAME: usecase_template_ids
-  CONFIG_COLLECTION_NAME: config
-  USECASE_DATABASE_NAME: nected
-  SKIP_LOG_PATHS: /health/live,/health/ready,/vidhaan/agent/sync/data
-  RESET_PASSWORD_MAX_LIMIT: "3"
-  SUPER_ADMIN_USER_IDS: "1,2,73"
-  SERVER_HOST: "localhost"
-
-
-envVarsConfigMap: "<CHARTNAME>-dev"
+envVars: {}
 
 serviceAccount:
   # Specifies whether a service account should be created
@@ -46,9 +28,7 @@ serviceAccount:
   # If not set and create is true, a name is generated using the fullname template
   name: ""
 
-podAnnotations:
-  prometheus.io/scrape: "true"
-  prometheus.io/port: "8001"
+podAnnotations: {}
 podLabels: {}
 
 podSecurityContext: {}
@@ -63,93 +43,81 @@ securityContext: {}
   # runAsUser: 1000
 
 autoSetup:
-  debug: false
-  enabled: false
-  image:
-    repository: 078489433560.dkr.ecr.ap-south-1.amazonaws.com/<CHARTNAME>
-    pullPolicy: IfNotPresent
-    tag: "latest"
-  command: ["/<CHARTNAME>", "--init"]
-  args: ["echo 'Auto setup is disabled'"]
-  annotations:
-    sidecar.istio.io/inject: "false"
-
-service:
-  type: ClusterIP
-  port: 80
-  targetPort: 8001
-
-ingress:
+  debug: true
   enabled: true
-  className: "alb"
-  annotations:
-    alb.ingress.kubernetes.io/load-balancer-name: dev-nected-alb-ingress-nginx
-    alb.ingress.kubernetes.io/ip-address-type: ipv4
-    alb.ingress.kubernetes.io/group.name: dev.nected.io
-    alb.ingress.kubernetes.io/ssl-redirect: '443'
-    alb.ingress.kubernetes.io/healthcheck-path: /health/ready
-    alb.ingress.kubernetes.io/scheme: internet-facing 
-    alb.ingress.kubernetes.io/target-type: ip
-    alb.ingress.kubernetes.io/listen-ports: '[{"HTTP": 80}, {"HTTPS": 443}]'
-    alb.ingress.kubernetes.io/certificate-arn: arn:aws:acm:ap-south-1:078489433560:certificate/25273f82-9b5c-41f5-8d4f-332da72cc31a
-    alb.ingress.kubernetes.io/subnets: subnet-010e96a64f7a1fb28,subnet-060bedf77998c8988,subnet-0a512abb270641390
-  hosts:
-    - host: <CHARTNAME>1.dev.nected.io
-      paths:
-        - path: /
-          pathType: Prefix
+  image:
+    repository: public.ecr.aws/f6k1n6r3/<CHART_NAME>
+    pullPolicy: IfNotPresent
+    tag: "op0.1.0"
+  command: ["/<CHART_NAME>", "--init"]
+  annotations: {}
+
+service: {}
+  # type: ClusterIP
+  # port: 80
+  # targetPort: 8001
+
+ingress: {}
+  # enabled: true
+  # className: "alb"
+  # classname for azure load balancer
+  # className: "azure/application-gateway"
+  annotations: {}
+    # alb.ingress.kubernetes.io/load-balancer-name: "alb-name" # loadbalancer name
+    # alb.ingress.kubernetes.io/ip-address-type: ipv4
+    # alb.ingress.kubernetes.io/group.name: "alb-group-name" # loadbalancer group name
+    # alb.ingress.kubernetes.io/healthcheck-path: /health/ready
+    # alb.ingress.kubernetes.io/scheme: internet-facing 
+    # alb.ingress.kubernetes.io/target-type: ip
+    # alb.ingress.kubernetes.io/listen-ports: '[{"HTTP": 80}]' # '[{"HTTP": 80}, {"HTTPS": 443}]'
+    # alb.ingress.kubernetes.io/certificate-arn: "" # certificate ARN
+    # alb.ingress.kubernetes.io/subnets: "" # public subnets "subnet-xxxxx,subnet-xxxxx"
+    # annotations for azure load balancer
+  hosts: []
+    # - host: "cluster.local"
+    #   paths:
+    #     - path: /
+    #       pathType: Prefix
   tls: []
   #  - secretName: chart-example-tls
   #    hosts:
   #      - chart-example.local
 
-resources:
+resources: {}
   # We usually recommend not to specify default resources and to leave this as a conscious
   # choice for the user. This also increases chances charts run on environments with little
   # resources, such as Minikube. If you do want to specify resources, uncomment the following
   # lines, adjust them as necessary, and remove the curly braces after 'resources:'.
-  requests:
-    cpu: "100m"
-    memory: "128Mi"
-  limits:
-    cpu: "300m"
-    memory: "256Mi"
+  # requests:
+  #   cpu: "250m"
+  #   memory: "256Mi"
+  # limits:
+  #   cpu: "250m"
+  #   memory: "256Mi"
 
-livenessProbe:
-  httpGet:
-    path: /health/live
-    port: 8001
-readinessProbe:
-  httpGet:
-    path: /health/live
-    port: 8001
+livenessProbe: {}
+  # httpGet:
+  #   path: /health/live
+  #   port: 8001
+readinessProbe: {}
+  # httpGet:
+  #   path: /health/live
+  #   port: 8001
 
-autoscaling:
-  enabled: false
-  minReplicas: 1
-  maxReplicas: 100
-  targetCPUUtilizationPercentage: 80
+autoscaling: {}
+  # enabled: false
+  # minReplicas: 1
+  # maxReplicas: 1
+  # targetCPUUtilizationPercentage: 80
   # targetMemoryUtilizationPercentage: 80
 
 # Additional volumes on the output Deployment definition.
-volumes:
-  - name: <CHARTNAME>-cm-volume
-    configMap:
-      name: <CHARTNAME>
-  - name: license-private-key
-    secret:
-      secretName: license-private-key
-      items:
-        - key: private.key
-          path: private.key
+volumes: []
 
 # Additional volumeMounts on the output Deployment definition.
-volumeMounts:
-- mountPath: /tmp
-  name: <CHARTNAME>-cm-volume
-- mountPath: /tmp/license
-  name: license-private-key
-  readOnly: true
+volumeMounts: []
+# additional volumes setting to mount configMap
+mountConfigMap: false
 
 nodeSelector: {}
 
