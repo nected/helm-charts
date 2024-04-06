@@ -90,6 +90,29 @@ entries:
     urls:
     - https://github.com/nected/helm-charts/releases/download/konark-0.1.0/konark-0.1.0.tgz
     version: 0.1.0
+  nalanda:
+  - apiVersion: v2
+    appVersion: op0.1.0
+    created: "2024-04-06T17:52:59.401771624Z"
+    dependencies:
+    - name: common
+      repository: https://charts.nected.io/
+      tags:
+      - nected-common
+      version: 0.x.x
+    description: Nected nalanda helm chart
+    digest: d165b0774196aae92e6318e5a06ffe35990495f33bcbe603b58c9f4cb51bd026
+    home: https://github.com/nected/helm-charts
+    maintainers:
+    - email: devops@nected.ai
+      name: Nected Devops
+    name: nalanda
+    sources:
+    - https://github.com/nected/nalanda
+    type: application
+    urls:
+    - https://github.com/nected/helm-charts/releases/download/nalanda-0.1.0/nalanda-0.1.0.tgz
+    version: 0.1.0
   nected-editor:
   - apiVersion: v2
     appVersion: 1.16.0
@@ -100,6 +123,29 @@ entries:
     type: application
     urls:
     - https://github.com/nected/helm-charts/releases/download/nected-editor-0.1.0/nected-editor-0.1.0.tgz
+    version: 0.1.0
+  sql-linter:
+  - apiVersion: v2
+    appVersion: op0.1.0
+    created: "2024-04-06T17:52:59.547822361Z"
+    dependencies:
+    - name: common
+      repository: https://charts.nected.io/
+      tags:
+      - nected-common
+      version: 0.x.x
+    description: Nected sql-linter helm chart
+    digest: 71106cee2fdd1a5a03fb28d8b2822ed8e70a8b275816ff13108eaad7f18e6a0c
+    home: https://github.com/nected/helm-charts
+    maintainers:
+    - email: devops@nected.ai
+      name: Nected Devops
+    name: sql-linter
+    sources:
+    - https://github.com/nected/nected-sql-linter
+    type: application
+    urls:
+    - https://github.com/nected/helm-charts/releases/download/sql-linter-0.1.0/sql-linter-0.1.0.tgz
     version: 0.1.0
   temporal:
   - apiVersion: v2
@@ -116,4 +162,50 @@ entries:
     urls:
     - https://github.com/nected/helm-charts/releases/download/temporal-0.0.1/temporal-0.0.1.tgz
     version: 0.0.1
-generated: "2024-04-06T17:46:45.792804828Z"
+  vidhaan-executer:
+  - apiVersion: v2
+    appVersion: op0.1.0
+    created: "2024-04-06T17:52:59.718894945Z"
+    dependencies:
+    - name: common
+      repository: https://charts.nected.io/
+      tags:
+      - nected-common
+      version: 0.x.x
+    description: Nected vidhaan-executer helm chart
+    digest: 473ede9d2345c4ebdc16574ecedf1d2cab638004b2165973c42d7fcf7f40bcd8
+    home: https://github.com/nected/helm-charts
+    maintainers:
+    - email: devops@nected.ai
+      name: Nected Devops
+    name: vidhaan-executer
+    sources:
+    - https://github.com/nected/vidhaan
+    type: application
+    urls:
+    - https://github.com/nected/helm-charts/releases/download/vidhaan-executer-0.1.0/vidhaan-executer-0.1.0.tgz
+    version: 0.1.0
+  vidhaan-router:
+  - apiVersion: v2
+    appVersion: op0.1.0
+    created: "2024-04-06T17:52:59.886415582Z"
+    dependencies:
+    - name: common
+      repository: https://charts.nected.io/
+      tags:
+      - nected-common
+      version: 0.x.x
+    description: Nected vidhaan-router helm chart
+    digest: 05ddce02973c32dba89aec03a45ae7fefddf806a3378536160372c58ba74cf56
+    home: https://github.com/nected/helm-charts
+    maintainers:
+    - email: devops@nected.ai
+      name: Nected Devops
+    name: vidhaan-router
+    sources:
+    - https://github.com/nected/vidhaan
+    type: application
+    urls:
+    - https://github.com/nected/helm-charts/releases/download/vidhaan-router-0.1.0/vidhaan-router-0.1.0.tgz
+    version: 0.1.0
+generated: "2024-04-06T17:52:59.886427574Z"
