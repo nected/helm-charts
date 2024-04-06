@@ -1,5 +1,5 @@
 apiVersion: v2
-description: Nected nalanda helm chart
+description: Nected common helm chart
 home: https://github.com/nected/helm-charts
 maintainers:
 - email: devops@nected.ai
