@@ -1,0 +1,19 @@
+apiVersion: v2
+description: Nected vidhaan-router helm chart
+home: https://github.com/nected/helm-charts
+maintainers:
+- email: devops@nected.ai
+  name: Nected Devops
+name: vidhaan-router
+sources:
+- https://github.com/nected/vidhaan
+appVersion: "op0.1.0"
+type: application
+version: 0.1.0
+
+dependencies:
+- name: common
+  repository: https://charts.nected.io/
+  tags:
+  - nected-common
+  version: 0.x.x
