@@ -1,15 +1,9 @@
-{{- include "inherited.defaultConfig" . -}}
-{{- $staticCmap := include "vidhaan-router.staticConfig" . }} 
-{{- $defaultConfig := include "vidhaan-router.defaultConfig" . }} 
-
-
-{{- $finalCMap := include "common.tplvalues.merge" ( dict "values" ( list $defaultConfig  $staticCmap ) "context" . ) }}
 apiVersion: v1
 kind: ConfigMap
 metadata:
-  name: {{ include "vidhaan-router.name" . }}
+  name: {{ include "common.fullname" . }}
   labels:
-    {{- include "vidhaan-router.labels" . | nindent 4 }}
+    {{- include "common.labels" . | nindent 4 }}
 data:
-    envFile: |
-    {{- include "common.tplvalues.render" ( dict "value" $finalCMap "context" .) | nindent 4 }}
+  envFile: |
+    {{- toToml .Values.envVars | nindent 4 }}

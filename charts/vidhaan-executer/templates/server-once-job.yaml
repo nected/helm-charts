@@ -5,7 +5,7 @@ metadata:
   name: {{ include "common.fullname" . }}-setup
   labels:
     {{- include "common.labels" . | nindent 4 }}
-  annotations:    
+  annotations:
     {{- include "common.autoSetupPodAnnotationsHook" . | nindent 4 }}
 spec:
   backoffLimit: {{ .Values.autoSetup.backoffLimit }}
@@ -40,6 +40,6 @@ spec:
                 - key: envFile
                   path: envFile
           {{- end }}
-          {{- toYaml .Values.volumes| nindent 8 }}
+          {{- toYaml .Values.volumes| nindent 10 }}
         restartPolicy: OnFailure
 {{- end}}

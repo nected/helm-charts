@@ -202,8 +202,7 @@ autoSetup:
     pullPolicy: IfNotPresent
     tag: "op0.1.0"
   command: ["/nalanda", "--init"]
-  annotations:
-    mrigesh: pokhrel
+  annotations: {}
 
 service:
   type: ClusterIP

@@ -18,24 +18,20 @@ fullnameOverride: ""
 envVars:
   DEBUG: false
   DEPLOYMENT: production
-
   #Vidhaan
   VIDHAAN_AGENT_NAME: onpremise
   VIDHAAN_AGENT_KEY: d7000622-0c1a-439d-b15a-28d03f97d8d5
   VIDHAAN_PRE_SHARED_KEY: ""
-
   #Router Config
   ALLOWED_HOSTS: 0.0.0.0
   SERVER_HOST: 0.0.0.0
   SERVER_PORT: 8002
   MONTHLY_LIMIT: 0
   EXCLUDED_WORKSPACE_IDS_FOR_MONTHLY_LIMIT: "1"
-
   # Redis Config
   REDIS_HOST: ""
   REDIS_DATABASE: 1
   REDIS_PASSWORD: ""
-
   # Elastic Config
   ELASTIC_ENABLED: false
   ELASTIC_INSECURE_TLS: true
@@ -43,19 +39,16 @@ envVars:
   ELASTIC_API_KEY: ""
   ELASTIC_USERNAME: elastic
   ELASTIC_PASSWORD: ""
-
   # Audit log
   AUDIT_LOG_ENABLED: false
   AUDIT_LOG_INDEX: audit-all-vidhaan
   AWS_TRACE_ID_KEY: X-Amzn-Trace-Id
   X_FORWARDED_HEADER_KEY: X-Forwarded-For
-
   # Nalanda
   NALANDA_BASE_URL: http://nected-nalanda
   NALANDA_WORKSPACE_SYNC_PATH: /vidhaan/agent/sync/workspace
   NALANDA_ENTITY_SYNC_PATH: /vidhaan/agent/sync/data
   NALANDA_HEADER_AGENT_KEY_NAME: vidhaan-agent-key
-
   #Temporal For Executer Workers
   TEMPORAL_EXECUTER_SERVER_HOST: temporal-cloud-frontend:7233
   TEMPORAL_EXECUTER_NAMESPACE: onpremise
@@ -64,13 +57,11 @@ envVars:
   TEMPORAL_EXECUTER_ACTIVITY_TASK_POLLERS: 40
   TEMPORAL_EXECUTER_WORKFLOW_CONCURRENT_EXECUTION_SIZE: 1000
   TEMPORAL_EXECUTER_ACTIVITY_CONCURRENT_EXECUTION_SIZE: 1000
-
   # Datasync config
   DATASYNC_SCHEDULE: true
   DATASYNC_SCHEDULE_ID: datasync_schedule
   DATASYNC_INTERVAL_DURATION: 30
   DATASYNC_DELETE_WITH_MANAGER: false
-
   # Sentry config
   SENTRY_DSN: ""
   SENTRY_ENABLED: false
