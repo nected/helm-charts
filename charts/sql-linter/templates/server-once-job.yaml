@@ -13,7 +13,7 @@ spec:
     metadata:
       name: {{ include "common.fullname" . }}-setup
       labels:
-          {{- include "common.labels" . | nindent 12 }}
+        {{- include "common.labels" . | nindent 8 }}
     spec:
         containers:
           - name: setup
