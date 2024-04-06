@@ -1,5 +1,67 @@
 apiVersion: v1
 entries:
+  common:
+  - apiVersion: v2
+    appVersion: 0.1.0
+    created: "2024-04-06T17:46:45.530159177Z"
+    dependencies:
+    - alias: external
+      name: common
+      repository: https://charts.bitnami.com/bitnami
+      tags:
+      - bitnami-common
+      version: 2.x.x
+    description: Nected common helm chart
+    digest: 7287f577d6ec73ec7083f40807d1933a999a693aaee0f1a3f5365e3b0fca050a
+    home: https://github.com/nected/helm-charts
+    maintainers:
+    - email: devops@nected.ai
+      name: Nected Devops
+    name: common
+    type: application
+    urls:
+    - https://github.com/nected/helm-charts/releases/download/common-0.1.0/common-0.1.0.tgz
+    version: 0.1.0
+  datastore:
+  - apiVersion: v2
+    appVersion: 0.1.0
+    created: "2024-04-06T17:46:45.666803861Z"
+    dependencies:
+    - condition: postgresql.enabled
+      name: postgresql
+      repository: https://charts.bitnami.com/bitnami
+      version: 15.2.2
+    - condition: mongodb.enabled
+      name: mongodb
+      repository: https://charts.bitnami.com/bitnami
+      version: 15.1.1
+    - condition: redis.enabled
+      name: redis
+      repository: https://charts.bitnami.com/bitnami
+      version: 19.0.2
+    - condition: elasticsearch.enabled
+      name: elasticsearch
+      repository: https://charts.nected.io/
+      version: 8.5.1
+    description: A Datastore Helm chart for Nected Platform
+    digest: 14b1ed0d6720ed7c3ef3c456d5ed0e0e788f2ccbf9b0d8fb5d5129602374a72a
+    home: https://nected.ai/
+    keywords:
+    - datastore
+    - nected
+    - workflow
+    - BRE
+    - DMS
+    maintainers:
+    - name: Socioverse Tech Private Ltd.
+      url: https://nected.ai/
+    name: datastore
+    sources:
+    - https://charts.nected.io
+    type: application
+    urls:
+    - https://github.com/nected/helm-charts/releases/download/datastore-0.1.0/datastore-0.1.0.tgz
+    version: 0.1.0
   elasticsearch:
   - apiVersion: v1
     appVersion: 8.5.1
@@ -54,4 +116,4 @@ entries:
     urls:
     - https://github.com/nected/helm-charts/releases/download/temporal-0.0.1/temporal-0.0.1.tgz
     version: 0.0.1
-generated: "2024-04-05T13:42:21.955530529Z"
+generated: "2024-04-06T17:46:45.792804828Z"
