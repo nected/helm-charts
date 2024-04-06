@@ -6,4 +6,4 @@ metadata:
     {{- include "common.labels" . | nindent 4 }}
 data:
   envFile: |
-    {{- toYaml .Values.envVars | nindent 4 }}
+    {{- toToml .Values.envVars | nindent 4 }}

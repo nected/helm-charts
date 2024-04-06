@@ -2,7 +2,7 @@
 # This is a YAML-formatted file.
 # Declare variables to be passed into your templates.
 
-replicaCount: 1
+replicaCount: 2
 
 image:
   repository: public.ecr.aws/f6k1n6r3/nalanda
@@ -14,131 +14,160 @@ imagePullSecrets: []
 nameOverride: ""
 fullnameOverride: ""
 
-
 envVars:
-  SECRET: "54dTYUINfghjk8765hj"
+  # server config
+  ALLOWED_CORS_ORIGIN: http://nalanda.local,http://konark.local,http://nected-editor.local
+  ALLOWED_HOSTS: nalanda.local
   DEBUG: false
+  DEPLOYMENT: production
   ENABLE_PROFILING: false
-  ALLOWED_HOSTS: localhost:3000,localhost:8001
   SERVER_HOST: 0.0.0.0
   SERVER_PORT: 8001
-  DEPLOYMENT: production
-  ALLOWED_CORS_ORIGIN: http://localhost:8001,http://localhost:3000
-  ASSETS_BASE_URL: http://localhost:3000/assets/konark
-  KONARK_BASE_URL: localhost:3000
-  KONARK_RESET_PASSWORD_PATH: /reset-password/
-  KONARK_EMAIL_VERIFICATION_PATH: /verify/signup/email/
-  KONARK_WORKSPACE_INVITATION_PATH: /verify/workspace/invitation/
-  KONARK_OAUTH_REDIRECT_PATH: /oauth/redirect
-  RESET_PASSWORD_EXP_TIME: 259200
-  AES_SECRET: tfgoS4EzPPuBJjBLFgmlut9ukW9o2PYy
-  EMAIL_VERIFICATION_EXP_DURATION: 1296000
-  WORKSPACE_INVITE_LINK_EXP_DURATION: 1296000
-  EXTERNAL_PERMISSION_URL:
-  DEMO_CONNECTOR_TEMPLATE_ID:
-  USECASE_VALUES_CONFIG_DOCUMENT_NAME:
-  CONFIG_COLLECTION_NAME: config
-  USECASE_DATABASE_NAME: nected
-  SKIP_LOG_PATHS: /health/live,/health/ready
-  RESET_PASSWORD_MAX_LIMIT: 3
-  CREATE_DEMO_ENTITIES_ENABLED: false
-  WORKSPACE_SUBDOMAIN_ENABLED: false
-  SIGNUP_DOMAINS:
-  SYNC_PLUGINS: mysql,mongodb,postgres,redshift,sqlserver,restAPI
-  NECTED_USER_EMAIL: dev@nected.ai
-  NECTED_USER_PASSWORD: password
-  SUPER_ADMIN_USER_IDS:
-  PRODUCT_WORKSPACE_ID:
-  GOOGLE_AUTH_ENABLED: false
-  GOOGLE_CLIENT_ID:
-  JWT_SECRET: dfghjkcfgvbhnj567gvh
-  JWT_ACCESS_TOKEN_EXP_TIME: 900
-  JWT_REFRESH_TOKEN_EXP_TIME: 259200
-  AWS_ACCESS_KEY: # ses aws key
-  AWS_SECRET_KEY:
-  AWS_REGION:
-  SEND_EMAIL: false
-  EMAIL_PROVIDER: smtp
-  SENDER_EMAIL:
-  SENDER_NAME:
-  EMAIL_INSECURE_TLS: true
-  EMAIL_HOST:
-  EMAIL_PORT:
-  EMAIL_USERNAME:
-  EMAIL_PASSWORD:
+  SERVER_TIMEZONE: UTC
+  # secrets
+  AES_SECRET: aesKey
+  SECRET: secret
+    # Security
+  SECURITY_ENABLED: true
+  CHECK_ALLOWED_HOSTS: true
+  # Database
   AUTO_MIGRATE: false
-  MASTER_DB_NAME: nected
-  MASTER_DB_USER: nected
-  MASTER_DB_PASSWORD: NecTed#1234
-  MASTER_DB_HOST: datastore-postgresql
+  MASTER_DB_NAME: ""
+  MASTER_DB_USER: ""
+  MASTER_DB_PASSWORD: ""
+  MASTER_DB_HOST: ""
   MASTER_DB_PORT: 5432
   MASTER_DB_LOG_MODE: false
   MASTER_SSL_MODE: disable
   MASTER_DB_CONNS_POOL_ENABLE: true
   MASTER_DB_MAX_IDLE_CONNS: 5
   MASTER_DB_MAX_OPEN_CONNS: 10
-  MASTER_DB_CONN_MAX_LIFE_TIME: 1h
-  MASTER_DB_CONN_MAX_IDLE_TIME: 1h
+  MASTER_DB_CONN_MAX_LIFETIME: 1h
+  MASTER_DB_CONN_MAX_IDLE_TIME: 30m
+  # mongoDB
   MONGO_DB_SCHEME: mongodb
-  MONGO_DB_USER: nected
-  MONGO_DB_PASSWORD: Ne9ctg87$sdf8
-  MONGO_DB_HOST: datastore-mongodb
+  MONGO_DB_USER: ""
+  MONGO_DB_PASSWORD: ""
+  MONGO_DB_HOST: ""
   MONGO_DB_PORT: 27017
   MONGO_DB_LOCALE: "en"
-  REDIS_HOST: 1datastore-redis-master
+  # Redis Config
+  REDIS_HOST: ""
   REDIS_PORT: 6379
   REDIS_DATABASE: 0
-  REDIS_PASSWORD:
+  REDIS_PASSWORD: ""
+  # Elastic Config
   ELASTIC_ENABLED: false
+  ELASTIC_HOSTS: ""
+  ELASTIC_API_KEY: ""
   ELASTIC_INSECURE_TLS: true
-  ELASTIC_HOSTS: http://elasticsearch-master:9200
-  ELASTIC_API_KEY:
-  AWS_TRACE_ID_KEY:
+  # google
+  GOOGLE_AUTH_ENABLED: false
+  GOOGLE_CLIENT_ID: ""
+  # aws ses
+  AWS_ACCESS_KEY: ""
+  AWS_SECRET_KEY: ""
+  AWS_REGION: ""
+  # email
+  SEND_EMAIL: false
+  EMAIL_PROVIDER: smtp
+  SENDER_EMAIL: ""
+  SENDER_NAME: ""
+  EMAIL_INSECURE_TLS: ""
+  EMAIL_HOST: ""
+  EMAIL_PORT: ""
+  EMAIL_USERNAME: ""
+  EMAIL_PASSWORD: ""
+  # Recapcha config
+  RECAPTCHA_ENABLED: false
+  RECAPTCHA_SECRET: ""
+  RECAPTCHA_VERIFY_URL: ""
+  RECAPTCHA_MIN_SCORE: ""
+  RECAPTCHA_CHECK_PATH: ""
+  RECAPTCHA_CHECK_HOST: ""
+  RECAPTCHA_CHECK_SCORE: ""
+  # Sentry config
+  SENTRY_DSN: ""
+  SENTRY_ENABLED: false
+  SENTRY_SAMPLING_RATE: 0.1
+  SENTRY_ENABLE_TRACING: false
+  # JWT
+  JWT_ACCESS_TOKEN_EXP_TIME: 259200
+  JWT_REFRESH_TOKEN_EXP_TIME: 1296000
+  JWT_SECRET: "jwtsecret"
+  # konark
+  ASSETS_BASE_URL: http://localhost:3000/assets/konark
+  KONARK_BASE_URL: konark.local
+  KONARK_EMAIL_VERIFICATION_PATH: /verify/signup/email/
+  KONARK_OAUTH_REDIRECT_PATH: /oauth/redirect
+  KONARK_RESET_PASSWORD_PATH: /reset-password/
+  KONARK_WORKSPACE_INVITATION_PATH: /verify/workspace/invitation/
+  # durations
+  RESET_PASSWORD_EXP_TIME: 259200
+  EMAIL_VERIFICATION_EXP_DURATION: 1296000
+  WORKSPACE_INVITE_LINK_EXP_DURATION: 1296000
+  RESET_PASSWORD_MAX_LIMIT: 3
+  # features flags
+  EXTERNAL_PERMISSION_URL: ""
+  DEMO_CONNECTOR_TEMPLATE_ID: ""
+  USECASE_VALUES_CONFIG_DOCUMENT_NAME: ""
+  CONFIG_COLLECTION_NAME: config
+  USECASE_DATABASE_NAME: ""
+  SKIP_LOG_PATHS: /health/live,/health/ready
+  CREATE_DEMO_ENTITIES_ENABLED: false
+  WORKSPACE_SUBDOMAIN_ENABLED: false
+  SIGNUP_DOMAINS:
+  SYNC_PLUGINS: mysql,mongodb,postgres,sqlserver,redshift,restAPI
+  # Audit log
+  AWS_TRACE_ID_KEY: X-Amzn-Trace-Id
   ELASTIC_ADUIT_PATTERN: audit-*
   ELASTIC_ENTITY_AUDIT_INDEX: audit-log-nalanda
   ELASTIC_EVENT_LOG_INDEX: events-all-nalanda
   ELASTIC_TEMP_AUDIT_INDEX: audit-tmp-nalanda
   USAGE_INDEX_PATTERN: usage-*
-  VIDHAAN_AUDIT_LOG_INDEX: audit-all-vidhaan
+  VIDHAAN_AUDIT_LOG_INDEX: audit-all-*
   X_FORWARDED_HEADER_KEY: X-Forwarded-For
+  # proxy url
+  CREDENTIAL_CONFIG_MAP: ""
+  PROXY_SQL_LINT_URL: http://nected-sql-linter/api/v1/core/lint
+  PROXY_RULE_URL: ""
+
+  # Licensing Config
+  LICENSE_DURATION: ""
+  LICENSE_KEY_PATH: ""
+
+  # Workflow config
+  WORKFLOW_NOT_TESTABLE_NODE_TYPE: trigger,addNode,delayNode
+
+  # nected user config
+  NECTED_USER_EMAIL: ""
+  NECTED_USER_PASSWORD: ""
+  SUPER_ADMIN_USER_IDS: 1
+  PRODUCT_WORKSPACE_ID: 1
+
+  # usages
+  FREE_PLAN_ID: 1
+  IS_PAID: true
+  RULE_LIMIT: 1000
+  WORKFLOW_LIMIT: 500
+  INVOCATION_LIMIT: 0
+  EDITOR_LIMIT: 100
+
+  # Vidhaan Config
   DEFAULT_VIDHAAN_SCHEME: http
-  DEFAULT_VIDHAAN_DOMAIN: localhost:8002
-  DEFAULT_VIDHAAN_SECRET_KEY:
-  DEFAULT_VIDHAAN_WHITELISTED_IPS: 127.0.0.1,127.0.0.2
+  DEFAULT_VIDHAAN_DOMAIN: vidhaan.local
+  DEFAULT_VIDHAAN_SECRET_KEY: d7000622-0c1a-439d-b15a-28d03f97d8d5
+  DEFAULT_VIDHAAN_WHITELISTED_IPS: ""
   VIDHAAN_INTERNAL_API_PATH: /nected/test
   VIDHAAN_EXTERNAL_API_PATH: /nected
   VIDHAAN_HEALTH_API_PATH: /nected/health
   VIDHAAN_EXECUTION_LOGS_API_PATH: /nected/execution-log
   VIDHAAN_SCHEDULE_API_PATH: /nected/schedule
   VIDHAAN_HEADER_AGENT_KEY_NAME: vidhaan-agent-key
-  VIDHAAN_HEADER_WORKSPACE_KEY_NAME: vidhaan-workspace-key
   VIDHAAN_AUTH_HEADER_KEY_NAME: nected-api-key
-  PRODUCT_API_KEY:
-  FREE_PLAN_ID: 1
-  IS_PAID: true
-  RULE_LIMIT: 1000
-  WORKFLOW_LIMIT: 10000
-  INVOCATION_LIMIT: 100000000
-  EDITOR_LIMIT: 100
-  CREDENTIAL_CONFIG_MAP: {}
-  PROXY_SQL_LINT_URL: http://nected-sql-linter/api/v1/core/lint
-  PROXY_RULE_URL: http://nected-vidhaan-router/nected/rule
-  LICENSE_DURATION:
-  LICENSE_KEY_PATH:
-  SENTRY_DSN:
-  SENTRY_ENABLED: false
-  SENTRY_SAMPLING_RATE:
-  SENTRY_ENABLE_TRACING: true
-  SECURITY_ENABLED: false
-  CHECK_ALLOWED_HOSTS: false
-  RECAPTCHA_ENABLED:
-  RECAPTCHA_SECRET:
-  RECAPTCHA_VERIFY_URL:
-  RECAPTCHA_MIN_SCORE:
-  RECAPTCHA_CHECK_PATH:
-  RECAPTCHA_CHECK_HOST:
-  RECAPTCHA_CHECK_SCORE:
-  WORKFLOW_NOT_TESTABLE_NODE_TYPE: trigger,addNode,delayNode
+  VIDHAAN_HEADER_WORKSPACE_KEY_NAME: vidhaan-workspace-key
+  PRODUCT_API_KEY: ""
+
 
 serviceAccount:
   # Specifies whether a service account should be created
@@ -189,16 +218,16 @@ ingress:
   annotations:
     alb.ingress.kubernetes.io/load-balancer-name: "alb-name" # loadbalancer name
     # alb.ingress.kubernetes.io/ip-address-type: ipv4
-    # alb.ingress.kubernetes.io/group.name: "alb-group-name" # loadbalancer group name
+    # alb.ingress.kubernetes.io/group.name: "alb-group-name"
     alb.ingress.kubernetes.io/healthcheck-path: /health/ready
     # alb.ingress.kubernetes.io/scheme: internet-facing 
     # alb.ingress.kubernetes.io/target-type: ip
-    # alb.ingress.kubernetes.io/listen-ports: '[{"HTTP": 80}]' # '[{"HTTP": 80}, {"HTTPS": 443}]'
+    # alb.ingress.kubernetes.io/listen-ports: '[{"HTTP": 80}, {"HTTPS": 443}]'
     # alb.ingress.kubernetes.io/certificate-arn: "" # certificate ARN
     # alb.ingress.kubernetes.io/subnets: "" # public subnets "subnet-xxxxx,subnet-xxxxx"
     # annotations for azure load balancer
   hosts:
-    - host: "cluster.local"
+    - host: nalanda.local
       paths:
         - path: /
           pathType: Prefix
