@@ -125,7 +125,7 @@ envVars:
   ELASTIC_EVENT_LOG_INDEX: events-all-nalanda
   ELASTIC_TEMP_AUDIT_INDEX: audit-tmp-nalanda
   USAGE_INDEX_PATTERN: usage-*
-  VIDHAAN_AUDIT_LOG_INDEX: audit-all-*
+  VIDHAAN_AUDIT_LOG_INDEX: audit-all-vidhaan
   X_FORWARDED_HEADER_KEY: X-Forwarded-For
   # proxy url
   CREDENTIAL_CONFIG_MAP: ""
