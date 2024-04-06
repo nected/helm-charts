@@ -16,4 +16,4 @@ dependencies:
   repository: https://charts.nected.io/
   tags:
   - nected-common
-  version: 0.1.0
+  version: 0.x.x
