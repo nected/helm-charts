@@ -1,3 +1,10 @@
+datastoreAutoSetup:
+  elasticsearch:
+    apiKey:
+  postgresql:
+    temporal_db:
+    temporal_visibility_db:
+
 # Mongodb Chart Values
 mongodb:
   enabled: true
@@ -6,11 +13,10 @@ mongodb:
   auth:
     enabled: true
     rootUser: root
-    rootPassword: "7sdhT599nflY433"
-    username: "nected"
-    password: "Ne9ctg87$sdf8"
-    database: "nected"
-    
+    rootPassword:
+    username: 
+    password:
+    database:
   persistence:
     enabled: true
     storageClass: "default"
@@ -23,6 +29,13 @@ mongodb:
     whenDeleted: Delete
   volumePermissions:
     enabled: true
+  resources:
+    requests:
+      cpu: "1000m"
+      memory: "2Gi"
+    limits:
+      cpu: "1000m"
+      memory: "2Gi"
 
 # Postgresql Chart Values
 postgresql:
@@ -30,10 +43,10 @@ postgresql:
   global:
     postgresql:
       auth:
-        postgresPassword: "hdfh^sdgds$sdf"
-        username: "nected"
-        password: "NecTed#1234"
-        database: "nected"
+        postgresPassword:
+        username:
+        password:
+        database:
   primary:
     persistence:
       enabled: true
@@ -45,9 +58,15 @@ postgresql:
       enabled: true
       whenScaled: Retain
       whenDeleted: Delete
-
   volumePermissions:
     enabled: true
+  resources:
+    requests:
+      cpu: "1000m"
+      memory: "2Gi"
+    limits:
+      cpu: "1000m"
+      memory: "2Gi"
 
 # Redis Chart Values
 redis:
@@ -56,11 +75,17 @@ redis:
   auth:
     enabled: false
     sentinel: false
-
   master:
     count: 1
     persistence:
       enabled: false
+  resources:
+    requests:
+      cpu: "500m"
+      memory: "512Mi"
+    limits:
+      cpu: "500m"
+      memory: "512Mi"
 
 # Elasticsearch Chart Values
 elasticsearch:
@@ -70,7 +95,6 @@ elasticsearch:
   secret:
     enabled: true
     password: "asdkjhkj5h6j45rthjr"
-
   protocol: http
   persistence:
     enabled: true
@@ -80,14 +104,19 @@ elasticsearch:
       enabled: true
       whenScaled: Retain
       whenDeleted: Delete
-
   volumeClaimTemplate:
     accessModes: ["ReadWriteOnce"]
     storageClassName: "default"
     resources:
       requests:
         storage: 30Gi
-
   networkPolicy:
     http:
       enabled: true
+  resources:
+    requests:
+      cpu: "1000m"
+      memory: "2Gi"
+    limits:
+      cpu: "1000m"
+      memory: "2Gi"
