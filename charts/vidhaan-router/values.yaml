@@ -20,7 +20,7 @@ envVars:
   DEPLOYMENT: production
   #Vidhaan
   VIDHAAN_AGENT_NAME: onpremise
-  VIDHAAN_AGENT_KEY: d7000622-0c1a-439d-b15a-28d03f97d8d5
+  VIDHAAN_AGENT_KEY: ""
   VIDHAAN_PRE_SHARED_KEY: ""
   #Router Config
   ALLOWED_HOSTS: 0.0.0.0
