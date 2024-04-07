@@ -5,7 +5,7 @@ metadata:
   name: {{ include "common.fullname" . }}-setup
   labels:
     {{- include "common.labels" . | nindent 4 }}
-  annotations: 
+  annotations:
     {{- include "common.autoSetupPodAnnotationsHook" . | nindent 4 }}
 spec:
   backoffLimit: {{ .Values.autoSetup.backoffLimit }}
@@ -30,7 +30,9 @@ spec:
               - mountPath: /tmp
                 name: {{ include "common.name" . }}-cm-volume
               {{- end }}
+              {{- if .Values.volumeMounts }}
               {{- toYaml .Values.volumeMounts | nindent 14 }}
+              {{- end }}
         volumes:
           {{- if .Values.mountConfigMap }}
           - name: {{ include "common.name" . }}-cm-volume
@@ -40,6 +42,8 @@ spec:
                 - key: envFile
                   path: envFile
           {{- end }}
+          {{- if .Values.volumes }}
           {{- toYaml .Values.volumes| nindent 10 }}
+          {{- end }}
         restartPolicy: OnFailure
 {{- end}}
