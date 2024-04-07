@@ -62,6 +62,29 @@ entries:
     urls:
     - https://github.com/nected/helm-charts/releases/download/datastore-0.1.0/datastore-0.1.0.tgz
     version: 0.1.0
+  editor:
+  - apiVersion: v2
+    appVersion: op0.1.0
+    created: "2024-04-07T08:10:31.674155229Z"
+    dependencies:
+    - name: common
+      repository: https://charts.nected.io/
+      tags:
+      - nected-common
+      version: 0.x.x
+    description: Nected editor helm chart
+    digest: 6feb5ae360b8f1ea0d9b1bda663bdbe2928ce35a0438e4188d2e7ddeab10cea0
+    home: https://github.com/nected/helm-charts
+    maintainers:
+    - email: devops@nected.ai
+      name: Nected Devops
+    name: editor
+    sources:
+    - https://github.com/nected/nected-editor
+    type: application
+    urls:
+    - https://github.com/nected/helm-charts/releases/download/editor-0.1.0/editor-0.1.0.tgz
+    version: 0.1.0
   elasticsearch:
   - apiVersion: v1
     appVersion: 8.5.1
@@ -208,4 +231,4 @@ entries:
     urls:
     - https://github.com/nected/helm-charts/releases/download/vidhaan-router-0.1.0/vidhaan-router-0.1.0.tgz
     version: 0.1.0
-generated: "2024-04-06T17:52:59.886427574Z"
+generated: "2024-04-07T08:10:31.774822891Z"
