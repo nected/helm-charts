@@ -248,38 +248,6 @@ entries:
     urls:
     - https://github.com/nected/helm-charts/releases/download/temporal-0.28.0/temporal-0.28.0.tgz
     version: 0.28.0
-  - apiVersion: v2
-    appVersion: op0.1.0
-    created: "2024-04-07T12:03:22.40683022Z"
-    dependencies:
-    - name: temporal
-      repository: https://charts.lemontech.engineering
-      version: 0.36.0
-    description: Nected temporal helm, using main temporal helm chart.
-    digest: 2cffa89500ef8504c2c715527570fe0a534f59d790515ff85f5c0e4b6875c00d
-    home: https://github.com/nected/helm-charts
-    maintainers:
-    - email: devops@nected.ai
-      name: Nected Devops
-    name: temporal
-    type: application
-    urls:
-    - https://github.com/nected/helm-charts/releases/download/temporal-0.1.0/temporal-0.1.0.tgz
-    version: 0.1.0
-  - apiVersion: v2
-    appVersion: op0.0.1
-    created: "2024-04-05T13:42:21.855388964Z"
-    dependencies:
-    - name: temporal
-      repository: https://charts.lemontech.engineering
-      version: 0.36.0
-    description: A Helm chart for Nected Temporal
-    digest: 6fb7b8d4f930b9488be42dcecc7ac14fbf958b4415c4f2367d1d223de761b5be
-    name: temporal
-    type: application
-    urls:
-    - https://github.com/nected/helm-charts/releases/download/temporal-0.0.1/temporal-0.0.1.tgz
-    version: 0.0.1
   vidhaan-executer:
   - apiVersion: v2
     appVersion: op0.1.0
