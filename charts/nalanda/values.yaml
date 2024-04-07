@@ -218,30 +218,15 @@ service:
   targetPort: 8001
 
 ingress:
-  enabled: true
-  className: "alb"
-  # classname for azure load balancer
-  # className: "azure/application-gateway"
-  annotations:
-    alb.ingress.kubernetes.io/load-balancer-name: "alb-name" # loadbalancer name
-    # alb.ingress.kubernetes.io/ip-address-type: ipv4
-    # alb.ingress.kubernetes.io/group.name: "alb-group-name"
-    alb.ingress.kubernetes.io/healthcheck-path: /health/ready
-    # alb.ingress.kubernetes.io/scheme: internet-facing 
-    # alb.ingress.kubernetes.io/target-type: ip
-    # alb.ingress.kubernetes.io/listen-ports: '[{"HTTP": 80}, {"HTTPS": 443}]'
-    # alb.ingress.kubernetes.io/certificate-arn: "" # certificate ARN
-    # alb.ingress.kubernetes.io/subnets: "" # public subnets "subnet-xxxxx,subnet-xxxxx"
-    # annotations for azure load balancer
+  enabled: false
+  className:
+  annotations: {}
   hosts:
     - host: nalanda.local
       paths:
         - path: /
           pathType: Prefix
   tls: []
-  #  - secretName: chart-example-tls
-  #    hosts:
-  #      - chart-example.local
 
 resources:
   # We usually recommend not to specify default resources and to leave this as a conscious
