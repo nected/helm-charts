@@ -78,10 +78,10 @@ temporal:
   elasticsearch:
     enabled: false
     external: false
-    host: ""
+    host: elasticsearch-master
     port: 9200
-    username: "elastic"
-    password: ""
+    username: elastic
+    password: nected
     visibilityIndex: "temporal_visibility_v1_op"
   prometheus:
     enabled: false

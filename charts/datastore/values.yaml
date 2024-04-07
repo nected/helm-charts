@@ -1,9 +1,12 @@
+nameOverride: ""
+fullnameOverride: ""
+
 datastoreAutoSetup:
   elasticsearch:
-    apiKey:
+    apiKey: Zmd2YmhmZ3ZoYmpubQ==
   postgresql:
-    temporal_db:
-    temporal_visibility_db:
+    temporal_db: temporal
+    temporal_visibility_db: temporal_visibility
 
 # Mongodb Chart Values
 mongodb:
@@ -13,10 +16,10 @@ mongodb:
   auth:
     enabled: true
     rootUser: root
-    rootPassword:
-    username: 
-    password:
-    database:
+    rootPassword: nected
+    username: nected
+    password: nected
+    database: nected
   persistence:
     enabled: true
     storageClass: "default"
@@ -43,10 +46,10 @@ postgresql:
   global:
     postgresql:
       auth:
-        postgresPassword:
-        username:
-        password:
-        database:
+        postgresPassword: nected
+        username: nected
+        password: nected
+        database: nected
   primary:
     persistence:
       enabled: true
@@ -94,7 +97,7 @@ elasticsearch:
   minimumMasterNodes: 1
   secret:
     enabled: true
-    password: "asdkjhkj5h6j45rthjr"
+    password: nected
   protocol: http
   persistence:
     enabled: true
