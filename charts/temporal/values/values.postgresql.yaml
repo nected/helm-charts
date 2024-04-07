@@ -1,0 +1,66 @@
+server:
+  config:
+    persistence:
+      default:
+        driver: "sql"
+
+        sql:
+          driver: "postgres"
+          host: ""
+          port: 5432
+          database: temporal
+          user: ""
+          password: ""
+          # for a production deployment use this instead of `password` and provision the secret beforehand e.g. with a sealed secret
+          # it has a single key called `password`
+          # existingSecret: temporal-visibility-store
+          maxConns: 10
+          maxConnLifetime: "1h"
+          tls:
+            enabled: true
+            enableHostVerification: false
+          #  serverName: _HOST_ # this is strictly required when using serverless CRDB offerings
+
+      visibility:
+        driver: "sql"
+
+        sql:
+          driver: "postgres"
+          host: ""
+          port: 5432
+          database: temporal_visibility
+          user: ""
+          password: 
+          # for a production deployment use this instead of `password` and provision the secret beforehand e.g. with a sealed secret
+          # it has a single key called `password`
+          # existingSecret: temporal-visibility-store
+          maxConns: 5
+          maxConnLifetime: "1h"
+          tls:
+            enabled: true
+            enableHostVerification: false
+          #  serverName: _HOST_ # this is strictly required when using serverless CRDB offerings
+
+cassandra:
+  enabled: false
+
+mysql:
+  enabled: false
+
+postgresql:
+  enabled: true
+
+prometheus:
+  enabled: false
+
+grafana:
+  enabled: false
+  
+elasticsearch:
+  enabled: false
+
+schema:
+  setup:
+    enabled: false
+  update:
+    enabled: false

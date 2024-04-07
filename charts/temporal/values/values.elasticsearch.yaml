@@ -1,0 +1,10 @@
+elasticsearch:
+  enabled: false
+  external: true
+  host: "es.dev.nected.io"
+  port: "443"
+  username: "satya"
+  password: "qLfps9JY4MN3BFL"
+  version: "v7"
+  scheme: "https"
+  logLevel: "error"

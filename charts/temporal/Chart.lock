@@ -1,6 +1,15 @@
 dependencies:
-- name: temporal
-  repository: https://charts.lemontech.engineering
-  version: 0.36.0
-digest: sha256:45d10ba76c943a69c8e95744a51fb846007058682b60768ac9382265c904a1fb
-generated: "2024-04-07T17:26:32.961744+05:30"
+- name: cassandra
+  repository: https://charts.helm.sh/incubator
+  version: 0.14.3
+- name: prometheus
+  repository: https://prometheus-community.github.io/helm-charts
+  version: 15.1.3
+- name: elasticsearch
+  repository: https://helm.elastic.co
+  version: 7.17.3
+- name: grafana
+  repository: https://grafana.github.io/helm-charts
+  version: 5.0.10
+digest: sha256:9c0f1e5924b3754c6d61672a26428a53425a75c1f2d31884b179ecfb59882b8e
+generated: "2023-09-26T23:55:29.519927+05:30"
