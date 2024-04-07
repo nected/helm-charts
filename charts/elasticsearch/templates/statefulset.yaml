@@ -144,14 +144,14 @@ spec:
           secret:
            secretName: {{ template "elasticsearch.uname" . }}-certs
         {{- end }}
-{{- if .Values.keystore }}
+        {{- if .Values.keystore }}
         - name: keystore
           emptyDir: {}
         {{- range .Values.keystore }}
         - name: keystore-{{ .secretName }}
           secret: {{ toYaml . | nindent 12 }}
         {{- end }}
-{{ end }}
+      {{ end }}
       {{- if .Values.extraVolumes }}
       # Currently some extra blocks accept strings
       # to continue with backwards compatibility this is being kept
@@ -347,7 +347,7 @@ spec:
           {{- end }}
           {{- if .Values.createCert }}
           - name: xpack.security.enabled
-            value: "false"
+            value: "true"
           - name: xpack.security.transport.ssl.enabled
             value: "false"
           - name: xpack.security.http.ssl.enabled
