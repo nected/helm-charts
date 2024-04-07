@@ -28,7 +28,7 @@ envVars:
   AES_SECRET: iAmAesKey
   SECRET: iAmSecret
     # Security
-  SECURITY_ENABLED: true
+  SECURITY_ENABLED: false
   CHECK_ALLOWED_HOSTS: true
   # Database
   AUTO_MIGRATE: false
@@ -203,7 +203,7 @@ autoSetup:
   image:
     repository: public.ecr.aws/f6k1n6r3/nalanda
     pullPolicy: IfNotPresent
-    tag: "op0.1.0"
+    tag: "op0.1.1"
   command: ["/app/nalanda", "--init"]
   annotations: {}
 
