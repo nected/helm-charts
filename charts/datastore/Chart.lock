@@ -10,6 +10,6 @@ dependencies:
   version: 19.0.2
 - name: elasticsearch
   repository: https://charts.nected.io/
-  version: 0.1.0
-digest: sha256:5353332ee6721207f6fbbeaa381fd0ae8ea217a8423a6098fe4d4213b7df9d51
-generated: "2024-04-07T22:14:31.222897+05:30"
+  version: 8.5.1
+digest: sha256:c2512f474c6389596c2a2f3ab6f7e789b09e5ad7b290294a18a85a7bb45fd332
+generated: "2024-04-07T22:28:24.300757+05:30"
