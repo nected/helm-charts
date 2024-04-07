@@ -1,0 +1,37 @@
+{{- if .Values.autoSetup.enabled }}
+apiVersion: batch/v1
+kind: Job
+metadata:
+  name: {{ include "common.fullname" . }}-setup
+  labels:
+    {{- include "common.labels" . | nindent 4 }}
+  annotations:    
+    {{- include "common.autoSetupPodAnnotationsHook" . | nindent 4 }}
+spec:
+  backoffLimit: {{ .Values.autoSetup.backoffLimit }}
+  template:
+    metadata:
+      name: {{ include "common.fullname" . }}-setup
+      labels:
+        {{- include "common.labels" . | nindent 8 }}
+    spec:
+        containers:
+          - name: setup
+            image: {{ .Values.autoSetup.image.repository }}:{{ .Values.autoSetup.image.tag }}
+            imagePullPolicy: {{ .Values.autoSetup.image.pullPolicy }}
+            command: {{ .Values.autoSetup.command }}
+            args: {{ .Values.autoSetup.args }}
+            {{- with .Values.autoSetup.resources }}
+            resources:
+              {{- toYaml . | nindent 14 }}
+            {{- end }}
+            {{- with .Values.volumeMounts }}
+            volumeMounts:
+            {{- toYaml . | nindent 14 }}
+            {{- end }}
+        {{- with .Values.volumes }}
+        volumes:
+          {{- toYaml . | nindent 10 }}
+        {{- end }}
+        restartPolicy: OnFailure
+{{- end}}

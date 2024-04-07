@@ -1,0 +1,41 @@
+apiVersion: v2
+name: datastore
+description: A Datastore Helm chart for Nected Platform
+
+home: https://nected.ai/
+
+keywords:
+  - datastore
+  - nected
+  - workflow
+  - BRE
+  - DMS
+
+maintainers:
+  - name: Socioverse Tech Private Ltd.
+    url: https://nected.ai/
+
+sources:
+  - https://charts.nected.io
+
+dependencies:
+  - name: postgresql
+    version: "15.2.2"
+    repository: https://charts.bitnami.com/bitnami
+    condition: postgresql.enabled
+  - name: mongodb
+    version: "15.1.1"
+    repository: https://charts.bitnami.com/bitnami
+    condition: mongodb.enabled
+  - name: redis
+    version: "19.0.2"
+    repository: https://charts.bitnami.com/bitnami
+    condition: redis.enabled
+  - name: elasticsearch
+    version: "8.5.1"
+    repository: https://charts.nected.io/
+    condition: elasticsearch.enabled
+
+type: application
+version: 0.1.0
+appVersion: "0.1.0"

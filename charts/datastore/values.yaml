@@ -1,0 +1,122 @@
+datastoreAutoSetup:
+  elasticsearch:
+    apiKey:
+  postgresql:
+    temporal_db:
+    temporal_visibility_db:
+
+# Mongodb Chart Values
+mongodb:
+  enabled: true
+  architecture: standalone
+  useStatefulSet: true
+  auth:
+    enabled: true
+    rootUser: root
+    rootPassword:
+    username: 
+    password:
+    database:
+  persistence:
+    enabled: true
+    storageClass: "default"
+    accessModes:
+      - ReadWriteOnce
+    size: 8Gi
+  persistentVolumeClaimRetentionPolicy:
+    enabled: true
+    whenScaled: Retain
+    whenDeleted: Delete
+  volumePermissions:
+    enabled: true
+  resources:
+    requests:
+      cpu: "1000m"
+      memory: "2Gi"
+    limits:
+      cpu: "1000m"
+      memory: "2Gi"
+
+# Postgresql Chart Values
+postgresql:
+  enabled: true
+  global:
+    postgresql:
+      auth:
+        postgresPassword:
+        username:
+        password:
+        database:
+  primary:
+    persistence:
+      enabled: true
+      storageClass: "default"
+      accessModes:
+        - ReadWriteOnce
+      size: 20Gi
+    persistentVolumeClaimRetentionPolicy:
+      enabled: true
+      whenScaled: Retain
+      whenDeleted: Delete
+  volumePermissions:
+    enabled: true
+  resources:
+    requests:
+      cpu: "1000m"
+      memory: "2Gi"
+    limits:
+      cpu: "1000m"
+      memory: "2Gi"
+
+# Redis Chart Values
+redis:
+  enabled: true
+  architecture: standalone
+  auth:
+    enabled: false
+    sentinel: false
+  master:
+    count: 1
+    persistence:
+      enabled: false
+  resources:
+    requests:
+      cpu: "500m"
+      memory: "512Mi"
+    limits:
+      cpu: "500m"
+      memory: "512Mi"
+
+# Elasticsearch Chart Values
+elasticsearch:
+  enabled: true
+  replicas: 1
+  minimumMasterNodes: 1
+  secret:
+    enabled: true
+    password: "asdkjhkj5h6j45rthjr"
+  protocol: http
+  persistence:
+    enabled: true
+    labels:
+      enabled: false
+    persistentVolumeClaimRetentionPolicy:
+      enabled: true
+      whenScaled: Retain
+      whenDeleted: Delete
+  volumeClaimTemplate:
+    accessModes: ["ReadWriteOnce"]
+    storageClassName: "default"
+    resources:
+      requests:
+        storage: 30Gi
+  networkPolicy:
+    http:
+      enabled: true
+  resources:
+    requests:
+      cpu: "1000m"
+      memory: "2Gi"
+    limits:
+      cpu: "1000m"
+      memory: "2Gi"

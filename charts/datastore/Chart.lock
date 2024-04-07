@@ -1,0 +1,15 @@
+dependencies:
+- name: postgresql
+  repository: https://charts.bitnami.com/bitnami
+  version: 15.2.2
+- name: mongodb
+  repository: https://charts.bitnami.com/bitnami
+  version: 15.1.1
+- name: redis
+  repository: https://charts.bitnami.com/bitnami
+  version: 19.0.2
+- name: elasticsearch
+  repository: https://charts.nected.io/
+  version: 8.5.1
+digest: sha256:c2512f474c6389596c2a2f3ab6f7e789b09e5ad7b290294a18a85a7bb45fd332
+generated: "2024-04-05T18:00:34.908563845+05:30"
