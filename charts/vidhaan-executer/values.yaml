@@ -2,7 +2,7 @@
 # This is a YAML-formatted file.
 # Declare variables to be passed into your templates.
 
-replicaCount: 4
+replicaCount: 1
 
 image:
   repository: public.ecr.aws/f6k1n6r3/vidhaan-executer
@@ -70,7 +70,7 @@ envVars:
   # Security
   SECURITY_ENABLED: true
   # Workflow config
-  WORKFLOW_CONFIG_MAP: ""
+  #WORKFLOW_CONFIG_MAP: ""
 
 serviceAccount:
   # Specifies whether a service account should be created
