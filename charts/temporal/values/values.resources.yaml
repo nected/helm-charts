@@ -1,0 +1,24 @@
+server:
+  frontend:
+    resources:
+      requests:
+        cpu: 250m
+        memory: 256Mi
+
+  history:
+    resources:
+      requests:
+        cpu: 500m
+        memory: 1024Mi
+
+  matching:
+    resources:
+      requests:
+        cpu: 250m
+        memory: 256Mi
+
+  worker:
+    resources:
+      requests:
+        cpu: 150m
+        memory: 256Mi
