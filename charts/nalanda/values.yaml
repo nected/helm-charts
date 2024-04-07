@@ -264,19 +264,10 @@ autoscaling:
   targetMemoryUtilizationPercentage: 80
 
 # Additional volumes on the output Deployment definition.
-volumes:
-  - name: license-private-key
-    secret:
-      secretName: license-private-key
-      items:
-        - key: private.key
-          path: private.key
+volumes: []
 
 # Additional volumeMounts on the output Deployment definition.
-volumeMounts:
-  - mountPath: /tmp/license
-    name: license-private-key
-    readOnly: true
+volumeMounts: []
 # additional volumes setting to mount configMap
 mountConfigMap: true
 
