@@ -19,7 +19,6 @@ spec:
           - name: setup
             image: {{ .Values.autoSetup.image.repository }}:{{ .Values.autoSetup.image.tag }}
             imagePullPolicy: {{ .Values.autoSetup.image.pullPolicy }}
-            command: {{ .Values.autoSetup.command }}
             args: {{ .Values.autoSetup.args }}
             {{- with .Values.autoSetup.resources }}
             resources:
