@@ -8,7 +8,7 @@ image:
   repository: public.ecr.aws/f6k1n6r3/nalanda
   pullPolicy: IfNotPresent
   # Overrides the image tag whose default is the chart appVersion.
-  tag: "op0.1.0"
+  tag: "op0.1.1"
 
 imagePullSecrets: []
 nameOverride: ""
@@ -35,7 +35,7 @@ envVars:
   MASTER_DB_NAME: nected
   MASTER_DB_USER: nected
   MASTER_DB_PASSWORD: nected
-  MASTER_DB_HOST: datastore-postgresql
+  MASTER_DB_HOST: "datastore-postgresql"
   MASTER_DB_PORT: "5432"
   MASTER_DB_LOG_MODE: false
   MASTER_SSL_MODE: disable
@@ -48,19 +48,22 @@ envVars:
   MONGO_DB_SCHEME: mongodb
   MONGO_DB_USER: nected
   MONGO_DB_PASSWORD: nected
-  MONGO_DB_HOST: datastore-mongodb
+  MONGO_DB_HOST: "datastore-mongodb"
+  MONGO_DB_PARAMS: "authSource=admin&retryWrites=true"
   MONGO_DB_PORT: "27017"
   MONGO_DB_LOCALE: "en"
   # Redis Config
-  REDIS_HOST: datastore-redis-master
+  REDIS_HOST: "datastore-redis-master"
   REDIS_PORT: "6379"
   REDIS_DATABASE: "0"
   REDIS_PASSWORD: ""
   # Elastic Config
-  ELASTIC_ENABLED: false
-  ELASTIC_HOSTS: elasticsearch-master
-  ELASTIC_API_KEY: Zmd2YmhmZ3ZoYmpubQ==
+  ELASTIC_ENABLED: true
+  ELASTIC_HOSTS: "http://elasticsearch-master:9200"
+  ELASTIC_API_KEY: ""
   ELASTIC_INSECURE_TLS: true
+  ELASTIC_USER: elastic
+  ELASTIC_PASSWORD: nected
   # google
   GOOGLE_AUTH_ENABLED: false
   GOOGLE_CLIENT_ID: ""
