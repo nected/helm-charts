@@ -19,8 +19,14 @@ spec:
           - name: setup
             image: {{ .Values.autoSetup.image.repository }}:{{ .Values.autoSetup.image.tag }}
             imagePullPolicy: {{ .Values.autoSetup.image.pullPolicy }}
-            command: {{ .Values.autoSetup.command }}
-            args: {{ .Values.autoSetup.args }}
+            {{- with .Values.autoSetup.command }}
+            command:
+              {{- toYaml . | nindent 14 }}
+            {{- end }}
+            {{- with .Values.autoSetup.args }}
+            args:
+              {{- toYaml . | nindent 14 }}
+            {{- end }}
             {{- with .Values.autoSetup.resources }}
             resources:
               {{- toYaml . | nindent 14 }}

@@ -205,11 +205,11 @@ autoSetup:
     pullPolicy: IfNotPresent
     tag: "op0.1.1"
   command:
-    - /bin/sh
-    - -c
-    - |
-      cp /tmp/envFile .env
-      /app/nalanda --init
+  - /bin/sh
+  - -c
+  - |
+    cp /tmp/envFile .env
+    /app/nalanda --init
   annotations: {}
 
 service:
