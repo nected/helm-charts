@@ -20,7 +20,7 @@ envVars:
   DEPLOYMENT: production
   #Vidhaan
   VIDHAAN_AGENT_NAME: onpremise
-  VIDHAAN_AGENT_KEY: ""
+  VIDHAAN_AGENT_KEY: afa8572b-facf-46ca-a40b-5cd23a3dbf02
   VIDHAAN_PRE_SHARED_KEY: ""
   #Router Config
   ALLOWED_HOSTS: 0.0.0.0
@@ -29,7 +29,7 @@ envVars:
   MONTHLY_LIMIT: 0
   EXCLUDED_WORKSPACE_IDS_FOR_MONTHLY_LIMIT: "1"
   # Redis Config
-  REDIS_HOST: ""
+  REDIS_HOST: datastore-redis-master
   REDIS_DATABASE: 1
   REDIS_PASSWORD: ""
   # Elastic Config
@@ -50,7 +50,7 @@ envVars:
   NALANDA_ENTITY_SYNC_PATH: /vidhaan/agent/sync/data
   NALANDA_HEADER_AGENT_KEY_NAME: vidhaan-agent-key
   #Temporal For Executer Workers
-  TEMPORAL_EXECUTER_SERVER_HOST: temporal-cloud-frontend:7233
+  TEMPORAL_EXECUTER_SERVER_HOST: nected-temporal-frontend:7233
   TEMPORAL_EXECUTER_NAMESPACE: onpremise
   TEMPORAL_EXECUTER_RETENTION_PERIOD: 3600
   TEMPORAL_EXECUTER_WORKFLOW_TASK_POLLERS: 40
