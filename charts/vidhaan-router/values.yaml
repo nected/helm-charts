@@ -29,14 +29,14 @@ envVars:
   MONTHLY_LIMIT: "0"
   EXCLUDED_WORKSPACE_IDS_FOR_MONTHLY_LIMIT: "1"
   # Redis Config
-  REDIS_HOST: datastore-redis-master:6379
+  REDIS_HOST: "datastore-redis-master:6379"
   REDIS_DATABASE: "1"
   REDIS_PASSWORD: ""
-  # Elastic Config
+   # Elastic Config
   ELASTIC_ENABLED: false
   ELASTIC_INSECURE_TLS: true
-  ELASTIC_ADDRESSES: elasticsearch-master
-  ELASTIC_API_KEY: Zmd2YmhmZ3ZoYmpubQ==
+  ELASTIC_ADDRESSES: "http://elasticsearch-master:9200"
+  ELASTIC_API_KEY: ""
   ELASTIC_USERNAME: elastic
   ELASTIC_PASSWORD: nected
   # Audit log
@@ -50,7 +50,7 @@ envVars:
   NALANDA_ENTITY_SYNC_PATH: /vidhaan/agent/sync/data
   NALANDA_HEADER_AGENT_KEY_NAME: vidhaan-agent-key
   #Temporal For Executer Workers
-  TEMPORAL_EXECUTER_SERVER_HOST: nected-temporal-frontend:7233
+  TEMPORAL_EXECUTER_SERVER_HOST: "nected-temporal-frontend:7233"
   TEMPORAL_EXECUTER_NAMESPACE: onpremise
   TEMPORAL_EXECUTER_RETENTION_PERIOD: "3600"
   TEMPORAL_EXECUTER_WORKFLOW_TASK_POLLERS: "40"
