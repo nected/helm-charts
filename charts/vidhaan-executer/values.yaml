@@ -35,10 +35,10 @@ envVars:
   # Elastic Config
   ELASTIC_ENABLED: false
   ELASTIC_INSECURE_TLS: true
-  ELASTIC_ADDRESSES: ""
-  ELASTIC_API_KEY: ""
+  ELASTIC_ADDRESSES: elasticsearch-master
+  ELASTIC_API_KEY: Zmd2YmhmZ3ZoYmpubQ==
   ELASTIC_USERNAME: elastic
-  ELASTIC_PASSWORD: ""
+  ELASTIC_PASSWORD: nected
   # Audit log
   AUDIT_LOG_ENABLED: false
   AUDIT_LOG_INDEX: audit-all-vidhaan

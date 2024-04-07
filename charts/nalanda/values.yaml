@@ -58,8 +58,8 @@ envVars:
   REDIS_PASSWORD: ""
   # Elastic Config
   ELASTIC_ENABLED: false
-  ELASTIC_HOSTS: ""
-  ELASTIC_API_KEY: ""
+  ELASTIC_HOSTS: elasticsearch-master
+  ELASTIC_API_KEY: Zmd2YmhmZ3ZoYmpubQ==
   ELASTIC_INSECURE_TLS: true
   # google
   GOOGLE_AUTH_ENABLED: false
