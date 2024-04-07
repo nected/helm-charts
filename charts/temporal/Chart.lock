@@ -1,0 +1,6 @@
+dependencies:
+- name: temporal
+  repository: https://charts.lemontech.engineering
+  version: 0.36.0
+digest: sha256:45d10ba76c943a69c8e95744a51fb846007058682b60768ac9382265c904a1fb
+generated: "2024-04-05T19:19:01.312943133+05:30"

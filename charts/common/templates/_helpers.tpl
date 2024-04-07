@@ -1,6 +1,7 @@
 {{/*
 Expand the name of the chart.
 */}}
+
 {{- define "common.name" -}}
 {{- default .Chart.Name .Values.nameOverride | trunc 63 | trimSuffix "-" }}
 {{- end }}
@@ -31,6 +32,14 @@ Create chart name and version as used by the chart label.
 {{- end }}
 
 {{/*
+Selector labels
+*/}}
+{{- define "common.selectorLabels" -}}
+app.kubernetes.io/name: {{ include "common.name" . }}
+app.kubernetes.io/instance: {{ .Release.Name }}
+{{- end }}
+
+{{/*
 Common labels
 */}}
 {{- define "common.labels" -}}
@@ -43,14 +52,6 @@ app.kubernetes.io/managed-by: {{ .Release.Service }}
 {{- end }}
 
 {{/*
-Selector labels
-*/}}
-{{- define "common.selectorLabels" -}}
-app.kubernetes.io/name: {{ include "common.name" . }}
-app.kubernetes.io/instance: {{ .Release.Name }}
-{{- end }}
-
-{{/*
 Create the name of the service account to use
 */}}
 {{- define "common.serviceAccountName" -}}
@@ -60,3 +61,42 @@ Create the name of the service account to use
 {{- default "default" .Values.serviceAccount.name }}
 {{- end }}
 {{- end }}
+
+
+{{/*
+Create pod annotations
+*/}}
+{{- define "common.podAnnotations" -}}
+{{- with .Values.annotations }}
+{{- toYaml . }}
+{{- end }}
+{{- end }}
+
+
+{{/*
+Create autosetup pod annotations from values  and include pod annotations
+*/}}
+{{- define "common.autoSetupPodAnnotations" -}}
+{{- if .Values.autoSetup.enabled }}
+{{- include "common.podAnnotations" . }}
+{{- with .Values.autoSetup.annotations }}
+{{- toYaml . -}}
+{{- end -}}
+{{- end }}
+{{- end }}
+
+{{/*
+Create autosetup pod labels from values and include pod labels
+*/}}
+{{- define "common.autoSetupPodAnnotationsHook" -}}
+{{- if .Values.autoSetup.enabled }}
+{{- include "common.autoSetupPodAnnotations" . -}}
+{{ else }}
+{{- include "common.podAnnotations" . -}}
+{{ end }}
+"helm.sh/hook": pre-install
+"helm.sh/hook-weight": "0"
+{{- if not .Values.autoSetup.debug }}
+"helm.sh/hook-delete-policy": hook-succeeded,hook-failed
+{{- end -}}
+{{- end -}}

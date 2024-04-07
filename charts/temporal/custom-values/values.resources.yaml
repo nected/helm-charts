@@ -1,0 +1,25 @@
+temporal:
+  server:
+    frontend:
+      resources:
+        requests:
+          cpu: 400m
+          memory: 512Mi
+
+    history:
+      resources:
+        requests:
+          cpu: 1000m
+          memory: 4096Mi
+
+    matching:
+      resources:
+        requests:
+          cpu: 400m
+          memory: 512Mi
+
+    worker:
+      resources:
+        requests:
+          cpu: 100m
+          memory: 512Mi

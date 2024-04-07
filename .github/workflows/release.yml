@@ -16,22 +16,34 @@ jobs:
       - name: Checkout
         uses: actions/checkout@v4
         with:
-          repository: nected/charts-public
+          fetch-depth: 0
+
       - name: Configure Git
         run: |
-            git config user.name "$GITHUB_ACTOR"
-            git config user.email "$GITHUB_ACTOR@users.noreply.github.com"
-      - name: Make trigger changes
-        run: |
-            echo '('`date +"%s.%N"` ' * 1000000)/1' | bc > release
-      - name: Commit and push changes
-        uses: cpina/github-action-push-to-another-repository@main
+          git config user.name "$GITHUB_ACTOR"
+          git config user.email "$GITHUB_ACTOR@users.noreply.github.com"
+
+      - name: Install Helm
+        uses: azure/setup-helm@v4
+
+      - name: Install YQ
         env:
-          SSH_DEPLOY_KEY: ${{ secrets.SSH_DEPLOY_KEY }}
+          VERSION: v4.43.1
+          BINARY: yq_linux_amd64
+        run: |
+          wget https://github.com/mikefarah/yq/releases/download/${VERSION}/${BINARY}.tar.gz -O - |\
+          tar xz && mv ${BINARY} /tmp/yq
+      
+      - name: Initialize custom helm repo (Helm V3 Bug)
+        run: |
+            helm repo add bitnami https://charts.bitnami.com/bitnami
+            helm repo add nected https://charts.nected.io
+            helm repo add lemontech https://charts.lemontech.engineering
+
+      - name: Run chart-releaser
+        uses: helm/chart-releaser-action@v1.6.0
         with:
-          source-directory: .
-          destination-github-username: nected
-          destination-repository-name: charts-public
-          target-branch: main
-          user-email: "${{ env.GITHUB_ACTOR }}@users.noreply.github.com"
-          
+          skip_existing: true
+        env:
+          CR_TOKEN: "${{ secrets.GITHUB_TOKEN }}"
+

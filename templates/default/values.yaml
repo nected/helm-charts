@@ -1,0 +1,126 @@
+# Default values for <CHART_NAME>.
+# This is a YAML-formatted file.
+# Declare variables to be passed into your templates.
+
+replicaCount: 1
+
+image:
+  repository: public.ecr.aws/f6k1n6r3/<CHART_NAME>
+  pullPolicy: IfNotPresent
+  # Overrides the image tag whose default is the chart appVersion.
+  tag: "op0.1.0"
+
+imagePullSecrets: []
+nameOverride: ""
+fullnameOverride: ""
+
+
+envVars: {}
+
+serviceAccount:
+  # Specifies whether a service account should be created
+  create: false
+  # Automatically mount a ServiceAccount's API credentials?
+  automount: false
+  # Annotations to add to the service account
+  annotations: {}
+  # The name of the service account to use.
+  # If not set and create is true, a name is generated using the fullname template
+  name: ""
+
+podAnnotations: {}
+podLabels: {}
+
+podSecurityContext: {}
+  # fsGroup: 2000
+
+securityContext: {}
+  # capabilities:
+  #   drop:
+  #   - ALL
+  # readOnlyRootFilesystem: true
+  # runAsNonRoot: true
+  # runAsUser: 1000
+
+autoSetup:
+  debug: true
+  enabled: true
+  image:
+    repository: public.ecr.aws/f6k1n6r3/<CHART_NAME>
+    pullPolicy: IfNotPresent
+    tag: "op0.1.0"
+  command: ["/<CHART_NAME>", "--init"]
+  annotations: {}
+
+service: {}
+  # type: ClusterIP
+  # port: 80
+  # targetPort: 8001
+
+ingress:
+  # enabled: true
+  # className: "alb"
+  # classname for azure load balancer
+  # className: "azure/application-gateway"
+  annotations: {}
+    # alb.ingress.kubernetes.io/load-balancer-name: "alb-name" # loadbalancer name
+    # alb.ingress.kubernetes.io/ip-address-type: ipv4
+    # alb.ingress.kubernetes.io/group.name: "alb-group-name" # loadbalancer group name
+    # alb.ingress.kubernetes.io/healthcheck-path: /health/ready
+    # alb.ingress.kubernetes.io/scheme: internet-facing 
+    # alb.ingress.kubernetes.io/target-type: ip
+    # alb.ingress.kubernetes.io/listen-ports: '[{"HTTP": 80}]' # '[{"HTTP": 80}, {"HTTPS": 443}]'
+    # alb.ingress.kubernetes.io/certificate-arn: "" # certificate ARN
+    # alb.ingress.kubernetes.io/subnets: "" # public subnets "subnet-xxxxx,subnet-xxxxx"
+    # annotations for azure load balancer
+  hosts: []
+    # - host: "cluster.local"
+    #   paths:
+    #     - path: /
+    #       pathType: Prefix
+  tls: []
+  #  - secretName: chart-example-tls
+  #    hosts:
+  #      - chart-example.local
+
+resources: {}
+  # We usually recommend not to specify default resources and to leave this as a conscious
+  # choice for the user. This also increases chances charts run on environments with little
+  # resources, such as Minikube. If you do want to specify resources, uncomment the following
+  # lines, adjust them as necessary, and remove the curly braces after 'resources:'.
+  # requests:
+  #   cpu: "250m"
+  #   memory: "256Mi"
+  # limits:
+  #   cpu: "250m"
+  #   memory: "256Mi"
+
+livenessProbe: {}
+  # httpGet:
+  #   path: /health/live
+  #   port: 8001
+readinessProbe: {}
+  # httpGet:
+  #   path: /health/live
+  #   port: 8001
+
+autoscaling: {}
+  # enabled: false
+  # minReplicas: 1
+  # maxReplicas: 1
+  # targetCPUUtilizationPercentage: 80
+  # targetMemoryUtilizationPercentage: 80
+
+# Additional volumes on the output Deployment definition.
+volumes: []
+
+# Additional volumeMounts on the output Deployment definition.
+volumeMounts: []
+# additional volumes setting to mount configMap
+mountConfigMap: false
+
+nodeSelector: {}
+
+tolerations: []
+
+affinity: {}

@@ -5,7 +5,7 @@ HELM_TEMPLATE_PATH= ${HELM_DATA_HOME}/starters/${HELM_TEMPLATE}
 HELM_CHART_DIR=charts
 APP_NAME=
 APP_PATH=$(HELM_CHART_DIR)/$(APP_NAME)
-USE_STARTER=false
+USE_STARTER=true
 
 
 
@@ -33,7 +33,7 @@ checks: ## Check if helm is installed
 prepare-dev: ## Prepare the development environment
 	@echo "Copying helm template to HELM_DATA_HOME"
 	mkdir -p ${HELM_TEMPLATE_PATH}
-	cp -r template/CHART_NAME/* $(HELM_TEMPLATE_PATH)
+	cp -r templates/default/* $(HELM_TEMPLATE_PATH)
 
 
 .PHONY: help
@@ -54,5 +54,21 @@ create_app: checks ## Create a new project
 		echo "Creating a new project"; \
 		$(HELM_BIN) create $(APP_PATH); \
 	fi
+
+.PHONY: test_charts
+test_charts: ## Test the helm chart
+	@echo "Testing helm chart"
+	@for chart in $(HELM_CHART_DIR)/*; do \
+		echo "Testing $$chart"; \
+		$(HELM_BIN) template $$chart; \
+	done
+
+.PHONY: build_dependencies
+build_dependencies: ## Build the dependencies
+	@echo "Building dependencies"
+	@for chart in $(HELM_CHART_DIR)/*; do \
+		echo "Building dependencies for $$chart"; \
+		$(HELM_BIN) dependency update $$chart; \
+	done
 
 

@@ -1,0 +1,18 @@
+temporal:
+  server:
+    dynamicConfig:
+      matching.numTaskqueueReadPartitions:
+      - value: 50
+        constraints: {}
+      matching.numTaskqueueWritePartitions:
+      - value: 50
+        constraints: {}
+      frontend.namespacerps:
+      - value: 5000
+        constraints: {}
+      history.rps:
+      - value: 4000
+        constraints: {}
+      matching.rps:
+      - value: 2200
+        constraints: {}
