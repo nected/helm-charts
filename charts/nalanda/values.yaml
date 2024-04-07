@@ -204,7 +204,7 @@ autoSetup:
     repository: public.ecr.aws/f6k1n6r3/nalanda
     pullPolicy: IfNotPresent
     tag: "op0.1.1"
-  command: ["--init"]
+  args: "--init"
   annotations: {}
 
 service:
