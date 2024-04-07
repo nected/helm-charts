@@ -1,13 +1,6 @@
 nameOverride: ""
 fullnameOverride: ""
 
-datastoreAutoSetup:
-  elasticsearch:
-    apiKey: Zmd2YmhmZ3ZoYmpubQ==
-  postgresql:
-    temporal_db: temporal
-    temporal_visibility_db: temporal_visibility
-
 # Mongodb Chart Values
 mongodb:
   enabled: true
