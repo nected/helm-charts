@@ -45,6 +45,45 @@ entries:
     version: 0.1.0
   datastore:
   - apiVersion: v2
+    appVersion: 0.1.1
+    created: "2024-04-08T14:21:24.520191594Z"
+    dependencies:
+    - condition: postgresql.enabled
+      name: postgresql
+      repository: https://charts.bitnami.com/bitnami
+      version: 15.2.2
+    - condition: mongodb.enabled
+      name: mongodb
+      repository: https://charts.bitnami.com/bitnami
+      version: 15.1.1
+    - condition: redis.enabled
+      name: redis
+      repository: https://charts.bitnami.com/bitnami
+      version: 19.0.2
+    - condition: elasticsearch.enabled
+      name: elasticsearch
+      repository: https://charts.nected.io/
+      version: 8.5.1
+    description: A Datastore Helm chart for Nected Platform
+    digest: 3a63c2691df030921a1085c1809c529a9653951f53ff9200c4803ec6733215fd
+    home: https://nected.ai/
+    keywords:
+    - datastore
+    - nected
+    - workflow
+    - BRE
+    - DMS
+    maintainers:
+    - name: Socioverse Tech Private Ltd.
+      url: https://nected.ai/
+    name: datastore
+    sources:
+    - https://charts.nected.io
+    type: application
+    urls:
+    - https://github.com/nected/helm-charts/releases/download/datastore-0.1.1/datastore-0.1.1.tgz
+    version: 0.1.1
+  - apiVersion: v2
     appVersion: 0.1.0
     created: "2024-04-07T08:25:29.196349603Z"
     dependencies:
@@ -84,6 +123,28 @@ entries:
     - https://github.com/nected/helm-charts/releases/download/datastore-0.1.0/datastore-0.1.0.tgz
     version: 0.1.0
   editor:
+  - apiVersion: v2
+    appVersion: op0.1.0-3
+    created: "2024-04-08T14:21:24.663946851Z"
+    dependencies:
+    - name: common
+      repository: https://charts.nected.io/
+      tags:
+      - nected-common
+      version: 0.x.x
+    description: Nected editor helm chart
+    digest: fade890d4e027f7d7c1de0dcf77f99d1792c16dcd13fa75a8084e425124c0042
+    home: https://github.com/nected/helm-charts
+    maintainers:
+    - email: devops@nected.ai
+      name: Nected Devops
+    name: editor
+    sources:
+    - https://github.com/nected/nected-editor
+    type: application
+    urls:
+    - https://github.com/nected/helm-charts/releases/download/editor-0.1.1/editor-0.1.1.tgz
+    version: 0.1.1
   - apiVersion: v2
     appVersion: op0.1.0
     created: "2024-04-07T08:25:29.309535914Z"
@@ -141,6 +202,28 @@ entries:
     version: 0.1.0
   konark:
   - apiVersion: v2
+    appVersion: op0.10.0-4
+    created: "2024-04-08T14:21:24.903573329Z"
+    dependencies:
+    - name: common
+      repository: https://charts.nected.io/
+      tags:
+      - nected-common
+      version: 0.x.x
+    description: Nected nalanda helm chart
+    digest: 30399b987d1e60f791bbdfadcf8d64fd4cd5a150586092a2f02049072a26898e
+    home: https://github.com/nected/helm-charts
+    maintainers:
+    - email: devops@nected.ai
+      name: Nected Devops
+    name: konark
+    sources:
+    - https://github.com/nected/konark
+    type: application
+    urls:
+    - https://github.com/nected/helm-charts/releases/download/konark-0.1.1/konark-0.1.1.tgz
+    version: 0.1.1
+  - apiVersion: v2
     appVersion: op0.1.0
     created: "2024-04-07T08:25:29.414351442Z"
     dependencies:
@@ -163,6 +246,28 @@ entries:
     - https://github.com/nected/helm-charts/releases/download/konark-0.1.0/konark-0.1.0.tgz
     version: 0.1.0
   nalanda:
+  - apiVersion: v2
+    appVersion: op0.1.2
+    created: "2024-04-08T14:21:25.027956107Z"
+    dependencies:
+    - name: common
+      repository: https://charts.nected.io/
+      tags:
+      - nected-common
+      version: 0.x.x
+    description: Nected nalanda helm chart
+    digest: efd586357bb0cefb105f94d582c3e8b7c5cf57bb58e0ca122fd7f6c450735564
+    home: https://github.com/nected/helm-charts
+    maintainers:
+    - email: devops@nected.ai
+      name: Nected Devops
+    name: nalanda
+    sources:
+    - https://github.com/nected/nalanda
+    type: application
+    urls:
+    - https://github.com/nected/helm-charts/releases/download/nalanda-0.1.1/nalanda-0.1.1.tgz
+    version: 0.1.1
   - apiVersion: v2
     appVersion: op0.1.0
     created: "2024-04-07T08:25:29.5383149Z"
@@ -294,4 +399,4 @@ entries:
     urls:
     - https://github.com/nected/helm-charts/releases/download/vidhaan-router-0.1.0/vidhaan-router-0.1.0.tgz
     version: 0.1.0
-generated: "2024-04-07T23:18:12.404291518Z"
+generated: "2024-04-08T14:21:25.518801509Z"
