@@ -1,0 +1,15 @@
+replicaCount: 1
+
+envVars:
+  REDIS_HOST: "datastore-redis-master:6379"
+  # enable elastic if installed using datastore or used external
+  ELASTIC_ENABLED: false
+  # license key is issued by Nected
+  VIDHAAN_PRE_SHARED_KEY: <<LicenseKey>>
+  # if external use external host address
+  ELASTIC_HOSTS: "http://elasticsearch-master:9200"
+  # update if external and different user
+  ELASTIC_USER: elastic
+  ELASTIC_PASSWORD: <<ElasticUserPass>>
+  # enable elastic if installed using datastore or used external
+  AUDIT_LOG_ENABLED: false
