@@ -2,15 +2,12 @@
 Installation using Helm charts
 
 ## Pre-Requisite
-1. Create a load balance, in case of Azure need to create application gatewa [Azure apigateway ingress](https://learn.microsoft.com/en-us/azure/application-gateway/ingress-controller-install-existing) & [Azure guide add addons](https://learn.microsoft.com/en-us/azure/application-gateway/tutorial-ingress-controller-add-on-existing)
-
-
+1. A loadbalance with public subnet
 2. Map 4 domains to loadbalaner
   - `<<frontend-konark-domain>>`
   - `<<frontend-editor-domain>>`
   - `<<backend-nalanda-domain>>`
   - `<<backend-vidhaan-router-domain>>`
-
 3. need to enable storage drivers, e.g: for azure execute:
    ```
    az aks update -n <Cluster Name> -g <Resource Group> --enable-disk-driver --enable-file-driver --enable-blob-driver --enable-snapshot-controller
