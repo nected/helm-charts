@@ -8,7 +8,7 @@ image:
   repository: public.ecr.aws/f6k1n6r3/nalanda
   pullPolicy: IfNotPresent
   # Overrides the image tag whose default is the chart appVersion.
-  tag: "op0.1.1-1"
+  tag: "op0.1.2"
 
 imagePullSecrets: []
 nameOverride: ""
@@ -100,7 +100,7 @@ envVars:
   JWT_SECRET: lsdnfYTYknn5432HGHY7w
   # konark
   ASSETS_BASE_URL: http://konark.local/assets/konark
-  KONARK_BASE_URL: konark.local
+  KONARK_BASE_URL: http://konark.local
   KONARK_EMAIL_VERIFICATION_PATH: /verify/signup/email/
   KONARK_OAUTH_REDIRECT_PATH: /oauth/redirect
   KONARK_RESET_PASSWORD_PATH: /reset-password/
