@@ -8,8 +8,8 @@ verbosityLevel: 3
 #
 appgw:
     subscriptionId: <<SubscriptionID>>
-    resourceGroup: Nected-RG
-    name: myAppGateway
+    resourceGroup: <<ResourceGroup>>
+    name: <<applicationGatewayName>>
     usePrivateIP: false
 
     # Setting appgw.shared to "true" will create an AzureIngressProhibitedTarget CRD.

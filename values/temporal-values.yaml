@@ -1,0 +1,102 @@
+###
+nameOverride: "nected-temporal"
+fullnameOverride: "nected-temporal"
+
+server:
+  enabled: true
+  config:
+    persistence:
+      defaultStore: default
+      default:
+        driver: "sql"
+        sql:
+          driver: "postgres"
+          # if external use external host address
+          host: datastore-postgresql
+          port: 5432
+          user: <<PostgresUserName>>
+          password: <<PostgresNectedPass>>
+          maxConns: 10
+      visibility:
+        driver: "sql"
+        sql:
+          driver: "postgres"
+          # if external use external host address
+          host: datastore-postgresql
+          port: 5432
+          user: <<PostgresUserName>>
+          password: <<PostgresNectedPass>>
+          maxConns: 10
+    dcRedirectionPolicy:
+      policy: "selected-apis-forwarding"
+      toDC: ""
+    clusterMetadata:
+      enableGlobalNamespace: true
+      replicationConsumer:
+        type: rpc
+      failoverVersionIncrement: 100
+      masterClusterName: "nected-op"
+      currentClusterName: "nected-op"
+      clusterInformation:
+        nected-op:
+          enabled: true
+          initialFailoverVersion: 1
+          rpcName: "frontend"
+          rpcAddress: "0.0.0.0:7233"
+  frontend:
+    replicaCount: 1
+    autoscaling:
+      enabled: false
+    resources:
+      requests:
+        cpu: 250m
+        memory: 512Mi
+  history:
+    replicaCount: 1
+    autoscaling:
+      enabled: false
+    resources:
+      requests:
+        cpu: 800m
+        memory: 2048Mi
+  matching:
+    replicaCount: 1
+    autoscaling:
+      enabled: false
+    resources:
+      requests:
+        cpu: 250m
+        memory: 512Mi
+  worker:
+    replicaCount: 1
+    autoscaling:
+      enabled: false
+    resources:
+      requests:
+        cpu: 200m
+        memory: 512Mi
+
+admintools:
+  enabled: false
+web:
+  enabled: false
+  ingress:
+    enabled: false
+
+schema:
+  # enable setup if elastic used external or datastore for temporal_visibility
+  setup:
+    enabled: false
+  update:
+    enabled: false
+
+
+elasticsearch:
+  # enable setup if elastic used external or datastore for temporal_visibility
+  external: false
+  # if external use external host address
+  host: elasticsearch-master
+  port: 9200
+  # update if external and different user
+  username: elastic
+  password: <<ElasticUserPass>>

@@ -1,0 +1,50 @@
+replicaCount: 1
+
+envVars:
+  ALLOWED_CORS_ORIGIN: http://<<backend-nalanda-domain>>,<<frontend-konark-domain>>,<<frontend-editor-domain>>
+  MASTER_DB_USER: <<PostgresUserName>>
+  MASTER_DB_PASSWORD: <<PostgresPassword>>
+  # if external use external host address
+  MASTER_DB_HOST: datastore-postgresql
+  MONGO_DB_USER: <<MongoUsername>>
+  MONGO_DB_PASSWORD: <<MongoPassword>>
+  # if external use external host address
+  MONGO_DB_HOST: datastore-mongodb
+  ASSETS_BASE_URL: http://<<frontend-konark-domain>>/assets/konark
+  KONARK_BASE_URL: <<frontend-konark-domain>>
+  NECTED_USER_EMAIL: <<DefaultUser>>
+  NECTED_USER_PASSWORD: <<DefaultPassword>>
+  SIGNUP_DOMAINS:
+  DEFAULT_VIDHAAN_SCHEME: http
+  DEFAULT_VIDHAAN_DOMAIN: <<backend-vidhaan-router-domain>>
+  # if external use external host address
+  REDIS_HOST: datastore-redis-master
+  # enable elastic if installed using datastore or used external
+  ELASTIC_ENABLED: false
+  # if external use external host address
+  ELASTIC_HOSTS: http://elasticsearch-master:9200
+  ELASTIC_USER: elastic
+  ELASTIC_PASSWORD: <<ElasticUserPass>>
+  # email
+  SEND_EMAIL: true
+  EMAIL_PROVIDER: smtp
+  SENDER_EMAIL: <<senderEmail>>
+  SENDER_NAME: <<SendeName>>
+  EMAIL_INSECURE_TLS: true
+  EMAIL_HOST: <<emailHostName>>
+  EMAIL_PORT: 587
+  EMAIL_USERNAME: <<senderUsername>>
+  EMAIL_PASSWORD: <<senderPassword>>
+
+ingress:
+  enabled: true
+  # azure: "azure-application-gateway", aws: "alb"
+  className: <<ingressClassName>>
+  annotations:
+    appgw.ingress.kubernetes.io/health-probe-path: /health/ready
+  hosts:
+    - host: <<backend-nalanda-domain>>
+      paths:
+          - path: /
+            # zzure: Exact, aws: Prefix
+            pathType: <<pathType>>

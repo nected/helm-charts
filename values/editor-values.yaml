@@ -1,0 +1,20 @@
+replicaCount: 1
+
+envVars:
+  REACT_APP_ALLOWED_DOMAINS: http://<<frontend-konark-domain>>
+  REACT_APP_SQL_LINT: http://<<backend-nalanda-domain>>/misc/proxy/lint
+  REACT_APP_EXECUTE_JS_API: http://<<backend-nalanda-domain>>/integration/code/execute
+  REACT_APP_NGINX_SERVER_NAME: <<frontend-editor-domain>>
+
+ingress:
+  enabled: true
+  # azure: "azure-application-gateway", aws: "alb"
+  className: <<ingressClassName>>
+  annotations:
+    appgw.ingress.kubernetes.io/health-probe-path: /
+  hosts:
+    - host: <<frontend-editor-domain>>
+      paths:
+          - path: /
+            # azure: Exact, aws: Prefix
+            pathType: <<pathType>>

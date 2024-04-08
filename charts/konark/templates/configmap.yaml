@@ -6,4 +6,6 @@ metadata:
     {{- include "common.labels" . | nindent 4 }}
 data:
   envFile: |
-    {{- toToml .Values.envVars | nindent 4 }}
+    {{- range $key, $value := .Values.envVars }}
+    {{ $key }}={{ $value}}
+    {{- end }}

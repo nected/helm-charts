@@ -8,7 +8,7 @@ image:
   repository: public.ecr.aws/f6k1n6r3/nalanda
   pullPolicy: IfNotPresent
   # Overrides the image tag whose default is the chart appVersion.
-  tag: "op0.1.1"
+  tag: "op0.1.1-1"
 
 imagePullSecrets: []
 nameOverride: ""
@@ -21,83 +21,83 @@ envVars:
   DEBUG: false
   DEPLOYMENT: production
   ENABLE_PROFILING: false
-  SERVER_HOST: "0.0.0.0"
-  SERVER_PORT: "8001"
+  SERVER_HOST: 0.0.0.0
+  SERVER_PORT: 8001
   SERVER_TIMEZONE: UTC
   # secrets
-  AES_SECRET: iAmAesKey
-  SECRET: iAmSecret
+  AES_SECRET: tfgoS4EzPPuBJjBLFgmlut9ukW9o2PYy
+  SECRET: sdyghvjbknn6576876ggYT
     # Security
   SECURITY_ENABLED: false
-  CHECK_ALLOWED_HOSTS: true
+  CHECK_ALLOWED_HOSTS: false
   # Database
   AUTO_MIGRATE: false
   MASTER_DB_NAME: nected
   MASTER_DB_USER: nected
   MASTER_DB_PASSWORD: nected
-  MASTER_DB_HOST: "datastore-postgresql"
-  MASTER_DB_PORT: "5432"
+  MASTER_DB_HOST: datastore-postgresql
+  MASTER_DB_PORT: 5432
   MASTER_DB_LOG_MODE: false
   MASTER_SSL_MODE: disable
   MASTER_DB_CONNS_POOL_ENABLE: true
-  MASTER_DB_MAX_IDLE_CONNS: "5"
-  MASTER_DB_MAX_OPEN_CONNS: "10"
+  MASTER_DB_MAX_IDLE_CONNS: 5
+  MASTER_DB_MAX_OPEN_CONNS: 10
   MASTER_DB_CONN_MAX_LIFETIME: 1h
   MASTER_DB_CONN_MAX_IDLE_TIME: 30m
   # mongoDB
   MONGO_DB_SCHEME: mongodb
   MONGO_DB_USER: nected
   MONGO_DB_PASSWORD: nected
-  MONGO_DB_HOST: "datastore-mongodb"
-  MONGO_DB_PARAMS: "authSource=admin&retryWrites=true"
-  MONGO_DB_PORT: "27017"
+  MONGO_DB_HOST: datastore-mongodb
+  MONGO_DB_PARAMS: authSource=admin&retryWrites=true
+  MONGO_DB_PORT: 27017
   MONGO_DB_LOCALE: "en"
   # Redis Config
-  REDIS_HOST: "datastore-redis-master"
-  REDIS_PORT: "6379"
-  REDIS_DATABASE: "0"
-  REDIS_PASSWORD: ""
+  REDIS_HOST: datastore-redis-master
+  REDIS_PORT: 6379
+  REDIS_DATABASE: 0
+  REDIS_PASSWORD:
   # Elastic Config
   ELASTIC_ENABLED: true
-  ELASTIC_HOSTS: "http://elasticsearch-master:9200"
-  ELASTIC_API_KEY: ""
+  ELASTIC_HOSTS: http://elasticsearch-master:9200
+  ELASTIC_API_KEY:
   ELASTIC_INSECURE_TLS: true
   ELASTIC_USER: elastic
   ELASTIC_PASSWORD: nected
   # google
   GOOGLE_AUTH_ENABLED: false
-  GOOGLE_CLIENT_ID: ""
+  GOOGLE_CLIENT_ID:
   # aws ses
-  AWS_ACCESS_KEY: ""
-  AWS_SECRET_KEY: ""
-  AWS_REGION: ""
+  AWS_ACCESS_KEY:
+  AWS_SECRET_KEY:
+  AWS_REGION:
   # email
   SEND_EMAIL: false
   EMAIL_PROVIDER: smtp
-  SENDER_EMAIL: ""
-  SENDER_NAME: ""
-  EMAIL_INSECURE_TLS: ""
-  EMAIL_HOST: ""
-  EMAIL_PORT: ""
-  EMAIL_USERNAME: ""
-  EMAIL_PASSWORD: ""
+  SENDER_EMAIL:
+  SENDER_NAME:
+  EMAIL_INSECURE_TLS:
+  EMAIL_HOST:
+  EMAIL_PORT:
+  EMAIL_USERNAME:
+  EMAIL_PASSWORD:
   # Recapcha config
   RECAPTCHA_ENABLED: false
-  RECAPTCHA_SECRET: ""
-  RECAPTCHA_VERIFY_URL: ""
-  RECAPTCHA_MIN_SCORE: ""
-  RECAPTCHA_CHECK_PATH: ""
-  RECAPTCHA_CHECK_HOST: ""
-  RECAPTCHA_CHECK_SCORE: ""
+  RECAPTCHA_SECRET:
+  RECAPTCHA_VERIFY_URL:
+  RECAPTCHA_MIN_SCORE:
+  RECAPTCHA_CHECK_PATH:
+  RECAPTCHA_CHECK_HOST:
+  RECAPTCHA_CHECK_SCORE:
   # Sentry config
-  SENTRY_DSN: ""
+  SENTRY_DSN:
   SENTRY_ENABLED: false
-  SENTRY_SAMPLING_RATE: "0.1"
+  SENTRY_SAMPLING_RATE: 0.1
   SENTRY_ENABLE_TRACING: false
   # JWT
   JWT_ACCESS_TOKEN_EXP_TIME: "259200"
   JWT_REFRESH_TOKEN_EXP_TIME: "1296000"
-  JWT_SECRET: iAmJWTSecret
+  JWT_SECRET: lsdnfYTYknn5432HGHY7w
   # konark
   ASSETS_BASE_URL: http://konark.local/assets/konark
   KONARK_BASE_URL: konark.local
@@ -109,13 +109,13 @@ envVars:
   RESET_PASSWORD_EXP_TIME: "259200"
   EMAIL_VERIFICATION_EXP_DURATION: "1296000"
   WORKSPACE_INVITE_LINK_EXP_DURATION: "1296000"
-  RESET_PASSWORD_MAX_LIMIT: "3"
+  RESET_PASSWORD_MAX_LIMIT: 3
   # features flags
-  EXTERNAL_PERMISSION_URL: ""
-  DEMO_CONNECTOR_TEMPLATE_ID: ""
-  USECASE_VALUES_CONFIG_DOCUMENT_NAME: ""
+  EXTERNAL_PERMISSION_URL:
+  DEMO_CONNECTOR_TEMPLATE_ID:
+  USECASE_VALUES_CONFIG_DOCUMENT_NAME:
   CONFIG_COLLECTION_NAME: config
-  USECASE_DATABASE_NAME: ""
+  USECASE_DATABASE_NAME:
   SKIP_LOG_PATHS: /health/live,/health/ready
   CREATE_DEMO_ENTITIES_ENABLED: false
   WORKSPACE_SUBDOMAIN_ENABLED: false
@@ -131,8 +131,8 @@ envVars:
   VIDHAAN_AUDIT_LOG_INDEX: audit-all-vidhaan
   X_FORWARDED_HEADER_KEY: X-Forwarded-For
   # proxy url
-  CREDENTIAL_CONFIG_MAP: ""
-  PROXY_SQL_LINT_URL: http://nected-sql-linter/api/v1/core/lint
+  CREDENTIAL_CONFIG_MAP: '{}'
+  PROXY_SQL_LINT_URL: http://sql-linter/api/v1/core/lint
   PROXY_RULE_URL: ""
 
   # Licensing Config
@@ -145,16 +145,16 @@ envVars:
   # nected user config
   NECTED_USER_EMAIL: ""
   NECTED_USER_PASSWORD: ""
-  SUPER_ADMIN_USER_IDS: "1"
-  PRODUCT_WORKSPACE_ID: "1"
+  SUPER_ADMIN_USER_IDS: 1
+  PRODUCT_WORKSPACE_ID: 1
 
   # usages
-  FREE_PLAN_ID: "1"
+  FREE_PLAN_ID: 1
   IS_PAID: true
-  RULE_LIMIT: "1000"
-  WORKFLOW_LIMIT: "500"
-  INVOCATION_LIMIT: "0"
-  EDITOR_LIMIT: "100"
+  RULE_LIMIT: 1000
+  WORKFLOW_LIMIT: 500
+  INVOCATION_LIMIT: 0
+  EDITOR_LIMIT: 100
 
   # Vidhaan Config
   DEFAULT_VIDHAAN_SCHEME: http

@@ -12,7 +12,7 @@ metadata:
 spec:
   ingressClassName: azure-application-gateway
   rules:
-  - host: az-nalanda.dev.nected.io
+  - host: onpremise.nected.io
     http:
       paths:
       - path: /
