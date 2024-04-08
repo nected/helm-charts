@@ -7,9 +7,9 @@ maintainers:
 name: editor
 sources:
 - https://github.com/nected/nected-editor
-appVersion: "op0.1.0"
+appVersion: "op0.1.0-3"
 type: application
-version: 0.1.0
+version: 0.1.1
 
 dependencies:
 - name: common

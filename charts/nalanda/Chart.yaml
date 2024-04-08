@@ -7,9 +7,9 @@ maintainers:
 name: nalanda
 sources:
 - https://github.com/nected/nalanda
-appVersion: "op0.1.0"
+appVersion: "op0.1.2"
 type: application
-version: 0.1.0
+version: 0.1.1
 
 dependencies:
 - name: common
