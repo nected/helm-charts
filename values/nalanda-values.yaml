@@ -11,7 +11,7 @@ envVars:
   # if external use external host address
   MONGO_DB_HOST: datastore-mongodb
   ASSETS_BASE_URL: http://<<frontend-konark-domain>>/assets/konark
-  KONARK_BASE_URL: <<frontend-konark-domain>>
+  KONARK_BASE_URL: http://<<frontend-konark-domain>>
   NECTED_USER_EMAIL: <<DefaultUser>>
   NECTED_USER_PASSWORD: <<DefaultPassword>>
   SIGNUP_DOMAINS:
