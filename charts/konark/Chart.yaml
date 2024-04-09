@@ -7,9 +7,9 @@ maintainers:
 name: konark
 sources:
 - https://github.com/nected/konark
-appVersion: "op0.10.0-4"
+appVersion: "op0.1.1"
 type: application
-version: 0.1.1
+version: 0.1.2
 
 dependencies:
 - name: common
