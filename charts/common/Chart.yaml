@@ -5,9 +5,9 @@ maintainers:
 - email: devops@nected.ai
   name: Nected Devops
 name: common
-appVersion: "0.1.1"
+appVersion: "0.1.4"
 type: application
-version: 0.1.1
+version: 0.1.4
 
 dependencies:
   - name: common

@@ -198,7 +198,7 @@ securityContext: {}
   # runAsUser: 1000
 
 autoSetup:
-  debug: true
+  debug: false
   enabled: true
   image:
     repository: public.ecr.aws/f6k1n6r3/nalanda
