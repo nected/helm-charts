@@ -8,7 +8,6 @@ envVars:
 
 ingress:
   enabled: true
-  # azure: "azure-application-gateway", aws: "alb"
   className: <<ingressClassName>>
   annotations:
     appgw.ingress.kubernetes.io/health-probe-path: /
@@ -16,5 +15,4 @@ ingress:
     - host: <<frontend-editor-domain>>
       paths:
           - path: /
-            # azure: Exact, aws: Prefix
-            pathType: <<pathType>>
+            pathType: Prefix

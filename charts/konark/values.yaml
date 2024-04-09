@@ -8,7 +8,7 @@ image:
   repository: public.ecr.aws/f6k1n6r3/konark
   pullPolicy: IfNotPresent
   # Overrides the image tag whose default is the chart appVersion.
-  tag: "op0.10.0-4"
+  tag: "op0.1.1"
 
 imagePullSecrets: []
 nameOverride: ""
@@ -100,11 +100,11 @@ resources:
   # resources, such as Minikube. If you do want to specify resources, uncomment the following
   # lines, adjust them as necessary, and remove the curly braces after 'resources:'.
   requests:
-    cpu: "250m"
+    cpu: "150m"
     memory: "256Mi"
   limits:
-    cpu: "500m"
-    memory: "512Mi"
+    cpu: "150m"
+    memory: "256Mi"
 
 livenessProbe: {}
 readinessProbe: {}

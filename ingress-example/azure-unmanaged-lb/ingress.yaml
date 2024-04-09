@@ -4,6 +4,7 @@ metadata:
   name: ingress-ssl
   annotations:
     # kubernetes.io/ingress.class: "nginx"
+    # service.beta.kubernetes.io/port_443_health-probe_request-path: "/health/ready"
     cert-manager.io/cluster-issuer: letsencrypt    
 spec:
   ingressClassName: webapprouting.kubernetes.azure.com

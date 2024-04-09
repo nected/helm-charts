@@ -8,11 +8,9 @@ envVars:
 
 ingress:
   enabled: true
-  className: <<ingressClassName>> # azure: "azure-application-gateway", aws: "alb"
-  annotations:
-    appgw.ingress.kubernetes.io/health-probe-path: /
+  className: <<ingressClassName>>
   hosts:
     - host: <<frontend-konark-domain>>
       paths:
           - path: /
-            pathType: <<pathType>> # zzure: Exact, aws: Prefix
+            pathType: Prefix

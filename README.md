@@ -8,7 +8,7 @@ Installation using Helm charts
   - `<<frontend-editor-domain>>`
   - `<<backend-nalanda-domain>>`
   - `<<backend-vidhaan-router-domain>>`
-3. need to enable storage drivers, e.g: for azure execute:
+3. need to enable storage drivers, e.g: azure execute:
    ```
    az aks update -n <Cluster Name> -g <Resource Group> --enable-disk-driver --enable-file-driver --enable-blob-driver --enable-snapshot-controller
    ```
@@ -84,8 +84,8 @@ Installation using Helm charts
     helm install sql-linter charts/sql-linter/
     helm install konark charts/konark/ -f values/konark-values.yaml
     helm install editor charts/nected-editor/ -f values/editor-values.yaml
-    helm install router charts/vidhaan-router/ -f values/vidhaan-router-values.yaml
-    helm install executer charts/vidhaan-executer/ -f values/vidhaan-executer-values.yaml
+    helm install vidhaan-router charts/vidhaan-router/ -f values/vidhaan-router-values.yaml
+    helm install vidhaan-executer charts/vidhaan-executer/ -f values/vidhaan-executer-values.yaml
     ```
 
 7. Access  Nected services:

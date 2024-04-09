@@ -38,13 +38,9 @@ envVars:
 
 ingress:
   enabled: true
-  # azure: "azure-application-gateway", aws: "alb"
   className: <<ingressClassName>>
-  annotations:
-    appgw.ingress.kubernetes.io/health-probe-path: /health/ready
   hosts:
     - host: <<backend-nalanda-domain>>
       paths:
           - path: /
-            # zzure: Exact, aws: Prefix
-            pathType: <<pathType>>
+            pathType: Prefix

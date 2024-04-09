@@ -50,19 +50,19 @@ postgresql:
       accessModes:
         - ReadWriteOnce
       size: 20Gi
+    resources:
+      requests:
+        cpu: "1000m"
+        memory: "2Gi"
+      limits:
+        cpu: "1000m"
+        memory: "2Gi"
     persistentVolumeClaimRetentionPolicy:
       enabled: true
       whenScaled: Retain
       whenDeleted: Delete
   volumePermissions:
     enabled: true
-  resources:
-    requests:
-      cpu: "1000m"
-      memory: "2Gi"
-    limits:
-      cpu: "1000m"
-      memory: "2Gi"
 
 # Redis Chart Values
 redis:
@@ -75,13 +75,13 @@ redis:
     count: 1
     persistence:
       enabled: false
-  resources:
-    requests:
-      cpu: "500m"
-      memory: "512Mi"
-    limits:
-      cpu: "500m"
-      memory: "512Mi"
+    resources:
+      requests:
+        cpu: "500m"
+        memory: "512Mi"
+      limits:
+        cpu: "500m"
+        memory: "512Mi"
 
 # Elasticsearch Chart Values
 elasticsearch:
