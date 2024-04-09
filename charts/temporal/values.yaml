@@ -119,11 +119,11 @@ server:
 
         sql:
           driver: "postgres"
-          host: "dev-psql-nected.c57qkvquzcvh.ap-south-1.rds.amazonaws.com"
+          host: ""
           port: 5432
           database: "temporal"
-          user: "nected"
-          password: "nected123"
+          user: ""
+          password: ""
           existingSecret: ""
           secretName: ""
           maxConns: 20
