@@ -2,6 +2,27 @@ apiVersion: v1
 entries:
   common:
   - apiVersion: v2
+    appVersion: 0.1.2
+    created: "2024-04-09T18:24:17.763719352Z"
+    dependencies:
+    - alias: external
+      name: common
+      repository: https://charts.bitnami.com/bitnami
+      tags:
+      - bitnami-common
+      version: 2.x.x
+    description: Nected common helm chart
+    digest: 2ff6f276d74c660f5c62438d85650b0ac9535c4df576efeb9c250bb6544eaa3a
+    home: https://github.com/nected/helm-charts
+    maintainers:
+    - email: devops@nected.ai
+      name: Nected Devops
+    name: common
+    type: application
+    urls:
+    - https://github.com/nected/helm-charts/releases/download/common-0.1.2/common-0.1.2.tgz
+    version: 0.1.2
+  - apiVersion: v2
     appVersion: 0.1.1
     created: "2024-04-07T16:11:34.472758547Z"
     dependencies:
@@ -399,4 +420,4 @@ entries:
     urls:
     - https://github.com/nected/helm-charts/releases/download/vidhaan-router-0.1.0/vidhaan-router-0.1.0.tgz
     version: 0.1.0
-generated: "2024-04-08T14:21:25.518801509Z"
+generated: "2024-04-09T18:24:19.352043145Z"
