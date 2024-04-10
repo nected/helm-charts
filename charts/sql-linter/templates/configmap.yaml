@@ -5,4 +5,4 @@ metadata:
   labels:
     {{- include "common.labels" . | nindent 4 }}
 data:
-  {{- toYaml .Values.envVars | nindent 2 }}
+  {{- include "common.configMapData" . | nindent 2 }}

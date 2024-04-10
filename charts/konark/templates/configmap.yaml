@@ -5,7 +5,4 @@ metadata:
   labels:
     {{- include "common.labels" . | nindent 4 }}
 data:
-  envFile: |
-    {{- range $key, $value := .Values.envVars }}
-    {{ $key }}={{ $value}}
-    {{- end }}
+  {{- include "common.configMapData" . | nindent 2 }}
