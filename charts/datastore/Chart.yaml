@@ -1,11 +1,10 @@
 apiVersion: v2
 name: datastore
-description: A Datastore Helm chart for Nected Platform
+description: A Datastore Helm chart
 
 home: https://nected.ai/
 
 keywords:
-  - datastore
   - nected
   - workflow
   - BRE
