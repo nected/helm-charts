@@ -1,6 +1,8 @@
 # Nected OnPremise
 Installation using Helm charts
 
+![Nected Onpremise Architecture](https://assets.nected.io/nalanda/nected-onpremise-architecture.jpg)
+
 ## Pre-Requisite
 1. A loadbalance with public subnet
 2. Map 4 domains to loadbalaner
