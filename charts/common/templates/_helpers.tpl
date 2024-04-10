@@ -107,7 +107,7 @@ Common configMap data generator
 */}}
 
 {{- define "common.configMapData" -}}
-{{- if .Values.monthConfigMap }}
+{{- if .Values.mountConfigMap }}
   envFile: |
     {{- range $key, $value := .Values.envVars }}
     {{ $key }}={{ $value}}
