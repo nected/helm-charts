@@ -9,8 +9,6 @@ envVars:
 ingress:
   enabled: true
   className: <<ingressClassName>>
-  annotations:
-    appgw.ingress.kubernetes.io/health-probe-path: /
   hosts:
     - host: <<frontend-editor-domain>>
       paths:

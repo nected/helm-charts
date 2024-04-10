@@ -100,3 +100,19 @@ Create autosetup pod labels from values and include pod labels
 "helm.sh/hook-delete-policy": hook-succeeded,hook-failed
 {{- end -}}
 {{- end -}}
+
+
+{{/*
+Common configMap data generator
+*/}}
+
+{{- define "common.configMapData" -}}
+{{- if .Values.monthConfigMap }}
+  envFile: |
+    {{- range $key, $value := .Values.envVars }}
+    {{ $key }}={{ $value}}
+    {{- end }}
+  {{- else }}
+  {{- toYaml .Values.envVars }}
+  {{- end }}
+{{- end }}
