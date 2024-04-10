@@ -108,11 +108,13 @@ Common configMap data generator
 
 {{- define "common.configMapData" -}}
 {{- if .Values.mountConfigMap }}
+data:
   envFile: |
-    {{- range $key, $value := .Values.envVars }}
-    {{ $key }}={{ $value}}
-    {{- end }}
-  {{- else }}
-  {{- toYaml .Values.envVars }}
+  {{- range $key, $value := .Values.envVars }}
+  {{ $key }}={{ $value}}
   {{- end }}
+{{- else }}
+data:
+  {{- toYaml .Values.envVars }}
+{{- end }}
 {{- end }}
