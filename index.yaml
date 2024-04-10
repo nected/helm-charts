@@ -22,6 +22,45 @@ entries:
     urls:
     - https://github.com/nected/helm-charts/releases/download/common-0.1.4/common-0.1.4.tgz
     version: 0.1.4
+  datastore:
+  - apiVersion: v2
+    appVersion: 0.1.1
+    created: "2024-04-10T07:07:44.552558538Z"
+    dependencies:
+    - condition: postgresql.enabled
+      name: postgresql
+      repository: https://charts.bitnami.com/bitnami
+      version: 15.2.2
+    - condition: mongodb.enabled
+      name: mongodb
+      repository: https://charts.bitnami.com/bitnami
+      version: 15.1.1
+    - condition: redis.enabled
+      name: redis
+      repository: https://charts.bitnami.com/bitnami
+      version: 19.0.2
+    - condition: elasticsearch.enabled
+      name: elasticsearch
+      repository: https://charts.nected.io/
+      version: 8.5.1
+    description: A Datastore Helm chart
+    digest: 339f77c373b30ea4f63b660b24c357002d9f6bc5c2e4357870edeb05d3e70323
+    home: https://nected.ai/
+    keywords:
+    - nected
+    - workflow
+    - BRE
+    - DMS
+    maintainers:
+    - name: Socioverse Tech Private Ltd.
+      url: https://nected.ai/
+    name: datastore
+    sources:
+    - https://charts.nected.io
+    type: application
+    urls:
+    - https://github.com/nected/helm-charts/releases/download/datastore-0.1.1/datastore-0.1.1.tgz
+    version: 0.1.1
   editor:
   - apiVersion: v2
     appVersion: op0.1.0-3
@@ -131,6 +170,46 @@ entries:
     urls:
     - https://github.com/nected/helm-charts/releases/download/sql-linter-0.1.1/sql-linter-0.1.1.tgz
     version: 0.1.1
+  temporal:
+  - apiVersion: v2
+    appVersion: 1.22.0
+    created: "2024-04-10T07:07:44.730939943Z"
+    dependencies:
+    - condition: cassandra.enabled
+      name: cassandra
+      repository: https://charts.helm.sh/incubator
+      version: 0.14.3
+    - condition: prometheus.enabled
+      name: prometheus
+      repository: https://prometheus-community.github.io/helm-charts
+      version: 15.1.3
+    - condition: elasticsearch.enabled
+      name: elasticsearch
+      repository: https://helm.elastic.co
+      version: 7.17.3
+    - condition: grafana.enabled
+      name: grafana
+      repository: https://grafana.github.io/helm-charts
+      version: 5.0.10
+    description: Temporal is a distributed, scalable, durable, and highly available
+      orchestration engine to execute asynchronous long-running business logic in
+      a scalable and resilient way.
+    digest: 43a649e5a7a7750883603cab1db6264da93b92a467c97a1a155f26b1807fe015
+    home: https://temporal.io/
+    keywords:
+    - temporal
+    - workflow
+    - orchestration
+    maintainers:
+    - name: Temporal Technologies Inc.
+      url: https://temporal.io/
+    name: temporal
+    sources:
+    - https://github.com/temporalio/temporal
+    type: application
+    urls:
+    - https://github.com/nected/helm-charts/releases/download/temporal-0.28.0/temporal-0.28.0.tgz
+    version: 0.28.0
   vidhaan-executer:
   - apiVersion: v2
     appVersion: op0.1.0
@@ -177,4 +256,4 @@ entries:
     urls:
     - https://github.com/nected/helm-charts/releases/download/vidhaan-router-0.1.1/vidhaan-router-0.1.1.tgz
     version: 0.1.1
-generated: "2024-04-09T19:06:59.863424341Z"
+generated: "2024-04-10T07:07:44.730952537Z"
