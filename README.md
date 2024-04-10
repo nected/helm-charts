@@ -1,7 +1,7 @@
 # Nected OnPremise
 Installation using Helm charts
 
-![Nected Onpremise Architecture](https://assets.nected.io/nalanda/nected-onpremise-architecture.jpg)
+![Nected Onpremise Architecture](https://assets.nected.io/nalanda/nected-onpremise-arch.jpg)
 
 ## Pre-Requisite
 1. A loadbalance with public subnet
