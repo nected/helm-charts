@@ -105,16 +105,13 @@ Create autosetup pod labels from values and include pod labels
 {{/*
 Common configMap data generator
 */}}
-
 {{- define "common.configMapData" -}}
 {{- if .Values.mountConfigMap }}
-data:
-  envFile: |
+envFile: |
   {{- range $key, $value := .Values.envVars }}
   {{ $key }}={{ $value}}
   {{- end }}
 {{- else }}
-data:
-  {{- toYaml .Values.envVars }}
+{{- toYaml .Values.envVars }}
 {{- end }}
 {{- end }}
