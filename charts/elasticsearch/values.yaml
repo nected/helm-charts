@@ -142,6 +142,10 @@ persistence:
     # Add default labels for the volumeClaimTemplate of the StatefulSet
     enabled: false
   annotations: {}
+  persistentVolumeClaimRetentionPolicy:
+      enabled: true
+      whenScaled: Retain
+      whenDeleted: Delete
 
 extraVolumes: []
 # - name: extras
