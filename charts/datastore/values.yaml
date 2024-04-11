@@ -106,9 +106,6 @@ elasticsearch:
     resources:
       requests:
         storage: 30Gi
-  networkPolicy:
-    http:
-      enabled: true
   resources:
     requests:
       cpu: "1000m"
