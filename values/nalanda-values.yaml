@@ -1,22 +1,18 @@
 replicaCount: 1
 
 envVars:
-  ALLOWED_CORS_ORIGIN: http://<<backend-nalanda-domain>>,<<frontend-konark-domain>>,<<frontend-editor-domain>>
+  ALLOWED_CORS_ORIGIN: <<scheme>>://<<backend-nalanda-domain>>,<<scheme>>://<<frontend-konark-domain>>,<<scheme>>://<<frontend-editor-domain>>
   MASTER_DB_USER: <<PostgresUserName>>
   MASTER_DB_PASSWORD: <<PostgresPassword>>
   # if external use external host address
   MASTER_DB_HOST: datastore-postgresql
+  # if external use external use change accordingly: mongodb / mongodb+srv
+  MONGO_DB_SCHEME: mongodb
   MONGO_DB_USER: <<MongoUsername>>
   MONGO_DB_PASSWORD: <<MongoPassword>>
   # if external use external host address
   MONGO_DB_HOST: datastore-mongodb
-  ASSETS_BASE_URL: http://<<frontend-konark-domain>>/assets/konark
-  KONARK_BASE_URL: http://<<frontend-konark-domain>>
-  NECTED_USER_EMAIL: <<DefaultUser>>
-  NECTED_USER_PASSWORD: <<DefaultPassword>>
-  SIGNUP_DOMAINS:
-  DEFAULT_VIDHAAN_SCHEME: http
-  DEFAULT_VIDHAAN_DOMAIN: <<backend-vidhaan-router-domain>>
+  MONGO_DB_PARAMS: authSource=admin&retryWrites=true
   # if external use external host address
   REDIS_HOST: datastore-redis-master
   # enable elastic if installed using datastore or used external
@@ -25,16 +21,36 @@ envVars:
   ELASTIC_HOSTS: http://elasticsearch-master:9200
   ELASTIC_USER: elastic
   ELASTIC_PASSWORD: <<ElasticUserPass>>
+  # aws ses credentials if EMAIL_PROVIDE: ses
+  AWS_ACCESS_KEY:
+  AWS_SECRET_KEY:
+  AWS_REGION:
   # email
   SEND_EMAIL: true
   EMAIL_PROVIDER: smtp
+  # email sender setting
   SENDER_EMAIL: <<senderEmail>>
   SENDER_NAME: <<SendeName>>
+  # smtp provider credentials
   EMAIL_INSECURE_TLS: true
   EMAIL_HOST: <<emailHostName>>
   EMAIL_PORT: 587
   EMAIL_USERNAME: <<senderUsername>>
   EMAIL_PASSWORD: <<senderPassword>>
+  ASSETS_BASE_URL: <<scheme>>://<<frontend-konark-domain>>/assets/konark
+  KONARK_BASE_URL: <<scheme>>://<<frontend-konark-domain>>
+  # comma separated email domains to allow signup from
+  SIGNUP_DOMAINS:
+  # sql-linter service url (change only if release name is not sql-linter)
+  PROXY_SQL_LINT_URL: http://sql-linter/api/v1/core/lint
+  # default user created on setup
+  NECTED_USER_EMAIL: <<DefaultUser>>
+  NECTED_USER_PASSWORD: <<DefaultPassword>>
+  # default vidhaan settings
+  DEFAULT_VIDHAAN_SCHEME: <<scheme>>
+  DEFAULT_VIDHAAN_DOMAIN: <<backend-vidhaan-router-domain>>
+  # vidhaan agen key, any uuid, should be same in nalanda / vidhaan-router / vidhaan-exdecuter
+  DEFAULT_VIDHAAN_SECRET_KEY: <<VidhaanSecretKey>>
 
 ingress:
   enabled: true

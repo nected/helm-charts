@@ -24,13 +24,16 @@ envVars:
   SERVER_HOST: 0.0.0.0
   SERVER_PORT: 8001
   SERVER_TIMEZONE: UTC
+
   # secrets
   AES_SECRET: tfgoS4EzPPuBJjBLFgmlut9ukW9o2PYy
   SECRET: sdyghvjbknn6576876ggYT
+
     # Security
   SECURITY_ENABLED: false
   CHECK_ALLOWED_HOSTS: false
-  # Database
+
+  # Datastores
   AUTO_MIGRATE: false
   MASTER_DB_NAME: nected
   MASTER_DB_USER: nected
@@ -64,10 +67,12 @@ envVars:
   ELASTIC_INSECURE_TLS: true
   ELASTIC_USER: elastic
   ELASTIC_PASSWORD: nected
-  # google
+
+  # to enable signup using google auth
   GOOGLE_AUTH_ENABLED: false
   GOOGLE_CLIENT_ID:
-  # aws ses
+
+  # aws ses credentials if EMAIL_PROVIDE: ses
   AWS_ACCESS_KEY:
   AWS_SECRET_KEY:
   AWS_REGION:
@@ -81,6 +86,7 @@ envVars:
   EMAIL_PORT:
   EMAIL_USERNAME:
   EMAIL_PASSWORD:
+
   # Recapcha config
   RECAPTCHA_ENABLED: false
   RECAPTCHA_SECRET:
@@ -89,15 +95,18 @@ envVars:
   RECAPTCHA_CHECK_PATH:
   RECAPTCHA_CHECK_HOST:
   RECAPTCHA_CHECK_SCORE:
+
   # Sentry config
   SENTRY_DSN:
   SENTRY_ENABLED: false
   SENTRY_SAMPLING_RATE: 0.1
   SENTRY_ENABLE_TRACING: false
+
   # JWT
   JWT_ACCESS_TOKEN_EXP_TIME: "259200"
   JWT_REFRESH_TOKEN_EXP_TIME: "1296000"
   JWT_SECRET: lsdnfYTYknn5432HGHY7w
+
   # konark
   ASSETS_BASE_URL: http://konark.local/assets/konark
   KONARK_BASE_URL: http://konark.local
@@ -105,11 +114,13 @@ envVars:
   KONARK_OAUTH_REDIRECT_PATH: /oauth/redirect
   KONARK_RESET_PASSWORD_PATH: /reset-password/
   KONARK_WORKSPACE_INVITATION_PATH: /verify/workspace/invitation/
+
   # durations
   RESET_PASSWORD_EXP_TIME: "259200"
   EMAIL_VERIFICATION_EXP_DURATION: "1296000"
   WORKSPACE_INVITE_LINK_EXP_DURATION: "1296000"
   RESET_PASSWORD_MAX_LIMIT: 3
+
   # features flags
   EXTERNAL_PERMISSION_URL:
   DEMO_CONNECTOR_TEMPLATE_ID:
@@ -121,6 +132,7 @@ envVars:
   WORKSPACE_SUBDOMAIN_ENABLED: false
   SIGNUP_DOMAINS:
   SYNC_PLUGINS: mysql,mongodb,postgres,sqlserver,redshift,restAPI
+
   # Audit log
   AWS_TRACE_ID_KEY: X-Amzn-Trace-Id
   ELASTIC_ADUIT_PATTERN: audit-*
@@ -130,6 +142,7 @@ envVars:
   USAGE_INDEX_PATTERN: usage-*
   VIDHAAN_AUDIT_LOG_INDEX: audit-all-vidhaan
   X_FORWARDED_HEADER_KEY: X-Forwarded-For
+
   # proxy url
   CREDENTIAL_CONFIG_MAP: '{}'
   PROXY_SQL_LINT_URL: http://sql-linter/api/v1/core/lint
@@ -155,6 +168,7 @@ envVars:
   WORKFLOW_LIMIT: 500
   INVOCATION_LIMIT: 0
   EDITOR_LIMIT: 100
+  PLAN_NAME: OnPremise
 
   # Vidhaan Config
   DEFAULT_VIDHAAN_SCHEME: http
@@ -170,7 +184,6 @@ envVars:
   VIDHAAN_AUTH_HEADER_KEY_NAME: nected-api-key
   VIDHAAN_HEADER_WORKSPACE_KEY_NAME: vidhaan-workspace-key
   PRODUCT_API_KEY: ""
-
 
 serviceAccount:
   # Specifies whether a service account should be created
