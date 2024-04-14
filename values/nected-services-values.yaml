@@ -1,0 +1,154 @@
+# editor chart values to be updated
+editor:
+  replicaCount: 1
+  envVars:
+    REACT_APP_ALLOWED_DOMAINS: http://<<frontend-konark-domain>>
+    REACT_APP_SQL_LINT: http://<<backend-nalanda-domain>>/misc/proxy/lint
+    REACT_APP_EXECUTE_JS_API: http://<<backend-nalanda-domain>>/integration/code/execute
+    REACT_APP_NGINX_SERVER_NAME: <<frontend-editor-domain>>
+
+  ingress:
+    enabled: true
+    className: <<ingressClassName>>
+    hosts:
+      - host: <<frontend-editor-domain>>
+        paths:
+            - path: /
+              pathType: Prefix
+
+# konark chart values to be updated
+konark:
+  replicaCount: 1
+  envVars:
+    VITE_API_HOST: http://<<backend-nalanda-domain>>
+    VITE_GRAPHQL_URL: http://<<backend-nalanda-domain>>/graphql/query
+    VITE_EDITOR_URL: http://<<frontend-editor-domain>>
+    VITE_NGINX_SERVER_NAME: <<frontend-konark-domain>>
+
+  ingress:
+    enabled: true
+    className: <<ingressClassName>>
+    hosts:
+      - host: <<frontend-konark-domain>>
+        paths:
+            - path: /
+              pathType: Prefix
+
+# nalanda chart values to be updated
+nalanda:
+  replicaCount: 1
+  envVars:
+    ALLOWED_CORS_ORIGIN: http://<<backend-nalanda-domain>>,http://<<frontend-konark-domain>>,http://<<frontend-editor-domain>>
+    MASTER_DB_USER: <<PostgresUserName>>
+    MASTER_DB_PASSWORD: <<PostgresPassword>>
+    # if external use external host address
+    MASTER_DB_HOST: datastore-postgresql
+    # if external use external use change accordingly: mongodb / mongodb+srv
+    MONGO_DB_SCHEME: mongodb
+    MONGO_DB_USER: <<MongoUsername>>
+    MONGO_DB_PASSWORD: <<MongoPassword>>
+    # if external use external host address
+    MONGO_DB_HOST: datastore-mongodb
+    MONGO_DB_PARAMS: authSource=admin&retryWrites=true
+    # if external use external host address
+    REDIS_HOST: datastore-redis-master
+    # enable elastic if installed using datastore or used external
+    ELASTIC_ENABLED: false
+    # if external use external host address
+    ELASTIC_HOSTS: http://elasticsearch-master:9200
+    ELASTIC_USER: elastic
+    ELASTIC_PASSWORD: <<ElasticUserPass>>
+    # aws ses credentials if EMAIL_PROVIDE: ses
+    AWS_ACCESS_KEY:
+    AWS_SECRET_KEY:
+    AWS_REGION:
+    # email
+    SEND_EMAIL: true
+    EMAIL_PROVIDER: smtp
+    # email sender setting
+    SENDER_EMAIL: <<senderEmail>>
+    SENDER_NAME: <<SendeName>>
+    # smtp provider credentials
+    EMAIL_INSECURE_TLS: true
+    EMAIL_HOST: <<emailHostName>>
+    EMAIL_PORT: 587
+    EMAIL_USERNAME: <<senderUsername>>
+    EMAIL_PASSWORD: <<senderPassword>>
+    ASSETS_BASE_URL: http://<<frontend-konark-domain>>/assets/konark
+    KONARK_BASE_URL: http://<<frontend-konark-domain>>
+    # comma separated email domains to allow signup from
+    SIGNUP_DOMAINS:
+    # sql-linter service url (change only if release name is not sql-linter)
+    PROXY_SQL_LINT_URL: http://sql-linter/api/v1/core/lint
+    # default user created on setup
+    NECTED_USER_EMAIL: <<DefaultUser>>
+    NECTED_USER_PASSWORD: <<DefaultPassword>>
+    # default vidhaan settings
+    DEFAULT_VIDHAAN_SCHEME: http
+    DEFAULT_VIDHAAN_DOMAIN: <<backend-vidhaan-router-domain>>
+    # vidhaan agen key, any uuid, should be same in nalanda / vidhaan-router / vidhaan-exdecuter
+    DEFAULT_VIDHAAN_SECRET_KEY: <<VidhaanSecretKey>>
+    # k8s cluster gw ip
+    DEFAULT_VIDHAAN_WHITELISTED_IPS: "127.0.0.1"
+ 
+  ingress:
+    enabled: true
+    className: <<ingressClassName>>
+  hosts:
+    - host: <<backend-nalanda-domain>>
+      paths:
+          - path: /
+            pathType: Prefix
+
+# vidhaan-executer chart to be updated
+vidhaan-executer:
+  replicaCount: 1
+  envVars:
+    REDIS_HOST: "datastore-redis-master:6379"
+    # vidhaan agen key, any uuid, should be same in nalanda / vidhaan-router / vidhaan-exdecuter
+    VIDHAAN_AGENT_KEY: <<VidhaanSecretKey>>
+    # license key is issued by Nected
+    VIDHAAN_PRE_SHARED_KEY: <<LicenseKey>>
+    # enable elastic if installed using datastore or used external
+    ELASTIC_ENABLED: false
+    AUDIT_LOG_ENABLED: false
+    # if external use external host address
+    ELASTIC_ADDRESSES: http://elasticsearch-master:9200
+    # update if external and different user
+    ELASTIC_USERNAME: elastic
+    ELASTIC_PASSWORD: <<ElasticUserPass>>
+    # nalanda service url (change only if release name is not nalanda)
+    NALANDA_BASE_URL: http://nalanda
+    # nalanda service url (change only if release name is not temporal)
+    TEMPORAL_EXECUTER_SERVER_HOST: nected-temporal-frontend:7233
+
+# vidhaan-router chart to be updated
+vidhaan-router:
+  replicaCount: 1
+  envVars:
+    REDIS_HOST: "datastore-redis-master:6379"
+    # vidhaan agen key, any uuid, should be same in nalanda / vidhaan-router / vidhaan-exdecuter
+    VIDHAAN_AGENT_KEY: <<VidhaanSecretKey>>
+    # license key is issued by Nected
+    VIDHAAN_PRE_SHARED_KEY: <<LicenseKey>>
+    # enable elastic if installed using datastore or used external
+    ELASTIC_ENABLED: false
+    AUDIT_LOG_ENABLED: false
+    # if external use external host address
+    ELASTIC_ADDRESSES: http://elasticsearch-master:9200
+    # update if external and different user
+    ELASTIC_USERNAME: elastic
+    ELASTIC_PASSWORD: <<ElasticUserPass>>
+    # nalanda service url (change only if release name is not nalanda)
+    NALANDA_BASE_URL: http://nalanda
+    # nalanda service url (change only if release name is not temporal)
+    TEMPORAL_EXECUTER_SERVER_HOST: nected-temporal-frontend:7233
+
+  ingress:
+    enabled: true
+    className: <<ingressClassName>>
+    hosts:
+      - host: <<backend-vidhaan-router-domain>>
+        paths:
+            - path: /
+              pathType: Prefix
