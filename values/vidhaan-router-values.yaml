@@ -10,9 +10,9 @@ envVars:
   ELASTIC_ENABLED: false
   AUDIT_LOG_ENABLED: false
   # if external use external host address
-  ELASTIC_HOSTS: "http://elasticsearch-master:9200"
+  ELASTIC_ADDRESSES: http://elasticsearch-master:9200
   # update if external and different user
-  ELASTIC_USER: elastic
+  ELASTIC_USERNAME: elastic
   ELASTIC_PASSWORD: <<ElasticUserPass>>
   # nalanda service url (change only if release name is not nalanda)
   NALANDA_BASE_URL: http://nalanda

@@ -1,7 +1,7 @@
 replicaCount: 1
 
 envVars:
-  ALLOWED_CORS_ORIGIN: <<scheme>>://<<backend-nalanda-domain>>,<<scheme>>://<<frontend-konark-domain>>,<<scheme>>://<<frontend-editor-domain>>
+  ALLOWED_CORS_ORIGIN: http://<<backend-nalanda-domain>>,http://<<frontend-konark-domain>>,http://<<frontend-editor-domain>>
   MASTER_DB_USER: <<PostgresUserName>>
   MASTER_DB_PASSWORD: <<PostgresPassword>>
   # if external use external host address
@@ -37,8 +37,8 @@ envVars:
   EMAIL_PORT: 587
   EMAIL_USERNAME: <<senderUsername>>
   EMAIL_PASSWORD: <<senderPassword>>
-  ASSETS_BASE_URL: <<scheme>>://<<frontend-konark-domain>>/assets/konark
-  KONARK_BASE_URL: <<scheme>>://<<frontend-konark-domain>>
+  ASSETS_BASE_URL: http://<<frontend-konark-domain>>/assets/konark
+  KONARK_BASE_URL: http://<<frontend-konark-domain>>
   # comma separated email domains to allow signup from
   SIGNUP_DOMAINS:
   # sql-linter service url (change only if release name is not sql-linter)
@@ -47,10 +47,12 @@ envVars:
   NECTED_USER_EMAIL: <<DefaultUser>>
   NECTED_USER_PASSWORD: <<DefaultPassword>>
   # default vidhaan settings
-  DEFAULT_VIDHAAN_SCHEME: <<scheme>>
+  DEFAULT_VIDHAAN_SCHEME: http
   DEFAULT_VIDHAAN_DOMAIN: <<backend-vidhaan-router-domain>>
   # vidhaan agen key, any uuid, should be same in nalanda / vidhaan-router / vidhaan-exdecuter
   DEFAULT_VIDHAAN_SECRET_KEY: <<VidhaanSecretKey>>
+  # k8s cluster gw ip
+  DEFAULT_VIDHAAN_WHITELISTED_IPS: "127.0.0.1"
 
 ingress:
   enabled: true

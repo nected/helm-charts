@@ -56,20 +56,24 @@ Installation using Helm charts
       kubectl exec -it nected-temporal-admintools-xxxxxxx-xxxx -- /bin/bash
       ```
       - set db environment inside admintools pod:
-        ```export SQL_PLUGIN=postgres
+        ```
+        export SQL_PLUGIN=postgres
         export SQL_HOST=datastore-postgresql
         export SQL_PORT=5432
         export SQL_USER=<<PostgresUserName>>
-        export SQL_PASSWORD=<<PostgresUserName>>```
+        export SQL_PASSWORD=<<PostgresUserName>>
+        ```
   
       - set up temporal schema:
-        ```temporal-sql-tool --db temporal create-database 
+        ```
+        temporal-sql-tool --db temporal create-database
         SQL_DATABASE=temporal temporal-sql-tool setup-schema -v 0.0
         SQL_DATABASE=temporal temporal-sql-tool update -schema-dir schema/postgresql/v96/temporal/versioned
   
         temporal-sql-tool --db temporal_visibility create-database
         SQL_DATABASE=temporal_visibility temporal-sql-tool setup-schema -v 0.0
-        SQL_DATABASE=temporal_visibility temporal-sql-tool update -schema-dir schema/postgresql/v96/visibility/versioned```
+        SQL_DATABASE=temporal_visibility temporal-sql-tool update -schema-dir schema/postgresql/v96/visibility/versioned
+        ```
 
     - revert previous changes temporal-values.yaml 
       - set `server: enabled: true`
