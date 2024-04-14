@@ -96,7 +96,4 @@ Installation using Helm charts
     helm install nected charts/nected-services/ -f values/nected-services-values.yaml
     ```
 
-5. Access  Nected services:
-   ```
-   http://<<frontend-konark-domain>>, signin using  <<DefaultUser>> & <<DefaultPassword>>
-   ```
+Once all services are up, access using fronend-konark domain and defaul username / password.
