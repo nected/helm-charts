@@ -1,0 +1,42 @@
+apiVersion: v2
+name: nected
+description: A Nected Services Helm chart
+
+home: https://nected.ai/
+
+keywords:
+  - nected
+  - workflow
+  - BRE
+  - DMS
+
+maintainers:
+  - name: Socioverse Tech Private Ltd.
+    url: https://nected.ai/
+
+sources:
+  - https://charts.nected.io
+
+dependencies:
+  - name: editor
+    repository: https://charts.nected.io/
+    version: 0.1.2
+  - name: konark
+    repository: https://charts.nected.io/
+    version: 0.1.2
+  - name: nalanda
+    repository: https://charts.nected.io/
+    version: 0.1.2
+  - name: sql-linter
+    repository: https://charts.nected.io/
+    version: 0.1.1
+  - name: vidhaan-router
+    repository: https://charts.nected.io/
+    version: 0.1.1
+  - name: vidhaan-executer
+    repository: https://charts.nected.io/
+    version: 0.1.1
+
+type: application
+version: 0.1.0
+appVersion: "0.1.0"
