@@ -44,7 +44,7 @@ Installation using Helm charts
    helm install datastore charts/nected/datastore -f values/datastore-values.yaml
    ```
 
-5. Once datastore is deployed, Install Temporal:
+3. Once datastore is deployed, Install Temporal:
     - update temporal-values.yaml, disable server & and enable admintools
       ```
       server:
@@ -53,12 +53,14 @@ Installation using Helm charts
         enabled: true
 
       helm install temporal charts/temporal/ -f values/temporal-values.yaml
-     ```
+      ```
+
     - use admintools pod to setup temporal schema
       ```
       kubctl get pods
       kubectl exec -it nected-temporal-admintools-xxxxxxx-xxxx -- /bin/bash
       ```
+
       - set db environment inside admintools pod:
         ```
         export SQL_PLUGIN=postgres
@@ -67,6 +69,7 @@ Installation using Helm charts
         export SQL_USER=<<PostgresUserName>>
         export SQL_PASSWORD=<<PostgresUserName>>
         ```
+
       - set up temporal schema:
         ```
         temporal-sql-tool --db temporal create-database
@@ -86,14 +89,14 @@ Installation using Helm charts
         enabled: false
       
       helm upgrade temporal charts/temporal/ -f values/temporal-values.yaml
-      ````
+      ```
 
-6. Install Nected services:
+4. Install Nected services:
     ```
     helm install nected charts/nected-services/ -f values/nected-services-values.yaml
     ```
 
-7. Access  Nected services:
+5. Access  Nected services:
    ```
    http://<<frontend-konark-domain>>, signin using  <<DefaultUser>> & <<DefaultPassword>>
    ```
