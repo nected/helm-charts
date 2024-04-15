@@ -41,55 +41,35 @@ Installation using Helm charts
 
 2. If using nected provided chart to install databases, install datastore:
    ```
-   helm install datastore charts/nected/datastore -f values/datastore-values.yaml
+   helm install datastore charts/datastore/ -f values/datastore-values.yaml
    ```
 
-3. Once datastore is deployed, Install Temporal:
-    - update temporal-values.yaml, disable server & and enable admintools
-      ```
-      server:
-        enabled: false
-      admin-tools:
-        enabled: true
+3. Once datastore is deployed, Install Temporal's admintools & create schema:
+    ```
+    helm install admintools charts/temporal/ -f values/admintools-values.yaml
 
-      helm install temporal charts/temporal/ -f values/temporal-values.yaml
-      ```
+    kubctl get pods
+    kubectl exec -it admintools-temporal-admintools-xxxxxxx-xxxx -- /bin/bash
 
-    - use admintools pod to setup temporal schema
-      ```
-      kubctl get pods
-      kubectl exec -it nected-temporal-admintools-xxxxxxx-xxxx -- /bin/bash
-      ```
+    export SQL_PLUGIN=postgres
+    export SQL_HOST=datastore-postgresql
+    export SQL_PORT=5432
+    export SQL_USER=<<PostgresUserName>>
+    export SQL_PASSWORD=<<PostgresUserName>>
 
-      - set db environment inside admintools pod:
-        ```
-        export SQL_PLUGIN=postgres
-        export SQL_HOST=datastore-postgresql
-        export SQL_PORT=5432
-        export SQL_USER=<<PostgresUserName>>
-        export SQL_PASSWORD=<<PostgresUserName>>
-        ```
+    temporal-sql-tool --db temporal create-database
+    SQL_DATABASE=temporal temporal-sql-tool setup-schema -v 0.0
+    SQL_DATABASE=temporal temporal-sql-tool update -schema-dir schema/postgresql/v96/temporal/versioned
 
-      - set up temporal schema:
-        ```
-        temporal-sql-tool --db temporal create-database
-        SQL_DATABASE=temporal temporal-sql-tool setup-schema -v 0.0
-        SQL_DATABASE=temporal temporal-sql-tool update -schema-dir schema/postgresql/v96/temporal/versioned
-  
-        temporal-sql-tool --db temporal_visibility create-database
-        SQL_DATABASE=temporal_visibility temporal-sql-tool setup-schema -v 0.0
-        SQL_DATABASE=temporal_visibility temporal-sql-tool update -schema-dir schema/postgresql/v96/visibility/versioned
-        ```
+    temporal-sql-tool --db temporal_visibility create-database
+    SQL_DATABASE=temporal_visibility temporal-sql-tool setup-schema -v 0.0
+    SQL_DATABASE=temporal_visibility temporal-sql-tool update -schema-dir schema/postgresql/v96/visibility/versioned
+    ```
 
-    - revert values changes & upgrade temporal
-      ```
-      server:
-        enabled: true
-      admin-tools:
-        enabled: false
-      
-      helm upgrade temporal charts/temporal/ -f values/temporal-values.yaml
-      ```
+4. Now install temporal:
+    ```
+    helm install temporal charts/temporal/ -f values/temporal-values.yaml
+    ```
 
 4. Install Nected services:
     ```

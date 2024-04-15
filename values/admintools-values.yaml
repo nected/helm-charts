@@ -1,0 +1,7 @@
+###
+server:
+  enabled: false
+admintools:
+  enabled: true
+web:
+  enabled: false
