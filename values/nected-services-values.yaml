@@ -79,7 +79,7 @@ nalanda:
     # comma separated email domains to allow signup from
     SIGNUP_DOMAINS:
     # sql-linter service url (change only if release name is not sql-linter)
-    PROXY_SQL_LINT_URL: http://sql-linter/api/v1/core/lint
+    PROXY_SQL_LINT_URL: http://nected-sql-linter/api/v1/core/lint
     # default user created on setup
     NECTED_USER_EMAIL: <<DefaultUser>>
     NECTED_USER_PASSWORD: <<DefaultPassword>>
@@ -118,7 +118,7 @@ vidhaan-executer:
     ELASTIC_USERNAME: elastic
     ELASTIC_PASSWORD: <<ElasticUserPass>>
     # nalanda service url (change only if release name is not nalanda)
-    NALANDA_BASE_URL: http://nalanda
+    NALANDA_BASE_URL: http://nected-nalanda
     # nalanda service url (change only if release name is not temporal)
     TEMPORAL_EXECUTER_SERVER_HOST: nected-temporal-frontend:7233
 
@@ -140,7 +140,7 @@ vidhaan-router:
     ELASTIC_USERNAME: elastic
     ELASTIC_PASSWORD: <<ElasticUserPass>>
     # nalanda service url (change only if release name is not nalanda)
-    NALANDA_BASE_URL: http://nalanda
+    NALANDA_BASE_URL: http://nected-nalanda
     # nalanda service url (change only if release name is not temporal)
     TEMPORAL_EXECUTER_SERVER_HOST: nected-temporal-frontend:7233
 
