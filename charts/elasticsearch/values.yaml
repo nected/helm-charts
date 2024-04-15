@@ -21,6 +21,8 @@ roles:
   - remote_cluster_client
   - transform
 
+singleNode: true
+
 replicas: 3
 minimumMasterNodes: 2
 

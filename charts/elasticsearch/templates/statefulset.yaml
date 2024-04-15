@@ -315,9 +315,14 @@ spec:
             valueFrom:
               fieldRef:
                 fieldPath: metadata.name
+          {{- if .Values.singleNode }}
+          - name: discovery.type
+            value: "single-node"
+          {{- else }}
           {{- if has "master" .Values.roles }}
           - name: cluster.initial_master_nodes
             value: "{{ template "elasticsearch.endpoints" . }}"
+          {{- end }}
           {{- end }}
           {{- if gt (len (include "elasticsearch.roles" .)) 0 }}
           - name: node.roles
