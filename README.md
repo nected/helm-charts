@@ -20,7 +20,11 @@ Installation using Helm charts
   ```
   helm repo add nected https://nected.github.io/helm-charts
   ```
-2. Download values folder from [Nected Helm charts values](https://github.com/nected/helm-charts/tree/main/values)
+2. Download values into values folder:
+ - [Datastore values](https://charts.nected.io/values/datastore-values.yaml)
+ - [Admintools values](https://charts.nected.io/values/admintools-values.yaml)
+ - [Temporal values](https://charts.nected.io/values/temporal-values.yaml)
+ - [Nected Services values](https://charts.nected.io/values/nected-services-values.yaml)
 
 3. The following values need to be updated in the "values/*.yaml" files:
   - `<<LicenseKey>>`
