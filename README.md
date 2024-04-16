@@ -1,22 +1,85 @@
-# helm-charts
+# Nected OnPremise
+Installation using Helm charts
 
-## Usage
+![Nected Onpremise Architecture](https://assets.nected.io/nalanda/nected-onpremise-arch.jpg)
 
-[Helm](https://helm.sh) must be installed to use the charts.  Please refer to
-Helm's [documentation](https://helm.sh/docs) to get started.
+## Pre-Requisite
+1. A loadbalance with public subnet
+2. Map 4 domains to loadbalaner
+  - `<<frontend-konark-domain>>`
+  - `<<frontend-editor-domain>>`
+  - `<<backend-nalanda-domain>>`
+  - `<<backend-vidhaan-router-domain>>`
+3. need to enable storage drivers, e.g: azure execute:
+   ```
+   az aks update -n <Cluster Name> -g <Resource Group> --enable-disk-driver --enable-file-driver --enable-blob-driver --enable-snapshot-controller
+   ```
 
-Once Helm has been set up correctly, add the repo as follows:
+## Deployment steps
+1. Add Nected Repo:
+  ```
+  helm repo add nected https://nected.github.io/helm-charts
+  ```
+2. Download values folder from [Nected Helm charts values](https://github.com/nected/helm-charts/tree/main/values)
 
-  helm repo add <alias> https://nected.github.io/helm-charts
+3. The following values need to be updated in the "values/*.yaml" files:
+  - `<<LicenseKey>>`
+  - `<<frontend-konark-domain>>`
+  - `<<frontend-editor-domain>>`
+  - `<<backend-nalanda-domain>>`
+  - `<<backend-vidhaan-router-domain>>`
+  - `<<MongoPassword>>`
+  - `<<PostgresUserName>>`
+  - `<<PostgresPassword>>`
+  - `<<ElasticUserPass>>`
+  - `<<ingressClassName>>`
+  - `<<pathType>>`
+  - `<<DefaultUser>>`
+  - `<<DefaultPassword>>`
+  - `<<senderEmail>>`
+  - `<<SendeName>>`
+  - `<<emailHostName>>`
+  - `<<senderUsername>>`
+  - `<<senderPassword>>`
+  - `<<ingressClassName>>`
 
-If you had already added this repo earlier, run `helm repo update` to retrieve
-the latest versions of the packages.  You can then run `helm search repo
-<alias>` to see the charts.
+  Also update ingress annotations accordingly.
 
-To install the <chart-name> chart:
+4. If using nected provided chart to install databases, install datastore:
+   ```
+   helm install datastore nected/datastore -f values/datastore-values.yaml
+   ```
 
-    helm install my-<chart-name> <alias>/<chart-name>
+3. Once datastore is deployed, Install Temporal's admintools & create schema:
+    ```
+    helm install admintools nected/temporal -f values/admintools-values.yaml
 
-To uninstall the chart:
+    kubctl get pods
+    kubectl exec -it admintools-temporal-admintools-xxxxxxx-xxxx -- /bin/bash
 
-    helm delete my-<chart-name>
+    export SQL_PLUGIN=postgres
+    export SQL_HOST=datastore-postgresql
+    export SQL_PORT=5432
+    export SQL_USER=<<PostgresUserName>>
+    export SQL_PASSWORD=<<PostgresUserName>>
+
+    temporal-sql-tool --db temporal create-database
+    SQL_DATABASE=temporal temporal-sql-tool setup-schema -v 0.0
+    SQL_DATABASE=temporal temporal-sql-tool update -schema-dir schema/postgresql/v96/temporal/versioned
+
+    temporal-sql-tool --db temporal_visibility create-database
+    SQL_DATABASE=temporal_visibility temporal-sql-tool setup-schema -v 0.0
+    SQL_DATABASE=temporal_visibility temporal-sql-tool update -schema-dir schema/postgresql/v96/visibility/versioned
+    ```
+
+4. Now install temporal:
+    ```
+    helm install temporal nected/temporal -f values/temporal-values.yaml
+    ```
+
+4. Install Nected services:
+    ```
+    helm install nected nected/nected-services -f values/nected-services-values.yaml
+    ```
+
+Once all services are up, access using fronend-konark domain and defaul username / password.
