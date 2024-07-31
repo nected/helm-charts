@@ -164,6 +164,36 @@ entries:
     urls:
     - https://github.com/nected/helm-charts/releases/download/elasticsearch-8.5.1/elasticsearch-8.5.1.tgz
     version: 8.5.1
+  executer-tp:
+  - apiVersion: v2
+    appVersion: op0.2.0
+    created: "2024-07-31T18:06:59.152132526Z"
+    dependencies:
+    - name: common
+      repository: https://charts.nected.io/
+      tags:
+      - nected-common
+      version: 0.x.x
+    description: Nected 3rd party connector executer service
+    digest: 284170371adb1c7b372eb27d1356f05c658ba04b59963e816c58f653ee32e50d
+    home: https://nected.ai/
+    keywords:
+    - Nected
+    - Workflow automation
+    - BRE, Business Rule Engine
+    - Decision management platform
+    - No-Code / Low-Code Rule Engine
+    - No-Code / Low-Code Workflow automation
+    maintainers:
+    - name: Socioverse Tech Private Ltd.
+      url: https://nected.ai/
+    name: executer-tp
+    sources:
+    - https://charts.nected.io
+    type: application
+    urls:
+    - https://github.com/nected/helm-charts/releases/download/executer-tp-0.2.0/executer-tp-0.2.0.tgz
+    version: 0.2.0
   konark:
   - apiVersion: v2
     appVersion: op0.2.0
@@ -413,6 +443,35 @@ entries:
     version: 0.28.0
   vidhaan-executer:
   - apiVersion: v2
+    appVersion: op0.2.0
+    created: "2024-07-31T18:06:59.408720065Z"
+    dependencies:
+    - name: common
+      repository: https://charts.nected.io/
+      tags:
+      - nected-common
+      version: 0.x.x
+    description: Nected Vidhaan-executer (platform worker service)
+    digest: 813c6bc8ce8fbb2234aeaa3cf697c130789eaddcb8eb7d164557c084a6b1f5c0
+    home: https://nected.ai/
+    keywords:
+    - Nected
+    - Workflow automation
+    - BRE, Business Rule Engine
+    - Decision management platform
+    - No-Code / Low-Code Rule Engine
+    - No-Code / Low-Code Workflow automation
+    maintainers:
+    - name: Socioverse Tech Private Ltd.
+      url: https://nected.ai/
+    name: vidhaan-executer
+    sources:
+    - https://charts.nected.io
+    type: application
+    urls:
+    - https://github.com/nected/helm-charts/releases/download/vidhaan-executer-0.2.1/vidhaan-executer-0.2.1.tgz
+    version: 0.2.1
+  - apiVersion: v2
     appVersion: op0.1.0
     created: "2024-04-09T19:06:59.764933426Z"
     dependencies:
@@ -436,6 +495,35 @@ entries:
     version: 0.1.1
   vidhaan-router:
   - apiVersion: v2
+    appVersion: op0.2.0
+    created: "2024-07-31T18:06:59.586655214Z"
+    dependencies:
+    - name: common
+      repository: https://charts.nected.io/
+      tags:
+      - nected-common
+      version: 0.x.x
+    description: Nected vidhaan-router helm chart
+    digest: 97bd269302ad66186cef89ef109370fb1e6248c4384126d30e50380506be7fa3
+    home: https://nected.ai/
+    keywords:
+    - Nected
+    - Workflow automation
+    - BRE, Business Rule Engine
+    - Decision management platform
+    - No-Code / Low-Code Rule Engine
+    - No-Code / Low-Code Workflow automation
+    maintainers:
+    - name: Socioverse Tech Private Ltd.
+      url: https://nected.ai/
+    name: vidhaan-router
+    sources:
+    - https://charts.nected.io
+    type: application
+    urls:
+    - https://github.com/nected/helm-charts/releases/download/vidhaan-router-0.2.1/vidhaan-router-0.2.1.tgz
+    version: 0.2.1
+  - apiVersion: v2
     appVersion: op0.1.0
     created: "2024-04-09T19:06:59.863413701Z"
     dependencies:
@@ -457,4 +545,4 @@ entries:
     urls:
     - https://github.com/nected/helm-charts/releases/download/vidhaan-router-0.1.1/vidhaan-router-0.1.1.tgz
     version: 0.1.1
-generated: "2024-07-31T14:02:58.86438428Z"
+generated: "2024-07-31T18:06:59.58668548Z"
