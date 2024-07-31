@@ -1,15 +1,27 @@
 apiVersion: v2
-description: Nected editor helm chart
-home: https://github.com/nected/helm-charts
-maintainers:
-- email: devops@nected.ai
-  name: Nected Devops
 name: editor
+description: Editor, Nected fronend editor app
+
+home: https://nected.ai/
+
+keywords:
+  - Nected
+  - Workflow automation
+  - BRE, Business Rule Engine
+  - Decision management platform
+  - No-Code / Low-Code Rule Engine
+  - No-Code / Low-Code Workflow automation
+
+maintainers:
+  - name: Socioverse Tech Private Ltd.
+    url: https://nected.ai/
+
 sources:
-- https://github.com/nected/nected-editor
-appVersion: "op0.1.0-3"
+  - https://charts.nected.io
+
+appVersion: "op0.2.0"
 type: application
-version: 0.1.2
+version: 0.2.0
 
 dependencies:
 - name: common

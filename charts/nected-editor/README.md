@@ -1,4 +1,5 @@
-Nected Editor (Frontend) Helm Chart
+# Nected Editor
+Nected fronend editor app
 
 # Install
 helm repo add nected https://nected.github.io/helm-charts
