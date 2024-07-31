@@ -1,4 +1,5 @@
 apiVersion: v2
+name: nalanda
 description: Nalanda, Nected Backend API service
 
 home: https://nected.ai/

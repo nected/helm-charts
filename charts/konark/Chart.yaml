@@ -1,4 +1,5 @@
 apiVersion: v2
+name: konark
 description: Konark, Nected fronend application
 
 home: https://nected.ai/
