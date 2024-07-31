@@ -1,4 +1,4 @@
-Nected Konark (Frontend Console) Helm Chart
+Konark, Nected Frontend application
 
 # Install
 helm repo add nected https://nected.github.io/helm-charts

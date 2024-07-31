@@ -5,10 +5,12 @@ description: helm charts to install data stores requred for Nected platform
 home: https://nected.ai/
 
 keywords:
-  - nected
-  - workflow
-  - BRE
-  - DMS
+  - Nected
+  - Workflow automation
+  - BRE, Business Rule Engine
+  - Decision management platform
+  - No-Code / Low-Code Rule Engine
+  - No-Code / Low-Code Workflow automation
 
 maintainers:
   - name: Socioverse Tech Private Ltd.
