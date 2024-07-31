@@ -137,6 +137,35 @@ entries:
     version: 8.5.1
   konark:
   - apiVersion: v2
+    appVersion: op0.2.0
+    created: "2024-07-31T13:39:32.201856337Z"
+    dependencies:
+    - name: common
+      repository: https://charts.nected.io/
+      tags:
+      - nected-common
+      version: 0.x.x
+    description: Konark, Nected fronend application
+    digest: c9296add612a3482784497fa7b0f6ab8e96fd951991209800278ef2f46f8a980
+    home: https://nected.ai/
+    keywords:
+    - Nected
+    - Workflow automation
+    - BRE, Business Rule Engine
+    - Decision management platform
+    - No-Code / Low-Code Rule Engine
+    - No-Code / Low-Code Workflow automation
+    maintainers:
+    - name: Socioverse Tech Private Ltd.
+      url: https://nected.ai/
+    name: konark
+    sources:
+    - https://charts.nected.io
+    type: application
+    urls:
+    - https://github.com/nected/helm-charts/releases/download/konark-0.2.0/konark-0.2.0.tgz
+    version: 0.2.0
+  - apiVersion: v2
     appVersion: op0.1.1
     created: "2024-04-09T19:06:59.389741989Z"
     dependencies:
@@ -159,6 +188,35 @@ entries:
     - https://github.com/nected/helm-charts/releases/download/konark-0.1.2/konark-0.1.2.tgz
     version: 0.1.2
   nalanda:
+  - apiVersion: v2
+    appVersion: op0.2.0
+    created: "2024-07-31T13:39:32.302775106Z"
+    dependencies:
+    - name: common
+      repository: https://charts.nected.io/
+      tags:
+      - nected-common
+      version: 0.x.x
+    description: Nalanda, Nected Backend API service
+    digest: 290e3b1e3e3c9d8a9d2a5d84589719caaee1ff81ee5e2def65bba024bc7e5609
+    home: https://nected.ai/
+    keywords:
+    - Nected
+    - Workflow automation
+    - BRE, Business Rule Engine
+    - Decision management platform
+    - No-Code / Low-Code Rule Engine
+    - No-Code / Low-Code Workflow automation
+    maintainers:
+    - name: Socioverse Tech Private Ltd.
+      url: https://nected.ai/
+    name: nalanda
+    sources:
+    - https://charts.nected.io
+    type: application
+    urls:
+    - https://github.com/nected/helm-charts/releases/download/nalanda-0.2.0/nalanda-0.2.0.tgz
+    version: 0.2.0
   - apiVersion: v2
     appVersion: op0.1.2
     created: "2024-04-09T19:06:59.506107543Z"
@@ -331,4 +389,4 @@ entries:
     urls:
     - https://github.com/nected/helm-charts/releases/download/vidhaan-router-0.1.1/vidhaan-router-0.1.1.tgz
     version: 0.1.1
-generated: "2024-07-31T13:28:03.021438674Z"
+generated: "2024-07-31T13:39:32.3027986Z"
