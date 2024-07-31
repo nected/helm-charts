@@ -1,38 +1,6 @@
 nameOverride: ""
 fullnameOverride: ""
 
-# Mongodb Chart Values
-mongodb:
-  enabled: true
-  architecture: standalone
-  useStatefulSet: true
-  auth:
-    enabled: true
-    rootUser: root
-    rootPassword: nected
-    username: nected
-    password: nected
-    database: nected
-  persistence:
-    enabled: true
-    storageClass: "default"
-    accessModes:
-      - ReadWriteOnce
-    size: 8Gi
-  persistentVolumeClaimRetentionPolicy:
-    enabled: true
-    whenScaled: Retain
-    whenDeleted: Delete
-  volumePermissions:
-    enabled: true
-  resources:
-    requests:
-      cpu: "1000m"
-      memory: "2Gi"
-    limits:
-      cpu: "1000m"
-      memory: "2Gi"
-
 # Postgresql Chart Values
 postgresql:
   enabled: true
