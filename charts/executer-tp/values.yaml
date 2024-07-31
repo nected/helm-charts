@@ -1,0 +1,129 @@
+# Default values for sql-linter.
+# This is a YAML-formatted file.
+# Declare variables to be passed into your templates.
+
+replicaCount: 1
+
+image:
+  repository: public.ecr.aws/f6k1n6r3/vidhaan-executer-tp
+  pullPolicy: IfNotPresent
+  # Overrides the image tag whose default is the chart appVersion.
+  tag: op0.2.0
+
+imagePullSecrets: []
+nameOverride: ""
+fullnameOverride: ""
+
+
+envVars:
+  TEMPORAL_HOST: temporal-stage-frontend
+  TEMPORAL_PORT: 7233
+  TEMPORAL_NAMESPACE: vidhaan
+  TEMPORAL_TASK_QUEUE: vidhaan-tp-worker-tq
+  TEMPORAL_MAX_CONCURRENT_ACTIVITY_TASK_EXECUTIONS: 100
+  TEMPORAL_MAX_CONCURRENT_LOCAL_ACTIVITY_EXECUTIONS: 100
+  TEMPORAL_MAX_CONCURRENT_WORKFLOW_TASK_EXECUTIONS: 100
+  TEMPORAL_MAX_CONCURRENT_WORKFLOW_TASK_POLLS: 50
+  TEMPORAL_MAX_CONCURRENT_ACTIVITY_TASK_POLLS: 10
+  TEMPORAL_MAX_CACHED_WORKFLOWS: 200
+  SENTRY_DSN:
+  SENTRY_ENABLED: false
+  SENTRY_ENVIRONMENT: development
+  SENTRY_SAMPLE_RATE: 1.0
+  APPLICATION_NAME: executer-tp
+  REDIS_ENABLED: true
+  REDIS_HOST: redis-master
+  REDIS_PORT: 6379
+  REDIS_USERNAME:
+  REDIS_PASSWORD:
+  REDIS_DB: 0
+
+
+serviceAccount:
+  # Specifies whether a service account should be created
+  create: false
+  # Automatically mount a ServiceAccount's API credentials?
+  automount: false
+  # Annotations to add to the service account
+  annotations: {}
+  # The name of the service account to use.
+  # If not set and create is true, a name is generated using the fullname template
+  name: ""
+
+podAnnotations: {}
+podLabels: {}
+
+podSecurityContext: {}
+  # fsGroup: 2000
+
+securityContext: {}
+  # capabilities:
+  #   drop:
+  #   - ALL
+  # readOnlyRootFilesystem: true
+  # runAsNonRoot: true
+  # runAsUser: 1000
+
+autoSetup:
+  debug: false
+  enabled: false
+  image:
+    repository: ""
+    pullPolicy: ""
+    tag: ""
+  command: []
+  args: []
+  annotations: {}
+
+service:
+  type: ClusterIP
+  port: 80
+  targetPort: 8000
+
+ingress:
+  enabled: false
+  className: ""
+  annotations: {}
+  hosts: []
+  tls: []
+
+
+resources:
+  # We usually recommend not to specify default resources and to leave this as a conscious
+  # choice for the user. This also increases chances charts run on environments with little
+  # resources, such as Minikube. If you do want to specify resources, uncomment the following
+  # lines, adjust them as necessary, and remove the curly braces after 'resources:'.
+  requests:
+    cpu: "500m"
+    memory: "1024Mi"
+  limits:
+    cpu: "1000m"
+    memory: "1024Mi"
+
+livenessProbe:
+  httpGet:
+    path: /status
+    port: 8000
+readinessProbe:
+  httpGet:
+    path: /status
+    port: 8000
+
+autoscaling:
+  enabled: false
+  # minReplicas: 1
+  # maxReplicas: 1
+  # targetCPUUtilizationPercentage: 80
+  # targetMemoryUtilizationPercentage: 80
+
+# Additional volumes on the output Deployment definition.
+volumes: []
+
+# Additional volumeMounts on the output Deployment definition.
+volumeMounts: []
+
+nodeSelector: {}
+
+tolerations: []
+
+affinity: {}
