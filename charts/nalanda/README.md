@@ -1,4 +1,5 @@
-Nected Nalanda (Backend API service) Helm Chart
+# Nalanda
+Nected Backend API service
 
 # Install
 helm repo add nected https://nected.github.io/helm-charts
