@@ -5,41 +5,55 @@ server:
         driver: "sql"
 
         sql:
-          driver: "postgres"
-          host: ""
+          driver: "postgres12"
+          host: _HOST_
           port: 5432
           database: temporal
-          user: ""
-          password: ""
+          user: _USERNAME_
+          password: _PASSWORD_
           # for a production deployment use this instead of `password` and provision the secret beforehand e.g. with a sealed secret
           # it has a single key called `password`
-          # existingSecret: temporal-visibility-store
-          maxConns: 10
+          # existingSecret: temporal-default-store
+          maxConns: 20
           maxConnLifetime: "1h"
-          tls:
-            enabled: true
-            enableHostVerification: false
+          # tls:
+          #  enabled: true
+          #  enableHostVerification: true
           #  serverName: _HOST_ # this is strictly required when using serverless CRDB offerings
+          #  caFile: /path/to/certs/<CA-file> # Here we assumed that caFile, certFile, keyFile are stored in one secret mounted as 'secret-with-certs' (see: server.additionalVolumes and server.additionalVolumeMounts sections).
+          #  certFile: /path/to/certs/<client-cert-file>
+          #  keyFile: /path/to/certs/<client-key-file>
 
       visibility:
         driver: "sql"
 
         sql:
-          driver: "postgres"
-          host: ""
+          driver: "postgres12"
+          host: _HOST_
           port: 5432
           database: temporal_visibility
-          user: ""
-          password: 
+          user: _USERNAME_
+          password: _PASSWORD_
           # for a production deployment use this instead of `password` and provision the secret beforehand e.g. with a sealed secret
           # it has a single key called `password`
           # existingSecret: temporal-visibility-store
-          maxConns: 5
+          maxConns: 20
           maxConnLifetime: "1h"
-          tls:
-            enabled: true
-            enableHostVerification: false
+          # tls:
+          #  enabled: true
+          #  enableHostVerification: true
           #  serverName: _HOST_ # this is strictly required when using serverless CRDB offerings
+          #  caFile: /path/to/certs/<CA-file> # Here we assumed that caFile, certFile, keyFile are stored in one secret mounted as 'secret-with-certs' (see: server.additionalVolumes and server.additionalVolumeMounts sections).
+          #  certFile: /path/to/certs/<client-cert-file>
+          #  keyFile: /path/to/certs/<client-key-file>
+
+  # additionalVolumes:
+  #   - name: secret-with-certs
+  #     secret:
+  #       secretName: secret-with-certs
+  # additionalVolumeMounts:
+  #   - name: secret-with-certs
+  #     mountPath: /path/to/certs/
 
 cassandra:
   enabled: false
@@ -60,6 +74,8 @@ elasticsearch:
   enabled: false
 
 schema:
+  createDatabase:
+    enabled: true
   setup:
     enabled: false
   update:

@@ -1,10 +1,10 @@
 elasticsearch:
   enabled: false
   external: true
-  host: "es.dev.nected.io"
-  port: "443"
-  username: "satya"
-  password: "qLfps9JY4MN3BFL"
+  host: "elasticsearch-master-headless"
+  port: "9200"
+  username: "elastic"
+  password:
   version: "v7"
   scheme: "https"
   logLevel: "error"

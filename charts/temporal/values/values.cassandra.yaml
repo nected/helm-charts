@@ -27,25 +27,9 @@ server:
 #                      ResourceExhausted: 0.15
 
         cassandra:
-          hosts: []
+          hosts: ["cassandra.default.svc.cluster.local"]
           port: 9042
           keyspace: temporal
-          user: "user"
-          password: "password"
-          existingSecret: ""
-          replicationFactor: 1
-          consistency:
-            default:
-              consistency: "local_quorum"
-              serialConsistency: "local_serial"
-
-      visibility:
-        driver: "cassandra"
-
-        cassandra:
-          hosts: []
-          port: 9042
-          keyspace: temporal_visibility
           user: "user"
           password: "password"
           existingSecret: ""
@@ -65,6 +49,8 @@ postgresql:
   enabled: false
 
 schema:
+  createDatabase:
+    enabled: true
   setup:
     enabled: false
   update:
