@@ -8,7 +8,7 @@ image:
   repository: public.ecr.aws/f6k1n6r3/vidhaan-executer
   pullPolicy: IfNotPresent
   # Overrides the image tag whose default is the chart appVersion.
-  tag: "op0.1.0"
+  tag: "op0.2.0"
 
 imagePullSecrets: []
 nameOverride: ""
@@ -21,56 +21,66 @@ envVars:
   #Vidhaan
   VIDHAAN_AGENT_NAME: onpremise
   VIDHAAN_AGENT_KEY: afa8572b-facf-46ca-a40b-5cd23a3dbf02
-  VIDHAAN_PRE_SHARED_KEY:
+  VIDHAAN_PRE_SHARED_KEY: 7322a280-ef06-44ed-9aa2-07ff39a33126
+
   #Router Config
   ALLOWED_HOSTS: 0.0.0.0
   SERVER_HOST: 0.0.0.0
   SERVER_PORT: 8002
   MONTHLY_LIMIT: 0
-  EXCLUDED_WORKSPACE_IDS_FOR_MONTHLY_LIMIT: 1
+  EXCLUDED_WORKSPACE_IDS_FOR_MONTHLY_LIMIT: 1,
+  MAX_REQUEST_SIZE: 3145728
+  ENABLE_PROFILING: false
+  SKIP_LOG_PATHS: /health
+
   # Redis Config
   REDIS_HOST: datastore-redis-master:6379
-  REDIS_DATABASE: 1
+  REDIS_DATABASE: 0
   REDIS_PASSWORD:
+
   # Elastic Config
   ELASTIC_ENABLED: false
   ELASTIC_INSECURE_TLS: true
   ELASTIC_ADDRESSES: http://elasticsearch-master:9200
-  ELASTIC_API_KEY: api-key
+  ELASTIC_API_KEY:
   ELASTIC_USERNAME: elastic
   ELASTIC_PASSWORD: nected
+
   # Audit log
   AUDIT_LOG_ENABLED: false
   AUDIT_LOG_INDEX: audit-all-vidhaan
   AWS_TRACE_ID_KEY: X-Amzn-Trace-Id
   X_FORWARDED_HEADER_KEY: X-Forwarded-For
+
   # Nalanda
   NALANDA_BASE_URL: http://nalanda
-  NALANDA_WORKSPACE_SYNC_PATH: /vidhaan/agent/sync/workspace
-  NALANDA_ENTITY_SYNC_PATH: /vidhaan/agent/sync/data
-  NALANDA_HEADER_AGENT_KEY_NAME: vidhaan-agent-key
+
   #Temporal For Executer Workers
-  TEMPORAL_EXECUTER_SERVER_HOST: "nected-temporal-frontend:7233"
-  TEMPORAL_EXECUTER_NAMESPACE: onpremise
-  TEMPORAL_EXECUTER_RETENTION_PERIOD: 3600
-  TEMPORAL_EXECUTER_WORKFLOW_TASK_POLLERS: 40
-  TEMPORAL_EXECUTER_ACTIVITY_TASK_POLLERS: 40
-  TEMPORAL_EXECUTER_WORKFLOW_CONCURRENT_EXECUTION_SIZE: 1000
-  TEMPORAL_EXECUTER_ACTIVITY_CONCURRENT_EXECUTION_SIZE: 1000
+  TEMPORAL_EXECUTER_SERVER_HOST: nected-temporal-frontend:7233
+  TEMPORAL_EXECUTER_NAMESPACE: default
+  TEMPORAL_EXECUTER_RETENTION_PERIOD: 24h
+
   # Datasync config
   DATASYNC_SCHEDULE: true
   DATASYNC_SCHEDULE_ID: datasync_schedule
   DATASYNC_INTERVAL_DURATION: 30
   DATASYNC_DELETE_WITH_MANAGER: false
+
   # Sentry config
   SENTRY_DSN:
   SENTRY_ENABLED: false
   SENTRY_SAMPLING_RATE: 0.1
   SENTRY_ENABLE_TRACING: false
+
   # Security
   SECURITY_ENABLED: true
+
   # Workflow config
   WORKFLOW_CONFIG_MAP: '{}'
+
+  # Reporting
+  ERROR_REPORTING_ENABLED: false
+  ERROR_REPORTING_TTL: 24h
 
 serviceAccount:
   # Specifies whether a service account should be created
