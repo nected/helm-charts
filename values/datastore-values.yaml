@@ -1,31 +1,49 @@
 # datastore charts values
-mongodb:
-  # false if wants to use external mongodb
-  enabled: true
-  auth:
-    rootPassword: <<MongoPassword>>
-    username: <<MongoUsername>>
-    password: <<MongoPassword>>
-    # create database manually if external
-    database: nected
 postgresql:
   # false if wants to use external postgresql
   enabled: true
   global:
     postgresql:
       auth:
-        postgresPassword: <<PostgresPassword>>
+        postgresPassword: psqlMainPass123
         # create username manually if external
-        username: <<PostgresUserName>>
-        password: <<PostgresPassword>>
+        username: nected
+        password: psqlPass123
         # create database manually if external
         database: nected
+  primary:
+    persistence:
+      storageClass: "default"
+    resources:
+      requests:
+        cpu: "500m"
+        memory: "512Mi"
+      limits:
+        cpu: "500m"
+        memory: "512Mi"
 redis:
   # false if wants to use external redis
   enabled: true
+  master:
+    resources:
+      requests:
+        cpu: "200m"
+        memory: "512Mi"
+      limits:
+        cpu: "200m"
+        memory: "512Mi"
 elasticsearch:
   # false if wants to use external elastic
-  enabled: false
+  enabled: true
   secret:
-    password: <<ElasticUserPass>>
+    password: esPass123
+  volumeClaimTemplate:
+    storageClassName: "default"
+  resources:
+    requests:
+      cpu: "500m"
+      memory: "1Gi"
+    limits:
+      cpu: "500m"
+      memory: "1Gi"
 

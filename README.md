@@ -1,16 +1,16 @@
 # Nected OnPremise
 Installation using Helm charts
 
-![Nected Onpremise Architecture](https://assets.nected.io/nalanda/nected-onpremise-arch.jpg)
+![Nected Onpremise Architecture](https://assets.nected.io/nalanda/nected-op-1.jpg)
 
 ## Pre-Requisite
 1. An external Application Load Balancer with Ingress.
 
 2. Map 4 domains to loadbalaner
-    - `<<frontend-konark-domain>>`
-    - `<<frontend-editor-domain>>`
-    - `<<backend-nalanda-domain>>`
-    - `<<backend-vidhaan-router-domain>>`
+    - `<<ui-domain>>`
+    - `<<editor-domain>>`
+    - `<<backend-domain>>`
+    - `<<router-domain>>`
       - Configure external access only if rule/workflow API or webhook needs to be accessible from outside of cluster.
 
 ## Deployment steps
@@ -26,10 +26,10 @@ Installation using Helm charts
 
 3. Update following values in "values/nected-values.yaml" files, according to your ingress.
     - `<<scheme>>`
-    - `<<frontend-konark-domain>>`
-    - `<<frontend-editor-domain>>`
-    - `<<backend-nalanda-domain>>`
-    - `<<backend-vidhaan-router-domain>>`
+    - `<<ui-domain>>`
+    - `<<editor-domain>>`
+    - `<<backend-domain>>`
+    - `<<router-domain>>`
     - `<<ingressClassName>>` (also enable ingress)
 
 4. Install Datastore ElasticSearch / Postgresql / Redis.
@@ -46,7 +46,7 @@ Installation using Helm charts
 
 7. Install Nected services:
     ```
-    helm install nected nected/nected -f values/nected-services-values.yaml
+    helm install nected nected/nected -f values/nected-values.yaml
     ```
 
 With all services running, access the application through the fronend-konark domain using the default user and password (values/nected-values.yaml).
