@@ -2,16 +2,16 @@
 editor:
   replicaCount: 1
   envVars:
-    REACT_APP_ALLOWED_DOMAINS: <<scheme>>://<<frontend-konark-domain>>
-    REACT_APP_SQL_LINT: <<scheme>>://<<backend-nalanda-domain>>/misc/proxy/lint
-    REACT_APP_EXECUTE_JS_API: <<scheme>>://<<backend-nalanda-domain>>/integration/code/execute
-    REACT_APP_NGINX_SERVER_NAME: <<frontend-editor-domain>>
+    REACT_APP_ALLOWED_DOMAINS: <<scheme>>://<<ui-domain>>
+    REACT_APP_SQL_LINT: <<scheme>>://<<backend-domain>>/misc/proxy/lint
+    REACT_APP_EXECUTE_JS_API: <<scheme>>://<<backend-domain>>/integration/code/execute
+    REACT_APP_NGINX_SERVER_NAME: <<editor-domain>>
 
   ingress:
     enabled: false
     className: <<ingressClassName>>
     hosts:
-      - host: <<frontend-editor-domain>>
+      - host: <<editor-domain>>
         paths:
             - path: /
               pathType: Prefix
@@ -20,16 +20,16 @@ editor:
 konark:
   replicaCount: 1
   envVars:
-    VITE_API_HOST: <<scheme>>://<<backend-nalanda-domain>>
-    VITE_GRAPHQL_URL: <<scheme>>://<<backend-nalanda-domain>>/graphql/query
-    VITE_EDITOR_URL: <<scheme>>://<<frontend-editor-domain>>
-    VITE_NGINX_SERVER_NAME: <<frontend-konark-domain>>
+    VITE_API_HOST: <<scheme>>://<<backend-domain>>
+    VITE_GRAPHQL_URL: <<scheme>>://<<backend-domain>>/graphql/query
+    VITE_EDITOR_URL: <<scheme>>://<<editor-domain>>
+    VITE_NGINX_SERVER_NAME: <<ui-domain>>
 
   ingress:
     enabled: false
     className: <<ingressClassName>>
     hosts:
-      - host: <<frontend-konark-domain>>
+      - host: <<ui-domain>>
         paths:
             - path: /
               pathType: Prefix
@@ -38,7 +38,7 @@ konark:
 nalanda:
   replicaCount: 1
   envVars:
-    ALLOWED_CORS_ORIGIN: <<scheme>>://<<backend-nalanda-domain>>,<<scheme>>://<<frontend-konark-domain>>,<<scheme>>://<<frontend-editor-domain>>
+    ALLOWED_CORS_ORIGIN: <<scheme>>://<<backend-domain>>,<<scheme>>://<<ui-domain>>,<<scheme>>://<<editor-domain>>
     # if external use external host address
     MASTER_DB_USER: nected
     MASTER_DB_PASSWORD: psqlPass123
@@ -67,8 +67,8 @@ nalanda:
     EMAIL_PORT: 587
     EMAIL_USERNAME:
     EMAIL_PASSWORD:
-    ASSETS_BASE_URL: <<scheme>>://<<frontend-konark-domain>>/assets/konark
-    KONARK_BASE_URL: <<scheme>>://<<frontend-konark-domain>>
+    ASSETS_BASE_URL: <<scheme>>://<<ui-domain>>/assets/konark
+    KONARK_BASE_URL: <<scheme>>://<<ui-domain>>
     # comma separated email domains to allow signup from
     SIGNUP_DOMAINS:
     # sql-linter service url (change only if release name is not sql-linter)
@@ -78,7 +78,7 @@ nalanda:
     NECTED_USER_PASSWORD: userPassword123
     # default vidhaan settings
     DEFAULT_VIDHAAN_SCHEME: <<scheme>>
-    DEFAULT_VIDHAAN_DOMAIN: <<backend-vidhaan-router-domain>>
+    DEFAULT_VIDHAAN_DOMAIN: <<router-domain>>
     # k8s cluster gw ip
     DEFAULT_VIDHAAN_WHITELISTED_IPS: 127.0.0.1
  
@@ -86,7 +86,7 @@ nalanda:
     enabled: false
     className: <<ingressClassName>>
   hosts:
-    - host: <<backend-nalanda-domain>>
+    - host: <<backend-domain>>
       paths:
           - path: /
             pathType: Prefix
@@ -123,7 +123,7 @@ vidhaan-router:
     enabled: false
     className: <<ingressClassName>>
     hosts:
-      - host: <<backend-vidhaan-router-domain>>
+      - host: <<router-domain>>
         paths:
             - path: /
               pathType: Prefix

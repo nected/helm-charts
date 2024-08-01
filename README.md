@@ -7,26 +7,28 @@ Installation using Helm charts
 1. An external Application Load Balancer with Ingress.
 
 2. Map 4 domains to loadbalaner
-    - `<<frontend-konark-domain>>`
-    - `<<frontend-editor-domain>>`
-    - `<<backend-nalanda-domain>>`
-    - `<<backend-vidhaan-router-domain>>`
+    - `<<ui-domain>>`
+    - `<<editor-domain>>`
+    - `<<backend-domain>>`
+    - `<<router-domain>>`
       - Configure external access only if rule/workflow API or webhook needs to be accessible from outside of cluster.
 
 
 ## Deployment steps
 1. Update following values in "values/nected-values.yaml" files, according to your ingress.
     - `<<scheme>>`
-    - `<<frontend-konark-domain>>`
-    - `<<frontend-editor-domain>>`
-    - `<<backend-nalanda-domain>>`
-    - `<<backend-vidhaan-router-domain>>`
+    - `<<ui-domain>>`
+    - `<<editor-domain>>`
+    - `<<backend-domain>>`
+    - `<<router-domain>>`
     - `<<ingressClassName>>` (also enable ingress)
 
-2. When installing databases with nected's chart, include datastore in the installation.
+2. Install Datastore ElasticSearch / Postgresql / Redis.
    ```
    helm upgrade -i datastore charts/datastore/ -f values/datastore-values.yaml
    ```
+
+   If you want to use external elastic/psql/redis endpoints then skip installing datastore chart, please update endpoints and credentials in value/*.yaml.
 
 3. Now install temporal.
     ```
