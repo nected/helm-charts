@@ -10,67 +10,41 @@ server:
       default:
         driver: "sql"
         sql:
-          driver: "postgres"
-          # if external use external host address
+          driver: "postgres12"
+          # if external use external host address & credentials
           host: datastore-postgresql
           port: 5432
-          user: <<PostgresUserName>>
-          password: <<PostgresNectedPass>>
-          maxConns: 10
+          user: nected
+          password: psqlPass123
       visibility:
         driver: "sql"
         sql:
-          driver: "postgres"
-          # if external use external host address
+          driver: "postgres12"
+          # if external use external host address & credentials
           host: datastore-postgresql
           port: 5432
-          user: <<PostgresUserName>>
-          password: <<PostgresNectedPass>>
-          maxConns: 10
-    dcRedirectionPolicy:
-      policy: "selected-apis-forwarding"
-      toDC: ""
-    clusterMetadata:
-      enableGlobalNamespace: true
-      replicationConsumer:
-        type: rpc
-      failoverVersionIncrement: 100
-      masterClusterName: "nected-op"
-      currentClusterName: "nected-op"
-      clusterInformation:
-        nected-op:
-          enabled: true
-          initialFailoverVersion: 1
-          rpcName: "frontend"
-          rpcAddress: "0.0.0.0:7233"
+          user: nected
+          password: psqlPass123
   frontend:
     replicaCount: 1
-    autoscaling:
-      enabled: false
     resources:
       requests:
         cpu: 250m
         memory: 512Mi
   history:
     replicaCount: 1
-    autoscaling:
-      enabled: false
     resources:
       requests:
-        cpu: 800m
-        memory: 2048Mi
+        cpu: 500m
+        memory: 1048Mi
   matching:
     replicaCount: 1
-    autoscaling:
-      enabled: false
     resources:
       requests:
         cpu: 250m
         memory: 512Mi
   worker:
     replicaCount: 1
-    autoscaling:
-      enabled: false
     resources:
       requests:
         cpu: 200m
@@ -78,25 +52,20 @@ server:
 
 admintools:
   enabled: false
-web:
-  enabled: false
-  ingress:
-    enabled: false
 
 schema:
-  # enable setup if elastic used external or datastore for temporal_visibility
+  createDatabase:
+    enabled: true
   setup:
-    enabled: false
+    enabled: true
   update:
-    enabled: false
-
+    enabled: true
 
 elasticsearch:
   # enable setup if elastic used external or datastore for temporal_visibility
   external: false
-  # if external use external host address
+  # if external use external host address & credentials
   host: elasticsearch-master
   port: 9200
-  # update if external and different user
   username: elastic
-  password: <<ElasticUserPass>>
+  password: esPass123
