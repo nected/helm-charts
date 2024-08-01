@@ -1,4 +1,4 @@
 # Install 
 
 helm depedency build
-helm install nected ./
+helm install nected nected/nected
