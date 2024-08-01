@@ -22,7 +22,7 @@ Installation using Helm charts
 2. Download sample files into values folder:
     - [Datastore values](https://charts.nected.io/values/datastore-values.yaml)
     - [Temporal values](https://charts.nected.io/values/temporal-values.yaml)
-    - [Nected Services values](https://charts.nected.io/values/nected-services-values.yaml)
+    - [Nected values](https://charts.nected.io/values/nected-values.yaml)
 
 3. Update following values in "values/nected-values.yaml" files, according to your ingress.
     - `<<scheme>>`
