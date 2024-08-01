@@ -7,16 +7,11 @@ Installation using Helm charts
 1. An external Application Load Balancer with Ingress.
 
 2. Map 4 domains to loadbalaner
-  - `<<frontend-konark-domain>>`
-  - `<<frontend-editor-domain>>`
-  - `<<backend-nalanda-domain>>`
-  - `<<backend-vidhaan-router-domain>>`
-    - Configure external access only if rule/workflow API or webhook needs to be reachable from outside.
-
-3. need to enable storage drivers, e.g: for AKS:
-   ```
-   az aks update -n <Cluster Name> -g <Resource Group> --enable-disk-driver --enable-file-driver --enable-blob-driver --enable-snapshot-controller
-   ```
+    - `<<frontend-konark-domain>>`
+    - `<<frontend-editor-domain>>`
+    - `<<backend-nalanda-domain>>`
+    - `<<backend-vidhaan-router-domain>>`
+      - Configure external access only if rule/workflow API or webhook needs to be accessible from outside of cluster.
 
 ## Deployment steps
 1. Add Nected Repo:
@@ -26,61 +21,27 @@ Installation using Helm charts
 
 2. Download sample files into values folder:
     - [Datastore values](https://charts.nected.io/values/datastore-values.yaml)
-    - [Admintools values](https://charts.nected.io/values/admintools-values.yaml)
     - [Temporal values](https://charts.nected.io/values/temporal-values.yaml)
     - [Nected Services values](https://charts.nected.io/values/nected-services-values.yaml)
 
-3. Update following values in "values/*.yaml" files, adjust Ingress annotations based on ingressClass, and consider switching domains to https in case going to use SSL certificates.
-    - `<<LicenseKey>>`
+3. Update following values in "values/nected-values.yaml" files, according to your ingress.
+    - `<<scheme>>`
     - `<<frontend-konark-domain>>`
     - `<<frontend-editor-domain>>`
     - `<<backend-nalanda-domain>>`
     - `<<backend-vidhaan-router-domain>>`
-    - `<<MongoPassword>>`
-    - `<<PostgresUserName>>`
-    - `<<PostgresPassword>>`
-    - `<<ElasticUserPass>>`
-    - `<<ingressClassName>>`
-    - `<<pathType>>`
-    - `<<DefaultUser>>`
-    - `<<DefaultPassword>>`
-    - `<<senderEmail>>`
-    - `<<SendeName>>`
-    - `<<emailHostName>>`
-    - `<<senderUsername>>`
-    - `<<senderPassword>>`
-    - `<<ingressClassName>>`
+    - `<<ingressClassName>>` (also enable ingress)
 
-4. When installing databases with nected's chart, include datastore in the installation.
+4. Install Datastore ElasticSearch / Postgresql / Redis.
    ```
-   helm install datastore nected/datastore -f values/datastore-values.yaml
+   helm upgrade -i datastore nected/datastore -f values/datastore-values.yaml
    ```
 
-5. After deploying datastore, install Temporal's admin tools and initialize its schema.
+   If you want to use external elastic/psql/redis endpoints then skip installing datastore chart, please update endpoints and credentials in value/*.yaml.
+
+5.  Install temporal.
     ```
-    helm install admintools nected/temporal -f values/admintools-values.yaml
-
-    kubctl get pods
-    kubectl exec -it admintools-temporal-admintools-xxxxxxx-xxxx -- /bin/bash
-
-    export SQL_PLUGIN=postgres
-    export SQL_HOST=datastore-postgresql
-    export SQL_PORT=5432
-    export SQL_USER=<<PostgresUserName>>
-    export SQL_PASSWORD=<<PostgresUserName>>
-
-    temporal-sql-tool --db temporal create-database
-    SQL_DATABASE=temporal temporal-sql-tool setup-schema -v 0.0
-    SQL_DATABASE=temporal temporal-sql-tool update -schema-dir schema/postgresql/v96/temporal/versioned
-
-    temporal-sql-tool --db temporal_visibility create-database
-    SQL_DATABASE=temporal_visibility temporal-sql-tool setup-schema -v 0.0
-    SQL_DATABASE=temporal_visibility temporal-sql-tool update -schema-dir schema/postgresql/v96/visibility/versioned
-    ```
-
-6. Now install temporal:
-    ```
-    helm install temporal nected/temporal -f values/temporal-values.yaml
+    helm upgrade -i temporal nected/temporal -f values/temporal-values.yaml
     ```
 
 7. Install Nected services:
@@ -88,4 +49,4 @@ Installation using Helm charts
     helm install nected nected/nected -f values/nected-services-values.yaml
     ```
 
-With all services running, access the application through the fronend-konark domain using the default username and password.
+With all services running, access the application through the fronend-konark domain using the default user and password (values/nected-values.yaml).
