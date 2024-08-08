@@ -89,10 +89,14 @@ livenessProbe:
   httpGet:
     path: /status
     port: 8000
+  initialDelaySeconds: 10
+  periodSeconds: 4
 readinessProbe:
   httpGet:
     path: /status
     port: 8000
+  initialDelaySeconds: 10
+  periodSeconds: 5
 
 autoscaling:
   enabled: false
