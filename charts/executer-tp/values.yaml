@@ -8,7 +8,7 @@ image:
   repository: public.ecr.aws/f6k1n6r3/vidhaan-executer-tp
   pullPolicy: IfNotPresent
   # Overrides the image tag whose default is the chart appVersion.
-  tag: op0.2.0
+  tag: op0.2.1
 
 imagePullSecrets: []
 nameOverride: ""
@@ -17,26 +17,26 @@ fullnameOverride: ""
 
 envVars:
   TEMPORAL_HOST: nected-temporal-frontend
-  TEMPORAL_PORT: 7233
+  TEMPORAL_PORT: "7233"
   TEMPORAL_NAMESPACE: default
   TEMPORAL_TASK_QUEUE: vidhaan-tp-worker-tq
-  TEMPORAL_MAX_CONCURRENT_ACTIVITY_TASK_EXECUTIONS: 100
-  TEMPORAL_MAX_CONCURRENT_LOCAL_ACTIVITY_EXECUTIONS: 100
-  TEMPORAL_MAX_CONCURRENT_WORKFLOW_TASK_EXECUTIONS: 100
-  TEMPORAL_MAX_CONCURRENT_WORKFLOW_TASK_POLLS: 50
-  TEMPORAL_MAX_CONCURRENT_ACTIVITY_TASK_POLLS: 10
-  TEMPORAL_MAX_CACHED_WORKFLOWS: 200
+  TEMPORAL_MAX_CONCURRENT_ACTIVITY_TASK_EXECUTIONS: "100"
+  TEMPORAL_MAX_CONCURRENT_LOCAL_ACTIVITY_EXECUTIONS: "100"
+  TEMPORAL_MAX_CONCURRENT_WORKFLOW_TASK_EXECUTIONS: "100"
+  TEMPORAL_MAX_CONCURRENT_WORKFLOW_TASK_POLLS: "50"
+  TEMPORAL_MAX_CONCURRENT_ACTIVITY_TASK_POLLS: "10"
+  TEMPORAL_MAX_CACHED_WORKFLOWS: "200"
   SENTRY_DSN:
-  SENTRY_ENABLED: false
+  SENTRY_ENABLED: "false"
   SENTRY_ENVIRONMENT: development
-  SENTRY_SAMPLE_RATE: 1.0
+  SENTRY_SAMPLE_RATE: "1.0"
   APPLICATION_NAME: executer-tp
-  REDIS_ENABLED: true
+  REDIS_ENABLED: "true"
   REDIS_HOST: datastore-redis-master
-  REDIS_PORT: 6379
+  REDIS_PORT: "6379"
   REDIS_USERNAME:
   REDIS_PASSWORD:
-  REDIS_DB: 0
+  REDIS_DB: "0"
 
 
 serviceAccount:
@@ -75,10 +75,7 @@ autoSetup:
   args: []
   annotations: {}
 
-service:
-  type: ClusterIP
-  port: 80
-  targetPort: 8000
+service: {}
 
 ingress:
   enabled: false
@@ -94,20 +91,14 @@ resources:
   # resources, such as Minikube. If you do want to specify resources, uncomment the following
   # lines, adjust them as necessary, and remove the curly braces after 'resources:'.
   requests:
-    cpu: "500m"
+    cpu: "300m"
     memory: "1024Mi"
   limits:
-    cpu: "1000m"
+    cpu: "300m"
     memory: "1024Mi"
 
-livenessProbe:
-  httpGet:
-    path: /status
-    port: 8000
-readinessProbe:
-  httpGet:
-    path: /status
-    port: 8000
+livenessProbe: {}
+readinessProbe: {}
 
 autoscaling:
   enabled: false
