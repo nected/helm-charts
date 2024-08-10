@@ -33,7 +33,7 @@ spec:
             {{- end }}
             volumeMounts:
               {{- if .Values.mountConfigMap }}
-              - mountPath: /tmp
+              - mountPath: /mnt/temp
                 name: {{ include "common.name" . }}-cm-volume
               {{- end }}
               {{- if .Values.volumeMounts }}

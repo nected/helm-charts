@@ -8,7 +8,7 @@ image:
   repository: public.ecr.aws/f6k1n6r3/nalanda
   pullPolicy: IfNotPresent
   # Overrides the image tag whose default is the chart appVersion.
-  tag: "op0.2.0"
+  tag: "op0.2.1"
 
 imagePullSecrets: []
 nameOverride: ""
@@ -34,7 +34,7 @@ envVars:
   # Postgresql Config
   MASTER_DB_NAME: nected
   MASTER_DB_USER: nected
-  MASTER_DB_PASSWORD: nected
+  MASTER_DB_PASSWORD: psqlPass123
   MASTER_DB_HOST: datastore-postgresql
   MASTER_DB_PORT: 5432
   MASTER_DB_LOG_MODE: false
@@ -44,22 +44,30 @@ envVars:
   MASTER_DB_MAX_OPEN_CONNS: 10
   MASTER_DB_CONN_MAX_LIFETIME: 1h
   MASTER_DB_CONN_MAX_IDLE_TIME: 30m
+
   # Redis Config
   REDIS_HOST: datastore-redis-master
   REDIS_PORT: 6379
   REDIS_DATABASE: 0
   REDIS_PASSWORD:
+
+  VIDHAAN_REDIS_HOST: datastore-redis-master
+  VIDHAAN_REDIS_PORT: 6379
+  VIDHAAN_REDIS_DATABASE: 1
+  VIDHAAN_REDIS_PASSWORD:
+
   # Elastic Config
   ELASTIC_ENABLED: true
   ELASTIC_HOSTS: http://elasticsearch-master:9200
   ELASTIC_API_KEY:
   ELASTIC_INSECURE_TLS: true
   ELASTIC_USER: elastic
-  ELASTIC_PASSWORD: nected
+  ELASTIC_PASSWORD: esPass123
 
   # google auth
   GOOGLE_AUTH_ENABLED: false
   GOOGLE_CLIENT_ID:
+
   # mslogin
   MICROSOFT_AUTH_ENABLED: false
   MICROSOFT_CLIENT_ID:
@@ -70,6 +78,7 @@ envVars:
   AWS_ACCESS_KEY:
   AWS_SECRET_KEY:
   AWS_REGION:
+
   # email
   SEND_EMAIL: false
   EMAIL_PROVIDER: smtp
@@ -154,12 +163,12 @@ envVars:
 
   # usages
   FREE_PLAN_ID: 1
-  IS_PAID: true
-  RULE_LIMIT: 1000
-  WORKFLOW_LIMIT: 500
-  INVOCATION_LIMIT: 0
-  EDITOR_LIMIT: 100
-  PLAN_NAME: OnPremise
+  IS_PAID: false
+  RULE_LIMIT: 50
+  WORKFLOW_LIMIT: 100
+  INVOCATION_LIMIT: 10000
+  EDITOR_LIMIT: 10
+  PLAN_NAME: Free Trial
 
   # Vidhaan Config
   DEFAULT_VIDHAAN_SCHEME: http
@@ -199,12 +208,12 @@ autoSetup:
   image:
     repository: public.ecr.aws/f6k1n6r3/nalanda
     pullPolicy: IfNotPresent
-    tag: "op0.2.0"
+    tag: "op0.2.1"
   command:
   - /bin/sh
   - -c
   - |
-    cp /tmp/envFile .env
+    cp /mnt/temp/envFile .env
     /app/nalanda --init --init-elastic
   annotations: {}
 
