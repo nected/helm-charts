@@ -8,7 +8,7 @@ image:
   repository: public.ecr.aws/f6k1n6r3/vidhaan-router
   pullPolicy: IfNotPresent
   # Overrides the image tag whose default is the chart appVersion.
-  tag: "op0.2.0"
+  tag: "op0.2.1"
 
 imagePullSecrets: []
 nameOverride: ""
@@ -35,8 +35,22 @@ envVars:
 
   # Redis Config
   REDIS_HOST: datastore-redis-master:6379
-  REDIS_DATABASE: 0
+  REDIS_DATABASE: 1
   REDIS_PASSWORD:
+
+  # Database
+  DB_NAME: nected
+  DB_USER: nected
+  DB_PASSWORD: psqlPass123
+  DB_HOST: datastore-postgresql
+  DB_PORT: 5432
+  DB_LOG_MODE: false
+  SSL_MODE: disable
+  DB_CONNS_POOL_ENABLE: true
+  DB_MAX_IDLE_CONNS: 2
+  DB_MAX_OPEN_CONNS: 10
+  DB_CONN_MAX_LIFE_TIME: 1h
+  DB_CONN_MAX_IDLE_TIME: 1h
 
   # Elastic Config
   ELASTIC_ENABLED: false
@@ -44,27 +58,21 @@ envVars:
   ELASTIC_ADDRESSES: http://elasticsearch-master:9200
   ELASTIC_API_KEY:
   ELASTIC_USERNAME: elastic
-  ELASTIC_PASSWORD: nected
+  ELASTIC_PASSWORD: esPass123
 
   # Audit log
-  AUDIT_LOG_ENABLED: false
+  AUDIT_LOG_ENABLED: true
   AUDIT_LOG_INDEX: audit-all-vidhaan
   AWS_TRACE_ID_KEY: X-Amzn-Trace-Id
   X_FORWARDED_HEADER_KEY: X-Forwarded-For
 
   # Nalanda
-  NALANDA_BASE_URL: http://nalanda
+  NALANDA_BASE_URL: http://nected-nalanda
 
   #Temporal For Executer Workers
   TEMPORAL_EXECUTER_SERVER_HOST: nected-temporal-frontend:7233
   TEMPORAL_EXECUTER_NAMESPACE: default
   TEMPORAL_EXECUTER_RETENTION_PERIOD: 24h
-
-  # Datasync config
-  DATASYNC_SCHEDULE: true
-  DATASYNC_SCHEDULE_ID: datasync_schedule
-  DATASYNC_INTERVAL_DURATION: 30
-  DATASYNC_DELETE_WITH_MANAGER: false
 
   # Sentry config
   SENTRY_DSN:
@@ -81,6 +89,10 @@ envVars:
   # Reporting
   ERROR_REPORTING_ENABLED: false
   ERROR_REPORTING_TTL: 24h
+
+  # subdomains
+  SKIP_SUBDOMAINS:
+  SKIP_SUBDOMAINS_WORKSPACE_IDS:
 
 serviceAccount:
   # Specifies whether a service account should be created
