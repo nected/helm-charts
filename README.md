@@ -1,7 +1,7 @@
 # Nected OnPremise
 Installation using Helm charts
 
-![Nected Onpremise Architecture](https://assets.nected.io/nalanda/nected-op-1.jpg)
+![Nected Onpremise Architecture](https://assets.nected.ai/nalanda/nected-onpremise-arch.jpg)
 
 ## Pre-Requisite
 1. An external Application Load Balancer with Ingress.
