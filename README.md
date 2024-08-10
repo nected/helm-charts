@@ -1,7 +1,7 @@
 # Nected OnPremise
 Installation using Helm charts
 
-![Nected Onpremise Architecture](https://assets.nected.io/nalanda/nected-onpremise-arch.jpg)
+![Nected Onpremise Architecture](https://assets.nected.ai/nalanda/nected-onpremise-arch.jpg)
 
 ## Pre-Requisite
 1. An external Application Load Balancer with Ingress.
@@ -37,7 +37,7 @@ Installation using Helm charts
 
 4. Install Nected services.
     ```
-    helm upgrade -i nected charts/nected-services/ -f values/nected-values.yaml
+    helm upgrade -i nected charts/nected/ -f values/nected-values.yaml
     ```
 
 With all services running, access the application through the fronend-konark domain using the default user and password (values/nected-values.yaml).

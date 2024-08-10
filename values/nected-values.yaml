@@ -1,10 +1,12 @@
 # editor chart values to be updated
 editor:
+  enabled: true
   replicaCount: 1
   envVars:
     REACT_APP_ALLOWED_DOMAINS: <<scheme>>://<<ui-domain>>
     REACT_APP_SQL_LINT: <<scheme>>://<<backend-domain>>/misc/proxy/lint
     REACT_APP_EXECUTE_JS_API: <<scheme>>://<<backend-domain>>/integration/code/execute
+    REACT_APP_AI_SUGGESTION: <<scheme>>://<<backend-domain>>/misc/proxy/suggestion
     REACT_APP_NGINX_SERVER_NAME: <<editor-domain>>
 
   ingress:
@@ -18,6 +20,7 @@ editor:
 
 # konark chart values to be updated
 konark:
+  enabled: true
   replicaCount: 1
   envVars:
     VITE_API_HOST: <<scheme>>://<<backend-domain>>
@@ -36,15 +39,18 @@ konark:
 
 # nalanda chart values to be updated
 nalanda:
+  enabled: true
   replicaCount: 1
   envVars:
     ALLOWED_CORS_ORIGIN: <<scheme>>://<<backend-domain>>,<<scheme>>://<<ui-domain>>,<<scheme>>://<<editor-domain>>
+    ALLOWED_HOSTS: <<backend-domain>>
     # if external use external host address
     MASTER_DB_USER: nected
     MASTER_DB_PASSWORD: psqlPass123
     MASTER_DB_HOST: datastore-postgresql
     # if external use external host address
     REDIS_HOST: datastore-redis-master
+    VIDHAAN_REDIS_HOST: datastore-redis-master
     # enable elastic if installed using datastore or used external
     ELASTIC_ENABLED: true
     # if external use external host address
@@ -71,8 +77,6 @@ nalanda:
     KONARK_BASE_URL: <<scheme>>://<<ui-domain>>
     # comma separated email domains to allow signup from
     SIGNUP_DOMAINS:
-    # sql-linter service url (change only if release name is not sql-linter)
-    PROXY_SQL_LINT_URL: http://nected-sql-linter/api/v1/core/lint
     # default user created on setup
     NECTED_USER_EMAIL: user@example.com
     NECTED_USER_PASSWORD: userPassword123
@@ -93,9 +97,13 @@ nalanda:
 
 # vidhaan-executer chart to be updated
 vidhaan-executer:
+  enabled: true
   replicaCount: 1
   envVars:
     REDIS_HOST: datastore-redis-master:6379
+    DB_USER: nected
+    DB_PASSWORD: psqlPass123
+    DB_HOST: datastore-postgresql
     # enable elastic if installed using datastore or used external
     ELASTIC_ENABLED: true
     AUDIT_LOG_ENABLED: true
@@ -104,12 +112,19 @@ vidhaan-executer:
     # update if external and different user
     ELASTIC_USERNAME: elastic
     ELASTIC_PASSWORD: esPass123
+    # subdomains
+    SKIP_SUBDOMAINS: <<router-domain>>
+    SKIP_SUBDOMAINS_WORKSPACE_IDS: "*"
 
 # vidhaan-router chart to be updated
 vidhaan-router:
+  enabled: true
   replicaCount: 1
   envVars:
     REDIS_HOST: datastore-redis-master:6379
+    DB_USER: nected
+    DB_PASSWORD: psqlPass123
+    DB_HOST: datastore-postgresql
     # enable elastic if installed using datastore or used external
     ELASTIC_ENABLED: true
     AUDIT_LOG_ENABLED: true
@@ -118,6 +133,9 @@ vidhaan-router:
     # update if external and different user
     ELASTIC_USERNAME: elastic
     ELASTIC_PASSWORD: esPass123
+    # subdomains
+    SKIP_SUBDOMAINS: <<router-domain>>
+    SKIP_SUBDOMAINS_WORKSPACE_IDS: "*"
 
   ingress:
     enabled: false
@@ -127,3 +145,14 @@ vidhaan-router:
         paths:
             - path: /
               pathType: Prefix
+
+# sql-linter chart to be updated
+sql-linter:
+  enabled: true
+  replicaCount: 1
+  envVars:
+    OPENAI_API_KEY:
+
+# executer-tp chart to be updated
+executer-tp:
+  enabled: false

@@ -1,4 +1,4 @@
 # Install 
 
-helm depedency build
-helm install nected nected/nected
+helm dependency build
+helm install nected .
