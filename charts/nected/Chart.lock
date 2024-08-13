@@ -7,7 +7,7 @@ dependencies:
   version: 0.2.2
 - name: nalanda
   repository: https://charts.nected.io/
-  version: 0.2.2
+  version: 0.2.3
 - name: sql-linter
   repository: https://charts.nected.io/
   version: 0.2.1
@@ -20,5 +20,5 @@ dependencies:
 - name: executer-tp
   repository: https://charts.nected.io/
   version: 0.2.1
-digest: sha256:6b3d85ed9f80789fb95f625e44701e8529b794ac433e9f3fae2e6ffe006e99fc
-generated: "2024-08-13T18:47:43.402649+05:30"
+digest: sha256:02e1eb7ba7979c9d8dc312074c546f1db5a434197573f85fd44e57ef4b5c54a0
+generated: "2024-08-13T19:17:24.631685+05:30"
