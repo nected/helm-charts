@@ -634,6 +634,45 @@ entries:
   temporal:
   - apiVersion: v2
     appVersion: 1.24.2
+    created: "2024-08-13T12:50:06.041033729Z"
+    dependencies:
+    - condition: cassandra.enabled
+      name: cassandra
+      repository: https://charts.helm.sh/incubator
+      version: 0.14.3
+    - condition: prometheus.enabled
+      name: prometheus
+      repository: https://prometheus-community.github.io/helm-charts
+      version: 25.22.0
+    - condition: elasticsearch.enabled
+      name: elasticsearch
+      repository: https://helm.elastic.co
+      version: 7.17.3
+    - condition: grafana.enabled
+      name: grafana
+      repository: https://grafana.github.io/helm-charts
+      version: 8.0.2
+    description: Temporal is a distributed, scalable, durable, and highly available
+      orchestration engine to execute asynchronous long-running business logic in
+      a scalable and resilient way.
+    digest: 96d88a03bcfaf36caa0c6d6e5a1f4bb2348e7a0d200015a982ec1f4eb2592525
+    home: https://temporal.io/
+    keywords:
+    - temporal
+    - workflow
+    - orchestration
+    maintainers:
+    - name: temporalio
+      url: https://temporal.io/
+    name: temporal
+    sources:
+    - https://github.com/temporalio/temporal
+    type: application
+    urls:
+    - https://github.com/nected/helm-charts/releases/download/temporal-0.44.1/temporal-0.44.1.tgz
+    version: 0.44.1
+  - apiVersion: v2
+    appVersion: 1.24.2
     created: "2024-07-31T18:20:59.408782049Z"
     dependencies:
     - condition: cassandra.enabled
@@ -872,4 +911,4 @@ entries:
     urls:
     - https://github.com/nected/helm-charts/releases/download/vidhaan-router-0.1.1/vidhaan-router-0.1.1.tgz
     version: 0.1.1
-generated: "2024-08-10T11:44:09.000355856Z"
+generated: "2024-08-13T12:50:06.041063414Z"
