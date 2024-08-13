@@ -130,7 +130,7 @@ envVars:
   CREATE_DEMO_ENTITIES_ENABLED: false
   WORKSPACE_SUBDOMAIN_ENABLED: false
   SIGNUP_DOMAINS:
-  SYNC_PLUGINS: mysql,mongodb,postgres,sqlserver,redshift,restAPI
+  SYNC_PLUGINS:
 
   # Audit log
   AWS_TRACE_ID_KEY: X-Amzn-Trace-Id
@@ -208,7 +208,7 @@ autoSetup:
   image:
     repository: public.ecr.aws/f6k1n6r3/nalanda
     pullPolicy: IfNotPresent
-    tag: "op0.2.1"
+    tag: "op0.2.2"
   command:
   - /bin/sh
   - -c
