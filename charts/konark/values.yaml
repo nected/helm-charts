@@ -90,11 +90,7 @@ ingress:
   enabled: false
   className:
   annotations: {}
-  hosts:
-    - host: konark.local
-      paths:
-        - path: /
-          pathType: Prefix
+  hosts: []
   tls: []
 
 resources:

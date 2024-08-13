@@ -142,11 +142,7 @@ ingress:
   enabled: false
   className:
   annotations: {}
-  hosts:
-    - host: vidhaan.local
-      paths:
-        - path: /
-          pathType: Prefix
+  hosts: []
   tls: []
 
 resources:

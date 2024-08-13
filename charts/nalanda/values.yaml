@@ -8,7 +8,7 @@ image:
   repository: public.ecr.aws/f6k1n6r3/nalanda
   pullPolicy: IfNotPresent
   # Overrides the image tag whose default is the chart appVersion.
-  tag: "op0.2.1"
+  tag: "op0.2.2"
 
 imagePullSecrets: []
 nameOverride: ""
@@ -226,11 +226,7 @@ ingress:
   enabled: false
   className:
   annotations: {}
-  hosts:
-    - host: nalanda.local
-      paths:
-        - path: /
-          pathType: Prefix
+  hosts: []
   tls: []
 
 resources:

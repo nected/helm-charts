@@ -66,11 +66,7 @@ ingress:
   enabled: false
   className:
   annotations: {}
-  hosts:
-    - host: editor.local
-      paths:
-        - path: /
-          pathType: Prefix
+  hosts: []
   tls: []
 
 resources:
