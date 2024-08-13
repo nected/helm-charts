@@ -77,6 +77,7 @@ nalanda:
     KONARK_BASE_URL: <<scheme>>://<<ui-domain>>
     # comma separated email domains to allow signup from
     SIGNUP_DOMAINS:
+    SYNC_PLUGINS: mysql,mongodb,postgres,sqlserver,redshift,oracle,snowflake,restAPI
     # default user created on setup
     NECTED_USER_EMAIL: user@example.com
     NECTED_USER_PASSWORD: userPassword123
