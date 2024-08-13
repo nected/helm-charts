@@ -14,13 +14,11 @@ editor:
     REACT_APP_NGINX_SERVER_NAME: nected-editor.local
 
   ingress:
-    enabled: true
-    className: ""
-    hosts:
-      - host: editor.local
-        paths:
-            - path: /
-              pathType: Prefix
+    enabled: false
+    className:
+    annotations: {}
+    hosts: []
+    tls: []
 
 # konark chart values to be updated
 konark:
@@ -61,13 +59,11 @@ konark:
     VITE_NGINX_SERVER_NAME: konark.local
 
   ingress:
-    enabled: true
-    className: ""
-    hosts:
-      - host: konark.local
-        paths:
-            - path: /
-              pathType: Prefix
+    enabled: false
+    className:
+    annotations: {}
+    hosts: []
+    tls: []
 
 # nalanda chart values to be updated
 nalanda:
@@ -237,13 +233,11 @@ nalanda:
     PRODUCT_API_KEY:
  
   ingress:
-    enabled: true
+    enabled: false
     className:
-    hosts:
-      - host: nalanda.local
-        paths:
-            - path: /
-              pathType: Prefix
+    annotations: {}
+    hosts: []
+    tls: []
 
 # vidhaan-executer chart to be updated
 vidhaan-executer:
@@ -426,13 +420,11 @@ vidhaan-router:
     SKIP_SUBDOMAINS_WORKSPACE_IDS:
 
   ingress:
-    enabled: true
+    enabled: false
     className:
-    hosts:
-      - host: vidhaan.local
-        paths:
-            - path: /
-              pathType: Prefix
+    annotations: {}
+    hosts: []
+    tls: []
 
 # sql-linter chart to be updated
 sql-linter:
