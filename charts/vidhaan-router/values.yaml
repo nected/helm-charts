@@ -5,10 +5,11 @@
 replicaCount: 1
 
 image:
-  repository: public.ecr.aws/f6k1n6r3/vidhaan-router
+  repository: public.ecr.aws/f6k1n6r3/vidhaan
   pullPolicy: IfNotPresent
   # Overrides the image tag whose default is the chart appVersion.
-  tag: "op0.2.1"
+  tag: "op0.2.2"
+  args: ["--router"]
 
 imagePullSecrets: []
 nameOverride: ""
