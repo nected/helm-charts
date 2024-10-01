@@ -8,13 +8,20 @@ image:
   repository: public.ecr.aws/f6k1n6r3/vidhaan
   pullPolicy: IfNotPresent
   # Overrides the image tag whose default is the chart appVersion.
-  tag: "op0.2.2"
+  tag: "op0.2.3"
   args: ["--executer"]
 
 imagePullSecrets: []
 nameOverride: ""
 fullnameOverride: ""
 
+# existingSecretMap:
+#   - name: ENCRYPTKEY_EAR_1
+#     valueFrom:
+#       secretKeyRef:
+#         name: encryption-at-rest-secret
+#         key: encryption-at-rest
+existingSecretMap: {}
 
 envVars:
   DEBUG: false
@@ -90,6 +97,7 @@ envVars:
 
   # Security
   SECURITY_ENABLED: true
+  ENCRYPTION_KEY: EAR
 
   # Workflow config
   WORKFLOW_CONFIG_MAP: '{}'
