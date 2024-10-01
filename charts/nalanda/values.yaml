@@ -8,11 +8,19 @@ image:
   repository: public.ecr.aws/f6k1n6r3/nalanda
   pullPolicy: IfNotPresent
   # Overrides the image tag whose default is the chart appVersion.
-  tag: "op0.2.3"
+  tag: "op0.2.4"
 
 imagePullSecrets: []
 nameOverride: ""
 fullnameOverride: ""
+
+# existingSecretMap:
+#   - name: ENCRYPTKEY_EAR_1
+#     valueFrom:
+#       secretKeyRef:
+#         name: encryption-at-rest-secret
+#         key: encryption-at-rest
+existingSecretMap: {}
 
 envVars:
   # server config
