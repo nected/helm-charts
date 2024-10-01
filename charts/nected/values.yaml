@@ -1,3 +1,11 @@
+# existingSecretMap: &commonSecretMap
+#   - name: ENCRYPTKEY_EAR_1
+#     valueFrom:
+#       secretKeyRef:
+#         name: encryption-at-rest-secret
+#         key: encryption-at-rest
+existingSecretMap: &commonSecretMap {}
+
 # editor chart values to be updated
 editor:
   enabled: true
@@ -69,6 +77,7 @@ konark:
 nalanda:
   enabled: true
   replicaCount: 1
+  existingSecretMap: *commonSecretMap
   envVars:
     # server config
     ALLOWED_CORS_ORIGIN: http://nalanda.local,http://konark.local,http://nected-editor.local
@@ -85,6 +94,7 @@ nalanda:
     SECURITY_ENABLED: false
     CHECK_ALLOWED_HOSTS: false
     AES_SECRET: tfgoS4EzPPuBJjBLFgmlut9ukW9o2PYy
+    ENCRYPTION_KEY: EAR
 
     # Postgresql Config
     MASTER_DB_NAME: nected
@@ -243,6 +253,7 @@ nalanda:
 vidhaan-executer:
   enabled: true
   replicaCount: 1
+  existingSecretMap: *commonSecretMap
   envVars:
     DEBUG: false
     DEPLOYMENT: production
@@ -317,6 +328,7 @@ vidhaan-executer:
 
     # Security
     SECURITY_ENABLED: true
+    ENCRYPTION_KEY: EAR
 
     # Workflow config
     WORKFLOW_CONFIG_MAP: '{}'
@@ -333,6 +345,7 @@ vidhaan-executer:
 vidhaan-router:
   enabled: true
   replicaCount: 1
+  existingSecretMap: *commonSecretMap
   envVars:
     DEBUG: false
     DEPLOYMENT: production
@@ -407,6 +420,7 @@ vidhaan-router:
 
     # Security
     SECURITY_ENABLED: true
+    ENCRYPTION_KEY: EAR
 
     # Workflow config
     WORKFLOW_CONFIG_MAP: '{}'
