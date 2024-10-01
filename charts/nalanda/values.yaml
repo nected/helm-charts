@@ -38,6 +38,7 @@ envVars:
   SECURITY_ENABLED: false
   CHECK_ALLOWED_HOSTS: false
   AES_SECRET: tfgoS4EzPPuBJjBLFgmlut9ukW9o2PYy
+  ENCRYPTION_KEY: EAR
 
   # Postgresql Config
   MASTER_DB_NAME: nected
