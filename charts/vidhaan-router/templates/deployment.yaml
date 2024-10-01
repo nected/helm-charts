@@ -38,7 +38,11 @@ spec:
           {{- end }}
           image: "{{ .Values.image.repository }}:{{ .Values.image.tag | default .Chart.AppVersion }}"
           imagePullPolicy: {{ .Values.image.pullPolicy }}
-                    {{- if .Values.image.args }}
+          {{- with .Values.existingSecretMap }}
+          env:
+            {{- toYaml . | nindent 12 }}
+          {{- end }}
+          {{- if .Values.image.args }}
           args: 
             {{- range .Values.image.args }}
             - {{ . }}
