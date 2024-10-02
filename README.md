@@ -30,12 +30,19 @@ Installation using Helm charts
 
    If you want to use external elastic/psql/redis endpoints then skip installing datastore chart, please update endpoints and credentials in value/*.yaml.
 
+
 3. Now install temporal.
     ```
     helm upgrade -i temporal charts/temporal/ -f values/temporal-values.yaml
     ```
 
-4. Install Nected services.
+4. To enable encryption of sensitive data, create secret for private key, uncomment existingSecretMap key in nected-values.yaml:
+    ```
+    openssl genrsa -f4 -out encryption-at-rest 4096
+    kubectl create secret generic encryption-at-rest-secret --from-file encryption-at-rest
+    ```
+
+5. Install Nected services.
     ```
     helm upgrade -i nected charts/nected/ -f values/nected-values.yaml
     ```
