@@ -8,7 +8,7 @@ image:
   repository: public.ecr.aws/f6k1n6r3/vidhaan
   pullPolicy: IfNotPresent
   # Overrides the image tag whose default is the chart appVersion.
-  tag: "op0.2.3"
+  tag: "op0.2.4"
   args: ["--router"]
 
 imagePullSecrets: []
@@ -44,6 +44,7 @@ envVars:
   # Redis Config
   REDIS_HOST: datastore-redis-master:6379
   REDIS_DATABASE: 1
+  REDIS_USERNAME:
   REDIS_PASSWORD:
 
   # Database
