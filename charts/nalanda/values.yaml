@@ -8,7 +8,7 @@ image:
   repository: public.ecr.aws/f6k1n6r3/nalanda
   pullPolicy: IfNotPresent
   # Overrides the image tag whose default is the chart appVersion.
-  tag: "op0.2.4"
+  tag: "op0.2.5"
 
 imagePullSecrets: []
 nameOverride: ""
@@ -58,11 +58,13 @@ envVars:
   REDIS_HOST: datastore-redis-master
   REDIS_PORT: 6379
   REDIS_DATABASE: 0
+  REDIS_USERNAME:
   REDIS_PASSWORD:
 
   VIDHAAN_REDIS_HOST: datastore-redis-master
   VIDHAAN_REDIS_PORT: 6379
   VIDHAAN_REDIS_DATABASE: 1
+  VIDHAAN_REDIS_USERNAME:
   VIDHAAN_REDIS_PASSWORD:
 
   # Elastic Config
@@ -217,7 +219,7 @@ autoSetup:
   image:
     repository: public.ecr.aws/f6k1n6r3/nalanda
     pullPolicy: IfNotPresent
-    tag: "op0.2.2"
+    tag: "op0.2.5"
   command:
   - /bin/sh
   - -c
