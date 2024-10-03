@@ -7,18 +7,18 @@ dependencies:
   version: 0.2.3
 - name: nalanda
   repository: https://charts.nected.io/
-  version: 0.2.6
+  version: 0.2.7
 - name: sql-linter
   repository: https://charts.nected.io/
   version: 0.2.1
 - name: vidhaan-router
   repository: https://charts.nected.io/
-  version: 0.2.4
+  version: 0.2.5
 - name: vidhaan-executer
   repository: https://charts.nected.io/
-  version: 0.2.4
+  version: 0.2.5
 - name: executer-tp
   repository: https://charts.nected.io/
   version: 0.2.2
-digest: sha256:a3e0bde296cc722e356649ccd5c0422dcebb541de07ec0ea74a001af6717badb
-generated: "2024-10-02T00:28:18.996081+05:30"
+digest: sha256:51db48de753fe971d63c39be6777332758f8f118127d8746fe77278e194c5a2d
+generated: "2024-10-03T15:22:31.730473+05:30"
