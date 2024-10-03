@@ -62,8 +62,8 @@ schema:
     enabled: true
 
 elasticsearch:
-  # enable setup if elastic used external or datastore for temporal_visibility
-  external: false
+  # disable if postgres is used for visibility
+  external: true
   # if external use external host address & credentials
   host: elasticsearch-master
   port: 9200

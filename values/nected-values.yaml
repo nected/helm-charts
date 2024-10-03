@@ -1,3 +1,11 @@
+# existingSecretMap: &commonSecretMap
+#   - name: ENCRYPTKEY_EAR_1
+#     valueFrom:
+#       secretKeyRef:
+#         name: encryption-at-rest-secret
+#         key: encryption-at-rest
+existingSecretMap: &commonSecretMap {}
+
 # editor chart values to be updated
 editor:
   enabled: true
@@ -41,6 +49,7 @@ konark:
 nalanda:
   enabled: true
   replicaCount: 1
+  existingSecretMap: *commonSecretMap
   envVars:
     ALLOWED_CORS_ORIGIN: <<scheme>>://<<backend-domain>>,<<scheme>>://<<ui-domain>>,<<scheme>>://<<editor-domain>>
     ALLOWED_HOSTS: <<backend-domain>>
@@ -100,6 +109,7 @@ nalanda:
 vidhaan-executer:
   enabled: true
   replicaCount: 1
+  existingSecretMap: *commonSecretMap
   envVars:
     REDIS_HOST: datastore-redis-master:6379
     DB_USER: nected
@@ -121,6 +131,7 @@ vidhaan-executer:
 vidhaan-router:
   enabled: true
   replicaCount: 1
+  existingSecretMap: *commonSecretMap
   envVars:
     REDIS_HOST: datastore-redis-master:6379
     DB_USER: nected
