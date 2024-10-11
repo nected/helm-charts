@@ -8,7 +8,7 @@ image:
   repository: public.ecr.aws/f6k1n6r3/nalanda
   pullPolicy: IfNotPresent
   # Overrides the image tag whose default is the chart appVersion.
-  tag: "op0.2.5"
+  tag: "op0.2.6"
 
 imagePullSecrets: []
 nameOverride: ""
@@ -55,12 +55,16 @@ envVars:
   MASTER_DB_CONN_MAX_IDLE_TIME: 30m
 
   # Redis Config
+  REDIS_TLS_ENABLED: false
+  REDIS_INSECURE_TLS: true
   REDIS_HOST: datastore-redis-master
   REDIS_PORT: 6379
   REDIS_DATABASE: 0
   REDIS_USERNAME:
   REDIS_PASSWORD:
 
+  VIDHAAN_REDIS_TLS_ENABLED: false
+  VIDHAAN_REDIS_INSECURE_TLS: true
   VIDHAAN_REDIS_HOST: datastore-redis-master
   VIDHAAN_REDIS_PORT: 6379
   VIDHAAN_REDIS_DATABASE: 1
@@ -68,6 +72,7 @@ envVars:
   VIDHAAN_REDIS_PASSWORD:
 
   # Elastic Config
+  ELASTIC_PROVIDER: managed
   ELASTIC_ENABLED: true
   ELASTIC_HOSTS: http://elasticsearch-master:9200
   ELASTIC_API_KEY:
@@ -135,10 +140,7 @@ envVars:
 
   # features flags
   EXTERNAL_PERMISSION_URL:
-  DEMO_CONNECTOR_TEMPLATE_ID:
-  USECASE_VALUES_CONFIG_DOCUMENT_NAME:
   SKIP_LOG_PATHS: /health/live,/health/ready
-  CREATE_DEMO_ENTITIES_ENABLED: false
   WORKSPACE_SUBDOMAIN_ENABLED: false
   SIGNUP_DOMAINS:
   SYNC_PLUGINS:
@@ -219,7 +221,7 @@ autoSetup:
   image:
     repository: public.ecr.aws/f6k1n6r3/nalanda
     pullPolicy: IfNotPresent
-    tag: "op0.2.5"
+    tag: "op0.2.6"
   command:
   - /bin/sh
   - -c
