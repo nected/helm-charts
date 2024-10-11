@@ -113,12 +113,16 @@ nalanda:
     MASTER_DB_CONN_MAX_IDLE_TIME: 30m
 
     # Redis Config
+    REDIS_TLS_ENABLED: false
+    REDIS_INSECURE_TLS: true
     REDIS_HOST: datastore-redis-master
     REDIS_PORT: 6379
     REDIS_DATABASE: 0
     REDIS_USERNAME:
     REDIS_PASSWORD:
 
+    VIDHAAN_REDIS_TLS_ENABLED: false
+    VIDHAAN_REDIS_INSECURE_TLS: true
     VIDHAAN_REDIS_HOST: datastore-redis-master
     VIDHAAN_REDIS_PORT: 6379
     VIDHAAN_REDIS_DATABASE: 1
@@ -126,6 +130,7 @@ nalanda:
     VIDHAAN_REDIS_PASSWORD:
 
     # Elastic Config
+    ELASTIC_PROVIDER: managed
     ELASTIC_ENABLED: true
     ELASTIC_HOSTS: http://elasticsearch-master:9200
     ELASTIC_API_KEY:
@@ -193,10 +198,7 @@ nalanda:
 
     # features flags
     EXTERNAL_PERMISSION_URL:
-    DEMO_CONNECTOR_TEMPLATE_ID:
-    USECASE_VALUES_CONFIG_DOCUMENT_NAME:
     SKIP_LOG_PATHS: /health/live,/health/ready
-    CREATE_DEMO_ENTITIES_ENABLED: false
     WORKSPACE_SUBDOMAIN_ENABLED: false
     SIGNUP_DOMAINS:
     SYNC_PLUGINS: mysql,mongodb,postgres,sqlserver,redshift,restAPI
@@ -261,6 +263,7 @@ vidhaan-executer:
   envVars:
     DEBUG: false
     DEPLOYMENT: production
+
     #Vidhaan
     VIDHAAN_AGENT_NAME: onpremise
     VIDHAAN_AGENT_KEY: afa8572b-facf-46ca-a40b-5cd23a3dbf02
@@ -271,16 +274,11 @@ vidhaan-executer:
     SERVER_HOST: 0.0.0.0
     SERVER_PORT: 8002
     MONTHLY_LIMIT: 0
+    REQUEST_PER_MINUTE_LIMIT: 1500
     EXCLUDED_WORKSPACE_IDS_FOR_MONTHLY_LIMIT: 1,
     MAX_REQUEST_SIZE: 3145728
     ENABLE_PROFILING: false
     SKIP_LOG_PATHS: /health
-
-    # Redis Config
-    REDIS_HOST: datastore-redis-master:6379
-    REDIS_DATABASE: 1
-    REDIS_USERNAME:
-    REDIS_PASSWORD:
 
     # Database
     DB_NAME: nected
@@ -296,7 +294,16 @@ vidhaan-executer:
     DB_CONN_MAX_LIFE_TIME: 1h
     DB_CONN_MAX_IDLE_TIME: 1h
 
+    # Redis Config
+    REDIS_TLS_ENABLED: false
+    REDIS_INSECURE_TLS: true
+    REDIS_HOST: datastore-redis-master:6379
+    REDIS_DATABASE: 1
+    REDIS_USERNAME:
+    REDIS_PASSWORD:
+
     # Elastic Config
+    ELASTIC_PROVIDER: managed
     ELASTIC_ENABLED: false
     ELASTIC_INSECURE_TLS: true
     ELASTIC_ADDRESSES: http://elasticsearch-master:9200
@@ -354,6 +361,7 @@ vidhaan-router:
   envVars:
     DEBUG: false
     DEPLOYMENT: production
+
     #Vidhaan
     VIDHAAN_AGENT_NAME: onpremise
     VIDHAAN_AGENT_KEY: afa8572b-facf-46ca-a40b-5cd23a3dbf02
@@ -364,16 +372,11 @@ vidhaan-router:
     SERVER_HOST: 0.0.0.0
     SERVER_PORT: 8002
     MONTHLY_LIMIT: 0
+    REQUEST_PER_MINUTE_LIMIT: 1500
     EXCLUDED_WORKSPACE_IDS_FOR_MONTHLY_LIMIT: 1,
     MAX_REQUEST_SIZE: 3145728
     ENABLE_PROFILING: false
     SKIP_LOG_PATHS: /health
-
-    # Redis Config
-    REDIS_HOST: datastore-redis-master:6379
-    REDIS_DATABASE: 1
-    REDIS_USERNAME:
-    REDIS_PASSWORD:
 
     # Database
     DB_NAME: nected
@@ -389,7 +392,16 @@ vidhaan-router:
     DB_CONN_MAX_LIFE_TIME: 1h
     DB_CONN_MAX_IDLE_TIME: 1h
 
+    # Redis Config
+    REDIS_TLS_ENABLED: false
+    REDIS_INSECURE_TLS: true
+    REDIS_HOST: datastore-redis-master:6379
+    REDIS_DATABASE: 1
+    REDIS_USERNAME:
+    REDIS_PASSWORD:
+
     # Elastic Config
+    ELASTIC_PROVIDER: managed
     ELASTIC_ENABLED: false
     ELASTIC_INSECURE_TLS: true
     ELASTIC_ADDRESSES: http://elasticsearch-master:9200
