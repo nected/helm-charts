@@ -8,7 +8,7 @@ image:
   repository: public.ecr.aws/f6k1n6r3/vidhaan
   pullPolicy: IfNotPresent
   # Overrides the image tag whose default is the chart appVersion.
-  tag: "op0.2.4"
+  tag: "op0.2.5"
   args: ["--executer"]
 
 imagePullSecrets: []
@@ -26,6 +26,7 @@ existingSecretMap: {}
 envVars:
   DEBUG: false
   DEPLOYMENT: production
+
   #Vidhaan
   VIDHAAN_AGENT_NAME: onpremise
   VIDHAAN_AGENT_KEY: afa8572b-facf-46ca-a40b-5cd23a3dbf02
@@ -36,16 +37,11 @@ envVars:
   SERVER_HOST: 0.0.0.0
   SERVER_PORT: 8002
   MONTHLY_LIMIT: 0
+  REQUEST_PER_MINUTE_LIMIT: 1500
   EXCLUDED_WORKSPACE_IDS_FOR_MONTHLY_LIMIT: 1,
   MAX_REQUEST_SIZE: 3145728
   ENABLE_PROFILING: false
   SKIP_LOG_PATHS: /health
-
-  # Redis Config
-  REDIS_HOST: datastore-redis-master:6379
-  REDIS_DATABASE: 1
-  REDIS_USERNAME:
-  REDIS_PASSWORD:
 
   # Database
   DB_NAME: nected
@@ -61,7 +57,16 @@ envVars:
   DB_CONN_MAX_LIFE_TIME: 1h
   DB_CONN_MAX_IDLE_TIME: 1h
 
+  # Redis Config
+  REDIS_TLS_ENABLED: false
+  REDIS_INSECURE_TLS: true
+  REDIS_HOST: datastore-redis-master:6379
+  REDIS_DATABASE: 1
+  REDIS_USERNAME:
+  REDIS_PASSWORD:
+
   # Elastic Config
+  ELASTIC_PROVIDER: managed
   ELASTIC_ENABLED: false
   ELASTIC_INSECURE_TLS: true
   ELASTIC_ADDRESSES: http://elasticsearch-master:9200
