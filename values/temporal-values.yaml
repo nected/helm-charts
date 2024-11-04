@@ -43,6 +43,7 @@ server:
           port: 5432
           user: nected
           password: psqlPass123
+          database: temporal
           # existingSecret: temporal-default-store
           maxConns: 20
           maxConnLifetime: "1h"
@@ -57,6 +58,7 @@ server:
           host: datastore-postgresql
           port: 5432
           user: nected
+          database: temporal_visibility
           password: psqlPass123
           # existingSecret: temporal-default-store
           maxConns: 20
@@ -114,6 +116,8 @@ server:
         memory: 512Mi
 
 admintools:
+  enabled: false
+web:
   enabled: false
 
 schema:
