@@ -9,14 +9,14 @@ server:
       replicationConsumer:
         type: rpc
       failoverVersionIncrement: 100
-      masterClusterName: "nected-op"
-      currentClusterName: "nected-op" # <current cluster name>
-      clusterInformation:
-        nected-op:
-          enabled: true
-          initialFailoverVersion: 1
-          rpcName: "frontend"
-          rpcAddress: "0.0.0.0:7233"
+      masterClusterName: cluster_a
+      currentClusterName: # <current cluster name>
+      # clusterInformation:
+      #   <cluster name>:
+      #     enabled: true
+      #     initialFailoverVersion: <cluster initial failover version>
+      #     rpcName: "frontend"
+      #     rpcAddress: <cluster address:cluster port>
       #   cluster_a:
       #     enabled: true
       #     initialFailoverVersion: 1

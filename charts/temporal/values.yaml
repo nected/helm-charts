@@ -8,16 +8,20 @@ imagePullSecrets: {}
 serviceAccount:
   # Whether to create service account or not
   create: false
-  # Name of the service account, default: temporal.fullname
+  # Name of the service account.
+  # Uses `name` if set.
+  # If `create: true` defaults to temporal.fullname, otherwise uses the namespace's default serviceAccount.
   name:
   # extraAnnotations would let users add additional annotations
   extraAnnotations:
+additionalAnnotations: {}
+additionalLabels: {}
 server:
   enabled: true
   sidecarContainers: []
   image:
     repository: temporalio/server
-    tag: 1.24.2.1
+    tag: 1.25.1
     pullPolicy: IfNotPresent
   # Global default settings (can be overridden per service)
   replicaCount: 1
@@ -28,6 +32,8 @@ server:
       enabled: true
     # Additional tags to be added to Prometheus metrics
     tags: {}
+    # Tags to be excluded in Prometheus metrics
+    excludeTags: {}
     # Enable Prometheus ServiceMonitor
     # Use this if you installed the Prometheus Operator (https://github.com/coreos/prometheus-operator).
     serviceMonitor:
@@ -58,6 +64,8 @@ server:
       #   targetLabel: __name__
     prometheus:
       timerType: histogram
+  deploymentLabels: {}
+  deploymentAnnotations: {}
   podAnnotations: {}
   podLabels: {}
   secretLabels: {}
@@ -114,6 +122,15 @@ server:
     #       serverName: dnsSanInFrontendCertificate
     #       rootCaFiles:
     #         - /path/to/frontend/serverCa
+    # Define your Authorizer and ClaimMapper configuration here. See https://docs.temporal.io/self-hosted-guide/security#authorization
+    # authorization:
+    #   jwtKeyProvider:
+    #     keySourceURIs:
+    #       - http://localhost:/jwks.json
+    #     refreshInterval: 1m
+    #   permissionsClaimName: permissions
+    #   authorizer: default
+    #   claimMapper: default
     persistence:
       defaultStore: default
       additionalStores: {}
@@ -177,6 +194,12 @@ server:
           maxConnLifetime: "1h"
           # connectAttributes:
           #   tx_isolation: 'READ-COMMITTED'
+    namespaces:
+      # Enable this to create namespaces
+      create: false
+      namespace:
+        - name: default
+          retention: 3d
   frontend:
     service:
       # Evaluated as template
@@ -207,6 +230,8 @@ server:
       # enabled: false
       prometheus: {}
       # timerType: histogram
+    deploymentLabels: {}
+    deploymentAnnotations: {}
     podAnnotations: {}
     podLabels: {}
     resources: {}
@@ -217,6 +242,12 @@ server:
     containerSecurityContext: {}
     topologySpreadConstraints: []
     podDisruptionBudget: {}
+    autoscaling:
+      enabled: false
+      minReplicas: "1"
+      maxReplicas: "1"
+      targetCPU: "75"
+      targetMemory: "75"
   history:
     service:
       # type: ClusterIP
@@ -229,6 +260,8 @@ server:
       # enabled: false
       prometheus: {}
       # timerType: histogram
+    deploymentLabels: {}
+    deploymentAnnotations: {}
     podAnnotations: {}
     podLabels: {}
     resources: {}
@@ -239,6 +272,12 @@ server:
     containerSecurityContext: {}
     topologySpreadConstraints: []
     podDisruptionBudget: {}
+    autoscaling:
+      enabled: false
+      minReplicas: "1"
+      maxReplicas: "1"
+      targetCPU: "75"
+      targetMemory: "75"
   matching:
     service:
       # type: ClusterIP
@@ -251,6 +290,8 @@ server:
       # enabled: false
       prometheus: {}
       # timerType: histogram
+    deploymentLabels: {}
+    deploymentAnnotations: {}
     podAnnotations: {}
     podLabels: {}
     resources: {}
@@ -261,6 +302,12 @@ server:
     containerSecurityContext: {}
     topologySpreadConstraints: []
     podDisruptionBudget: {}
+    autoscaling:
+      enabled: false
+      minReplicas: "1"
+      maxReplicas: "1"
+      targetCPU: "75"
+      targetMemory: "75"
   worker:
     service:
       # type: ClusterIP
@@ -273,6 +320,8 @@ server:
       # enabled: false
       prometheus: {}
       # timerType: histogram
+    deploymentLabels: {}
+    deploymentAnnotations: {}
     podAnnotations: {}
     podLabels: {}
     resources: {}
@@ -283,16 +332,24 @@ server:
     containerSecurityContext: {}
     topologySpreadConstraints: []
     podDisruptionBudget: {}
+    autoscaling:
+      enabled: false
+      minReplicas: "1"
+      maxReplicas: "1"
+      targetCPU: "75"
+      targetMemory: "75"
 admintools:
-  enabled: false
+  enabled: true
   image:
     repository: temporalio/admin-tools
-    tag: 1.24.2.1-tctl-1.18.1-cli-0.13.2
+    tag: 1.25.1-tctl-1.18.1-cli-1.1.0
     pullPolicy: IfNotPresent
   service:
     type: ClusterIP
     port: 22
     annotations: {}
+  deploymentLabels: {}
+  deploymentAnnotations: {}
   podLabels: {}
   podAnnotations: {}
   nodeSelector: {}
@@ -304,11 +361,11 @@ admintools:
   securityContext: {}
   podDisruptionBudget: {}
 web:
-  enabled: false
+  enabled: true
   replicaCount: 1
   image:
     repository: temporalio/ui
-    tag: 2.29.2
+    tag: 2.31.2
     pullPolicy: IfNotPresent
   service:
     # set type to NodePort if access to web needs access from outside the cluster
@@ -332,6 +389,8 @@ web:
     #  - secretName: chart-example-tls
     #    hosts:
     #      - chart-example.local
+  deploymentLabels: {}
+  deploymentAnnotations: {}
   podAnnotations: {}
   podLabels: {}
   resources: {}
@@ -366,11 +425,13 @@ schema:
   update:
     enabled: true
     backoffLimit: 100
+  podAnnotations: {}
+  podLabels: {}
   resources: {}
   containerSecurityContext: {}
   securityContext: {}
 elasticsearch:
-  enabled: false
+  enabled: true
   replicas: 3
   persistence:
     enabled: false
@@ -382,13 +443,13 @@ elasticsearch:
   logLevel: "error"
   username: ""
   password: ""
-  visibilityIndex: "temporal_visibility_v1_op"
+  visibilityIndex: "temporal_visibility_v1_dev"
 prometheus:
-  enabled: false
+  enabled: true
   nodeExporter:
     enabled: false
 grafana:
-  enabled: false
+  enabled: true
   replicas: 1
   testFramework:
     enabled: false
@@ -444,7 +505,7 @@ grafana:
         url: https://raw.githubusercontent.com/temporalio/dashboards/helm/misc/worker-service-specific.json
         datasource: TemporalMetrics
 cassandra:
-  enabled: false
+  enabled: true
   persistence:
     enabled: false
   image:

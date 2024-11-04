@@ -3,8 +3,6 @@ elasticsearch:
   external: true
   host: "elasticsearch-master-headless"
   port: "9200"
-  username: "elastic"
-  password:
   version: "v7"
-  scheme: "https"
+  scheme: "http"
   logLevel: "error"

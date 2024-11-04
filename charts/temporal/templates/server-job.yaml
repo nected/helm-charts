@@ -2,30 +2,26 @@
 apiVersion: batch/v1
 kind: Job
 metadata:
-  name: {{ include "temporal.componentname" (list . "schema") }}
+  name: {{ include "temporal.componentname" (list $ (printf "schema-%d" .Release.Revision | replace "." "-")) }}
   labels:
-    app.kubernetes.io/name: {{ include "temporal.name" . }}
-    helm.sh/chart: {{ include "temporal.chart" . }}
-    app.kubernetes.io/managed-by: {{ .Release.Service }}
-    app.kubernetes.io/instance: {{ .Release.Name }}
-    app.kubernetes.io/version: {{ .Chart.AppVersion | replace "+" "_" }}
-    app.kubernetes.io/component: database
-    app.kubernetes.io/part-of: {{ .Chart.Name }}
+    {{- include "temporal.resourceLabels" (list $ "database" "") | nindent 4 }}
 spec:
   backoffLimit: {{ $.Values.schema.setup.backoffLimit }}
+  ttlSecondsAfterFinished: 86400
   template:
     metadata:
-      name: {{ include "temporal.componentname" (list . "schema") }}
+      name: {{ include "temporal.componentname" (list $ (printf "schema-%d" .Release.Revision | replace "." "-")) }}
       labels:
-        app.kubernetes.io/name: {{ include "temporal.name" . }}
-        helm.sh/chart: {{ include "temporal.chart" . }}
-        app.kubernetes.io/managed-by: {{ .Release.Service }}
-        app.kubernetes.io/instance: {{ .Release.Name }}
-        app.kubernetes.io/version: {{ .Chart.AppVersion | replace "+" "_" }}
-        app.kubernetes.io/component: database
-        app.kubernetes.io/part-of: {{ .Chart.Name }}
+        {{- include "temporal.resourceLabels" (list $ "database" "") | nindent 8 }}
+        {{- with $.Values.schema.podLabels }}
+        {{- toYaml . | nindent 8 }}
+        {{- end }}
+      {{- with $.Values.schema.podAnnotations }}
+      annotations:
+        {{- toYaml . | nindent 8 }}
+      {{- end }}
     spec:
-      {{ include "temporal.serviceAccount" . }}
+      {{ include "temporal.serviceAccount" $ }}
       restartPolicy: OnFailure
       initContainers:
         {{- if $.Values.cassandra.enabled }}
@@ -82,6 +78,7 @@ spec:
           command: ['sh', '-c']
           args:
             - 'curl -X PUT --fail --user "$ES_USER:$ES_PWD" $ES_SCHEME://$ES_HOST:$ES_PORT/_template/temporal_visibility_v1_template -H "Content-Type: application/json" --data-binary "@schema/elasticsearch/visibility/index_template_$ES_VERSION.json" 2>&1 &&
+              curl --head --fail --user "$ES_USER:$ES_PWD" $ES_SCHEME://$ES_HOST:$ES_PORT/$ES_VISIBILITY_INDEX 2>&1 ||
               curl -X PUT --fail --user "$ES_USER:$ES_PWD" $ES_SCHEME://$ES_HOST:$ES_PORT/$ES_VISIBILITY_INDEX 2>&1'
             {{- end }}
           env:
@@ -115,7 +112,7 @@ spec:
                 {{- $plugin := include "temporal.persistence.sql.driver" (list $ $store) }}
                 {{- if eq $plugin "mysql8" }}
           command: ['temporal-sql-tool', 'update-schema', '--schema-dir', '/etc/temporal/schema/mysql/v8/{{ $schema }}/versioned']
-                {{- else if eq $plugin "postgres12" }}
+                {{- else if or (eq $plugin "postgres12") (eq $plugin "postgres12_pgx") }}
           command: ['temporal-sql-tool', 'update-schema', '--schema-dir', '/etc/temporal/schema/postgresql/v12/{{ $schema }}/versioned']
                 {{- end }}
               {{- end }}
@@ -134,6 +131,30 @@ spec:
                 {{- toYaml . | nindent 12 }}
               {{- end }}
             {{- end }}
+          {{- end }}
+        {{- end }}
+        {{- if $.Values.server.config.namespaces.create }}
+          {{- range $namespace := $.Values.server.config.namespaces.namespace }}
+        - name: create-{{ $namespace.name }}-namespace
+          image: "{{ $.Values.admintools.image.repository }}:{{ $.Values.admintools.image.tag }}"
+          imagePullPolicy: {{ $.Values.admintools.image.pullPolicy }}
+          command: ['/bin/sh','-c']
+          args: ['temporal operator namespace describe -n {{ $namespace.name }} || temporal operator namespace create -n {{ $namespace.name }}{{- if hasKey $namespace "retention" }} --retention {{ $namespace.retention }}{{- end }}']
+          env:
+            - name: TEMPORAL_ADDRESS
+              value: "{{ include "temporal.fullname" $ }}-frontend.{{ $.Release.Namespace }}.svc:{{ $.Values.server.frontend.service.port }}"
+              {{- with $.Values.server.additionalVolumeMounts }}
+          volumeMounts:
+                {{- toYaml . | nindent 12 }}
+              {{- end }}
+              {{- with $.Values.schema.resources }}
+          resources:
+                {{- toYaml . | nindent 12 }}
+              {{- end }}
+              {{- with $.Values.schema.containerSecurityContext }}
+          securityContext:
+                {{- toYaml . | nindent 12 }}
+              {{- end }}
           {{- end }}
         {{- end }}
       containers:
