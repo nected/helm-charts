@@ -5,14 +5,10 @@ apiVersion: apps/v1
 kind: Deployment
 metadata:
   name: {{ include "temporal.componentname" (list $ $service) }}
+  annotations:
+    {{- include "temporal.resourceAnnotations" (list $ $service "deployment") | nindent 4 }}
   labels:
-    app.kubernetes.io/name: {{ include "temporal.name" $ }}
-    helm.sh/chart: {{ include "temporal.chart" $ }}
-    app.kubernetes.io/managed-by: {{ $.Release.Service }}
-    app.kubernetes.io/instance: {{ $.Release.Name }}
-    app.kubernetes.io/version: {{ $.Chart.AppVersion | replace "+" "_" }}
-    app.kubernetes.io/component: {{ $service }}
-    app.kubernetes.io/part-of: {{ $.Chart.Name }}
+    {{- include "temporal.resourceLabels" (list $ $service "deployment") | nindent 4 }}
 spec:
   replicas: {{ default $.Values.server.replicaCount $serviceValues.replicaCount }}
   selector:
@@ -22,17 +18,6 @@ spec:
       app.kubernetes.io/component: {{ $service }}
   template:
     metadata:
-      labels:
-        app.kubernetes.io/name: {{ include "temporal.name" $ }}
-        helm.sh/chart: {{ include "temporal.chart" $ }}
-        app.kubernetes.io/managed-by: {{ $.Release.Service }}
-        app.kubernetes.io/instance: {{ $.Release.Name }}
-        app.kubernetes.io/version: {{ $.Chart.AppVersion | replace "+" "_" }}
-        app.kubernetes.io/component: {{ $service }}
-        app.kubernetes.io/part-of: {{ $.Chart.Name }}
-        {{- with (default $.Values.server.podLabels $serviceValues.podLabels) }}
-        {{- toYaml . | nindent 8 }}
-        {{- end }}
       annotations:
         checksum/config: {{ include (print $.Template.BasePath "/server-configmap.yaml") $ | sha256sum }}
         {{- if (default $.Values.server.metrics.annotations.enabled $serviceValues.metrics.annotations.enabled) }}
@@ -40,9 +25,9 @@ spec:
         prometheus.io/scrape: 'true'
         prometheus.io/port: '9090'
         {{- end }}
-        {{- with (default $.Values.server.podAnnotations $serviceValues.podAnnotations) }}
-        {{- toYaml . | nindent 8 }}
-        {{- end }}
+        {{- include "temporal.resourceAnnotations" (list $ $service "pod") | nindent 8 }}
+      labels:
+        {{- include "temporal.resourceLabels" (list $ $service "pod") | nindent 8 }}
     spec:
       {{ include "temporal.serviceAccount" $ }}
       {{- if semverCompare ">=1.13.0" $.Chart.AppVersion}}
@@ -70,7 +55,9 @@ spec:
         - name: check-elasticsearch-index
           image: "{{ $.Values.admintools.image.repository }}:{{ $.Values.admintools.image.tag }}"
           imagePullPolicy: {{ $.Values.admintools.image.pullPolicy }}
-          command: ['sh', '-c', 'until curl --silent --fail {{- if and $.Values.elasticsearch.username $.Values.elasticsearch.password }} --user "{{ $.Values.elasticsearch.username }}:{{ $.Values.elasticsearch.password }}" {{- end }} {{ $.Values.elasticsearch.scheme }}://{{ $.Values.elasticsearch.host }}:{{ $.Values.elasticsearch.port }}/{{ $.Values.elasticsearch.visibilityIndex }} 2>&1 > /dev/null; do echo waiting for elasticsearch index to become ready; sleep 1; done;']
+          command: ['sh', '-c', 'until curl --silent --fail --user "$ES_USER:$ES_PWD" $ES_SCHEME://$ES_HOST:$ES_PORT/$ES_VISIBILITY_INDEX 2>&1 > /dev/null; do echo waiting for elasticsearch index to become ready; sleep 1; done;']
+          env:
+            {{- include "temporal.admintools-env" (list $ "visibility") | nindent 12 }}
         {{- end }}
       {{- end }}
       containers:

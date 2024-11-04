@@ -65,13 +65,13 @@ postgresql:
   enabled: true
 
 prometheus:
-  enabled: false
+  enabled: true
 
 grafana:
-  enabled: false
+  enabled: true
   
 elasticsearch:
-  enabled: false
+  enabled: true
 
 schema:
   createDatabase:

@@ -35,16 +35,18 @@ Create chart name and version as used by the chart label.
 Create the name of the service account
 */}}
 {{- define "temporal.serviceAccountName" -}}
+{{- if .Values.serviceAccount.create -}}
 {{ default (include "temporal.fullname" .) .Values.serviceAccount.name }}
+{{- else -}}
+{{ default "default" .Values.serviceAccount.name }}
+{{- end -}}
 {{- end -}}
 
 {{/*
 Define the service account as needed
 */}}
 {{- define "temporal.serviceAccount" -}}
-{{- if .Values.serviceAccount.name -}}
 serviceAccountName: {{ include "temporal.serviceAccountName" . }}
-{{- end -}}
 {{- end -}}
 
 {{/*
@@ -56,6 +58,82 @@ and we want to make sure that the component is included in the name.
 {{- $global := index . 0 -}}
 {{- $component := index . 1 | trimPrefix "-" -}}
 {{- printf "%s-%s" (include "temporal.fullname" $global | trunc (sub 62 (len $component) | int) | trimSuffix "-" ) $component | trimSuffix "-" -}}
+{{- end -}}
+
+{{/*
+Define the AppVersion
+*/}}
+{{- define "temporal.appVersion" -}}
+{{- if .Chart.AppVersion -}}
+{{ .Chart.AppVersion | replace "+" "_" | quote }}
+{{- else -}}
+{{ include "temporal.chart" $ }}
+{{- end -}}
+{{- end -}}
+
+{{/*
+Create the annotations for all resources
+*/}}
+{{- define "temporal.resourceAnnotations" -}}
+{{- $global := index . 0 -}}
+{{- $scope := index . 1 -}}
+{{- $resourceType := index . 2 -}}
+{{- $component := "server" -}}
+{{- if (or (eq $scope "admintools") (eq $scope "web")) -}}
+{{- $component = $scope -}}
+{{- end -}}
+{{- with $resourceType -}}
+{{- $resourceTypeKey := printf "%sAnnotations" . -}}
+{{- $componentAnnotations := (index $global.Values $component $resourceTypeKey) -}}
+{{- $scopeAnnotations := dict -}}
+{{- if hasKey (index $global.Values $component) $scope -}}
+{{- $scopeAnnotations = (index $global.Values $component $scope $resourceTypeKey) -}}
+{{- end -}}
+{{- $resourceAnnotations := merge $scopeAnnotations $componentAnnotations -}}
+{{- range $annotation_name, $annotation_value := $resourceAnnotations }}
+{{ $annotation_name }}: {{ $annotation_value }}
+{{- end -}}
+{{- end -}}
+{{- range $annotation_name, $annotation_value := $global.Values.additionalAnnotations }}
+{{ $annotation_name }}: {{ $annotation_value }}
+{{- end -}}
+{{- end -}}
+
+{{/*
+Create the labels for all resources
+*/}}
+{{- define "temporal.resourceLabels" -}}
+{{- $global := index . 0 -}}
+{{- $scope := index . 1 -}}
+{{- $resourceType := index . 2 -}}
+{{- $component := "server" -}}
+{{- if (or (eq $scope "admintools") (eq $scope "web")) -}}
+{{- $component = $scope -}}
+{{- end -}}
+{{- with $scope -}}
+app.kubernetes.io/component: {{ . }}
+{{ end -}}
+app.kubernetes.io/name: {{ include "temporal.name" $global }}
+helm.sh/chart: {{ include "temporal.chart" $global }}
+app.kubernetes.io/managed-by: {{ index $global "Release" "Service" }}
+app.kubernetes.io/instance: {{ index $global "Release" "Name" }}
+app.kubernetes.io/version: {{ include "temporal.appVersion" $global }}
+app.kubernetes.io/part-of: {{ $global.Chart.Name }}
+{{- with $resourceType -}}
+{{- $resourceTypeKey := printf "%sLabels" . -}}
+{{- $componentLabels := (index $global.Values $component $resourceTypeKey) -}}
+{{- $scopeLabels := dict -}}
+{{- if hasKey (index $global.Values $component) $scope -}}
+{{- $scopeLabels = (index $global.Values $component $scope $resourceTypeKey) -}}
+{{- end -}}
+{{- $resourceLabels := merge $scopeLabels $componentLabels -}}
+{{- range $label_name, $label_value := $resourceLabels }}
+{{ $label_name}}: {{ $label_value }}
+{{- end -}}
+{{- end -}}
+{{- range $label_name, $label_value := $global.Values.additionalLabels }}
+{{ $label_name }}: {{ $label_value }}
+{{- end -}}
 {{- end -}}
 
 {{/*
