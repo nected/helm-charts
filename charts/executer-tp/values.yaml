@@ -26,7 +26,7 @@ envVars:
   TEMPORAL_MAX_CONCURRENT_WORKFLOW_TASK_POLLS: "50"
   TEMPORAL_MAX_CONCURRENT_ACTIVITY_TASK_POLLS: "10"
   TEMPORAL_MAX_CACHED_WORKFLOWS: "200"
-  SENTRY_DSN:
+  SENTRY_DSN: ""
   SENTRY_ENABLED: "false"
   SENTRY_ENVIRONMENT: development
   SENTRY_SAMPLE_RATE: "1.0"
@@ -34,8 +34,8 @@ envVars:
   REDIS_ENABLED: "true"
   REDIS_HOST: datastore-redis-master
   REDIS_PORT: "6379"
-  REDIS_USERNAME:
-  REDIS_PASSWORD:
+  REDIS_USERNAME: ""
+  REDIS_PASSWORD: ""
   REDIS_DB: "0"
 
 
@@ -91,10 +91,10 @@ resources:
   # resources, such as Minikube. If you do want to specify resources, uncomment the following
   # lines, adjust them as necessary, and remove the curly braces after 'resources:'.
   requests:
-    cpu: "300m"
+    cpu: "400m"
     memory: "1024Mi"
   limits:
-    cpu: "300m"
+    cpu: "700m"
     memory: "1024Mi"
 
 livenessProbe: {}
@@ -102,10 +102,10 @@ readinessProbe: {}
 
 autoscaling:
   enabled: false
-  # minReplicas: 1
-  # maxReplicas: 1
-  # targetCPUUtilizationPercentage: 80
-  # targetMemoryUtilizationPercentage: 80
+  minReplicas: 1
+  maxReplicas: 1
+  targetCPUUtilizationPercentage: 80
+  targetMemoryUtilizationPercentage: 80
 
 # Additional volumes on the output Deployment definition.
 volumes: []
