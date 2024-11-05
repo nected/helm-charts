@@ -24,27 +24,26 @@ Installation using Helm charts
     - [Temporal values](https://charts.nected.io/values/temporal-values.yaml)
     - [Nected values](https://charts.nected.io/values/nected-values.yaml)
 
-3. Update following values in "values/nected-values.yaml" files, according to your ingress.
+3. Update following values in `values/nected-values.yaml` files:
     - `<<scheme>>`
     - `<<ui-domain>>`
     - `<<editor-domain>>`
     - `<<backend-domain>>`
     - `<<router-domain>>`
-    - `<<ingressClassName>>` (also enable ingress)
+    - `<<ingressClassName>>` (enable and update ingressClass)
 
 4. Install Datastore ElasticSearch / Postgresql / Redis.
    ```
    helm upgrade -i datastore nected/datastore -f values/datastore-values.yaml
    ```
 
-   If you want to use external elastic/psql/redis endpoints then skip installing datastore chart, please update endpoints and credentials in value/*.yaml.
+   If you want to use external elastic/psql/redis endpoints then skip installing datastore chart, please update endpoints and credentials in `values/temporal-values.yaml & values/nected-values.yaml`.
 
-5. To enable encryption of sensitive data, create secret for private key, uncomment existingSecretMap key in nected-values.yaml:
+5. To enable encryption of sensitive data, create secret for private key using following commands, and uncomment existingSecretMap key in `nected-values.yaml`:
     ```
     openssl genrsa -f4 -out encryption-at-rest 4096
     kubectl create secret generic encryption-at-rest-secret --from-file encryption-at-rest
     ```
-
 
 6.  Install temporal.
     ```
@@ -56,4 +55,4 @@ Installation using Helm charts
     helm install nected nected/nected -f values/nected-values.yaml
     ```
 
-With all services running, access the application through the fronend-konark domain using the default user and password (values/nected-values.yaml).
+With all services running, access the application through the `<<ui-domain>>` domain using the default `NECTED_USER_EMAIL` and `NECTED_USER_PASSWORD` (mentioned in `values/nected-values.yaml`).

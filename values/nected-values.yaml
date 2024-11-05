@@ -26,6 +26,21 @@ editor:
             - path: /
               pathType: Prefix
 
+  resources:
+    requests:
+      cpu: "250m"
+      memory: "512Mi"
+    limits:
+      cpu: "250m"
+      memory: "1024Mi"
+
+  autoscaling:
+    enabled: false
+    minReplicas: 1
+    maxReplicas: 1
+    targetCPUUtilizationPercentage: 80
+    targetMemoryUtilizationPercentage: 80
+
 # konark chart values to be updated
 konark:
   enabled: true
@@ -45,6 +60,21 @@ konark:
             - path: /
               pathType: Prefix
 
+  resources:
+    requests:
+      cpu: "250m"
+      memory: "512Mi"
+    limits:
+      cpu: "250m"
+      memory: "1024Mi"
+
+  autoscaling:
+    enabled: false
+    minReplicas: 1
+    maxReplicas: 1
+    targetCPUUtilizationPercentage: 80
+    targetMemoryUtilizationPercentage: 80
+
 # nalanda chart values to be updated
 nalanda:
   enabled: true
@@ -53,48 +83,92 @@ nalanda:
   envVars:
     ALLOWED_CORS_ORIGIN: <<scheme>>://<<backend-domain>>,<<scheme>>://<<ui-domain>>,<<scheme>>://<<editor-domain>>
     ALLOWED_HOSTS: <<backend-domain>>
+
     # if external use external host address
+    MASTER_DB_NAME: nected
     MASTER_DB_USER: nected
     MASTER_DB_PASSWORD: psqlPass123
     MASTER_DB_HOST: datastore-postgresql
+    MASTER_DB_PORT: "5432"
+    MASTER_DB_LOG_MODE: "false"
+    MASTER_SSL_MODE: disable
+    MASTER_DB_CONNS_POOL_ENABLE: "true"
+    MASTER_DB_MAX_IDLE_CONNS: "5"
+    MASTER_DB_MAX_OPEN_CONNS: "10"
+    MASTER_DB_CONN_MAX_LIFETIME: 1h
+    MASTER_DB_CONN_MAX_IDLE_TIME: 30m
+
     # if external use external host address
+    # Redis Config
+    REDIS_TLS_ENABLED: "false"
+    REDIS_INSECURE_TLS: "true"
     REDIS_HOST: datastore-redis-master
+    REDIS_PORT: "6379"
+    REDIS_DATABASE: "0"
+    REDIS_USERNAME: ""
+    REDIS_PASSWORD: ""
+
+    VIDHAAN_REDIS_TLS_ENABLED: "false"
+    VIDHAAN_REDIS_INSECURE_TLS: "true"
     VIDHAAN_REDIS_HOST: datastore-redis-master
+    VIDHAAN_REDIS_PORT: "6379"
+    VIDHAAN_REDIS_DATABASE: "1"
+    VIDHAAN_REDIS_USERNAME: ""
+    VIDHAAN_REDIS_PASSWORD: ""
+
     # enable elastic if installed using datastore or used external
-    ELASTIC_ENABLED: true
-    # if external use external host address
+    ELASTIC_PROVIDER: managed
+    ELASTIC_ENABLED: "true"
     ELASTIC_HOSTS: http://elasticsearch-master:9200
+    ELASTIC_API_KEY: ""
+    ELASTIC_INSECURE_TLS: "true"
     ELASTIC_USER: elastic
     ELASTIC_PASSWORD: esPass123
+
+    # google auth
+    GOOGLE_AUTH_ENABLED: "false"
+    GOOGLE_CLIENT_ID: ""
+
+    # mslogin
+    MICROSOFT_AUTH_ENABLED: "false"
+    MICROSOFT_CLIENT_ID: ""
+    MICROSOFT_CLIENT_SECRET: ""
+    MICROSOFT_TENANT_ID: ""
+
     # aws ses credentials if EMAIL_PROVIDE: ses
-    AWS_ACCESS_KEY:
-    AWS_SECRET_KEY:
-    AWS_REGION:
+    AWS_ACCESS_KEY: ""
+    AWS_SECRET_KEY: ""
+    AWS_REGION: ""
+
     # email
-    SEND_EMAIL: false
+    SEND_EMAIL: "false"
     EMAIL_PROVIDER: smtp
-    # email sender setting
-    SENDER_EMAIL:
-    SENDER_NAME:
-    # smtp provider credentials
-    EMAIL_INSECURE_TLS: true
-    EMAIL_HOST:
-    EMAIL_PORT: 587
-    EMAIL_USERNAME:
-    EMAIL_PASSWORD:
+    SENDER_EMAIL: ""
+    SENDER_NAME: ""
+    EMAIL_INSECURE_TLS: ""
+    EMAIL_HOST: ""
+    EMAIL_PORT: ""
+    EMAIL_USERNAME: ""
+    EMAIL_PASSWORD: ""
+
+    # konark
     ASSETS_BASE_URL: <<scheme>>://<<ui-domain>>/assets/konark
     KONARK_BASE_URL: <<scheme>>://<<ui-domain>>
+
     # comma separated email domains to allow signup from
-    SIGNUP_DOMAINS:
+    PASSWORD_AUTH_ENABLED: "true"
+    SIGNUP_DOMAINS: ""
     SYNC_PLUGINS: mysql,mongodb,postgres,sqlserver,redshift,oracle,snowflake,restAPI
+
     # default user created on setup
-    NECTED_USER_EMAIL: user@example.com
-    NECTED_USER_PASSWORD: userPassword123
+    NECTED_USER_EMAIL: dev@nected.ai
+    NECTED_USER_PASSWORD: devPass123
+
     # default vidhaan settings
     DEFAULT_VIDHAAN_SCHEME: <<scheme>>
     DEFAULT_VIDHAAN_DOMAIN: <<router-domain>>
     # k8s cluster gw ip
-    DEFAULT_VIDHAAN_WHITELISTED_IPS: 127.0.0.1
+    DEFAULT_VIDHAAN_WHITELISTED_IPS: "127.0.0.1"
  
   ingress:
     enabled: false
@@ -105,27 +179,79 @@ nalanda:
           - path: /
             pathType: Prefix
 
+  resources:
+    requests:
+      cpu: "250m"
+      memory: "512Mi"
+    limits:
+      cpu: "250m"
+      memory: "512Mi"
+
+  autoscaling:
+    enabled: false
+    minReplicas: 1
+    maxReplicas: 1
+    targetCPUUtilizationPercentage: 80
+    targetMemoryUtilizationPercentage: 80
+
 # vidhaan-executer chart to be updated
 vidhaan-executer:
   enabled: true
   replicaCount: 1
   existingSecretMap: *commonSecretMap
   envVars:
-    REDIS_HOST: datastore-redis-master:6379
+    # Database
+    DB_NAME: nected
     DB_USER: nected
     DB_PASSWORD: psqlPass123
     DB_HOST: datastore-postgresql
-    # enable elastic if installed using datastore or used external
-    ELASTIC_ENABLED: true
-    AUDIT_LOG_ENABLED: true
-    # if external use external host address
+    DB_PORT: "5432"
+    DB_LOG_MODE: "false"
+    SSL_MODE: disable
+    DB_CONNS_POOL_ENABLE: "true"
+    DB_MAX_IDLE_CONNS: "2"
+    DB_MAX_OPEN_CONNS: "10"
+    DB_CONN_MAX_LIFE_TIME: 1h
+    DB_CONN_MAX_IDLE_TIME: 1h
+
+    # Redis Config
+    REDIS_TLS_ENABLED: "false"
+    REDIS_INSECURE_TLS: "true"
+    REDIS_HOST: datastore-redis-master:6379
+    REDIS_DATABASE: "1"
+    REDIS_USERNAME: ""
+    REDIS_PASSWORD: ""
+
+    # Elastic Config
+    ELASTIC_PROVIDER: managed
+    ELASTIC_ENABLED: "false"
+    ELASTIC_INSECURE_TLS: "true"
     ELASTIC_ADDRESSES: http://elasticsearch-master:9200
-    # update if external and different user
+    ELASTIC_API_KEY: ""
     ELASTIC_USERNAME: elastic
     ELASTIC_PASSWORD: esPass123
+
+    # Audit log
+    AUDIT_LOG_ENABLED: "true"
+
     # subdomains
     SKIP_SUBDOMAINS: <<router-domain>>
     SKIP_SUBDOMAINS_WORKSPACE_IDS: "*"
+
+  resources:
+    requests:
+      cpu: "250m"
+      memory: "512Mi"
+    limits:
+      cpu: "500m"
+      memory: "1024Mi"
+
+  autoscaling:
+    enabled: false
+    minReplicas: 1
+    maxReplicas: 1
+    targetCPUUtilizationPercentage: 80
+    targetMemoryUtilizationPercentage: 80
 
 # vidhaan-router chart to be updated
 vidhaan-router:
@@ -133,18 +259,40 @@ vidhaan-router:
   replicaCount: 1
   existingSecretMap: *commonSecretMap
   envVars:
-    REDIS_HOST: datastore-redis-master:6379
+    # Database
+    DB_NAME: nected
     DB_USER: nected
     DB_PASSWORD: psqlPass123
     DB_HOST: datastore-postgresql
-    # enable elastic if installed using datastore or used external
-    ELASTIC_ENABLED: true
-    AUDIT_LOG_ENABLED: true
-    # if external use external host address
+    DB_PORT: "5432"
+    DB_LOG_MODE: "false"
+    SSL_MODE: disable
+    DB_CONNS_POOL_ENABLE: "true"
+    DB_MAX_IDLE_CONNS: "2"
+    DB_MAX_OPEN_CONNS: "10"
+    DB_CONN_MAX_LIFE_TIME: 1h
+    DB_CONN_MAX_IDLE_TIME: 1h
+
+    # Redis Config
+    REDIS_TLS_ENABLED: "false"
+    REDIS_INSECURE_TLS: "true"
+    REDIS_HOST: datastore-redis-master:6379
+    REDIS_DATABASE: "1"
+    REDIS_USERNAME: ""
+    REDIS_PASSWORD: ""
+
+    # Elastic Config
+    ELASTIC_PROVIDER: managed
+    ELASTIC_ENABLED: "false"
+    ELASTIC_INSECURE_TLS: "true"
     ELASTIC_ADDRESSES: http://elasticsearch-master:9200
-    # update if external and different user
+    ELASTIC_API_KEY: ""
     ELASTIC_USERNAME: elastic
     ELASTIC_PASSWORD: esPass123
+
+    # Audit log
+    AUDIT_LOG_ENABLED: "true"
+
     # subdomains
     SKIP_SUBDOMAINS: <<router-domain>>
     SKIP_SUBDOMAINS_WORKSPACE_IDS: "*"
@@ -158,13 +306,65 @@ vidhaan-router:
             - path: /
               pathType: Prefix
 
+  resources:
+    requests:
+      cpu: "250m"
+      memory: "512Mi"
+    limits:
+      cpu: "250m"
+      memory: "1024Mi"
+
+  autoscaling:
+    enabled: false
+    minReplicas: 1
+    maxReplicas: 1
+    targetCPUUtilizationPercentage: 80
+    targetMemoryUtilizationPercentage: 80
+
 # sql-linter chart to be updated
 sql-linter:
   enabled: true
   replicaCount: 1
   envVars:
-    OPENAI_API_KEY:
+    OPENAI_API_KEY: ""
+
+  resources:
+    requests:
+      cpu: "600m"
+      memory: "1024Mi"
+    limits:
+      cpu: "1000m"
+      memory: "1024Mi"
+
+  autoscaling:
+    enabled: false
+    minReplicas: 1
+    maxReplicas: 1
+    targetCPUUtilizationPercentage: 80
+    targetMemoryUtilizationPercentage: 80
 
 # executer-tp chart to be updated
 executer-tp:
   enabled: false
+  envVars:
+    REDIS_ENABLED: "true"
+    REDIS_HOST: datastore-redis-master
+    REDIS_PORT: "6379"
+    REDIS_USERNAME: ""
+    REDIS_PASSWORD: ""
+    REDIS_DB: "1"
+
+  resources:
+    requests:
+      cpu: "400m"
+      memory: "1024Mi"
+    limits:
+      cpu: "700m"
+      memory: "1024Mi"
+
+  autoscaling:
+    enabled: false
+    minReplicas: 1
+    maxReplicas: 1
+    targetCPUUtilizationPercentage: 80
+    targetMemoryUtilizationPercentage: 80
