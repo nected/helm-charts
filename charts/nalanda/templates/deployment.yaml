@@ -38,9 +38,20 @@ spec:
           {{- end }}
           image: "{{ .Values.image.repository }}:{{ .Values.image.tag | default .Chart.AppVersion }}"
           imagePullPolicy: {{ .Values.image.pullPolicy }}
+          {{- if .Values.image.args }}
+          args:
+            {{- range .Values.image.args }}
+            - {{ . }}
+            {{- end }}
+          {{- end}}
           {{- with .Values.existingSecretMap }}
           env:
             {{- toYaml . | nindent 12 }}
+          {{- end }}
+          {{- if not .Values.mountConfigMap }}
+          envFrom:
+          - configMapRef:
+              name: {{ include "common.fullname" . }}
           {{- end }}
           {{- if .Values.service }}
           ports:
@@ -59,22 +70,22 @@ spec:
           resources:
             {{- toYaml .Values.resources | nindent 12 }}
           volumeMounts:
-            {{- if .Values.mountConfigMap }}
             - mountPath: /mnt/temp
               name: {{ include "common.name" . }}-cm-volume
-            {{- end }}
             {{- if .Values.volumeMounts }}
             {{- toYaml .Values.volumeMounts | nindent 12 }}
             {{- end}}
       volumes:
-        {{- if .Values.mountConfigMap }}
         - name: {{ include "common.name" . }}-cm-volume
           configMap:
             name: {{ include "common.fullname" . }}
             items:
-              - key: envFile
-                path: envFile
-        {{- end }}
+              - path: envFile
+                {{- if .Values.mountConfigMap }}
+                key: envFile
+                {{- else }}
+                key: ENVFILE_DEFAULT_VALUE
+                {{- end }}
         {{- if .Values.volumes }}
         {{- toYaml .Values.volumes | nindent 8 }}
         {{- end}}

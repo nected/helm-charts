@@ -23,20 +23,21 @@ fullnameOverride: ""
 existingSecretMap: {}
 
 envVars:
+  ENVFILE_DEFAULT_VALUE: ""
   # server config
   ALLOWED_CORS_ORIGIN: http://nalanda.local,http://konark.local,http://nected-editor.local
   ALLOWED_HOSTS: nalanda.local
-  DEBUG: false
+  DEBUG: "false"
   DEPLOYMENT: production
-  ENABLE_PROFILING: false
-  SERVER_HOST: 0.0.0.0
-  SERVER_PORT: 8001
+  ENABLE_PROFILING: "false"
+  SERVER_HOST: "0.0.0.0"
+  SERVER_PORT: "8001"
   SERVER_TIMEZONE: UTC
-  MAX_REQUEST_SIZE: 3145728
+  MAX_REQUEST_SIZE: "3145728"
 
   # Security
-  SECURITY_ENABLED: false
-  CHECK_ALLOWED_HOSTS: false
+  SECURITY_ENABLED: "false"
+  CHECK_ALLOWED_HOSTS: "false"
   AES_SECRET: tfgoS4EzPPuBJjBLFgmlut9ukW9o2PYy
   ENCRYPTION_KEY: EAR
 
@@ -45,82 +46,82 @@ envVars:
   MASTER_DB_USER: nected
   MASTER_DB_PASSWORD: psqlPass123
   MASTER_DB_HOST: datastore-postgresql
-  MASTER_DB_PORT: 5432
-  MASTER_DB_LOG_MODE: false
+  MASTER_DB_PORT: "5432"
+  MASTER_DB_LOG_MODE: "false"
   MASTER_SSL_MODE: disable
-  MASTER_DB_CONNS_POOL_ENABLE: true
-  MASTER_DB_MAX_IDLE_CONNS: 5
-  MASTER_DB_MAX_OPEN_CONNS: 10
+  MASTER_DB_CONNS_POOL_ENABLE: "true"
+  MASTER_DB_MAX_IDLE_CONNS: "5"
+  MASTER_DB_MAX_OPEN_CONNS: "10"
   MASTER_DB_CONN_MAX_LIFETIME: 1h
   MASTER_DB_CONN_MAX_IDLE_TIME: 30m
 
   # Redis Config
-  REDIS_TLS_ENABLED: false
-  REDIS_INSECURE_TLS: true
+  REDIS_TLS_ENABLED: "false"
+  REDIS_INSECURE_TLS: "true"
   REDIS_HOST: datastore-redis-master
-  REDIS_PORT: 6379
-  REDIS_DATABASE: 0
-  REDIS_USERNAME:
-  REDIS_PASSWORD:
+  REDIS_PORT: "6379"
+  REDIS_DATABASE: "0"
+  REDIS_USERNAME: ""
+  REDIS_PASSWORD: ""
 
-  VIDHAAN_REDIS_TLS_ENABLED: false
-  VIDHAAN_REDIS_INSECURE_TLS: true
+  VIDHAAN_REDIS_TLS_ENABLED: "false"
+  VIDHAAN_REDIS_INSECURE_TLS: "true"
   VIDHAAN_REDIS_HOST: datastore-redis-master
-  VIDHAAN_REDIS_PORT: 6379
-  VIDHAAN_REDIS_DATABASE: 1
-  VIDHAAN_REDIS_USERNAME:
-  VIDHAAN_REDIS_PASSWORD:
+  VIDHAAN_REDIS_PORT: "6379"
+  VIDHAAN_REDIS_DATABASE: "1"
+  VIDHAAN_REDIS_USERNAME: ""
+  VIDHAAN_REDIS_PASSWORD: ""
 
   # Elastic Config
   ELASTIC_PROVIDER: managed
-  ELASTIC_ENABLED: true
+  ELASTIC_ENABLED: "true"
   ELASTIC_HOSTS: http://elasticsearch-master:9200
-  ELASTIC_API_KEY:
-  ELASTIC_INSECURE_TLS: true
+  ELASTIC_API_KEY: ""
+  ELASTIC_INSECURE_TLS: "true"
   ELASTIC_USER: elastic
   ELASTIC_PASSWORD: esPass123
 
   # google auth
-  GOOGLE_AUTH_ENABLED: false
-  GOOGLE_CLIENT_ID:
+  GOOGLE_AUTH_ENABLED: "false"
+  GOOGLE_CLIENT_ID: ""
 
   # mslogin
-  MICROSOFT_AUTH_ENABLED: false
-  MICROSOFT_CLIENT_ID:
-  MICROSOFT_CLIENT_SECRET:
-  MICROSOFT_TENANT_ID:
+  MICROSOFT_AUTH_ENABLED: "false"
+  MICROSOFT_CLIENT_ID: ""
+  MICROSOFT_CLIENT_SECRET: ""
+  MICROSOFT_TENANT_ID: ""
 
   # aws ses credentials if EMAIL_PROVIDE: ses
-  AWS_ACCESS_KEY:
-  AWS_SECRET_KEY:
-  AWS_REGION:
+  AWS_ACCESS_KEY: ""
+  AWS_SECRET_KEY: ""
+  AWS_REGION: ""
 
   # email
-  SEND_EMAIL: false
+  SEND_EMAIL: "false"
   EMAIL_PROVIDER: smtp
-  SENDER_EMAIL:
-  SENDER_NAME:
-  EMAIL_INSECURE_TLS:
-  EMAIL_HOST:
-  EMAIL_PORT:
-  EMAIL_USERNAME:
-  EMAIL_PASSWORD:
-  DEVOPS_EMAIL:
+  SENDER_EMAIL: ""
+  SENDER_NAME: ""
+  EMAIL_INSECURE_TLS: ""
+  EMAIL_HOST: ""
+  EMAIL_PORT: ""
+  EMAIL_USERNAME: ""
+  EMAIL_PASSWORD: ""
+  DEVOPS_EMAIL: ""
 
   # Recapcha config
-  RECAPTCHA_ENABLED: false
-  RECAPTCHA_SECRET:
-  RECAPTCHA_VERIFY_URL:
-  RECAPTCHA_MIN_SCORE:
-  RECAPTCHA_CHECK_PATH:
-  RECAPTCHA_CHECK_HOST:
-  RECAPTCHA_CHECK_SCORE:
+  RECAPTCHA_ENABLED: "false"
+  RECAPTCHA_SECRET: ""
+  RECAPTCHA_VERIFY_URL: ""
+  RECAPTCHA_MIN_SCORE: ""
+  RECAPTCHA_CHECK_PATH: ""
+  RECAPTCHA_CHECK_HOST: ""
+  RECAPTCHA_CHECK_SCORE: ""
 
   # Sentry config
-  SENTRY_DSN:
-  SENTRY_ENABLED: false
-  SENTRY_SAMPLING_RATE: 0.1
-  SENTRY_ENABLE_TRACING: false
+  SENTRY_DSN: ""
+  SENTRY_ENABLED: "false"
+  SENTRY_SAMPLING_RATE: "0.1"
+  SENTRY_ENABLE_TRACING: "false"
 
   # JWT
   JWT_ACCESS_TOKEN_EXP_TIME: "259200"
@@ -135,15 +136,15 @@ envVars:
   RESET_PASSWORD_EXP_TIME: "259200"
   EMAIL_VERIFICATION_EXP_DURATION: "1296000"
   WORKSPACE_INVITE_LINK_EXP_DURATION: "1296000"
-  RESET_PASSWORD_MAX_LIMIT: 3
-  PASSWORD_AUTH_ENABLED: true
+  RESET_PASSWORD_MAX_LIMIT: "3"
+  PASSWORD_AUTH_ENABLED: "true"
 
   # features flags
-  EXTERNAL_PERMISSION_URL:
+  EXTERNAL_PERMISSION_URL: ""
   SKIP_LOG_PATHS: /health/live,/health/ready
-  WORKSPACE_SUBDOMAIN_ENABLED: false
-  SIGNUP_DOMAINS:
-  SYNC_PLUGINS:
+  WORKSPACE_SUBDOMAIN_ENABLED: "false"
+  SIGNUP_DOMAINS: ""
+  SYNC_PLUGINS: mysql,mongodb,postgres,sqlserver,redshift,oracle,snowflake,restAPI
 
   # Audit log
   AWS_TRACE_ID_KEY: X-Amzn-Trace-Id
@@ -158,12 +159,12 @@ envVars:
   # proxy url
   CREDENTIAL_CONFIG_MAP: '{}'
   PROXY_SQL_LINT_URL: http://sql-linter/api/v1/core/lint
-  PROXY_RULE_URL:
+  PROXY_RULE_URL: ""
   AI_SUGGESTION: http://sql-linter/api/v1/core/suggest
 
   # Licensing Config
-  LICENSE_DURATION:
-  LICENSE_KEY_PATH:
+  LICENSE_DURATION: ""
+  LICENSE_KEY_PATH: ""
 
   # Workflow config
   WORKFLOW_NOT_TESTABLE_NODE_TYPE: trigger,addNode,delayNode
@@ -171,16 +172,16 @@ envVars:
   # nected user config
   NECTED_USER_EMAIL: dev@nected.ai
   NECTED_USER_PASSWORD: Password123
-  SUPER_ADMIN_USER_IDS: 1
-  PRODUCT_WORKSPACE_ID: 1
+  SUPER_ADMIN_USER_IDS: "1"
+  PRODUCT_WORKSPACE_ID: "1"
 
   # usages
-  FREE_PLAN_ID: 1
-  IS_PAID: false
-  RULE_LIMIT: 50
-  WORKFLOW_LIMIT: 100
-  INVOCATION_LIMIT: 10000
-  EDITOR_LIMIT: 10
+  FREE_PLAN_ID: "1"
+  IS_PAID: "false"
+  RULE_LIMIT: "50"
+  WORKFLOW_LIMIT: "100"
+  INVOCATION_LIMIT: "10000"
+  EDITOR_LIMIT: "10"
   PLAN_NAME: Free Trial
 
   # Vidhaan Config
@@ -248,20 +249,24 @@ resources:
   # resources, such as Minikube. If you do want to specify resources, uncomment the following
   # lines, adjust them as necessary, and remove the curly braces after 'resources:'.
   requests:
-    cpu: "150m"
-    memory: "256Mi"
+    cpu: "250m"
+    memory: "512Mi"
   limits:
-    cpu: "150m"
-    memory: "256Mi"
+    cpu: "250m"
+    memory: "512Mi"
 
 livenessProbe:
   httpGet:
     path: /health/live
     port: 8001
+  initialDelaySeconds: 5
+  periodSeconds: 5
 readinessProbe:
   httpGet:
     path: /health/live
     port: 8001
+  initialDelaySeconds: 5
+  periodSeconds: 5
 
 autoscaling:
   enabled: false
@@ -276,7 +281,7 @@ volumes: []
 # Additional volumeMounts on the output Deployment definition.
 volumeMounts: []
 # additional volumes setting to mount configMap
-mountConfigMap: true
+mountConfigMap: false
 
 nodeSelector: {}
 

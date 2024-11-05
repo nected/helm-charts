@@ -75,14 +75,24 @@ resources:
   # resources, such as Minikube. If you do want to specify resources, uncomment the following
   # lines, adjust them as necessary, and remove the curly braces after 'resources:'.
   requests:
-    cpu: "150m"
-    memory: "256Mi"
+    cpu: "250m"
+    memory: "512Mi"
   limits:
-    cpu: "150m"
-    memory: "256Mi"
+    cpu: "250m"
+    memory: "1024Mi"
 
-livenessProbe: {}
-readinessProbe: {}
+livenessProbe:
+  httpGet:
+    path: /
+    port: 80
+  initialDelaySeconds: 5
+  periodSeconds: 5
+readinessProbe:
+  httpGet:
+    path: /
+    port: 80
+  initialDelaySeconds: 5
+  periodSeconds: 5
 
 autoscaling:
   enabled: false

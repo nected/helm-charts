@@ -27,27 +27,32 @@ spec:
             args:
               {{- toYaml . | nindent 14 }}
             {{- end }}
+            {{- if not .Values.mountConfigMap }}
+            envFrom:
+            - configMapRef:
+                name: {{ include "common.fullname" . }}
+            {{- end }}
             {{- with .Values.autoSetup.resources }}
             resources:
               {{- toYaml . | nindent 14 }}
             {{- end }}
             volumeMounts:
-              {{- if .Values.mountConfigMap }}
               - mountPath: /mnt/temp
                 name: {{ include "common.name" . }}-cm-volume
-              {{- end }}
               {{- if .Values.volumeMounts }}
               {{- toYaml .Values.volumeMounts | nindent 14 }}
               {{- end }}
         volumes:
-          {{- if .Values.mountConfigMap }}
           - name: {{ include "common.name" . }}-cm-volume
             configMap:
               name: {{ include "common.fullname" . }}
               items:
-                - key: envFile
-                  path: envFile
-          {{- end }}
+                - path: envFile
+                  {{- if .Values.mountConfigMap }}
+                  key: envFile
+                  {{- else }}
+                  key: ENVFILE_DEFAULT_VALUE
+                  {{- end }}
           {{- if .Values.volumes }}
           {{- toYaml .Values.volumes| nindent 10 }}
           {{- end }}
