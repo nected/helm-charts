@@ -15,13 +15,17 @@ Installation using Helm charts
 
 
 ## Deployment steps
-1. Update following values in "values/nected-values.yaml" files, according to your ingress.
+
+# Configuration
+
+1. Update following values in "values/nected-values.yaml":
     - `<<scheme>>`
     - `<<ui-domain>>`
     - `<<editor-domain>>`
     - `<<backend-domain>>`
     - `<<router-domain>>`
-    - `<<ingressClassName>>` (also enable ingress)
+
+    - `<<ingressClassName>>` (enable and update ingressClass)
 
 2. Install Datastore ElasticSearch / Postgresql / Redis.
    ```
@@ -29,6 +33,7 @@ Installation using Helm charts
    ```
 
    If you want to use external elastic/psql/redis endpoints then skip installing datastore chart, please update endpoints and credentials in value/*.yaml.
+
 
 
 3. Now install temporal.
@@ -47,4 +52,4 @@ Installation using Helm charts
     helm upgrade -i nected charts/nected/ -f values/nected-values.yaml
     ```
 
-With all services running, access the application through the fronend-konark domain using the default user and password (values/nected-values.yaml).
+With all services running, access the application through the `<<ui-domain>>` using the default user and password (values/nected-values.yaml).
