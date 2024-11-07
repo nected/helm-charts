@@ -130,10 +130,11 @@ schema:
 
 elasticsearch:
   # disable if postgres is used for visibility
-  external: true
+  external: false
   enabled: false
   # if external use external host address & credentials
   host: elasticsearch-master
+  scheme: http
   port: 9200
   version: v7
   username: elastic

@@ -24,30 +24,33 @@ Installation using Helm charts
     - `<<editor-domain>>`
     - `<<backend-domain>>`
     - `<<router-domain>>`
-
     - `<<ingressClassName>>` (enable and update ingressClass)
 
-2. Install Datastore ElasticSearch / Postgresql / Redis.
+2. To configure Postgresql / Redis update REDIS & DB values in `nected-values.yaml` &  `temporal-values.yaml` or you can install datastore chart:
+
    ```
    helm upgrade -i datastore charts/datastore/ -f values/datastore-values.yaml
    ```
 
-   If you want to use external elastic/psql/redis endpoints then skip installing datastore chart, please update endpoints and credentials in value/*.yaml.
+3. To enable audit log in various services:
+
+   - Update elastic endpoints and credentials in `temporal-values.yaml` & `nected-values.yaml` or enable `elastic` in `datastore-values.yaml`
+   - Enable `elasticsearch.external` in `temporal-values.yaml`
+   - Enable `ELASTIC_ENABLED` and `AUDIT_LOG_ENABLED` in `nected-values.yaml`
 
 
-
-3. Now install temporal.
+4. Install temporal chart:
     ```
     helm upgrade -i temporal charts/temporal/ -f values/temporal-values.yaml
     ```
 
-4. To enable encryption of sensitive data, create secret for private key, uncomment existingSecretMap key in nected-values.yaml:
+5. To enable encryption of sensitive data, create secret for private key, uncomment `existingSecretMap` in `nected-values.yaml`:
     ```
     openssl genrsa -f4 -out encryption-at-rest 4096
     kubectl create secret generic encryption-at-rest-secret --from-file encryption-at-rest
     ```
 
-5. Install Nected services.
+5. Install Nected chart.
     ```
     helm upgrade -i nected charts/nected/ -f values/nected-values.yaml
     ```

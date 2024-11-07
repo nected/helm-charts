@@ -124,7 +124,7 @@ nalanda:
 
     # enable elastic if installed using datastore or used external
     ELASTIC_PROVIDER: managed
-    ELASTIC_ENABLED: "true"
+    ELASTIC_ENABLED: "false"
     ELASTIC_HOSTS: http://elasticsearch-master:9200
     ELASTIC_API_KEY: ""
     ELASTIC_INSECURE_TLS: "true"
@@ -238,7 +238,7 @@ vidhaan-executer:
     ELASTIC_PASSWORD: esPass123
 
     # Audit log
-    AUDIT_LOG_ENABLED: "true"
+    AUDIT_LOG_ENABLED: "false"
 
     # subdomains
     SKIP_SUBDOMAINS: <<router-domain>>
@@ -297,7 +297,7 @@ vidhaan-router:
     ELASTIC_PASSWORD: esPass123
 
     # Audit log
-    AUDIT_LOG_ENABLED: "true"
+    AUDIT_LOG_ENABLED: "false"
 
     # subdomains
     SKIP_SUBDOMAINS: <<router-domain>>

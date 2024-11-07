@@ -34,7 +34,7 @@ redis:
         memory: "512Mi"
 elasticsearch:
   # false if wants to use external elastic
-  enabled: true
+  enabled: false
   secret:
     password: esPass123
   volumeClaimTemplate:
