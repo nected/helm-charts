@@ -32,27 +32,31 @@ Installation using Helm charts
     - `<<router-domain>>`
     - `<<ingressClassName>>` (enable and update ingressClass)
 
-4. Install Datastore ElasticSearch / Postgresql / Redis.
-   ```
-   helm upgrade -i datastore nected/datastore -f values/datastore-values.yaml
-   ```
+4. To configure Postgresql / Redis update REDIS & DB values in `nected-values.yaml` &  `temporal-values.yaml` or you can install datastore chart:
 
-   If you want to use external elastic/psql/redis endpoints then skip installing datastore chart, please update endpoints and credentials in `values/temporal-values.yaml & values/nected-values.yaml`.
+   ```
+   helm upgrade -i datastore charts/datastore/ -f values/datastore-values.yaml
+   ```
+5. To enable audit log in various services:
 
-5. To enable encryption of sensitive data, create secret for private key using following commands, and uncomment existingSecretMap key in `nected-values.yaml`:
+   - Update elastic endpoints and credentials in `temporal-values.yaml` & `nected-values.yaml` or enable `elastic` in `datastore-values.yaml`
+   - Enable `elasticsearch.external` in `temporal-values.yaml`
+   - Enable `ELASTIC_ENABLED` and `AUDIT_LOG_ENABLED` in `nected-values.yaml`
+
+6.  Install temporal chart:
+    ```
+    helm upgrade -i temporal charts/temporal/ -f values/temporal-values.yaml
+    ```
+
+7. To enable encryption of sensitive data, create secret for private key, uncomment `existingSecretMap` in `nected-values.yaml`:
     ```
     openssl genrsa -f4 -out encryption-at-rest 4096
     kubectl create secret generic encryption-at-rest-secret --from-file encryption-at-rest
     ```
 
-6.  Install temporal.
+8. Install Nected chart.
     ```
-    helm upgrade -i temporal nected/temporal -f values/temporal-values.yaml
-    ```
-
-7. Install Nected services:
-    ```
-    helm install nected nected/nected -f values/nected-values.yaml
+    helm upgrade -i nected charts/nected/ -f values/nected-values.yaml
     ```
 
 With all services running, access the application through the `<<ui-domain>>` domain using the default `NECTED_USER_EMAIL` and `NECTED_USER_PASSWORD` (mentioned in `values/nected-values.yaml`).
