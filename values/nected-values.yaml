@@ -46,10 +46,10 @@ konark:
   enabled: true
   replicaCount: 1
   envVars:
-    VITE_ENABLE_MS_LOGIN: "true"
+    VITE_ENABLE_MS_LOGIN: "false"
     VITE_MICROSOFT_CLIENT_ID: ""
     VITE_MICROSOFT_TENANT_ID: common
-    VITE_ENABLE_SIGNUP_IN_FORM: "false"
+    VITE_ENABLE_AUTH_FORM: "true"
     VITE_ENABLE_GOOGLE_LOGIN: "false"
     VITE_GOOGLE_CLIENT_ID: ""
     VITE_API_HOST: <<scheme>>://<<backend-domain>>
