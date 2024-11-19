@@ -11,14 +11,10 @@ editor:
   enabled: true
   replicaCount: 1
   envVars:
-    REACT_APP_DEPLOYMENT_TYPE: onpremise
     REACT_APP_ALLOWED_DOMAINS: http://konark.local
     REACT_APP_SQL_LINT: http://nalanda.local/misc/proxy/lint
     REACT_APP_EXECUTE_JS_API: http://nalanda.local/integration/code/execute
     REACT_APP_AI_SUGGESTION: https://nalanda.local/misc/proxy/suggestion
-    REACT_APP_EDITOR_VERSION: 1.31.0
-    REACT_APP_SENTRY_DSN: ""
-    REACT_APP_ENV: production
     REACT_APP_NGINX_SERVER_NAME: nected-editor.local
 
   ingress:
@@ -48,37 +44,27 @@ konark:
   enabled: true
   replicaCount: 1
   envVars:
-    VITE_DEPLOYMENT_TYPE: onpremise
-    VITE_ENVIRONMENT: production
+    # Authentication Configuration 
     VITE_ENABLE_MS_LOGIN: false
+    VITE_SIGNUP_FORM_ENABLED: false
     VITE_ENABLE_AUTH_FORM: true
-    VITE_MICROSOFT_CLIENT_ID:
+    VITE_MICROSOFT_CLIENT_ID: ""
+    VITE_MICROSOFT_TENANT_ID: common
     VITE_ENABLE_GOOGLE_LOGIN: false
     VITE_GOOGLE_CLIENT_ID: ""
-    VITE_GA_MID: ""
-    VITE_CLARITY_ID: ""
-    VITE_GTM_ID: ""
-    VITE_IP_INFO_KEY: ""
+
+    # Security & Compliance
     VITE_RECAPTCHA_SITE_KEY: ""
-    VITE_TANDC_URL: https://www.nected.ai/tnc
-    VITE_PP_URL: https://www.nected.ai/privacy-policy
-    VITE_COOKIE_CONSENT_ENABLE: false
-    VITE_HIDE_OPTIONAL_ATTRIBUTES: true
+
+    # API Configuration
     VITE_API_HOST: http://nalanda.local
     VITE_WITH_CREDENTIALS: false
     VITE_GRAPHQL_URL: http://nalanda.local/graphql/query
     VITE_AUTH_CONFIG_ENABLED: true
-    VITE_ENABLE_EVENT_API: false
-    VITE_SENTRY_DSN: ""
-    VITE_RELEASE_TAG: ""
-    VITE_API_FEATURE_FLAG: ""
-    VITE_API_HOME_PAGE: ""
-    VITE_API_STATE_UPDATE: ""
-    VITE_API_GET_STATE: ""
-    VITE_API_PREMIUM_FEAT_PLAN: ""
-    VITE_API_WORKSPACE_PAUSE_GET: ""
-    VITE_ADMIN_EMAIL_CONFIG: ""
+
+    # Asset & CDN Configuration
     VITE_ASSETS_URL: /assets/konark/
+    VITE_CDN_URL: ""
     VITE_EDITOR_URL: http://nected-editor.local
     VITE_HELM_CHARTS_URL: https://charts.nected.io/
     VITE_NGINX_SERVER_NAME: konark.local
@@ -114,19 +100,9 @@ nalanda:
     # server config
     ALLOWED_CORS_ORIGIN: http://nalanda.local,http://konark.local,http://nected-editor.local
     ALLOWED_HOSTS: nalanda.local
-    DEBUG: "false"
-    DEPLOYMENT: production
-    ENABLE_PROFILING: "false"
-    SERVER_HOST: "0.0.0.0"
-    SERVER_PORT: "8001"
-    SERVER_TIMEZONE: UTC
-    MAX_REQUEST_SIZE: "3145728"
 
     # Security
-    SECURITY_ENABLED: "false"
-    CHECK_ALLOWED_HOSTS: "false"
     AES_SECRET: tfgoS4EzPPuBJjBLFgmlut9ukW9o2PYy
-    ENCRYPTION_KEY: EAR
 
     # Postgresql Config
     MASTER_DB_NAME: nected
@@ -161,7 +137,7 @@ nalanda:
 
     # Elastic Config
     ELASTIC_PROVIDER: managed
-    ELASTIC_ENABLED: "true"
+    ELASTIC_ENABLED: "false"
     ELASTIC_HOSTS: http://elasticsearch-master:9200
     ELASTIC_API_KEY: ""
     ELASTIC_INSECURE_TLS: "true"
@@ -204,12 +180,6 @@ nalanda:
     RECAPTCHA_CHECK_HOST: ""
     RECAPTCHA_CHECK_SCORE: ""
 
-    # Sentry config
-    SENTRY_DSN: ""
-    SENTRY_ENABLED: "false"
-    SENTRY_SAMPLING_RATE: "0.1"
-    SENTRY_ENABLE_TRACING: "false"
-
     # JWT
     JWT_ACCESS_TOKEN_EXP_TIME: "259200"
     JWT_REFRESH_TOKEN_EXP_TIME: "1296000"
@@ -227,56 +197,16 @@ nalanda:
     PASSWORD_AUTH_ENABLED: "true"
 
     # features flags
-    EXTERNAL_PERMISSION_URL: ""
-    SKIP_LOG_PATHS: /health/live,/health/ready
-    WORKSPACE_SUBDOMAIN_ENABLED: "false"
     SIGNUP_DOMAINS: ""
-    SYNC_PLUGINS: mysql,mongodb,postgres,sqlserver,redshift,oracle,snowflake,restAPI
-
-    # Audit log
-    AWS_TRACE_ID_KEY: X-Amzn-Trace-Id
-    ELASTIC_ADUIT_PATTERN: audit-*
-    ELASTIC_ENTITY_AUDIT_INDEX: audit-log-nalanda
-    ELASTIC_EVENT_LOG_INDEX: events-all-nalanda
-    ELASTIC_TEMP_AUDIT_INDEX: audit-tmp-nalanda
-    USAGE_INDEX_PATTERN: usage-*
-    VIDHAAN_AUDIT_LOG_INDEX: audit-all-vidhaan
-    X_FORWARDED_HEADER_KEY: X-Forwarded-For
-
-    # proxy url
-    CREDENTIAL_CONFIG_MAP: '{}'
-    PROXY_SQL_LINT_URL: http://sql-linter/api/v1/core/lint
-    PROXY_RULE_URL: ""
-    AI_SUGGESTION: http://sql-linter/api/v1/core/suggest
-
-    # Licensing Config
-    LICENSE_DURATION: ""
-    LICENSE_KEY_PATH: ""
-
-    # Workflow config
-    WORKFLOW_NOT_TESTABLE_NODE_TYPE: trigger,addNode,delayNode
 
     # nected user config
     NECTED_USER_EMAIL: dev@nected.ai
     NECTED_USER_PASSWORD: Password123
-    SUPER_ADMIN_USER_IDS: "1"
-    PRODUCT_WORKSPACE_ID: "1"
-
-    # usages
-    FREE_PLAN_ID: "1"
-    IS_PAID: "false"
-    RULE_LIMIT: "50"
-    WORKFLOW_LIMIT: "100"
-    INVOCATION_LIMIT: "10000"
-    EDITOR_LIMIT: "10"
-    PLAN_NAME: Free Trial
 
     # Vidhaan Config
     DEFAULT_VIDHAAN_SCHEME: http
     DEFAULT_VIDHAAN_DOMAIN: vidhaan.local
-    DEFAULT_VIDHAAN_SECRET_KEY: afa8572b-facf-46ca-a40b-5cd23a3dbf02
     DEFAULT_VIDHAAN_WHITELISTED_IPS: "127.0.0.1"
-    PRODUCT_API_KEY: ""
  
   ingress:
     enabled: false
@@ -306,24 +236,8 @@ vidhaan-executer:
   replicaCount: 1
   existingSecretMap: *commonSecretMap
   envVars:
-    DEBUG: "false"
-    DEPLOYMENT: production
-
     #Vidhaan
-    VIDHAAN_AGENT_NAME: onpremise
-    VIDHAAN_AGENT_KEY: afa8572b-facf-46ca-a40b-5cd23a3dbf02
     VIDHAAN_PRE_SHARED_KEY: 7322a280-ef06-44ed-9aa2-07ff39a33126
-
-    #Router Config
-    ALLOWED_HOSTS: "0.0.0.0"
-    SERVER_HOST: "0.0.0.0"
-    SERVER_PORT: "8002"
-    MONTHLY_LIMIT: "0"
-    REQUEST_PER_MINUTE_LIMIT: "1500"
-    EXCLUDED_WORKSPACE_IDS_FOR_MONTHLY_LIMIT: 1,
-    MAX_REQUEST_SIZE: "3145728"
-    ENABLE_PROFILING: "false"
-    SKIP_LOG_PATHS: /health
 
     # Database
     DB_NAME: nected
@@ -357,46 +271,10 @@ vidhaan-executer:
     ELASTIC_PASSWORD: esPass123
 
     # Audit log
-    AUDIT_LOG_ENABLED: "true"
-    AUDIT_LOG_INDEX: audit-all-vidhaan
-    AWS_TRACE_ID_KEY: X-Amzn-Trace-Id
-    X_FORWARDED_HEADER_KEY: X-Forwarded-For
-
-    # Nalanda
-    NALANDA_BASE_URL: http://nected-nalanda
-
-    #Temporal For Executer Workers
-    TEMPORAL_EXECUTER_SERVER_HOST: nected-temporal-frontend:7233
-    TEMPORAL_EXECUTER_NAMESPACE: default
-    TEMPORAL_EXECUTER_RETENTION_PERIOD: 24h
-    TEMPORAL_EXECUTER_WORKFLOW_TASK_POLLERS: "2"
-    TEMPORAL_EXECUTER_ACTIVITY_TASK_POLLERS: "2"
-    TEMPORAL_EXECUTER_WORKFLOW_CONCURRENT_EXECUTION_SIZE: "1000"
-    TEMPORAL_EXECUTER_ACTIVITY_CONCURRENT_EXECUTION_SIZE: "1000"
-    TEMPORAL_EXECUTER_LOCAL_ACTIVITY_CONCURRENT_EXECUTION_SIZE: "1000"
-    TEMPORAL_EXECUTER_ACTIVITY_EXECUTION_RPS: "100000"
-    TEMPORAL_EXECUTER_LOCAL_ACTIVITY_EXECUTION_RPS: "100000"
-
-    # Sentry config
-    SENTRY_DSN: ""
-    SENTRY_ENABLED: "false"
-    SENTRY_SAMPLING_RATE: "0.1"
-    SENTRY_ENABLE_TRACING: "false"
-
-    # Security
-    SECURITY_ENABLED: "true"
-    ENCRYPTION_KEY: EAR
-
-    # Workflow config
-    WORKFLOW_CONFIG_MAP: '{}'
-
-    # Reporting
-    ERROR_REPORTING_ENABLED: "false"
-    ERROR_REPORTING_TTL: 24h
+    AUDIT_LOG_ENABLED: "false"
 
     # subdomains
-    SKIP_SUBDOMAINS: ""
-    SKIP_SUBDOMAINS_WORKSPACE_IDS: ""
+    SKIP_SUBDOMAINS: "vidhaan.local"
 
   resources:
     requests:
@@ -419,24 +297,8 @@ vidhaan-router:
   replicaCount: 1
   existingSecretMap: *commonSecretMap
   envVars:
-    DEBUG: "false"
-    DEPLOYMENT: production
-
     #Vidhaan
-    VIDHAAN_AGENT_NAME: onpremise
-    VIDHAAN_AGENT_KEY: afa8572b-facf-46ca-a40b-5cd23a3dbf02
     VIDHAAN_PRE_SHARED_KEY: 7322a280-ef06-44ed-9aa2-07ff39a33126
-
-    #Router Config
-    ALLOWED_HOSTS: "0.0.0.0"
-    SERVER_HOST: "0.0.0.0"
-    SERVER_PORT: "8002"
-    MONTHLY_LIMIT: "0"
-    REQUEST_PER_MINUTE_LIMIT: "1500"
-    EXCLUDED_WORKSPACE_IDS_FOR_MONTHLY_LIMIT: 1,
-    MAX_REQUEST_SIZE: "3145728"
-    ENABLE_PROFILING: "false"
-    SKIP_LOG_PATHS: /health
 
     # Database
     DB_NAME: nected
@@ -470,46 +332,10 @@ vidhaan-router:
     ELASTIC_PASSWORD: esPass123
 
     # Audit log
-    AUDIT_LOG_ENABLED: "true"
-    AUDIT_LOG_INDEX: audit-all-vidhaan
-    AWS_TRACE_ID_KEY: X-Amzn-Trace-Id
-    X_FORWARDED_HEADER_KEY: X-Forwarded-For
-
-    # Nalanda
-    NALANDA_BASE_URL: http://nected-nalanda
-
-    #Temporal For Executer Workers
-    TEMPORAL_EXECUTER_SERVER_HOST: nected-temporal-frontend:7233
-    TEMPORAL_EXECUTER_NAMESPACE: default
-    TEMPORAL_EXECUTER_RETENTION_PERIOD: 24h
-    TEMPORAL_EXECUTER_WORKFLOW_TASK_POLLERS: "2"
-    TEMPORAL_EXECUTER_ACTIVITY_TASK_POLLERS: "2"
-    TEMPORAL_EXECUTER_WORKFLOW_CONCURRENT_EXECUTION_SIZE: "1000"
-    TEMPORAL_EXECUTER_ACTIVITY_CONCURRENT_EXECUTION_SIZE: "1000"
-    TEMPORAL_EXECUTER_LOCAL_ACTIVITY_CONCURRENT_EXECUTION_SIZE: "1000"
-    TEMPORAL_EXECUTER_ACTIVITY_EXECUTION_RPS: "100000"
-    TEMPORAL_EXECUTER_LOCAL_ACTIVITY_EXECUTION_RPS: "100000"
-
-    # Sentry config
-    SENTRY_DSN: ""
-    SENTRY_ENABLED: "false"
-    SENTRY_SAMPLING_RATE: "0.1"
-    SENTRY_ENABLE_TRACING: "false"
-
-    # Security
-    SECURITY_ENABLED: "true"
-    ENCRYPTION_KEY: EAR
-
-    # Workflow config
-    WORKFLOW_CONFIG_MAP: '{}'
-
-    # Reporting
-    ERROR_REPORTING_ENABLED: "false"
-    ERROR_REPORTING_TTL: 24h
+    AUDIT_LOG_ENABLED: "false"
 
     # subdomains
-    SKIP_SUBDOMAINS: ""
-    SKIP_SUBDOMAINS_WORKSPACE_IDS: ""
+    SKIP_SUBDOMAINS: "vidhaan.local"
 
   ingress:
     enabled: false
@@ -538,11 +364,6 @@ sql-linter:
   enabled: true
   replicaCount: 1
   envVars:
-    APPLICATION_ENV: production
-    EXCLUDED_RULES: ST05,LT08,LT12
-    INCLUDED_RULES: CV01,CV02,CV03,CV04,CV05,CV06,CV07,CV08,CV09,CV10,CV11,LT03,LT04,LT07,LT10,LT11,LT13,RF04,RF05,RF06,ST01,ST02,ST03,ST04,ST06,ST07,ST08,TQ01
-    LOGGING_LEVEL: ERROR
-    ENABLED_DIALECTS: mysql,postgres,redshift,oracle,snowflake
     OPENAI_API_KEY:
 
   resources:
@@ -565,21 +386,6 @@ executer-tp:
   enabled: false
   replicaCount: 1
   envVars:
-    TEMPORAL_HOST: nected-temporal-frontend
-    TEMPORAL_PORT: "7233"
-    TEMPORAL_NAMESPACE: default
-    TEMPORAL_TASK_QUEUE: vidhaan-tp-worker-tq
-    TEMPORAL_MAX_CONCURRENT_ACTIVITY_TASK_EXECUTIONS: "100"
-    TEMPORAL_MAX_CONCURRENT_LOCAL_ACTIVITY_EXECUTIONS: "100"
-    TEMPORAL_MAX_CONCURRENT_WORKFLOW_TASK_EXECUTIONS: "100"
-    TEMPORAL_MAX_CONCURRENT_WORKFLOW_TASK_POLLS: "50"
-    TEMPORAL_MAX_CONCURRENT_ACTIVITY_TASK_POLLS: "10"
-    TEMPORAL_MAX_CACHED_WORKFLOWS: "200"
-    SENTRY_DSN: ""
-    SENTRY_ENABLED: "false"
-    SENTRY_ENVIRONMENT: development
-    SENTRY_SAMPLE_RATE: "1.0"
-    APPLICATION_NAME: executer-tp
     REDIS_ENABLED: "true"
     REDIS_HOST: datastore-redis-master
     REDIS_PORT: "6379"
