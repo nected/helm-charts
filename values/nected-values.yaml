@@ -46,12 +46,16 @@ konark:
   enabled: true
   replicaCount: 1
   envVars:
-    VITE_ENABLE_MS_LOGIN: "false"
+    # Authentication Configuration
+    VITE_ENABLE_MS_LOGIN: false
+    VITE_SIGNUP_FORM_ENABLED: false
+    VITE_ENABLE_AUTH_FORM: true
     VITE_MICROSOFT_CLIENT_ID: ""
     VITE_MICROSOFT_TENANT_ID: common
-    VITE_ENABLE_AUTH_FORM: "true"
-    VITE_ENABLE_GOOGLE_LOGIN: "false"
+    VITE_ENABLE_GOOGLE_LOGIN: false
     VITE_GOOGLE_CLIENT_ID: ""
+
+    # API Configuration
     VITE_API_HOST: <<scheme>>://<<backend-domain>>
     VITE_GRAPHQL_URL: <<scheme>>://<<backend-domain>>/graphql/query
     VITE_EDITOR_URL: <<scheme>>://<<editor-domain>>
@@ -71,7 +75,7 @@ konark:
       cpu: "250m"
       memory: "512Mi"
     limits:
-      cpu: "250m"
+      cpu: "500m"
       memory: "1024Mi"
 
   autoscaling:
@@ -89,6 +93,7 @@ nalanda:
   envVars:
     ALLOWED_CORS_ORIGIN: <<scheme>>://<<backend-domain>>,<<scheme>>://<<ui-domain>>,<<scheme>>://<<editor-domain>>
     ALLOWED_HOSTS: <<backend-domain>>
+    BACKEND_URL: <<scheme>>://<<backend-domain>>
 
     # if external use external host address
     MASTER_DB_NAME: nected
@@ -164,7 +169,6 @@ nalanda:
     # comma separated email domains to allow signup from
     PASSWORD_AUTH_ENABLED: "true"
     SIGNUP_DOMAINS: ""
-    SYNC_PLUGINS: mysql,mongodb,postgres,sqlserver,redshift,oracle,snowflake,restAPI
 
     # default user created on setup
     NECTED_USER_EMAIL: dev@nected.ai
@@ -242,7 +246,6 @@ vidhaan-executer:
 
     # subdomains
     SKIP_SUBDOMAINS: <<router-domain>>
-    SKIP_SUBDOMAINS_WORKSPACE_IDS: "*"
 
   resources:
     requests:
@@ -301,7 +304,6 @@ vidhaan-router:
 
     # subdomains
     SKIP_SUBDOMAINS: <<router-domain>>
-    SKIP_SUBDOMAINS_WORKSPACE_IDS: "*"
 
   ingress:
     enabled: false
