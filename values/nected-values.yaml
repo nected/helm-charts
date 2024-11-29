@@ -93,6 +93,7 @@ nalanda:
   envVars:
     ALLOWED_CORS_ORIGIN: <<scheme>>://<<backend-domain>>,<<scheme>>://<<ui-domain>>,<<scheme>>://<<editor-domain>>
     ALLOWED_HOSTS: <<backend-domain>>
+    BACKEND_URL: <<scheme>>://<<backend-domain>>
 
     # if external use external host address
     MASTER_DB_NAME: nected

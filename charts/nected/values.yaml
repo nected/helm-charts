@@ -100,6 +100,7 @@ nalanda:
     # server config
     ALLOWED_CORS_ORIGIN: http://nalanda.local,http://konark.local,http://nected-editor.local
     ALLOWED_HOSTS: nalanda.local
+    BACKEND_URL: https://nalanda.local
 
     # Security
     AES_SECRET: tfgoS4EzPPuBJjBLFgmlut9ukW9o2PYy
