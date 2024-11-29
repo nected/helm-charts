@@ -8,7 +8,7 @@ image:
   repository: public.ecr.aws/f6k1n6r3/nalanda
   pullPolicy: IfNotPresent
   # Overrides the image tag whose default is the chart appVersion.
-  tag: "op0.2.7"
+  tag: "op0.2.8"
 
 imagePullSecrets: []
 nameOverride: ""
@@ -27,6 +27,7 @@ envVars:
   # server config
   ALLOWED_CORS_ORIGIN: http://nalanda.local,http://konark.local,http://nected-editor.local
   ALLOWED_HOSTS: nalanda.local
+  BACKEND_URL: https://nalanda.local
   DEBUG: "false"
   DEPLOYMENT: production
   ENABLE_PROFILING: "false"
@@ -36,6 +37,14 @@ envVars:
   MAX_REQUEST_SIZE: "3145728"
   DEV_API_RPM_LIMIT: "10"
   DEV_API_MAX_RESPONSE_SIZE: "1048576"
+  TASKS_CONCURRENCY: "5"
+  UPLOAD_SIGNED_URL_DAY_LIMIT: "10"
+
+  # Deployment customization
+  WORKSPACE_WHITE_LABELLING_ALLOWED: "false"
+  FULL_WHITE_LABELLING: "false"
+  COMPANY_NAME: Nected
+  LOGO_URL: https://assets.nected.ai/nalanda/nectedlogo.png
 
   # Security
   SECURITY_ENABLED: "false"
@@ -93,6 +102,13 @@ envVars:
   MICROSOFT_CLIENT_SECRET: ""
   MICROSOFT_TENANT_ID: ""
 
+  # aws s3 for asset upload
+  S3_AWS_ACCESS_KEY: ""
+  S3_AWS_SECRET_KEY: ""
+  S3_AWS_REGION: ""
+  S3_AWS_BUCKET_NAME: ""
+  S3_AWS_DOMAIN: ""
+
   # aws ses credentials if EMAIL_PROVIDE: ses
   AWS_ACCESS_KEY: ""
   AWS_SECRET_KEY: ""
@@ -109,6 +125,7 @@ envVars:
   EMAIL_USERNAME: ""
   EMAIL_PASSWORD: ""
   DEVOPS_EMAIL: ""
+  SUPPORT_EMAIL: ""
 
   # Recapcha config
   RECAPTCHA_ENABLED: "false"
@@ -138,6 +155,7 @@ envVars:
   RESET_PASSWORD_EXP_TIME: "259200"
   EMAIL_VERIFICATION_EXP_DURATION: "1296000"
   WORKSPACE_INVITE_LINK_EXP_DURATION: "1296000"
+  SIGNED_TOKEN_EXP_DURATION: "86400"
   RESET_PASSWORD_MAX_LIMIT: "3"
   PASSWORD_AUTH_ENABLED: "true"
 
@@ -192,6 +210,7 @@ envVars:
   DEFAULT_VIDHAAN_SECRET_KEY: afa8572b-facf-46ca-a40b-5cd23a3dbf02
   DEFAULT_VIDHAAN_WHITELISTED_IPS: "127.0.0.1"
   PRODUCT_API_KEY: ""
+  VIDHAAN_PRE_SHARED_KEY: 7322a280-ef06-44ed-9aa2-07ff39a33126
 
 serviceAccount:
   # Specifies whether a service account should be created
@@ -224,7 +243,7 @@ autoSetup:
   image:
     repository: public.ecr.aws/f6k1n6r3/nalanda
     pullPolicy: IfNotPresent
-    tag: "op0.2.7"
+    tag: "op0.2.8"
   command:
   - /bin/sh
   - -c
@@ -262,13 +281,13 @@ livenessProbe:
     path: /health/live
     port: 8001
   initialDelaySeconds: 5
-  periodSeconds: 5
+  periodSeconds: 10
 readinessProbe:
   httpGet:
     path: /health/ready
     port: 8001
   initialDelaySeconds: 5
-  periodSeconds: 5
+  periodSeconds: 10
 
 autoscaling:
   enabled: false
