@@ -8,7 +8,7 @@ image:
   repository: public.ecr.aws/f6k1n6r3/nected-editor
   pullPolicy: IfNotPresent
   # Overrides the image tag whose default is the chart appVersion.
-  tag: "op0.2.4"
+  tag: "op0.2.5"
 
 imagePullSecrets: []
 nameOverride: ""
@@ -86,13 +86,13 @@ livenessProbe:
     path: /
     port: 80
   initialDelaySeconds: 20
-  periodSeconds: 5
+  periodSeconds: 10
 readinessProbe:
   httpGet:
     path: /
     port: 80
   initialDelaySeconds: 20
-  periodSeconds: 5
+  periodSeconds: 10
 
 autoscaling:
   enabled: false
