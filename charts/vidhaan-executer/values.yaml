@@ -8,7 +8,7 @@ image:
   repository: public.ecr.aws/f6k1n6r3/vidhaan
   pullPolicy: IfNotPresent
   # Overrides the image tag whose default is the chart appVersion.
-  tag: "op0.2.6"
+  tag: "op0.2.7"
   args: ["--executer"]
 
 imagePullSecrets: []
@@ -170,8 +170,24 @@ resources:
     cpu: "500m"
     memory: "1024Mi"
 
-livenessProbe: {}
-readinessProbe: {}
+livenessProbe:
+  exec:
+    command:
+    - sh
+    - -c
+    - |-
+      kill -SIGUSR1 $(awk '{print $1}' /var/run/executer.pid)
+  initialDelaySeconds: 5
+  periodSeconds: 10
+readinessProbe:
+  exec:
+    command:
+    - sh
+    - -c
+    - |-
+      kill -SIGUSR2 $(awk '{print $1}' /var/run/executer.pid)
+  initialDelaySeconds: 5
+  periodSeconds: 10
 
 autoscaling:
   enabled: false
