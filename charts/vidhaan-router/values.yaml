@@ -8,7 +8,7 @@ image:
   repository: public.ecr.aws/f6k1n6r3/vidhaan
   pullPolicy: IfNotPresent
   # Overrides the image tag whose default is the chart appVersion.
-  tag: "op0.2.6"
+  tag: "op0.2.7"
   args: ["--router"]
 
 imagePullSecrets: []
@@ -178,13 +178,15 @@ livenessProbe:
     path: /health/live
     port: 8002
   initialDelaySeconds: 5
-  periodSeconds: 5
+  periodSeconds: 10
+  timeoutSeconds: 5
 readinessProbe:
   httpGet:
     path: /health/ready
     port: 8002
   initialDelaySeconds: 5
-  periodSeconds: 5
+  periodSeconds: 10
+  timeoutSeconds: 5
 
 autoscaling:
   enabled: false
