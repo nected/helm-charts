@@ -170,6 +170,10 @@ nalanda:
     PASSWORD_AUTH_ENABLED: "true"
     SIGNUP_DOMAINS: ""
 
+    # proxy url
+    PROXY_SQL_LINT_URL: http://nected-sql-linter/api/v1/core/lint
+    AI_SUGGESTION: http://nected-sql-linter/api/v1/core/suggest
+
     # default user created on setup
     NECTED_USER_EMAIL: dev@nected.ai
     NECTED_USER_PASSWORD: devPass123
