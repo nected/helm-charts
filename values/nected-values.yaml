@@ -46,16 +46,6 @@ konark:
   enabled: true
   replicaCount: 1
   envVars:
-    # Authentication Configuration
-    VITE_ENABLE_MS_LOGIN: false
-    VITE_SIGNUP_FORM_ENABLED: false
-    VITE_ENABLE_AUTH_FORM: true
-    VITE_MICROSOFT_CLIENT_ID: ""
-    VITE_MICROSOFT_TENANT_ID: common
-    VITE_ENABLE_GOOGLE_LOGIN: false
-    VITE_GOOGLE_CLIENT_ID: ""
-
-    # API Configuration
     VITE_API_HOST: <<scheme>>://<<backend-domain>>
     VITE_GRAPHQL_URL: <<scheme>>://<<backend-domain>>/graphql/query
     VITE_EDITOR_URL: <<scheme>>://<<editor-domain>>
@@ -72,10 +62,10 @@ konark:
 
   resources:
     requests:
-      cpu: "250m"
+      cpu: "350m"
       memory: "512Mi"
     limits:
-      cpu: "500m"
+      cpu: "700m"
       memory: "1024Mi"
 
   autoscaling:
@@ -136,15 +126,6 @@ nalanda:
     ELASTIC_USER: elastic
     ELASTIC_PASSWORD: esPass123
 
-    # google auth
-    GOOGLE_AUTH_ENABLED: "false"
-    GOOGLE_CLIENT_ID: ""
-
-    # mslogin
-    MICROSOFT_AUTH_ENABLED: "false"
-    MICROSOFT_CLIENT_ID: ""
-    MICROSOFT_CLIENT_SECRET: ""
-    MICROSOFT_TENANT_ID: ""
 
     # aws ses credentials if EMAIL_PROVIDE: ses
     AWS_ACCESS_KEY: ""
@@ -167,12 +148,7 @@ nalanda:
     KONARK_BASE_URL: <<scheme>>://<<ui-domain>>
 
     # comma separated email domains to allow signup from
-    PASSWORD_AUTH_ENABLED: "true"
     SIGNUP_DOMAINS: ""
-
-    # proxy url
-    PROXY_SQL_LINT_URL: http://nected-sql-linter/api/v1/core/lint
-    AI_SUGGESTION: http://nected-sql-linter/api/v1/core/suggest
 
     # default user created on setup
     NECTED_USER_EMAIL: dev@nected.ai
@@ -182,7 +158,7 @@ nalanda:
     DEFAULT_VIDHAAN_SCHEME: <<scheme>>
     DEFAULT_VIDHAAN_DOMAIN: <<router-domain>>
     # k8s cluster gw ip
-    DEFAULT_VIDHAAN_WHITELISTED_IPS: "127.0.0.1"
+    DEFAULT_VIDHAAN_WHITELISTED_IPS: ""
  
   ingress:
     enabled: false
@@ -360,6 +336,7 @@ executer-tp:
   enabled: false
   envVars:
     REDIS_ENABLED: "true"
+    REDIS_TLS_ENABLED: "false"
     REDIS_HOST: datastore-redis-master
     REDIS_PORT: "6379"
     REDIS_USERNAME: ""

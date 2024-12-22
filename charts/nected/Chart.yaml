@@ -20,15 +20,15 @@ sources:
 dependencies:
   - name: editor
     repository: https://charts.nected.io/
-    version: 0.3.4
+    version: 0.3.5
     condition: editor.enabled
   - name: konark
     repository: https://charts.nected.io/
-    version: 0.3.4
+    version: 0.3.5
     condition: konark.enabled
   - name: nalanda
     repository: https://charts.nected.io/
-    version: 0.3.4
+    version: 0.3.5
     condition: nalanda.enabled
   - name: sql-linter
     repository: https://charts.nected.io/
@@ -36,17 +36,17 @@ dependencies:
     condition: sql-linter.enabled
   - name: vidhaan-router
     repository: https://charts.nected.io/
-    version: 0.3.4
+    version: 0.3.5
     condition: vidhaan-router.enabled
   - name: vidhaan-executer
     repository: https://charts.nected.io/
-    version: 0.3.4
+    version: 0.3.5
     condition: vidhaan-executer.enabled
   - name: executer-tp
     repository: https://charts.nected.io/
-    version: 0.3.1
+    version: 0.3.2
     condition: executer-tp.enabled
 
 type: application
-version: 0.3.4
-appVersion: "0.26.1"
+version: 0.3.5
+appVersion: "0.27.0"
