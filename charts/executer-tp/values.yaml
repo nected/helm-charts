@@ -8,7 +8,7 @@ image:
   repository: public.ecr.aws/f6k1n6r3/vidhaan-executer-tp
   pullPolicy: IfNotPresent
   # Overrides the image tag whose default is the chart appVersion.
-  tag: op0.2.2
+  tag: op0.2.3
 
 imagePullSecrets: []
 nameOverride: ""
@@ -32,6 +32,7 @@ envVars:
   SENTRY_SAMPLE_RATE: "1.0"
   APPLICATION_NAME: executer-tp
   REDIS_ENABLED: "true"
+  REDIS_TLS_ENABLED: "false"
   REDIS_HOST: datastore-redis-master
   REDIS_PORT: "6379"
   REDIS_USERNAME: ""
