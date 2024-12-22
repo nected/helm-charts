@@ -8,7 +8,7 @@ image:
   repository: public.ecr.aws/f6k1n6r3/nalanda
   pullPolicy: IfNotPresent
   # Overrides the image tag whose default is the chart appVersion.
-  tag: "op0.2.8"
+  tag: "op0.2.9"
 
 imagePullSecrets: []
 nameOverride: ""
@@ -30,6 +30,7 @@ envVars:
   BACKEND_URL: https://nalanda.local
   DEBUG: "false"
   DEPLOYMENT: production
+  DEPLOYMENT_REGION: "op"
   ENABLE_PROFILING: "false"
   SERVER_HOST: "0.0.0.0"
   SERVER_PORT: "8001"
@@ -44,7 +45,7 @@ envVars:
   WORKSPACE_WHITE_LABELLING_ALLOWED: "false"
   FULL_WHITE_LABELLING: "false"
   COMPANY_NAME: Nected
-  LOGO_URL: https://assets.nected.ai/nalanda/nectedlogo.png
+  LOGO_URL: https://assets.nected.ai/nalanda/logo.png
 
   # Security
   SECURITY_ENABLED: "false"
@@ -165,6 +166,7 @@ envVars:
   WORKSPACE_SUBDOMAIN_ENABLED: "false"
   SIGNUP_DOMAINS: ""
   SYNC_PLUGINS: mysql,mongodb,postgres,sqlserver,redshift,oracle,snowflake,restAPI
+  INVITE_ONLY_SIGNUP: "true"
 
   # Audit log
   AWS_TRACE_ID_KEY: X-Amzn-Trace-Id
@@ -187,7 +189,7 @@ envVars:
   LICENSE_KEY_PATH: ""
 
   # Workflow config
-  WORKFLOW_NOT_TESTABLE_NODE_TYPE: trigger,addNode,delayNode
+  WORKFLOW_NOT_TESTABLE_NODE_TYPE: trigger,addNode,delayNode,loopDoneNode,arrowNode
 
   # nected user config
   NECTED_USER_EMAIL: dev@nected.ai
@@ -243,7 +245,7 @@ autoSetup:
   image:
     repository: public.ecr.aws/f6k1n6r3/nalanda
     pullPolicy: IfNotPresent
-    tag: "op0.2.8"
+    tag: "op0.2.9"
   command:
   - /bin/sh
   - -c
