@@ -8,7 +8,7 @@ image:
   repository: public.ecr.aws/f6k1n6r3/konark
   pullPolicy: IfNotPresent
   # Overrides the image tag whose default is the chart appVersion.
-  tag: "op0.2.13"
+  tag: "op0.2.16"
 
 imagePullSecrets: []
 nameOverride: ""
@@ -35,7 +35,7 @@ envVars:
   VITE_IP_INFO_KEY: ""
 
   # Security & Compliance
-  VITE_RECAPTCHA_SITE_KEY:
+  VITE_RECAPTCHA_SITE_KEY: ""
   VITE_TANDC_URL: https://www.nected.ai/tnc
   VITE_PP_URL: https://www.nected.ai/privacy-policy
   VITE_COOKIE_CONSENT_ENABLE: false
@@ -75,15 +75,15 @@ envVars:
   VITE_THEME_FAV_ICON: /favicon.ico
 
   # Theme Configuration
-  VITE_THEME_PRIMARY1:
-  VITE_THEME_PRIMARY2:
-  VITE_THEME_PRIMARY3:
-  VITE_THEME_PRIMARY4:
-  VITE_THEME_PRIMARY5:
-  VITE_THEME_PRIMARY6:
-  VITE_THEME_PRIMARY7:
-  VITE_THEME_PRIMARY8:
-  VITE_THEME_PRIMARY9:
+  VITE_THEME_PRIMARY1: ""
+  VITE_THEME_PRIMARY2: ""
+  VITE_THEME_PRIMARY3: ""
+  VITE_THEME_PRIMARY4: ""
+  VITE_THEME_PRIMARY5: ""
+  VITE_THEME_PRIMARY6: ""
+  VITE_THEME_PRIMARY7: ""
+  VITE_THEME_PRIMARY8: ""
+  VITE_THEME_PRIMARY9: ""
 
 serviceAccount:
   # Specifies whether a service account should be created
