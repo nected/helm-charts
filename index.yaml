@@ -129,6 +129,35 @@ entries:
     version: 0.1.1
   editor:
   - apiVersion: v2
+    appVersion: op0.2.8
+    created: "2025-02-20T17:42:42.814390566Z"
+    dependencies:
+    - name: common
+      repository: https://charts.nected.io/
+      tags:
+      - nected-common
+      version: 0.x.x
+    description: Editor, Nected fronend editor app
+    digest: 5909dcdf5b865e8f5d6760100746e330d92d121c8384ddcf89d9e8ccbc3be11c
+    home: https://nected.ai/
+    keywords:
+    - Nected
+    - Workflow automation
+    - BRE, Business Rule Engine
+    - Decision management platform
+    - No-Code / Low-Code Rule Engine
+    - No-Code / Low-Code Workflow automation
+    maintainers:
+    - name: Socioverse Tech Private Ltd.
+      url: https://nected.ai/
+    name: editor
+    sources:
+    - https://charts.nected.io
+    type: application
+    urls:
+    - https://github.com/nected/helm-charts/releases/download/editor-0.3.6/editor-0.3.6.tgz
+    version: 0.3.6
+  - apiVersion: v2
     appVersion: op0.2.7-1
     created: "2024-12-22T14:07:12.108053926Z"
     dependencies:
@@ -634,6 +663,35 @@ entries:
     - https://github.com/nected/helm-charts/releases/download/garuda-0.3.0/garuda-0.3.0.tgz
     version: 0.3.0
   konark:
+  - apiVersion: v2
+    appVersion: op0.10.11
+    created: "2025-02-20T17:42:42.91479965Z"
+    dependencies:
+    - name: common
+      repository: https://charts.nected.io/
+      tags:
+      - nected-common
+      version: 0.x.x
+    description: Konark, Nected fronend application
+    digest: 03eee485c3f34c1b5e91b3484b41699f06c5f9d9c309fe5d2755ad61aaf65937
+    home: https://nected.ai/
+    keywords:
+    - Nected
+    - Workflow automation
+    - BRE, Business Rule Engine
+    - Decision management platform
+    - No-Code / Low-Code Rule Engine
+    - No-Code / Low-Code Workflow automation
+    maintainers:
+    - name: Socioverse Tech Private Ltd.
+      url: https://nected.ai/
+    name: konark
+    sources:
+    - https://charts.nected.io
+    type: application
+    urls:
+    - https://github.com/nected/helm-charts/releases/download/konark-0.3.6/konark-0.3.6.tgz
+    version: 0.3.6
   - apiVersion: v2
     appVersion: op0.2.16
     created: "2024-12-22T14:13:46.110488549Z"
@@ -3273,4 +3331,4 @@ entries:
     urls:
     - https://github.com/nected/helm-charts/releases/download/vidhaan-router-0.1.1/vidhaan-router-0.1.1.tgz
     version: 0.1.1
-generated: "2025-02-20T17:20:25.066452832Z"
+generated: "2025-02-20T17:42:42.915045889Z"
