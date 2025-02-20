@@ -635,6 +635,35 @@ entries:
   garuda:
   - apiVersion: v2
     appVersion: op0.3.0
+    created: "2025-02-20T18:18:32.557219996Z"
+    dependencies:
+    - name: common
+      repository: https://charts.nected.io/
+      tags:
+      - nected-common
+      version: 0.x.x
+    description: Nected garuda service
+    digest: c7b980906073349b175045c611b366f980c32a09bb0286794dc5713097514cf6
+    home: https://nected.ai/
+    keywords:
+    - Nected
+    - Workflow automation
+    - BRE, Business Rule Engine
+    - Decision management platform
+    - No-Code / Low-Code Rule Engine
+    - No-Code / Low-Code Workflow automation
+    maintainers:
+    - name: Socioverse Tech Private Ltd.
+      url: https://nected.ai/
+    name: garuda
+    sources:
+    - https://charts.nected.io
+    type: application
+    urls:
+    - https://github.com/nected/helm-charts/releases/download/garuda-0.3.1/garuda-0.3.1.tgz
+    version: 0.3.1
+  - apiVersion: v2
+    appVersion: op0.3.0
     created: "2025-02-20T17:16:26.316375937Z"
     dependencies:
     - name: common
@@ -3331,4 +3360,4 @@ entries:
     urls:
     - https://github.com/nected/helm-charts/releases/download/vidhaan-router-0.1.1/vidhaan-router-0.1.1.tgz
     version: 0.1.1
-generated: "2025-02-20T17:42:42.915045889Z"
+generated: "2025-02-20T18:18:32.557461918Z"
