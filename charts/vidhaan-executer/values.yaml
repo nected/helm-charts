@@ -7,8 +7,7 @@ replicaCount: 1
 image:
   repository: public.ecr.aws/f6k1n6r3/vidhaan
   pullPolicy: IfNotPresent
-  # Overrides the image tag whose default is the chart appVersion.
-  tag: "op0.2.9"
+  tag: "op0.3.0"
   args: ["--executer"]
 
 imagePullSecrets: []
@@ -38,6 +37,7 @@ envVars:
   SERVER_HOST: "0.0.0.0"
   SERVER_PORT: "8002"
   MONTHLY_LIMIT: "0"
+  ASYNC_CONCURRENT_LIMIT: "20"
   REQUEST_PER_MINUTE_LIMIT: "1500"
   EXCLUDED_WORKSPACE_IDS_FOR_MONTHLY_LIMIT: 1,
   MAX_REQUEST_SIZE: "3145728"
@@ -95,6 +95,10 @@ envVars:
   TEMPORAL_EXECUTER_LOCAL_ACTIVITY_CONCURRENT_EXECUTION_SIZE: "1000"
   TEMPORAL_EXECUTER_ACTIVITY_EXECUTION_RPS: "100000"
   TEMPORAL_EXECUTER_LOCAL_ACTIVITY_EXECUTION_RPS: "100000"
+
+  # Garuda runner
+  GARUDA_SVC_HOST: "nected-garuda"
+  GARUDA_SVC_PORT: "9090"
 
   # Sentry config
   SENTRY_DSN: ""

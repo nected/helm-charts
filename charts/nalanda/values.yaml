@@ -5,10 +5,9 @@
 replicaCount: 1
 
 image:
-  repository: public.ecr.aws/f6k1n6r3/nalanda
-  pullPolicy: IfNotPresent
-  # Overrides the image tag whose default is the chart appVersion.
-  tag: "op0.2.9"
+  repository:  &nalandaRepo public.ecr.aws/f6k1n6r3/nalanda
+  pullPolicy:  IfNotPresent
+  tag: &nalandaTag "op0.3.0"
 
 imagePullSecrets: []
 nameOverride: ""
@@ -167,6 +166,7 @@ envVars:
   SIGNUP_DOMAINS: ""
   SYNC_PLUGINS: mysql,mongodb,postgres,sqlserver,redshift,oracle,snowflake,restAPI
   INVITE_ONLY_SIGNUP: "true"
+  ALLOW_SKIP_DEFAULT_WORKSPACE_CREATION: "true"
 
   # Audit log
   AWS_TRACE_ID_KEY: X-Amzn-Trace-Id
@@ -243,15 +243,15 @@ autoSetup:
   debug: false
   enabled: true
   image:
-    repository: public.ecr.aws/f6k1n6r3/nalanda
+    repository: *nalandaRepo
     pullPolicy: IfNotPresent
-    tag: "op0.2.9"
+    tag: *nalandaTag
   command:
   - /bin/sh
   - -c
   - |
     cp /mnt/temp/envFile .env
-    /app/nalanda --init --init-elastic
+    /app/nalanda init -e
   annotations: {}
 
 service:

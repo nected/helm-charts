@@ -5,10 +5,10 @@
 replicaCount: 1
 
 image:
-  repository: public.ecr.aws/f6k1n6r3/vidhaan-executer-tp
+  repository: public.ecr.aws/f6k1n6r3/garuda
   pullPolicy: IfNotPresent
   # Overrides the image tag whose default is the chart appVersion.
-  tag: op0.2.3
+  tag: "op0.3.0"
 
 imagePullSecrets: []
 nameOverride: ""
@@ -16,21 +16,13 @@ fullnameOverride: ""
 
 
 envVars:
-  TEMPORAL_HOST: nected-temporal-frontend
-  TEMPORAL_PORT: "7233"
-  TEMPORAL_NAMESPACE: default
-  TEMPORAL_TASK_QUEUE: vidhaan-tp-worker-tq
-  TEMPORAL_MAX_CONCURRENT_ACTIVITY_TASK_EXECUTIONS: "100"
-  TEMPORAL_MAX_CONCURRENT_LOCAL_ACTIVITY_EXECUTIONS: "100"
-  TEMPORAL_MAX_CONCURRENT_WORKFLOW_TASK_EXECUTIONS: "100"
-  TEMPORAL_MAX_CONCURRENT_WORKFLOW_TASK_POLLS: "50"
-  TEMPORAL_MAX_CONCURRENT_ACTIVITY_TASK_POLLS: "10"
-  TEMPORAL_MAX_CACHED_WORKFLOWS: "200"
+  HOST: "0.0.0.0"
+  PORT: "9090"
   SENTRY_DSN: ""
   SENTRY_ENABLED: "false"
   SENTRY_ENVIRONMENT: development
   SENTRY_SAMPLE_RATE: "1.0"
-  APPLICATION_NAME: executer-tp
+  APPLICATION_NAME: garuda
   REDIS_ENABLED: "true"
   REDIS_TLS_ENABLED: "false"
   REDIS_HOST: datastore-redis-master
@@ -76,7 +68,10 @@ autoSetup:
   args: []
   annotations: {}
 
-service: {}
+service:
+  type: ClusterIP
+  port: 9090
+  targetPort: 9090
 
 ingress:
   enabled: false
@@ -95,18 +90,26 @@ resources:
     cpu: "400m"
     memory: "1024Mi"
   limits:
-    cpu: "700m"
+    cpu: "400m"
     memory: "1024Mi"
 
-livenessProbe: {}
-readinessProbe: {}
+livenessProbe:
+  grpc:
+    port: 9090
+  initialDelaySeconds: 2
+  periodSeconds: 10
+readinessProbe:
+  grpc:
+    port: 9090
+  initialDelaySeconds: 2
+  periodSeconds: 10
 
 autoscaling:
   enabled: false
-  minReplicas: 1
-  maxReplicas: 1
-  targetCPUUtilizationPercentage: 80
-  targetMemoryUtilizationPercentage: 80
+  # minReplicas: 1
+  # maxReplicas: 1
+  # targetCPUUtilizationPercentage: 80
+  # targetMemoryUtilizationPercentage: 80
 
 # Additional volumes on the output Deployment definition.
 volumes: []

@@ -1,6 +1,6 @@
 apiVersion: v2
-name: executer-tp
-description: Nected 3rd party connector executer service
+name: garuda
+description: Nected garuda service
 
 home: https://nected.ai/
 
@@ -19,9 +19,9 @@ maintainers:
 sources:
   - https://charts.nected.io
 
-appVersion: "op0.2.3"
+appVersion: "op0.3.0"
 type: application
-version: 0.3.2
+version: 0.3.0
 
 dependencies:
 - name: common
