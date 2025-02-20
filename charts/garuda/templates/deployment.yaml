@@ -40,8 +40,7 @@ spec:
           - configMapRef:
               name: {{ include "common.fullname" . }}
           ports:
-            - name: http
-              containerPort: {{ .Values.service.port }}
+            - containerPort: {{ .Values.service.port }}
               protocol: TCP
           livenessProbe:
             {{- toYaml .Values.livenessProbe | nindent 12 }}
