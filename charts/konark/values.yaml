@@ -8,7 +8,7 @@ image:
   repository: public.ecr.aws/f6k1n6r3/konark
   pullPolicy: IfNotPresent
   # Overrides the image tag whose default is the chart appVersion.
-  tag: "op0.2.16"
+  tag: "op0.10.11"
 
 imagePullSecrets: []
 nameOverride: ""
@@ -18,6 +18,7 @@ envVars:
   # Deployment Configuration
   VITE_DEPLOYMENT_TYPE: onpremise
   VITE_ENVIRONMENT: production
+  VITE_DEPLOYMENT_REGION: ""
 
   # Authentication Configuration
   VITE_ENABLE_MS_LOGIN: false
@@ -60,6 +61,7 @@ envVars:
   VITE_ADMIN_EMAIL_CONFIG: ""
 
   # Asset & CDN Configuration
+  BASE_URL: "/"
   VITE_ASSETS_URL: /assets/konark/
   VITE_CDN_URL: ""
   VITE_EDITOR_URL: http://nected-editor.local
