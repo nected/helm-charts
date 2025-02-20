@@ -10,6 +10,8 @@ existingSecretMap: &commonSecretMap {}
 editor:
   enabled: true
   replicaCount: 1
+  image:
+    tag: "op0.2.8"
   envVars:
     REACT_APP_ALLOWED_DOMAINS: http://konark.local
     REACT_APP_SQL_LINT: http://nalanda.local/misc/proxy/lint
@@ -43,6 +45,8 @@ editor:
 konark:
   enabled: true
   replicaCount: 1
+  image:
+    tag: "op0.10.11"
   envVars:
     # Authentication Configuration 
     VITE_ENABLE_MS_LOGIN: false
@@ -95,6 +99,8 @@ konark:
 nalanda:
   enabled: true
   replicaCount: 1
+  image:
+    tag: &nalandaTag "op0.3.0"
   existingSecretMap: *commonSecretMap
   envVars:
     # server config
@@ -220,6 +226,10 @@ nalanda:
     hosts: []
     tls: []
 
+  autoSetup:
+    image:
+      tag: *nalandaTag
+
   resources:
     requests:
       cpu: "250m"
@@ -239,6 +249,8 @@ nalanda:
 vidhaan-executer:
   enabled: true
   replicaCount: 1
+  image:
+    tag: "op0.3.0"
   existingSecretMap: *commonSecretMap
   envVars:
     # Database
@@ -297,6 +309,8 @@ vidhaan-executer:
 vidhaan-router:
   enabled: true
   replicaCount: 1
+  image:
+    tag: "op0.3.0"
   existingSecretMap: *commonSecretMap
   envVars:
     # Database
@@ -362,7 +376,11 @@ vidhaan-router:
 sql-linter:
   enabled: true
   replicaCount: 1
+  image:
+    tag: "op0.2.0"
   envVars:
+    EXCLUDED_RULES: ST05,LT08,LT12
+    INCLUDED_RULES: CV01,CV02,CV03,CV04,CV05,CV06,CV07,CV08,CV09,CV10,CV11,LT03,LT04,LT07,LT10,LT11,LT13,RF04,RF06,ST01,ST02,ST03,ST04,ST07,ST08,TQ01
     OPENAI_API_KEY:
 
   resources:
@@ -381,9 +399,11 @@ sql-linter:
     targetMemoryUtilizationPercentage: 80
 
 # executer-tp chart to be updated
-executer-tp:
+garuda:
   enabled: false
   replicaCount: 1
+  image:
+    tag: "op0.3.0"
   envVars:
     REDIS_ENABLED: "true"
     REDIS_TLS_ENABLED: "false"
@@ -398,7 +418,7 @@ executer-tp:
       cpu: "400m"
       memory: "1024Mi"
     limits:
-      cpu: "700m"
+      cpu: "400m"
       memory: "1024Mi"
 
   autoscaling:
