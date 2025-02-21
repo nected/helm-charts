@@ -250,7 +250,7 @@ vidhaan-executer:
   enabled: true
   replicaCount: 1
   image:
-    tag: "op0.3.0"
+    tag: "op0.3.1"
   existingSecretMap: *commonSecretMap
   envVars:
     # Database
@@ -310,7 +310,7 @@ vidhaan-router:
   enabled: true
   replicaCount: 1
   image:
-    tag: "op0.3.0"
+    tag: "op0.3.1"
   existingSecretMap: *commonSecretMap
   envVars:
     # Database
@@ -403,7 +403,7 @@ garuda:
   enabled: false
   replicaCount: 1
   image:
-    tag: "op0.3.0"
+    tag: "op0.3.1"
   envVars:
     REDIS_ENABLED: "true"
     REDIS_TLS_ENABLED: "false"

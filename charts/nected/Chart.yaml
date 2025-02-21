@@ -36,17 +36,17 @@ dependencies:
     condition: sql-linter.enabled
   - name: vidhaan-router
     repository: https://charts.nected.io/
-    version: 0.3.6
+    version: 0.3.7
     condition: vidhaan-router.enabled
   - name: vidhaan-executer
     repository: https://charts.nected.io/
-    version: 0.3.6
+    version: 0.3.7
     condition: vidhaan-executer.enabled
   - name: garuda
     repository: https://charts.nected.io/
-    version: 0.3.1
+    version: 0.3.2
     condition: garuda.enabled
 
 type: application
-version: 0.3.6
-appVersion: "0.28.0"
+version: 0.3.7
+appVersion: "0.28.1"
