@@ -99,6 +99,7 @@ envVars:
   # Garuda runner
   GARUDA_SVC_HOST: "nected-garuda"
   GARUDA_SVC_PORT: "9090"
+  GARUDA_BASE_URL: http://nected-garuda:9090
 
   # Sentry config
   SENTRY_DSN: ""
@@ -175,7 +176,7 @@ resources:
     memory: "512Mi"
   limits:
     cpu: "250m"
-    memory: "1024Mi"
+    memory: "512Mi"
 
 livenessProbe:
   httpGet:

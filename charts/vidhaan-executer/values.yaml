@@ -7,7 +7,7 @@ replicaCount: 1
 image:
   repository: public.ecr.aws/f6k1n6r3/vidhaan
   pullPolicy: IfNotPresent
-  tag: "op0.3.0"
+  tag: "op0.3.1"
   args: ["--executer"]
 
 imagePullSecrets: []
@@ -99,6 +99,7 @@ envVars:
   # Garuda runner
   GARUDA_SVC_HOST: "nected-garuda"
   GARUDA_SVC_PORT: "9090"
+  GARUDA_BASE_URL: http://nected-garuda:9090
 
   # Sentry config
   SENTRY_DSN: ""
