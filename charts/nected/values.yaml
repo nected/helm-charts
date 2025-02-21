@@ -405,6 +405,7 @@ garuda:
   image:
     tag: "op0.3.1"
   envVars:
+    SKIP_LOG_PATHS: "/health/live,/health/ready"
     REDIS_ENABLED: "true"
     REDIS_TLS_ENABLED: "false"
     REDIS_HOST: datastore-redis-master

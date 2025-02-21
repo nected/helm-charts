@@ -18,6 +18,7 @@ fullnameOverride: ""
 envVars:
   HOST: "0.0.0.0"
   PORT: "9090"
+  SKIP_LOG_PATHS: "/health/live,/health/ready"
   SENTRY_DSN: ""
   SENTRY_ENABLED: "false"
   SENTRY_ENVIRONMENT: development
