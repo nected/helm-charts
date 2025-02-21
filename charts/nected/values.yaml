@@ -11,7 +11,7 @@ editor:
   enabled: true
   replicaCount: 1
   image:
-    tag: "op0.2.8"
+    tag: "op0.2.9"
   envVars:
     REACT_APP_ALLOWED_DOMAINS: http://konark.local
     REACT_APP_SQL_LINT: http://nalanda.local/misc/proxy/lint
@@ -46,7 +46,7 @@ konark:
   enabled: true
   replicaCount: 1
   image:
-    tag: "op0.10.11"
+    tag: "op0.10.11-1"
   envVars:
     # Authentication Configuration 
     VITE_ENABLE_MS_LOGIN: false
@@ -250,7 +250,7 @@ vidhaan-executer:
   enabled: true
   replicaCount: 1
   image:
-    tag: "op0.3.0"
+    tag: "op0.3.1"
   existingSecretMap: *commonSecretMap
   envVars:
     # Database
@@ -310,7 +310,7 @@ vidhaan-router:
   enabled: true
   replicaCount: 1
   image:
-    tag: "op0.3.0"
+    tag: "op0.3.1"
   existingSecretMap: *commonSecretMap
   envVars:
     # Database
@@ -403,8 +403,9 @@ garuda:
   enabled: false
   replicaCount: 1
   image:
-    tag: "op0.3.0"
+    tag: "op0.3.1"
   envVars:
+    SKIP_LOG_PATHS: "/health/live,/health/ready"
     REDIS_ENABLED: "true"
     REDIS_TLS_ENABLED: "false"
     REDIS_HOST: datastore-redis-master

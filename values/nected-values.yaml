@@ -332,7 +332,7 @@ sql-linter:
     targetMemoryUtilizationPercentage: 80
 
 # executer-tp chart to be updated
-executer-tp:
+garuda:
   enabled: false
   envVars:
     REDIS_ENABLED: "true"
