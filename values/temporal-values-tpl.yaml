@@ -39,10 +39,10 @@ server:
         sql:
           driver: "postgres12"
           # if external use external host address & credentials
-          host: datastore-postgresql
+          host: {{ DB_HOST }}
           port: 5432
-          user: nected
-          password: psqlPass123
+          user: {{ DB_USER }}
+          password: {{ DB_PASSWORD }}
           # tls:
           #  enabled: true
           #  enableHostVerification: true
@@ -51,10 +51,10 @@ server:
         sql:
           driver: "postgres12"
           # if external use external host address & credentials
-          host: datastore-postgresql
+          host: {{ DB_HOST }}
           port: 5432
-          user: nected
-          password: psqlPass123
+          user: {{ DB_USER }}
+          password: {{ DB_PASSWORD }}
           # tls:
           #  enabled: true
           #  enableHostVerification: true
@@ -125,12 +125,12 @@ elasticsearch:
   external: true
   enabled: false
   # if external use external host address & credentials
-  host: elasticsearch-master
+  host: {{ ELASTIC_HOST }}
   scheme: http
-  port: 9200
+  port: 443
   version: v7
-  username: elastic
-  password: esPass123
+  username: {{ ELASTIC_USER }}
+  password: {{ ELASTIC_PASSWORD }}
   visibilityIndex: "temporal_visibility_v1_op"
 prometheus:
   enabled: false
