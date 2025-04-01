@@ -126,7 +126,7 @@ elasticsearch:
   enabled: false
   # if external use external host address & credentials
   host: {{ ELASTIC_HOST }}
-  scheme: http
+  scheme: https
   port: 443
   version: v7
   username: {{ ELASTIC_USER }}

@@ -251,7 +251,7 @@ vidhaan-executer:
   enabled: true
   replicaCount: 1
   image:
-    tag: "op0.3.3"
+    tag: "op03.3"
   existingSecretMap: *commonSecretMap
   envVars:
     # Database
@@ -311,7 +311,7 @@ vidhaan-router:
   enabled: true
   replicaCount: 1
   image:
-    tag: "op0.3.3"
+    tag: "op03.3"
   existingSecretMap: *commonSecretMap
   envVars:
     # Database
