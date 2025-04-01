@@ -48,5 +48,5 @@ dependencies:
     condition: garuda.enabled
 
 type: application
-version: 0.3.10
-appVersion: "0.28.4"
+version: 0.3.11
+appVersion: "0.28.5"
