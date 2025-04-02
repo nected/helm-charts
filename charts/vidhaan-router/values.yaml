@@ -7,7 +7,7 @@ replicaCount: 1
 image:
   repository: public.ecr.aws/f6k1n6r3/vidhaan
   pullPolicy: IfNotPresent
-  tag: "op0.3.1"
+  tag: "op03.3"
   args: ["--router"]
 
 imagePullSecrets: []
@@ -68,7 +68,7 @@ envVars:
 
   # Elastic Config
   ELASTIC_PROVIDER: managed
-  ELASTIC_ENABLED: "false"
+  ELASTIC_ENABLED: "true"
   ELASTIC_INSECURE_TLS: "true"
   ELASTIC_ADDRESSES: http://elasticsearch-master:9200
   ELASTIC_API_KEY: ""
@@ -76,7 +76,7 @@ envVars:
   ELASTIC_PASSWORD: esPass123
 
   # Audit log
-  AUDIT_LOG_ENABLED: "false"
+  AUDIT_LOG_ENABLED: "true"
   AUDIT_LOG_INDEX: audit-all-vidhaan
   AWS_TRACE_ID_KEY: X-Amzn-Trace-Id
   X_FORWARDED_HEADER_KEY: X-Forwarded-For
