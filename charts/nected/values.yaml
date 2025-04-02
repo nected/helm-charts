@@ -11,7 +11,7 @@ editor:
   enabled: true
   replicaCount: 1
   image:
-    tag: "op0.3.1"
+    tag: "op0.3.1-1"
   envVars:
     REACT_APP_ALLOWED_DOMAINS: http://konark.local
     REACT_APP_SQL_LINT: http://nalanda.local/misc/proxy/lint
