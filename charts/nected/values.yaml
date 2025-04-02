@@ -205,7 +205,6 @@ nalanda:
 
     # features flags
     SIGNUP_DOMAINS: ""
-    ALLOW_SKIP_DEFAULT_WORKSPACE_CREATION: "false"
 
     # proxy url
     PROXY_SQL_LINT_URL: http://nected-sql-linter/api/v1/core/lint
@@ -278,7 +277,7 @@ vidhaan-executer:
 
     # Elastic Config
     ELASTIC_PROVIDER: managed
-    ELASTIC_ENABLED: "false"
+    ELASTIC_ENABLED: "true"
     ELASTIC_INSECURE_TLS: "true"
     ELASTIC_ADDRESSES: http://elasticsearch-master:9200
     ELASTIC_API_KEY: ""
@@ -338,7 +337,7 @@ vidhaan-router:
 
     # Elastic Config
     ELASTIC_PROVIDER: managed
-    ELASTIC_ENABLED: "false"
+    ELASTIC_ENABLED: "true"
     ELASTIC_INSECURE_TLS: "true"
     ELASTIC_ADDRESSES: http://elasticsearch-master:9200
     ELASTIC_API_KEY: ""
