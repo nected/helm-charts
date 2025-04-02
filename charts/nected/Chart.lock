@@ -7,7 +7,7 @@ dependencies:
   version: 0.3.8
 - name: nalanda
   repository: https://charts.nected.io/
-  version: 0.3.7
+  version: 0.3.8
 - name: sql-linter
   repository: https://charts.nected.io/
   version: 0.2.3
@@ -20,5 +20,5 @@ dependencies:
 - name: garuda
   repository: https://charts.nected.io/
   version: 0.3.3
-digest: sha256:d2eaee9bcf4f71defd06e87101f1c412c64a69e4e158b5199ae94db67a29b332
-generated: "2025-04-02T12:35:59.248538+05:30"
+digest: sha256:b9c42f55793abdbd0f5e4915c9972b22975a9c4b490412ead159194e54eb1310
+generated: "2025-04-02T13:01:13.33393+05:30"

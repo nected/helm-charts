@@ -28,7 +28,7 @@ dependencies:
     condition: konark.enabled
   - name: nalanda
     repository: https://charts.nected.io/
-    version: 0.3.7
+    version: 0.3.8
     condition: nalanda.enabled
   - name: sql-linter
     repository: https://charts.nected.io/
