@@ -45,6 +45,8 @@ envVars:
   FULL_WHITE_LABELLING: "false"
   COMPANY_NAME: Nected
   LOGO_URL: https://assets.nected.ai/nalanda/logo.png
+  DEFAULT_TIMEZONE: UTC
+  DEFAULT_DATEFORMAT: us
 
   # Security
   SECURITY_ENABLED: "false"
@@ -200,10 +202,10 @@ envVars:
   # usages
   FREE_PLAN_ID: "1"
   IS_PAID: "false"
-  RULE_LIMIT: "20"
-  WORKFLOW_LIMIT: "10"
-  INVOCATION_LIMIT: "10000"
-  EDITOR_LIMIT: "5"
+  RULE_LIMIT: "100"
+  WORKFLOW_LIMIT: "100"
+  INVOCATION_LIMIT: "3000"
+  EDITOR_LIMIT: "2"
   PLAN_NAME: Free Trial
 
   # Vidhaan Config
