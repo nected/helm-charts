@@ -4,10 +4,10 @@ dependencies:
   version: 0.3.8
 - name: konark
   repository: https://charts.nected.io/
-  version: 0.3.10
+  version: 0.3.11
 - name: nalanda
   repository: https://charts.nected.io/
-  version: 0.3.11
+  version: 0.3.12
 - name: sql-linter
   repository: https://charts.nected.io/
   version: 0.2.3
@@ -20,5 +20,5 @@ dependencies:
 - name: garuda
   repository: https://charts.nected.io/
   version: 0.3.3
-digest: sha256:e4ea6ff3c27ceabc77adda4948d707871a906ce1e1997c94f4dd6644188dfc04
-generated: "2025-04-10T18:45:59.339422+05:30"
+digest: sha256:b49e29c568038ebf985bb0b487260584cf21c60414f558bc50107ca59dd92e4b
+generated: "2025-04-11T16:16:08.738141+05:30"
