@@ -9,6 +9,7 @@ editor:
 
   ingress:
     enabled: true
+    className: alb
     annotations:
       alb.ingress.kubernetes.io/load-balancer-name: {{ LB_NAME }}
       alb.ingress.kubernetes.io/ip-address-type: ipv4
@@ -36,6 +37,7 @@ konark:
 
   ingress:
     enabled: true
+    className: alb
     annotations:
       alb.ingress.kubernetes.io/load-balancer-name: {{ LB_NAME }}
       alb.ingress.kubernetes.io/ip-address-type: ipv4
@@ -69,23 +71,21 @@ nalanda:
 
     # if external use external host address
     # Redis Config
-    REDIS_TLS_ENABLED: "false"
-    REDIS_INSECURE_TLS: "true"
+    REDIS_TLS_ENABLED: "true"
+    REDIS_INSECURE_TLS: "false"
     REDIS_HOST: {{ REDIS_HOST }}
-    REDIS_USERNAME: {{ REDIS_USER }}
     REDIS_PASSWORD: {{ REDIS_PASSWORD }}
 
-    VIDHAAN_REDIS_TLS_ENABLED: "false"
-    VIDHAAN_REDIS_INSECURE_TLS: "true"
+    VIDHAAN_REDIS_TLS_ENABLED: "true"
+    VIDHAAN_REDIS_INSECURE_TLS: "false"
     VIDHAAN_REDIS_HOST: {{ REDIS_HOST }}
-    VIDHAAN_REDIS_USERNAME: {{ REDIS_USER }}
     VIDHAAN_REDIS_PASSWORD: {{ REDIS_PASSWORD }}
 
     # enable elastic if installed using datastore or used external
     ELASTIC_PROVIDER: opensearch
     ELASTIC_ENABLED: "true"
     ELASTIC_HOSTS: https://{{ ELASTIC_HOST }}:443
-    ELASTIC_INSECURE_TLS: "true"
+    ELASTIC_INSECURE_TLS: "false"
     ELASTIC_USER: {{ ELASTIC_USER }}
     ELASTIC_PASSWORD: {{ ELASTIC_PASSWORD }}
 
@@ -96,11 +96,10 @@ nalanda:
     # default vidhaan settings
     DEFAULT_VIDHAAN_SCHEME: {{ SCHEME }}
     DEFAULT_VIDHAAN_DOMAIN: {{ ROUTER_DOMAIN }}
-    # k8s cluster gw ip
-    DEFAULT_VIDHAAN_WHITELISTED_IPS: "{{ VPC_GATEWAY_IP }}"
  
   ingress:
     enabled: true
+    className: alb
     annotations:
       alb.ingress.kubernetes.io/load-balancer-name: {{ LB_NAME }}
       alb.ingress.kubernetes.io/ip-address-type: ipv4
@@ -129,16 +128,15 @@ vidhaan-executer:
     SSL_MODE: require
 
     # Redis Config
-    REDIS_TLS_ENABLED: "false"
-    REDIS_INSECURE_TLS: "true"
+    REDIS_TLS_ENABLED: "true"
+    REDIS_INSECURE_TLS: "false"
     REDIS_HOST: {{ REDIS_HOST }}:6379
-    REDIS_USERNAME: {{ REDIS_USER }}
     REDIS_PASSWORD: {{ REDIS_PASSWORD }}
 
     # Elastic Config
     ELASTIC_PROVIDER: opensearch
     ELASTIC_ENABLED: "true"
-    ELASTIC_INSECURE_TLS: "true"
+    ELASTIC_INSECURE_TLS: "false"
     ELASTIC_ADDRESSES: https://{{ ELASTIC_HOST }}:443
     ELASTIC_USERNAME: {{ ELASTIC_USER }}
     ELASTIC_PASSWORD: {{ ELASTIC_PASSWORD }}
@@ -160,16 +158,15 @@ vidhaan-router:
     SSL_MODE: require
 
     # Redis Config
-    REDIS_TLS_ENABLED: "false"
-    REDIS_INSECURE_TLS: "true"
+    REDIS_TLS_ENABLED: "true"
+    REDIS_INSECURE_TLS: "false"
     REDIS_HOST: {{ REDIS_HOST }}:6379
-    REDIS_USERNAME: {{ REDIS_USER }}
     REDIS_PASSWORD: {{ REDIS_PASSWORD }}
 
     # Elastic Config
     ELASTIC_PROVIDER: opensearch
     ELASTIC_ENABLED: "true"
-    ELASTIC_INSECURE_TLS: "true"
+    ELASTIC_INSECURE_TLS: "false"
     ELASTIC_ADDRESSES: https://{{ ELASTIC_HOST }}:443
     ELASTIC_USERNAME: {{ ELASTIC_USER }}
     ELASTIC_PASSWORD: {{ ELASTIC_PASSWORD }}
@@ -182,6 +179,7 @@ vidhaan-router:
 
   ingress:
     enabled: true
+    className: alb
     annotations:
       alb.ingress.kubernetes.io/load-balancer-name: {{ LB_NAME }}
       alb.ingress.kubernetes.io/ip-address-type: ipv4

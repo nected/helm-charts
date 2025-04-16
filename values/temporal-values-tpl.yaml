@@ -43,9 +43,9 @@ server:
           port: 5432
           user: {{ DB_USER }}
           password: {{ DB_PASSWORD }}
-          # tls:
-          #  enabled: true
-          #  enableHostVerification: true
+          tls:
+           enabled: true
+           enableHostVerification: false
       visibility:
         driver: "sql"
         sql:
@@ -55,9 +55,9 @@ server:
           port: 5432
           user: {{ DB_USER }}
           password: {{ DB_PASSWORD }}
-          # tls:
-          #  enabled: true
-          #  enableHostVerification: true
+          tls:
+           enabled: true
+           enableHostVerification: false
   frontend:
     replicaCount: 1
     autoscaling:
