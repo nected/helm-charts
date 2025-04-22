@@ -13,7 +13,7 @@ editor:
     annotations:
       alb.ingress.kubernetes.io/load-balancer-name: {{ LB_NAME }}
       alb.ingress.kubernetes.io/ip-address-type: ipv4
-      alb.ingress.kubernetes.io/group.name: nected-editor
+      alb.ingress.kubernetes.io/group.name: nected-lb
       alb.ingress.kubernetes.io/ssl-redirect: '443'
       alb.ingress.kubernetes.io/healthcheck-path: /
       alb.ingress.kubernetes.io/scheme: internet-facing
@@ -21,6 +21,7 @@ editor:
       alb.ingress.kubernetes.io/listen-ports: '[{"HTTP": 80}, {"HTTPS": 443}]'
       alb.ingress.kubernetes.io/certificate-arn: {{ CERTIFICATE_ARN }}
       alb.ingress.kubernetes.io/subnets: {{ SUBNET_IDS }}
+      alb.ingress.kubernetes.io/security-groups: {{ LB_SG }}
     hosts:
       - host: {{ EDITOR_DOMAIN }}
         paths:
@@ -41,7 +42,7 @@ konark:
     annotations:
       alb.ingress.kubernetes.io/load-balancer-name: {{ LB_NAME }}
       alb.ingress.kubernetes.io/ip-address-type: ipv4
-      alb.ingress.kubernetes.io/group.name: nected-konark
+      alb.ingress.kubernetes.io/group.name: nected-lb
       alb.ingress.kubernetes.io/ssl-redirect: '443'
       alb.ingress.kubernetes.io/healthcheck-path: /
       alb.ingress.kubernetes.io/scheme: internet-facing
@@ -49,6 +50,7 @@ konark:
       alb.ingress.kubernetes.io/listen-ports: '[{"HTTP": 80}, {"HTTPS": 443}]'
       alb.ingress.kubernetes.io/certificate-arn: {{ CERTIFICATE_ARN }}
       alb.ingress.kubernetes.io/subnets: {{ SUBNET_IDS }}
+      alb.ingress.kubernetes.io/security-groups: {{ LB_SG }}
     hosts:
       - host: {{ UI_DOMAIN }}
         paths:
@@ -103,7 +105,7 @@ nalanda:
     annotations:
       alb.ingress.kubernetes.io/load-balancer-name: {{ LB_NAME }}
       alb.ingress.kubernetes.io/ip-address-type: ipv4
-      alb.ingress.kubernetes.io/group.name: nected-nalanda
+      alb.ingress.kubernetes.io/group.name: nected-lb
       alb.ingress.kubernetes.io/ssl-redirect: '443'
       alb.ingress.kubernetes.io/healthcheck-path: /
       alb.ingress.kubernetes.io/scheme: internet-facing
@@ -111,6 +113,7 @@ nalanda:
       alb.ingress.kubernetes.io/listen-ports: '[{"HTTP": 80}, {"HTTPS": 443}]'
       alb.ingress.kubernetes.io/certificate-arn: {{ CERTIFICATE_ARN }}
       alb.ingress.kubernetes.io/subnets: {{ SUBNET_IDS }}
+      alb.ingress.kubernetes.io/security-groups: {{ LB_SG }}
     hosts:
       - host: {{ BACKEND_DOMAIN }}
         paths:
@@ -183,7 +186,7 @@ vidhaan-router:
     annotations:
       alb.ingress.kubernetes.io/load-balancer-name: {{ LB_NAME }}
       alb.ingress.kubernetes.io/ip-address-type: ipv4
-      alb.ingress.kubernetes.io/group.name: nected-router
+      alb.ingress.kubernetes.io/group.name: nected-lb
       alb.ingress.kubernetes.io/ssl-redirect: '443'
       alb.ingress.kubernetes.io/healthcheck-path: /
       alb.ingress.kubernetes.io/scheme: internet-facing
@@ -191,6 +194,7 @@ vidhaan-router:
       alb.ingress.kubernetes.io/listen-ports: '[{"HTTP": 80}, {"HTTPS": 443}]'
       alb.ingress.kubernetes.io/certificate-arn: {{ CERTIFICATE_ARN }}
       alb.ingress.kubernetes.io/subnets: {{ SUBNET_IDS }}
+      alb.ingress.kubernetes.io/security-groups: {{ LB_SG }}
     hosts:
       - host: {{ ROUTER_DOMAIN }}
         paths:
