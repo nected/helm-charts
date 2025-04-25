@@ -67,7 +67,7 @@ nalanda:
     # if external use external host address
     MASTER_DB_NAME: {{ NECTED_DB_NAME }}
     MASTER_DB_USER: {{ DB_USER }}
-    MASTER_DB_PASSWORD: {{ DB_PASSWORD }}
+    MASTER_DB_PASSWORD: "{{ DB_PASSWORD }}"
     MASTER_DB_HOST: {{ DB_HOST }}
     MASTER_SSL_MODE: require
 
@@ -76,12 +76,12 @@ nalanda:
     REDIS_TLS_ENABLED: "true"
     REDIS_INSECURE_TLS: "false"
     REDIS_HOST: {{ REDIS_HOST }}
-    REDIS_PASSWORD: {{ REDIS_PASSWORD }}
+    REDIS_PASSWORD: "{{ REDIS_PASSWORD }}"
 
     VIDHAAN_REDIS_TLS_ENABLED: "true"
     VIDHAAN_REDIS_INSECURE_TLS: "false"
     VIDHAAN_REDIS_HOST: {{ REDIS_HOST }}
-    VIDHAAN_REDIS_PASSWORD: {{ REDIS_PASSWORD }}
+    VIDHAAN_REDIS_PASSWORD: "{{ REDIS_PASSWORD }}"
 
     # enable elastic if installed using datastore or used external
     ELASTIC_PROVIDER: opensearch
@@ -89,7 +89,7 @@ nalanda:
     ELASTIC_HOSTS: https://{{ ELASTIC_HOST }}:443
     ELASTIC_INSECURE_TLS: "false"
     ELASTIC_USER: {{ ELASTIC_USER }}
-    ELASTIC_PASSWORD: {{ ELASTIC_PASSWORD }}
+    ELASTIC_PASSWORD: "{{ ELASTIC_PASSWORD }}"
 
     # konark
     ASSETS_BASE_URL: {{ SCHEME }}://{{ UI_DOMAIN }}/assets/konark
@@ -126,7 +126,7 @@ vidhaan-executer:
     # Database
     DB_NAME: {{ NECTED_DB_NAME }}
     DB_USER: {{ DB_USER }}
-    DB_PASSWORD: {{ DB_PASSWORD }}
+    DB_PASSWORD: "{{ DB_PASSWORD }}"
     DB_HOST: {{ DB_HOST }}
     SSL_MODE: require
 
@@ -134,7 +134,7 @@ vidhaan-executer:
     REDIS_TLS_ENABLED: "true"
     REDIS_INSECURE_TLS: "false"
     REDIS_HOST: {{ REDIS_HOST }}:6379
-    REDIS_PASSWORD: {{ REDIS_PASSWORD }}
+    REDIS_PASSWORD: "{{ REDIS_PASSWORD }}"
 
     # Elastic Config
     ELASTIC_PROVIDER: opensearch
@@ -142,7 +142,7 @@ vidhaan-executer:
     ELASTIC_INSECURE_TLS: "false"
     ELASTIC_ADDRESSES: https://{{ ELASTIC_HOST }}:443
     ELASTIC_USERNAME: {{ ELASTIC_USER }}
-    ELASTIC_PASSWORD: {{ ELASTIC_PASSWORD }}
+    ELASTIC_PASSWORD: "{{ ELASTIC_PASSWORD }}"
 
     # Audit log
     AUDIT_LOG_ENABLED: "true"
@@ -156,7 +156,7 @@ vidhaan-router:
     # Database
     DB_NAME: {{ NECTED_DB_NAME }}
     DB_USER: {{ DB_USER }}
-    DB_PASSWORD: {{ DB_PASSWORD }}
+    DB_PASSWORD: "{{ DB_PASSWORD }}"
     DB_HOST: {{ DB_HOST }}
     SSL_MODE: require
 
@@ -164,7 +164,7 @@ vidhaan-router:
     REDIS_TLS_ENABLED: "true"
     REDIS_INSECURE_TLS: "false"
     REDIS_HOST: {{ REDIS_HOST }}:6379
-    REDIS_PASSWORD: {{ REDIS_PASSWORD }}
+    REDIS_PASSWORD: "{{ REDIS_PASSWORD }}"
 
     # Elastic Config
     ELASTIC_PROVIDER: opensearch
@@ -172,7 +172,7 @@ vidhaan-router:
     ELASTIC_INSECURE_TLS: "false"
     ELASTIC_ADDRESSES: https://{{ ELASTIC_HOST }}:443
     ELASTIC_USERNAME: {{ ELASTIC_USER }}
-    ELASTIC_PASSWORD: {{ ELASTIC_PASSWORD }}
+    ELASTIC_PASSWORD: "{{ ELASTIC_PASSWORD }}"
 
     # Audit log
     AUDIT_LOG_ENABLED: "true"

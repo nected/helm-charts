@@ -42,7 +42,7 @@ server:
           host: {{ DB_HOST }}
           port: 5432
           user: {{ DB_USER }}
-          password: {{ DB_PASSWORD }}
+          password: "{{ DB_PASSWORD }}"
           tls:
            enabled: true
            enableHostVerification: false
@@ -54,7 +54,7 @@ server:
           host: {{ DB_HOST }}
           port: 5432
           user: {{ DB_USER }}
-          password: {{ DB_PASSWORD }}
+          password: "{{ DB_PASSWORD }}"
           tls:
            enabled: true
            enableHostVerification: false
@@ -130,7 +130,7 @@ elasticsearch:
   port: 443
   version: v7
   username: {{ ELASTIC_USER }}
-  password: {{ ELASTIC_PASSWORD }}
+  password: "{{ ELASTIC_PASSWORD }}"
   visibilityIndex: "temporal_visibility_v1_op"
 prometheus:
   enabled: false
