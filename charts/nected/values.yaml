@@ -11,7 +11,7 @@ editor:
   enabled: true
   replicaCount: 1
   image:
-    tag: "op0.3.1-1"
+    tag: "op0.3.1-2"
   envVars:
     REACT_APP_ALLOWED_DOMAINS: http://konark.local
     REACT_APP_SQL_LINT: http://nalanda.local/misc/proxy/lint
@@ -46,7 +46,7 @@ konark:
   enabled: true
   replicaCount: 1
   image:
-    tag: "op0.11.2-2"
+    tag: "op0.11.2-3"
   envVars:
     # Authentication Configuration 
     VITE_ENABLE_MS_LOGIN: false
@@ -100,7 +100,7 @@ nalanda:
   enabled: true
   replicaCount: 1
   image:
-    tag: &nalandaTag "op0.3.8"
+    tag: &nalandaTag "op0.3.9"
   existingSecretMap: *commonSecretMap
   envVars:
     # server config
@@ -250,7 +250,7 @@ vidhaan-executer:
   enabled: true
   replicaCount: 1
   image:
-    tag: &vidhaanTag "op0.3.9"
+    tag: &vidhaanTag "op0.3.10"
   existingSecretMap: *commonSecretMap
   envVars:
     # Database
@@ -379,8 +379,6 @@ sql-linter:
   image:
     tag: "op0.2.1"
   envVars:
-    EXCLUDED_RULES: ST05,LT08,LT12
-    INCLUDED_RULES: CV01,CV02,CV03,CV04,CV05,CV06,CV07,CV08,CV09,CV10,CV11,LT03,LT04,LT07,LT10,LT11,LT13,RF04,RF06,ST01,ST02,ST03,ST04,ST07,ST08,TQ01
     OPENAI_API_KEY:
 
   resources:
