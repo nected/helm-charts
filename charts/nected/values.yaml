@@ -46,7 +46,7 @@ konark:
   enabled: true
   replicaCount: 1
   image:
-    tag: "op0.11.2-3"
+    tag: "op0.11.2-4"
   envVars:
     # Authentication Configuration 
     VITE_ENABLE_MS_LOGIN: false
