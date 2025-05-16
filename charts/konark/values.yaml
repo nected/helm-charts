@@ -8,7 +8,7 @@ image:
   repository: public.ecr.aws/f6k1n6r3/konark
   pullPolicy: IfNotPresent
   # Overrides the image tag whose default is the chart appVersion.
-  tag: "op0.11.2-3"
+  tag: "op0.11.2-4"
 
 imagePullSecrets: []
 nameOverride: ""
