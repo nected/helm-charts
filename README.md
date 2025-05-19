@@ -34,8 +34,7 @@ Point each domain to your ingress controller’s external IP:
 
 > 💡 **For Dev Environments:**
 Use Nected’s datastore chart if you don’t have PostgreSQL, Redis, or Elasticsearch installed:
-- Download values
-[Datastore values](https://charts.nected.io/values/datastore-values.yaml)
+- [Datastore values](https://charts.nected.io/values/datastore-values.yaml)
 - Install chart
 ```
 helm upgrade -i datastore nected/datastore -f datastore-values.yaml
@@ -53,6 +52,7 @@ helm repo add nected https://nected.github.io/helm-charts
 
 ### 🌐 Configure Scheme and Domains
 In `nected-values.yaml`, replace the following placeholders:
+
 | Values Placeholder   | Replace With       |
 |----------------------|--------------------|
 | `<<scheme>>`         | `http` or `https`  |
