@@ -15,8 +15,10 @@ NECTED_REDIS_PORT: &redisPort "6379"
 NECTED_REDIS_USERNAME: &redisUser ""
 NECTED_REDIS_PASSWORD: &redisPassword ""
 
-NECTED_ELASTIC_ENABLED: &elasticEnabled "true" # false if audit log not required, no elasticSearch
-NECTED_ELASTIC_PROVIDER: &elasticProvider managed # opensearch: OpenSearch, managed: ElasticSearch
+# false if audit log not required, no elasticSearch
+NECTED_ELASTIC_ENABLED: &elasticEnabled "true"
+ # opensearch: OpenSearch, managed: ElasticSearch
+NECTED_ELASTIC_PROVIDER: &elasticProvider managed
 NECTED_ELASTIC_HOSTS: &elasticHost http://elasticsearch-master:9200
 NECTED_ELASTIC_INSECURE_TLS: &elasticInsecureTls "true"
 NECTED_ELASTIC_API_KEY: &elasticAPiKey ""
