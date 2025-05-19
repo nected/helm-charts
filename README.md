@@ -139,3 +139,10 @@ Login using default credentials defined in `nected-values.yaml`:
 NECTED_USER_EMAIL: dev@nected.ai
 NECTED_USER_PASSWORD: devPass123
 ```
+
+---
+## 🤝 Community & Support
+For questions, feedback, or contributions:
+- Visit our [documentation](https://docs.nected.ai/)
+- Join the conversation on [LinkedIn](https://www.linkedin.com/company/nected-ai/)
+- Contact the team via support@nected.ai
