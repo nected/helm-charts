@@ -59,6 +59,7 @@ konark:
 
 # nalanda chart values to be updated
 nalanda:
+  replicaCount: 2
   envVars:
     ALLOWED_CORS_ORIGIN: {{ SCHEME }}://{{ BACKEND_DOMAIN }},{{ SCHEME }}://{{ UI_DOMAIN }},{{ SCHEME }}://{{ EDITOR_DOMAIN }}
     ALLOWED_HOSTS: {{ BACKEND_DOMAIN }}
@@ -122,7 +123,8 @@ nalanda:
 
 # vidhaan-executer chart to be updated
 vidhaan-executer:
-  envVars:
+  replicaCount: 4
+  envVars: &vidhaanEnvVars
     # Database
     DB_NAME: {{ NECTED_DB_NAME }}
     DB_USER: {{ DB_USER }}
@@ -152,33 +154,8 @@ vidhaan-executer:
 
 # vidhaan-router chart to be updated
 vidhaan-router:
-  envVars:
-    # Database
-    DB_NAME: {{ NECTED_DB_NAME }}
-    DB_USER: {{ DB_USER }}
-    DB_PASSWORD: "{{ DB_PASSWORD }}"
-    DB_HOST: {{ DB_HOST }}
-    SSL_MODE: require
-
-    # Redis Config
-    REDIS_TLS_ENABLED: "true"
-    REDIS_INSECURE_TLS: "false"
-    REDIS_HOST: {{ REDIS_HOST }}:6379
-    REDIS_PASSWORD: "{{ REDIS_PASSWORD }}"
-
-    # Elastic Config
-    ELASTIC_PROVIDER: opensearch
-    ELASTIC_ENABLED: "true"
-    ELASTIC_INSECURE_TLS: "false"
-    ELASTIC_ADDRESSES: https://{{ ELASTIC_HOST }}:443
-    ELASTIC_USERNAME: {{ ELASTIC_USER }}
-    ELASTIC_PASSWORD: "{{ ELASTIC_PASSWORD }}"
-
-    # Audit log
-    AUDIT_LOG_ENABLED: "true"
-
-    # subdomains
-    SKIP_SUBDOMAINS: {{ ROUTER_DOMAIN }}
+  replicaCount: 2
+  envVars: *vidhaanEnvVars
 
   ingress:
     enabled: true

@@ -2,6 +2,13 @@
 nameOverride: "nected-temporal"
 fullnameOverride: "nected-temporal"
 
+NECTED_PG_HOST: &pgHost datastore-postgresql
+NECTED_PG_USER: &pgUser nected
+NECTED_PG_PASSWORD: &pgPassword psqlPass123
+NECTED_PG_PORT: &pgPort 5432
+NECTED_PG_TLS_ENABLED: &pgTlsEnabled false
+NECTED_PG_HOST_VERIFICATIO: &pgHostVerification false
+
 server:
   enabled: true
   dynamicConfig:
@@ -38,26 +45,32 @@ server:
         driver: "sql"
         sql:
           driver: "postgres12"
+          database: temporal
+          maxConns: 20
+          maxConnLifetime: "1h"
           # if external use external host address & credentials
-          host: datastore-postgresql
-          port: 5432
-          user: nected
-          password: psqlPass123
-          # tls:
-          #  enabled: true
-          #  enableHostVerification: true
+          host: *pgHost
+          port: *pgPort
+          user: *pgUser
+          password: *pgPassword
+          tls:
+           enabled: *pgTlsEnabled
+           enableHostVerification: *pgHostVerification
       visibility:
         driver: "sql"
         sql:
           driver: "postgres12"
+          database: temporal_visibility
+          maxConns: 20
+          maxConnLifetime: "1h"
           # if external use external host address & credentials
-          host: datastore-postgresql
-          port: 5432
-          user: nected
-          password: psqlPass123
-          # tls:
-          #  enabled: true
-          #  enableHostVerification: true
+          host: *pgHost
+          port: *pgPort
+          user: *pgUser
+          password: *pgPassword
+          tls:
+            enabled: *pgTlsEnabled
+            enableHostVerification: *pgHostVerification
   frontend:
     replicaCount: 1
     autoscaling:
@@ -121,17 +134,8 @@ schema:
     enabled: true
 
 elasticsearch:
-  # disable if postgres is used for visibility
-  external: true
+  external: false
   enabled: false
-  # if external use external host address & credentials
-  host: elasticsearch-master
-  scheme: http
-  port: 9200
-  version: v7
-  username: elastic
-  password: esPass123
-  visibilityIndex: "temporal_visibility_v1_op"
 prometheus:
   enabled: false
 grafana:
