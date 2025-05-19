@@ -1,0 +1,69 @@
+---
+# Dummy service (required)
+apiVersion: v1
+kind: Service
+metadata:
+  name: dummy-service
+spec:
+  ports:
+    - port: 80
+      targetPort: 80
+  selector:
+    app: dummy
+
+---
+
+# Dummy deployment
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: dummy
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      app: dummy
+  template:
+    metadata:
+      labels:
+        app: dummy
+    spec:
+      containers:
+        - name: dummy
+          image: nginx
+          ports:
+            - containerPort: 80
+
+---
+
+# Dummy Ingress
+apiVersion: networking.k8s.io/v1
+kind: Ingress
+metadata:
+  name: nected-test-ing
+  namespace: default
+  annotations:
+    alb.ingress.kubernetes.io/load-balancer-name: {{ LB_NAME }}
+    alb.ingress.kubernetes.io/ip-address-type: ipv4
+    alb.ingress.kubernetes.io/group.name: nected-lb
+    alb.ingress.kubernetes.io/ssl-redirect: '443'
+    alb.ingress.kubernetes.io/healthcheck-path: /
+    alb.ingress.kubernetes.io/scheme: internet-facing
+    alb.ingress.kubernetes.io/target-type: ip
+    alb.ingress.kubernetes.io/listen-ports: '[{"HTTP": 80}, {"HTTPS": 443}]'
+    alb.ingress.kubernetes.io/certificate-arn: {{ CERTIFICATE_ARN }}
+    alb.ingress.kubernetes.io/subnets:  {{ SUBNET_IDS }}
+    alb.ingress.kubernetes.io/security-groups: {{ LB_SG }}
+spec:
+  rules:
+    - host: dummy.example.com
+      http:
+        paths:
+          - path: /
+            pathType: Prefix
+            backend:
+              service:
+                name: dummy-service
+                port:
+                  number: 80
+  ingressClassName: alb

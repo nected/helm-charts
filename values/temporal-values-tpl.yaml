@@ -14,7 +14,7 @@ server:
   config:
     logLevel: "debug,info"
     # IMPORTANT: This value cannot be changed, once it's set.
-    numHistoryShards: 512
+    numHistoryShards: 1024
     dcRedirectionPolicy:
       policy: "selected-apis-forwarding"
       toDC: ""
@@ -42,10 +42,10 @@ server:
           host: {{ DB_HOST }}
           port: 5432
           user: {{ DB_USER }}
-          password: {{ DB_PASSWORD }}
-          # tls:
-          #  enabled: true
-          #  enableHostVerification: true
+          password: "{{ DB_PASSWORD }}"
+          tls:
+           enabled: true
+           enableHostVerification: false
       visibility:
         driver: "sql"
         sql:
@@ -54,12 +54,12 @@ server:
           host: {{ DB_HOST }}
           port: 5432
           user: {{ DB_USER }}
-          password: {{ DB_PASSWORD }}
-          # tls:
-          #  enabled: true
-          #  enableHostVerification: true
+          password: "{{ DB_PASSWORD }}"
+          tls:
+           enabled: true
+           enableHostVerification: false
   frontend:
-    replicaCount: 1
+    replicaCount: 2
     autoscaling:
       enabled: false
       minReplicas: "1"
@@ -71,7 +71,7 @@ server:
         cpu: 250m
         memory: 512Mi
   history:
-    replicaCount: 1
+    replicaCount: 2
     autoscaling:
       enabled: false
       minReplicas: "1"
@@ -80,10 +80,10 @@ server:
       targetMemory: "75"
     resources:
       requests:
-        cpu: 500m
-        memory: 1048Mi
+        cpu: 1000m
+        memory: 2048Mi
   matching:
-    replicaCount: 1
+    replicaCount: 2
     autoscaling:
       enabled: false
       minReplicas: "1"
@@ -121,17 +121,8 @@ schema:
     enabled: true
 
 elasticsearch:
-  # disable if postgres is used for visibility
-  external: true
+  external: false
   enabled: false
-  # if external use external host address & credentials
-  host: {{ ELASTIC_HOST }}
-  scheme: http
-  port: 443
-  version: v7
-  username: {{ ELASTIC_USER }}
-  password: {{ ELASTIC_PASSWORD }}
-  visibilityIndex: "temporal_visibility_v1_op"
 prometheus:
   enabled: false
 grafana:

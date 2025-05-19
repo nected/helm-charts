@@ -1,10 +1,40 @@
+# configurations for Postgres / Redis / ElasticSearch
+# default values is set according to datastore chart
+NECTED_PG_HOST: &pgHost datastore-postgresql
+NECTED_PG_DATABASE: &pgDatabase nected
+NECTED_PG_USER: &pgUser nected
+NECTED_PG_PASSWORD: &pgPassword psqlPass123
+NECTED_PG_PORT: &pgPort "5432"
+NECTED_PG_SSL_MODE: &pgSslMode disable
+
+NECTED_REDIS_TLS_ENABLED: &redisTlsEnabled "false"
+NECTED_REDIS_INSECURE_TLS: &redisInsecureTls "true"
+NECTED_REDIS_HOST_PORT: &redisHostPort datastore-redis-master:6379
+NECTED_REDIS_HOST: &redisHost datastore-redis-master
+NECTED_REDIS_PORT: &redisPort "6379"
+NECTED_REDIS_USERNAME: &redisUser ""
+NECTED_REDIS_PASSWORD: &redisPassword ""
+
+NECTED_ELASTIC_ENABLED: &elasticEnabled "true" # false if audit log not required, no elasticSearch
+NECTED_ELASTIC_PROVIDER: &elasticProvider managed # opensearch: OpenSearch, managed: ElasticSearch
+NECTED_ELASTIC_HOSTS: &elasticHost http://elasticsearch-master:9200
+NECTED_ELASTIC_INSECURE_TLS: &elasticInsecureTls "true"
+NECTED_ELASTIC_API_KEY: &elasticAPiKey ""
+NECTED_ELASTIC_USER: &elasticUser elastic
+NECTED_ELASTIC_PASSWORD: &elasticPassword esPass123
+
+# to encrypt credentials and global variables before saving in db: create encryption key
+# openssl genrsa -f4 -out encryption-at-rest 4096
+# kubectl create secret generic encryption-at-rest-secret --from-file encryption-at-rest
+#
+existingSecretMap: &commonSecretMap {}
+# use below existingSecretMap value
 # existingSecretMap: &commonSecretMap
 #   - name: ENCRYPTKEY_EAR_1
 #     valueFrom:
 #       secretKeyRef:
 #         name: encryption-at-rest-secret
 #         key: encryption-at-rest
-existingSecretMap: &commonSecretMap {}
 
 # editor chart values to be updated
 editor:
@@ -85,56 +115,49 @@ nalanda:
     ALLOWED_HOSTS: <<backend-domain>>
     BACKEND_URL: <<scheme>>://<<backend-domain>>
 
-    # if external use external host address
-    MASTER_DB_NAME: nected
-    MASTER_DB_USER: nected
-    MASTER_DB_PASSWORD: psqlPass123
-    MASTER_DB_HOST: datastore-postgresql
-    MASTER_DB_PORT: "5432"
-    MASTER_DB_LOG_MODE: "false"
-    MASTER_SSL_MODE: disable
-    MASTER_DB_CONNS_POOL_ENABLE: "true"
-    MASTER_DB_MAX_IDLE_CONNS: "5"
-    MASTER_DB_MAX_OPEN_CONNS: "10"
-    MASTER_DB_CONN_MAX_LIFETIME: 1h
-    MASTER_DB_CONN_MAX_IDLE_TIME: 30m
+    # Database Config
+    MASTER_DB_NAME: *pgDatabase
+    MASTER_DB_USER: *pgUser
+    MASTER_DB_PASSWORD: *pgPassword
+    MASTER_DB_HOST: *pgHost
+    MASTER_DB_PORT: *pgPort
+    MASTER_SSL_MODE: *pgSslMode
 
-    # if external use external host address
     # Redis Config
-    REDIS_TLS_ENABLED: "false"
-    REDIS_INSECURE_TLS: "true"
-    REDIS_HOST: datastore-redis-master
-    REDIS_PORT: "6379"
+    REDIS_TLS_ENABLED: *redisTlsEnabled
+    REDIS_INSECURE_TLS: *redisInsecureTls
+    REDIS_HOST: *redisHost
+    REDIS_PORT: *redisPort
     REDIS_DATABASE: "0"
-    REDIS_USERNAME: ""
-    REDIS_PASSWORD: ""
+    REDIS_USERNAME: *redisUser
+    REDIS_PASSWORD: *redisPassword
 
-    VIDHAAN_REDIS_TLS_ENABLED: "false"
-    VIDHAAN_REDIS_INSECURE_TLS: "true"
-    VIDHAAN_REDIS_HOST: datastore-redis-master
-    VIDHAAN_REDIS_PORT: "6379"
+    VIDHAAN_REDIS_TLS_ENABLED: *redisTlsEnabled
+    VIDHAAN_REDIS_INSECURE_TLS: *redisInsecureTls
+    VIDHAAN_REDIS_HOST: *redisHost
+    VIDHAAN_REDIS_PORT: *redisPort
     VIDHAAN_REDIS_DATABASE: "1"
-    VIDHAAN_REDIS_USERNAME: ""
-    VIDHAAN_REDIS_PASSWORD: ""
+    VIDHAAN_REDIS_USERNAME: *redisUser
+    VIDHAAN_REDIS_PASSWORD: *redisPassword
 
-    # enable elastic if installed using datastore or used external
-    ELASTIC_PROVIDER: managed
-    ELASTIC_ENABLED: "false"
-    ELASTIC_HOSTS: http://elasticsearch-master:9200
-    ELASTIC_API_KEY: ""
-    ELASTIC_INSECURE_TLS: "true"
-    ELASTIC_USER: elastic
-    ELASTIC_PASSWORD: esPass123
+    # ElasticSearch Config
+    ELASTIC_PROVIDER: *elasticProvider
+    ELASTIC_ENABLED: *elasticEnabled
+    ELASTIC_HOSTS: *elasticHost
+    ELASTIC_API_KEY: *elasticAPiKey
+    ELASTIC_INSECURE_TLS: *elasticInsecureTls
+    ELASTIC_USER: *elasticUser
+    ELASTIC_PASSWORD: *elasticPassword
 
-
-    # aws ses credentials if EMAIL_PROVIDE: ses
+     # Email Config
+    SEND_EMAIL: "false"
+    # ses / smtp
+    EMAIL_PROVIDER: smtp
+    # Email provider: ses
     AWS_ACCESS_KEY: ""
     AWS_SECRET_KEY: ""
     AWS_REGION: ""
-
-    # email
-    SEND_EMAIL: "false"
-    EMAIL_PROVIDER: smtp
+    #Email Provider smtp
     SENDER_EMAIL: ""
     SENDER_NAME: ""
     EMAIL_INSECURE_TLS: ""
@@ -143,7 +166,7 @@ nalanda:
     EMAIL_USERNAME: ""
     EMAIL_PASSWORD: ""
 
-    # konark
+    # Konark Urls
     ASSETS_BASE_URL: <<scheme>>://<<ui-domain>>/assets/konark
     KONARK_BASE_URL: <<scheme>>://<<ui-domain>>
 
@@ -163,11 +186,11 @@ nalanda:
   ingress:
     enabled: false
     className: <<ingressClassName>>
-  hosts:
-    - host: <<backend-domain>>
-      paths:
-          - path: /
-            pathType: Prefix
+    hosts:
+      - host: <<backend-domain>>
+        paths:
+            - path: /
+              pathType: Prefix
 
   resources:
     requests:
@@ -189,40 +212,34 @@ vidhaan-executer:
   enabled: true
   replicaCount: 1
   existingSecretMap: *commonSecretMap
-  envVars:
-    # Database
-    DB_NAME: nected
-    DB_USER: nected
-    DB_PASSWORD: psqlPass123
-    DB_HOST: datastore-postgresql
-    DB_PORT: "5432"
-    DB_LOG_MODE: "false"
-    SSL_MODE: disable
-    DB_CONNS_POOL_ENABLE: "true"
-    DB_MAX_IDLE_CONNS: "2"
-    DB_MAX_OPEN_CONNS: "10"
-    DB_CONN_MAX_LIFE_TIME: 1h
-    DB_CONN_MAX_IDLE_TIME: 1h
+  envVars: &vidhaanEnvVars
+    # Database config
+    DB_NAME: *pgDatabase
+    DB_USER: *pgUser
+    DB_PASSWORD: *pgPassword
+    DB_HOST: *pgHost
+    DB_PORT: *pgPort
+    SSL_MODE: *pgSslMode
 
     # Redis Config
-    REDIS_TLS_ENABLED: "false"
-    REDIS_INSECURE_TLS: "true"
-    REDIS_HOST: datastore-redis-master:6379
+    REDIS_TLS_ENABLED: *redisTlsEnabled
+    REDIS_INSECURE_TLS: *redisInsecureTls
+    REDIS_HOST: *redisHostPort
     REDIS_DATABASE: "1"
-    REDIS_USERNAME: ""
-    REDIS_PASSWORD: ""
+    REDIS_USERNAME: *redisUser
+    REDIS_PASSWORD: *redisPassword
 
-    # Elastic Config
-    ELASTIC_PROVIDER: managed
-    ELASTIC_ENABLED: "false"
-    ELASTIC_INSECURE_TLS: "true"
-    ELASTIC_ADDRESSES: http://elasticsearch-master:9200
-    ELASTIC_API_KEY: ""
-    ELASTIC_USERNAME: elastic
-    ELASTIC_PASSWORD: esPass123
+    # ElasticSearch Config
+    ELASTIC_PROVIDER: *elasticProvider
+    ELASTIC_ENABLED: *elasticEnabled
+    ELASTIC_INSECURE_TLS: *elasticInsecureTls
+    ELASTIC_ADDRESSES: *elasticHost
+    ELASTIC_API_KEY: *elasticAPiKey
+    ELASTIC_USERNAME: *elasticUser
+    ELASTIC_PASSWORD: *elasticPassword
 
     # Audit log
-    AUDIT_LOG_ENABLED: "false"
+    AUDIT_LOG_ENABLED: *elasticEnabled
 
     # subdomains
     SKIP_SUBDOMAINS: <<router-domain>>
@@ -247,43 +264,7 @@ vidhaan-router:
   enabled: true
   replicaCount: 1
   existingSecretMap: *commonSecretMap
-  envVars:
-    # Database
-    DB_NAME: nected
-    DB_USER: nected
-    DB_PASSWORD: psqlPass123
-    DB_HOST: datastore-postgresql
-    DB_PORT: "5432"
-    DB_LOG_MODE: "false"
-    SSL_MODE: disable
-    DB_CONNS_POOL_ENABLE: "true"
-    DB_MAX_IDLE_CONNS: "2"
-    DB_MAX_OPEN_CONNS: "10"
-    DB_CONN_MAX_LIFE_TIME: 1h
-    DB_CONN_MAX_IDLE_TIME: 1h
-
-    # Redis Config
-    REDIS_TLS_ENABLED: "false"
-    REDIS_INSECURE_TLS: "true"
-    REDIS_HOST: datastore-redis-master:6379
-    REDIS_DATABASE: "1"
-    REDIS_USERNAME: ""
-    REDIS_PASSWORD: ""
-
-    # Elastic Config
-    ELASTIC_PROVIDER: managed
-    ELASTIC_ENABLED: "false"
-    ELASTIC_INSECURE_TLS: "true"
-    ELASTIC_ADDRESSES: http://elasticsearch-master:9200
-    ELASTIC_API_KEY: ""
-    ELASTIC_USERNAME: elastic
-    ELASTIC_PASSWORD: esPass123
-
-    # Audit log
-    AUDIT_LOG_ENABLED: "false"
-
-    # subdomains
-    SKIP_SUBDOMAINS: <<router-domain>>
+  envVars: *vidhaanEnvVars
 
   ingress:
     enabled: false
@@ -336,12 +317,12 @@ garuda:
   enabled: false
   envVars:
     REDIS_ENABLED: "true"
-    REDIS_TLS_ENABLED: "false"
-    REDIS_HOST: datastore-redis-master
-    REDIS_PORT: "6379"
-    REDIS_USERNAME: ""
-    REDIS_PASSWORD: ""
-    REDIS_DB: "1"
+    REDIS_TLS_ENABLED: *redisTlsEnabled
+    REDIS_HOST: *redisHost
+    REDIS_PORT: *redisPort
+    REDIS_USERNAME: *redisUser
+    REDIS_PASSWORD: *redisPassword
+    REDIS_DB: "2"
 
   resources:
     requests:
