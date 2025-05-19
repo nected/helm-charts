@@ -99,6 +99,7 @@ NECTED_REDIS_PASSWORD: &redisPassword ""
 In `nected-values.yaml`:
 ```
 NECTED_ELASTIC_ENABLED: &elasticEnabled "true"
+# possible values: managed / opensearch
 NECTED_ELASTIC_PROVIDER: &elasticProvider managed
 NECTED_ELASTIC_HOSTS: &elasticHost http://elasticsearch-master:9200
 NECTED_ELASTIC_INSECURE_TLS: &elasticInsecureTls "true"
