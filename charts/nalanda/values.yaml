@@ -7,7 +7,7 @@ replicaCount: 1
 image:
   repository:  &nalandaRepo public.ecr.aws/f6k1n6r3/nalanda
   pullPolicy:  IfNotPresent
-  tag: &nalandaTag "op0.3.9"
+  tag: &nalandaTag "op0.3.11"
 
 imagePullSecrets: []
 nameOverride: ""
