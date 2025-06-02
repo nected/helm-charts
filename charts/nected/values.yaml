@@ -100,7 +100,7 @@ nalanda:
   enabled: true
   replicaCount: 1
   image:
-    tag: &nalandaTag "op0.3.11"
+    tag: &nalandaTag "op0.3.12"
   existingSecretMap: *commonSecretMap
   envVars:
     # server config
