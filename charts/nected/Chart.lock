@@ -1,24 +1,24 @@
 dependencies:
 - name: editor
   repository: https://charts.nected.io/
-  version: 0.3.10
+  version: 0.3.11
 - name: konark
   repository: https://charts.nected.io/
-  version: 0.3.15
+  version: 0.3.16
 - name: nalanda
   repository: https://charts.nected.io/
-  version: 0.3.18
+  version: 0.3.19
 - name: sql-linter
   repository: https://charts.nected.io/
   version: 0.2.4
 - name: vidhaan-router
   repository: https://charts.nected.io/
-  version: 0.3.19
+  version: 0.3.20
 - name: vidhaan-executer
   repository: https://charts.nected.io/
-  version: 0.3.19
+  version: 0.3.20
 - name: garuda
   repository: https://charts.nected.io/
-  version: 0.3.3
-digest: sha256:c4db3eb425a5022f7cf8f66c30632a59cea209ab14668d3b2c469ff80207f0e9
-generated: "2025-06-02T17:06:30.205657+05:30"
+  version: 0.3.4
+digest: sha256:feebf7bc055b3f93b4ee9d626f188e0cf2511a967cc4e0fcde5586657a9b21a6
+generated: "2025-07-07T17:26:35.782538+05:30"
