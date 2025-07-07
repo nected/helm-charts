@@ -7,7 +7,7 @@ replicaCount: 1
 image:
   repository: public.ecr.aws/f6k1n6r3/vidhaan
   pullPolicy: IfNotPresent
-  tag: "op0.3.13"
+  tag: "op0.3.16"
   args: ["--executer"]
 
 imagePullSecrets: []
@@ -38,6 +38,7 @@ envVars:
   SERVER_PORT: "8002"
   ASYNC_CONCURRENT_LIMIT: "10"
   REQUEST_PER_MINUTE_LIMIT: "1200"
+  WEBHOOK_PER_MINUTE_LIMIT: "1200"
   MAX_REQUEST_SIZE: "3145728"
   ENABLE_PROFILING: "false"
   SKIP_LOG_PATHS: /health
