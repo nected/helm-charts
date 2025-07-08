@@ -81,8 +81,8 @@ server:
       targetMemory: "75"
     resources:
       requests:
-        cpu: 250m
-        memory: 512Mi
+        cpu: 400m
+        memory: 1024Mi
   history:
     replicaCount: 1
     autoscaling:
@@ -93,8 +93,8 @@ server:
       targetMemory: "75"
     resources:
       requests:
-        cpu: 500m
-        memory: 1048Mi
+        cpu: 700m
+        memory: 2048Mi
   matching:
     replicaCount: 1
     autoscaling:
@@ -105,8 +105,8 @@ server:
       targetMemory: "75"
     resources:
       requests:
-        cpu: 250m
-        memory: 512Mi
+        cpu: 400m
+        memory: 1024Mi
   worker:
     replicaCount: 1
     autoscaling:
