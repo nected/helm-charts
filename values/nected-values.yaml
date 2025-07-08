@@ -1,3 +1,7 @@
+# default username / password to be used post deployment for login
+NECTED_UI_USER_NAME: &uiUserName dev@nected.ai
+NECTED_UI_USER_PASSWORD: &uiUserPassword devPass123
+
 # configurations for Postgres / Redis / ElasticSearch
 # default values is set according to datastore chart
 NECTED_PG_HOST: &pgHost datastore-postgresql
@@ -176,8 +180,8 @@ nalanda:
     SIGNUP_DOMAINS: ""
 
     # default user created on setup
-    NECTED_USER_EMAIL: dev@nected.ai
-    NECTED_USER_PASSWORD: devPass123
+    NECTED_USER_EMAIL: *uiUserName
+    NECTED_USER_PASSWORD: *uiUserPassword
 
     # default vidhaan settings
     DEFAULT_VIDHAAN_SCHEME: <<scheme>>
@@ -248,10 +252,10 @@ vidhaan-executer:
 
   resources:
     requests:
-      cpu: "250m"
+      cpu: "500m"
       memory: "512Mi"
     limits:
-      cpu: "500m"
+      cpu: "1000m"
       memory: "1024Mi"
 
   autoscaling:

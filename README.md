@@ -61,6 +61,14 @@ In `nected-values.yaml`, replace the following placeholders:
 | `<<backend-domain>>` | `api.xyz.com`      |
 | `<<router-domain>>`  | `router.xyz.com`   |
 
+
+### 🔐 Configure default user credentials
+In `nected-values.yaml`:
+```
+NECTED_UI_USER_NAME: &uiUserName dev@nected.ai
+NECTED_UI_USER_PASSWORD: &uiUserPassword devPass123
+```
+
 ### 🗄️ Configure PostgreSQL
 1. In `temporal-values.yaml`:
 ```
@@ -123,7 +131,7 @@ kubectl create secret generic encryption-at-rest-secret --from-file encryption-a
 2. In `nected-values.yaml`, uncomment the `existingSecretMap` block to use the secret.
 
 ### 🚀 Install Nected Services
-1. nstall **Temporal**:
+1. Install **Temporal**:
     ```
     helm upgrade -i temporal nected/temporal -f values/temporal-values.yaml
     ```
