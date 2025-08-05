@@ -7,7 +7,7 @@ replicaCount: 1
 image:
   repository: public.ecr.aws/f6k1n6r3/vidhaan
   pullPolicy: IfNotPresent
-  tag: "op0.3.16"
+  tag: "op0.3.17"
   args: ["--executer"]
 
 imagePullSecrets: []
@@ -94,6 +94,7 @@ envVars:
   TEMPORAL_EXECUTER_LOCAL_ACTIVITY_CONCURRENT_EXECUTION_SIZE: "1000"
   TEMPORAL_EXECUTER_ACTIVITY_EXECUTION_RPS: "100000"
   TEMPORAL_EXECUTER_LOCAL_ACTIVITY_EXECUTION_RPS: "100000"
+  TEMPORAL_EXECUTER_INPUT_SIZE: "1783000"
 
   # Garuda runner
   GARUDA_SVC_HOST: "nected-garuda"
