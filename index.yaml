@@ -4769,6 +4769,35 @@ entries:
     version: 0.28.0
   vidhaan-executer:
   - apiVersion: v2
+    appVersion: op0.3.19
+    created: "2025-08-06T19:18:19.984501157Z"
+    dependencies:
+    - name: common
+      repository: https://charts.nected.io/
+      tags:
+      - nected-common
+      version: 0.x.x
+    description: Nected Vidhaan-executer (platform worker service)
+    digest: c3a50161371dc3d9aec178ab8c047ffef34f347190afe917f9a82712f9c004d1
+    home: https://nected.ai/
+    keywords:
+    - Nected
+    - Workflow automation
+    - BRE, Business Rule Engine
+    - Decision management platform
+    - No-Code / Low-Code Rule Engine
+    - No-Code / Low-Code Workflow automation
+    maintainers:
+    - name: Socioverse Tech Private Ltd.
+      url: https://nected.ai/
+    name: vidhaan-executer
+    sources:
+    - https://charts.nected.io
+    type: application
+    urls:
+    - https://github.com/nected/helm-charts/releases/download/vidhaan-executer-0.3.22/vidhaan-executer-0.3.22.tgz
+    version: 0.3.22
+  - apiVersion: v2
     appVersion: op0.3.17
     created: "2025-08-05T13:18:11.730075335Z"
     dependencies:
@@ -5574,6 +5603,35 @@ entries:
     - https://github.com/nected/helm-charts/releases/download/vidhaan-executer-0.1.1/vidhaan-executer-0.1.1.tgz
     version: 0.1.1
   vidhaan-router:
+  - apiVersion: v2
+    appVersion: op0.3.19
+    created: "2025-08-06T19:18:20.140782187Z"
+    dependencies:
+    - name: common
+      repository: https://charts.nected.io/
+      tags:
+      - nected-common
+      version: 0.x.x
+    description: Nected vidhaan-router helm chart
+    digest: 1c3bbf39ca534c2f5267b52cdcb461ba30f6978669c6f9ea2b7dbef5265ac384
+    home: https://nected.ai/
+    keywords:
+    - Nected
+    - Workflow automation
+    - BRE, Business Rule Engine
+    - Decision management platform
+    - No-Code / Low-Code Rule Engine
+    - No-Code / Low-Code Workflow automation
+    maintainers:
+    - name: Socioverse Tech Private Ltd.
+      url: https://nected.ai/
+    name: vidhaan-router
+    sources:
+    - https://charts.nected.io
+    type: application
+    urls:
+    - https://github.com/nected/helm-charts/releases/download/vidhaan-router-0.3.22/vidhaan-router-0.3.22.tgz
+    version: 0.3.22
   - apiVersion: v2
     appVersion: op0.3.17
     created: "2025-08-05T13:18:11.894098149Z"
@@ -6408,4 +6466,4 @@ entries:
     urls:
     - https://github.com/nected/helm-charts/releases/download/vidhaan-router-0.1.1/vidhaan-router-0.1.1.tgz
     version: 0.1.1
-generated: "2025-08-05T13:22:28.584446726Z"
+generated: "2025-08-06T19:18:20.14130081Z"
