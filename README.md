@@ -20,6 +20,14 @@ You’ll need **four fully qualified domain names (FQDNs)** pointing to your clu
 | `nected-nalanda`         | `<<backend-domain>>`   | `api.xyz.com`      |
 | `nected-vidhaan-router`  | `<<router-domain>>`    | `router.xyz.com`   |
 
+> 💡 **Ingress Setup:**
+- Create `ingress.yaml` for reference download sample file.
+- [Ingress config](https://charts.nected.io/values/azure-ingress-sample.yaml)
+- Setup ingress, once all services are deployed:
+```
+kubectl apply -f ingress.yaml
+```
+
 ### 📌 Update DNS
 Point each domain to your ingress controller’s external IP:
 
