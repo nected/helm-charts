@@ -1,0 +1,58 @@
+apiVersion: networking.k8s.io/v1
+kind: Ingress
+metadata:
+  name: ingress-nected
+  annotations:
+    # kubernetes.io/ingress.class: "nginx"
+    # service.beta.kubernetes.io/port_443_health-probe_request-path: "/health/ready"
+    # cert-manager.io/cluster-issuer: letsencrypt
+spec:
+  # tls:
+  #   - hosts:
+  #       - <<app.xyz.com>>
+  #       - <<api.xyz.com>>
+  #       - <<router.xyz.com>>
+  #       - <<editor.xyz.com>>
+  #     secretName: nected-tls-secret
+  ingressClassName: webapprouting.kubernetes.azure.com
+  rules:
+    - host: <<app.xyz.com>>
+      http:
+        paths:
+          - path: /
+            pathType: Prefix
+            backend:
+              service:
+                name: nected-konark
+                port:
+                  number: 80
+    - host: <<editor.xyz.com>>
+      http:
+        paths:
+          - path: /
+            pathType: Prefix
+            backend:
+              service:
+                name: nected-editor
+                port:
+                  number: 80
+    - host: <<router.xyz.com>>
+      http:
+        paths:
+          - path: /
+            pathType: Prefix
+            backend:
+              service:
+                name: nected-vidhaan-router
+                port:
+                  number: 80
+    - host: <<api.xyz.com>>
+      http:
+        paths:
+          - path: /
+            pathType: Prefix
+            backend:
+              service:
+                name: nected-nalanda
+                port:
+                  number: 80

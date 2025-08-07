@@ -53,15 +53,6 @@ editor:
     REACT_APP_AI_SUGGESTION: <<scheme>>://<<backend-domain>>/misc/proxy/suggestion
     REACT_APP_NGINX_SERVER_NAME: <<editor-domain>>
 
-  ingress:
-    enabled: false
-    className: <<ingressClassName>>
-    hosts:
-      - host: <<editor-domain>>
-        paths:
-            - path: /
-              pathType: Prefix
-
   resources:
     requests:
       cpu: "250m"
@@ -86,15 +77,6 @@ konark:
     VITE_GRAPHQL_URL: <<scheme>>://<<backend-domain>>/graphql/query
     VITE_EDITOR_URL: <<scheme>>://<<editor-domain>>
     VITE_NGINX_SERVER_NAME: <<ui-domain>>
-
-  ingress:
-    enabled: false
-    className: <<ingressClassName>>
-    hosts:
-      - host: <<ui-domain>>
-        paths:
-            - path: /
-              pathType: Prefix
 
   resources:
     requests:
@@ -188,15 +170,6 @@ nalanda:
     DEFAULT_VIDHAAN_DOMAIN: <<router-domain>>
     # k8s cluster gw ip
     DEFAULT_VIDHAAN_WHITELISTED_IPS: ""
- 
-  ingress:
-    enabled: false
-    className: <<ingressClassName>>
-    hosts:
-      - host: <<backend-domain>>
-        paths:
-            - path: /
-              pathType: Prefix
 
   resources:
     requests:
@@ -271,15 +244,6 @@ vidhaan-router:
   replicaCount: 1
   existingSecretMap: *commonSecretMap
   envVars: *vidhaanEnvVars
-
-  ingress:
-    enabled: false
-    className: <<ingressClassName>>
-    hosts:
-      - host: <<router-domain>>
-        paths:
-            - path: /
-              pathType: Prefix
 
   resources:
     requests:
