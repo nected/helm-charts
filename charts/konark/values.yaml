@@ -8,7 +8,7 @@ image:
   repository: public.ecr.aws/f6k1n6r3/konark
   pullPolicy: IfNotPresent
   # Overrides the image tag whose default is the chart appVersion.
-  tag: "op0.11.6-2"
+  tag: "op0.11.6-4"
 
 imagePullSecrets: []
 nameOverride: ""
@@ -88,6 +88,9 @@ envVars:
   VITE_THEME_PRIMARY7: ""
   VITE_THEME_PRIMARY8: ""
   VITE_THEME_PRIMARY9: ""
+  VITE_EMB_HIDE_DU_HELP_SETTINGS: true
+  VITE_EMB_HIDE_VC: false
+  VITE_EMB_HIDE_CI: true
 
 serviceAccount:
   # Specifies whether a service account should be created

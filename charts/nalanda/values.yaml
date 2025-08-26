@@ -7,7 +7,7 @@ replicaCount: 1
 image:
   repository:  &nalandaRepo public.ecr.aws/f6k1n6r3/nalanda
   pullPolicy:  IfNotPresent
-  tag: &nalandaTag "op0.3.15"
+  tag: &nalandaTag "op0.3.17"
 
 imagePullSecrets: []
 nameOverride: ""
@@ -145,7 +145,7 @@ envVars:
   SENTRY_ENABLE_TRACING: "false"
 
   # JWT
-  JWT_ACCESS_TOKEN_EXP_TIME: "259200"
+  JWT_ACCESS_TOKEN_EXP_TIME: "10800"
   JWT_REFRESH_TOKEN_EXP_TIME: "1296000"
   JWT_SECRET: lsdnfYTYknn5432HGHY7w
 
@@ -157,9 +157,10 @@ envVars:
   RESET_PASSWORD_EXP_TIME: "259200"
   EMAIL_VERIFICATION_EXP_DURATION: "1296000"
   WORKSPACE_INVITE_LINK_EXP_DURATION: "1296000"
-  SIGNED_TOKEN_EXP_DURATION: "86400"
+  SIGNED_TOKEN_EXP_DURATION: "300"
   RESET_PASSWORD_MAX_LIMIT: "3"
   PASSWORD_AUTH_ENABLED: "true"
+  SIGNED_TOKEN_LOGIN_OFFLINE_MODE: "false"
 
   # features flags
   EXTERNAL_PERMISSION_URL: ""
