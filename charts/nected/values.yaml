@@ -46,7 +46,7 @@ konark:
   enabled: true
   replicaCount: 1
   image:
-    tag: "op0.11.6-2"
+    tag: "op0.11.6-4"
   envVars:
     # Authentication Configuration 
     VITE_ENABLE_MS_LOGIN: false
@@ -100,7 +100,7 @@ nalanda:
   enabled: true
   replicaCount: 1
   image:
-    tag: &nalandaTag "op0.3.15"
+    tag: &nalandaTag "op0.3.17"
   existingSecretMap: *commonSecretMap
   envVars:
     # server config
@@ -188,7 +188,7 @@ nalanda:
     RECAPTCHA_CHECK_SCORE: ""
 
     # JWT
-    JWT_ACCESS_TOKEN_EXP_TIME: "259200"
+    JWT_ACCESS_TOKEN_EXP_TIME: "10800"
     JWT_REFRESH_TOKEN_EXP_TIME: "1296000"
     JWT_SECRET: lsdnfYTYknn5432HGHY7w
 
@@ -200,8 +200,10 @@ nalanda:
     RESET_PASSWORD_EXP_TIME: "259200"
     EMAIL_VERIFICATION_EXP_DURATION: "1296000"
     WORKSPACE_INVITE_LINK_EXP_DURATION: "1296000"
+    SIGNED_TOKEN_EXP_DURATION: "300"
     RESET_PASSWORD_MAX_LIMIT: "3"
     PASSWORD_AUTH_ENABLED: "true"
+    SIGNED_TOKEN_LOGIN_OFFLINE_MODE: "false"
 
     # features flags
     SIGNUP_DOMAINS: ""
@@ -250,7 +252,7 @@ vidhaan-executer:
   enabled: true
   replicaCount: 1
   image:
-    tag: &vidhaanTag "op0.3.20"
+    tag: &vidhaanTag "op0.3.21"
   existingSecretMap: *commonSecretMap
   envVars:
     # Database
