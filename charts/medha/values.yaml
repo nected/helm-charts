@@ -1,0 +1,128 @@
+# Default values for sql-linter.
+# This is a YAML-formatted file.
+# Declare variables to be passed into your templates.
+
+replicaCount: 1
+
+image:
+  repository: public.ecr.aws/f6k1n6r3/medha
+  pullPolicy: IfNotPresent
+  # Overrides the image tag whose default is the chart appVersion.
+  tag: "op0.1.0"
+
+imagePullSecrets: []
+nameOverride: ""
+fullnameOverride: ""
+
+envVars:
+  PROJECT_NAME: "Nected Medha"
+  VERSION: "1.0.0"
+  ENVIRONMENT: production
+  API_V1_PREFIX: /api/v1
+  ALLOWED_HOSTS: "*"
+  ALLOWED_METHODS: "*"
+  ALLOWED_HEADERS: "*"
+  SERVER_HOST: "0.0.0.0"
+  SERVER_PORT: "8000"
+  LOG_LEVEL: INFO
+  SKIP_LOGS: "/health"
+  SENTRY_DSN: ""
+  REQUEST_SIZE: "5"
+  EDITOR_EXCLUDED_RULES: "ST05,LT08,LT12"
+  EDITOR_INCLUDED_RULES: "CV01,CV02,CV03,CV04,CV05,CV06,CV07,CV08,CV09,CV10,CV11,LT03,LT04,LT07,LT10,LT11,LT13,RF06,ST01,ST02,ST03,ST04,ST07,ST08,TQ01"
+  EDITOR_ENABLED_DIALECTS: "mysql,postgres,redshift,oracle,snowflake"
+  EDITOR_OPENAI_API_KEY: ""
+  EDITOR_OPENAI_MODEL: "" 
+
+
+serviceAccount:
+  # Specifies whether a service account should be created
+  create: false
+  # Automatically mount a ServiceAccount's API credentials?
+  automount: false
+  # Annotations to add to the service account
+  annotations: {}
+  # The name of the service account to use.
+  # If not set and create is true, a name is generated using the fullname template
+  name: ""
+
+podAnnotations: {}
+podLabels: {}
+
+podSecurityContext: {}
+  # fsGroup: 2000
+
+securityContext: {}
+  # capabilities:
+  #   drop:
+  #   - ALL
+  # readOnlyRootFilesystem: true
+  # runAsNonRoot: true
+  # runAsUser: 1000
+
+autoSetup:
+  debug: false
+  enabled: false
+  image:
+    repository: ""
+    pullPolicy: ""
+    tag: ""
+  command: []
+  args: []
+  annotations: {}
+
+service:
+  type: ClusterIP
+  port: 80
+  targetPort: 8000
+
+ingress:
+  enabled: false
+  className: ""
+  annotations: {}
+  hosts: []
+  tls: []
+
+resources:
+  # We usually recommend not to specify default resources and to leave this as a conscious
+  # choice for the user. This also increases chances charts run on environments with little
+  # resources, such as Minikube. If you do want to specify resources, uncomment the following
+  # lines, adjust them as necessary, and remove the curly braces after 'resources:'.
+  requests:
+    cpu: "500m"
+    memory: "1024Mi"
+  limits:
+    cpu: "1000m"
+    memory: "2048Mi"
+
+livenessProbe:
+  httpGet:
+    path: /health/live
+    port: 8000
+  initialDelaySeconds: 10
+  periodSeconds: 4
+readinessProbe:
+  httpGet:
+    path: /health/ready
+    port: 8000
+  initialDelaySeconds: 10
+  periodSeconds: 5
+
+autoscaling:
+  enabled: false
+  minReplicas: 1
+  maxReplicas: 1
+  targetCPUUtilizationPercentage: 80
+  targetMemoryUtilizationPercentage: 80
+
+# Additional volumes on the output Deployment definition.
+volumes: []
+
+# Additional volumeMounts on the output Deployment definition.
+volumeMounts: []
+
+nodeSelector: {}
+
+tolerations: []
+
+affinity: {}

@@ -1,0 +1,31 @@
+apiVersion: v2
+name: medha
+description: Nected medha service
+
+home: https://nected.ai/
+
+keywords:
+  - Nected
+  - Workflow automation
+  - BRE, Business Rule Engine
+  - Decision management platform
+  - No-Code / Low-Code Rule Engine
+  - No-Code / Low-Code Workflow automation
+
+maintainers:
+  - name: Socioverse Tech Private Ltd.
+    url: https://nected.ai/
+
+sources:
+  - https://charts.nected.io
+
+appVersion: "op0.1.0"
+type: application
+version: 0.1.0
+
+dependencies:
+- name: common
+  repository: https://charts.nected.io/
+  tags:
+  - nected-common
+  version: 0.x.x
