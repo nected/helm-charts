@@ -129,6 +129,35 @@ entries:
     version: 0.1.1
   editor:
   - apiVersion: v2
+    appVersion: op0.3.4-3
+    created: "2025-09-01T11:33:16.983259601Z"
+    dependencies:
+    - name: common
+      repository: https://charts.nected.io/
+      tags:
+      - nected-common
+      version: 0.x.x
+    description: Editor, Nected fronend editor app
+    digest: 7c528ca81ce603bf108cdeba1711ea99ed166c2eaf74c22876d3daa0caf150af
+    home: https://nected.ai/
+    keywords:
+    - Nected
+    - Workflow automation
+    - BRE, Business Rule Engine
+    - Decision management platform
+    - No-Code / Low-Code Rule Engine
+    - No-Code / Low-Code Workflow automation
+    maintainers:
+    - name: Socioverse Tech Private Ltd.
+      url: https://nected.ai/
+    name: editor
+    sources:
+    - https://charts.nected.io
+    type: application
+    urls:
+    - https://github.com/nected/helm-charts/releases/download/editor-0.3.14/editor-0.3.14.tgz
+    version: 0.3.14
+  - apiVersion: v2
     appVersion: op0.3.-1
     created: "2025-08-31T08:47:35.961354923Z"
     dependencies:
@@ -6878,4 +6907,4 @@ entries:
     urls:
     - https://github.com/nected/helm-charts/releases/download/vidhaan-router-0.1.1/vidhaan-router-0.1.1.tgz
     version: 0.1.1
-generated: "2025-08-31T08:47:35.962224655Z"
+generated: "2025-09-01T11:33:16.983621556Z"
