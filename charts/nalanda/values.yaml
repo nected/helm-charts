@@ -185,9 +185,9 @@ envVars:
 
   # proxy url
   CREDENTIAL_CONFIG_MAP: '{}'
-  PROXY_SQL_LINT_URL: http://sql-linter/api/v1/core/lint
+  PROXY_SQL_LINT_URL: http://medha/api/v1/editor/lint
   PROXY_RULE_URL: ""
-  AI_SUGGESTION: http://sql-linter/api/v1/core/suggest
+  AI_SUGGESTION: http://medha/api/v1/editor/suggest
 
   # Licensing Config
   LICENSE_DURATION: ""
