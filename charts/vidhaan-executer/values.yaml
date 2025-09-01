@@ -7,7 +7,7 @@ replicaCount: 1
 image:
   repository: public.ecr.aws/f6k1n6r3/vidhaan
   pullPolicy: IfNotPresent
-  tag: "op0.3.21"
+  tag: "op0.3.22"
   args: ["--executer"]
 
 imagePullSecrets: []
@@ -113,6 +113,7 @@ envVars:
 
   # Workflow config
   WORKFLOW_CONFIG_MAP: '{}'
+  WORKFLOW_TIMEOUT_MAP: '{}'
 
   # Reporting
   ERROR_REPORTING_ENABLED: "false"

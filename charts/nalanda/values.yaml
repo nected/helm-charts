@@ -7,7 +7,7 @@ replicaCount: 1
 image:
   repository:  &nalandaRepo public.ecr.aws/f6k1n6r3/nalanda
   pullPolicy:  IfNotPresent
-  tag: &nalandaTag "op0.3.17"
+  tag: &nalandaTag "op0.3.18"
 
 imagePullSecrets: []
 nameOverride: ""
@@ -171,6 +171,7 @@ envVars:
   INVITE_ONLY_SIGNUP: "true"
   AUTO_VERIFY_EMAIL: "false"
   ALLOW_SKIP_DEFAULT_WORKSPACE_CREATION: "true"
+  ERROR_REPORTING_OWNER_ONLY_WORKSPACES: ""
 
   # Audit log
   AWS_TRACE_ID_KEY: X-Amzn-Trace-Id
