@@ -11,7 +11,7 @@ editor:
   enabled: true
   replicaCount: 1
   image:
-    tag: "op0.3.4"
+    tag: "op0.3.4-3"
   envVars:
     REACT_APP_ALLOWED_DOMAINS: http://konark.local
     REACT_APP_SQL_LINT: http://nalanda.local/misc/proxy/lint
@@ -209,8 +209,8 @@ nalanda:
     SIGNUP_DOMAINS: ""
 
     # proxy url
-    PROXY_SQL_LINT_URL: http://nected-sql-linter/api/v1/core/lint
-    AI_SUGGESTION: http://nected-sql-linter/api/v1/core/suggest
+    PROXY_SQL_LINT_URL: http://nected-medha/api/v1/editor/lint
+    AI_SUGGESTION: http://nected-medha/api/v1/editor/suggest
 
     # nected user config
     NECTED_USER_EMAIL: dev@nected.ai
@@ -375,13 +375,15 @@ vidhaan-router:
     targetMemoryUtilizationPercentage: 80
 
 # sql-linter chart to be updated
-sql-linter:
+medha:
   enabled: true
   replicaCount: 1
   image:
-    tag: "op0.2.1"
+    tag: "op0.1.0"
   envVars:
-    OPENAI_API_KEY:
+    SENTRY_DSN: ""
+    EDITOR_OPENAI_API_KEY: ""
+    EDITOR_OPENAI_MODEL: ""
 
   resources:
     requests:
