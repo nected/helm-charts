@@ -260,12 +260,10 @@ vidhaan-router:
     targetCPUUtilizationPercentage: 80
     targetMemoryUtilizationPercentage: 80
 
-# sql-linter chart to be updated
-sql-linter:
+# medha chart to be updated
+medha:
   enabled: true
   replicaCount: 1
-  envVars:
-    OPENAI_API_KEY: ""
 
   resources:
     requests:
