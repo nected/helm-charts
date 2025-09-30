@@ -7,7 +7,7 @@ replicaCount: 1
 image:
   repository: public.ecr.aws/f6k1n6r3/vidhaan
   pullPolicy: IfNotPresent
-  tag: "op0.3.22"
+  tag: "op0.3.23"
   args: ["--executer"]
 
 imagePullSecrets: []
@@ -69,6 +69,7 @@ envVars:
   ELASTIC_PROVIDER: managed
   ELASTIC_ENABLED: "true"
   ELASTIC_INSECURE_TLS: "true"
+  ELASTIC_SKIP_HEALTHCHECK: "false"
   ELASTIC_ADDRESSES: http://elasticsearch-master:9200
   ELASTIC_API_KEY: ""
   ELASTIC_USERNAME: elastic
