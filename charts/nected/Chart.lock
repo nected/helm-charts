@@ -10,7 +10,7 @@ dependencies:
   version: 0.3.23
 - name: medha
   repository: https://charts.nected.io/
-  version: 0.1.0
+  version: 0.1.1
 - name: vidhaan-router
   repository: https://charts.nected.io/
   version: 0.3.26
@@ -20,5 +20,5 @@ dependencies:
 - name: garuda
   repository: https://charts.nected.io/
   version: 0.3.4
-digest: sha256:0fe2f798b8590ec9f54ae70f5f628c051b89701efa0810e87aef8aa989afa7fc
-generated: "2025-09-30T22:04:57.59179+05:30"
+digest: sha256:03e38ae0d5633056a0fcddba4bad07051edf958767c8a6844830048061c5ae10
+generated: "2025-10-01T13:20:32.835919+05:30"

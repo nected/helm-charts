@@ -32,7 +32,7 @@ dependencies:
     condition: nalanda.enabled
   - name: medha
     repository: https://charts.nected.io/
-    version: 0.1.0
+    version: 0.1.1
     condition: medha.enabled
   - name: vidhaan-router
     repository: https://charts.nected.io/
@@ -48,5 +48,5 @@ dependencies:
     condition: garuda.enabled
 
 type: application
-version: 0.3.38
-appVersion: "0.29.2"
+version: 0.3.39
+appVersion: "0.29.3"
