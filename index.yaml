@@ -1012,6 +1012,35 @@ entries:
     version: 0.3.0
   konark:
   - apiVersion: v2
+    appVersion: op0.11.8-2
+    created: "2025-10-01T10:09:34.676080806Z"
+    dependencies:
+    - name: common
+      repository: https://charts.nected.io/
+      tags:
+      - nected-common
+      version: 0.x.x
+    description: Konark, Nected fronend application
+    digest: 49bda547e4cbe45a3fcccb026be4775df8289144e38264d6599c9b278445c308
+    home: https://nected.ai/
+    keywords:
+    - Nected
+    - Workflow automation
+    - BRE, Business Rule Engine
+    - Decision management platform
+    - No-Code / Low-Code Rule Engine
+    - No-Code / Low-Code Workflow automation
+    maintainers:
+    - name: Socioverse Tech Private Ltd.
+      url: https://nected.ai/
+    name: konark
+    sources:
+    - https://charts.nected.io
+    type: application
+    urls:
+    - https://github.com/nected/helm-charts/releases/download/konark-0.3.23/konark-0.3.23.tgz
+    version: 0.3.23
+  - apiVersion: v2
     appVersion: op0.11.8-1
     created: "2025-10-01T08:36:37.194110666Z"
     dependencies:
@@ -7584,4 +7613,4 @@ entries:
     urls:
     - https://github.com/nected/helm-charts/releases/download/vidhaan-router-0.1.1/vidhaan-router-0.1.1.tgz
     version: 0.1.1
-generated: "2025-10-01T08:41:28.415258741Z"
+generated: "2025-10-01T10:09:34.676508351Z"
