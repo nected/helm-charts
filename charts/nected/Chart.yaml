@@ -24,7 +24,7 @@ dependencies:
     condition: editor.enabled
   - name: konark
     repository: https://charts.nected.io/
-    version: 0.3.23
+    version: 0.3.24
     condition: konark.enabled
   - name: nalanda
     repository: https://charts.nected.io/
@@ -48,5 +48,5 @@ dependencies:
     condition: garuda.enabled
 
 type: application
-version: 0.3.41
-appVersion: "0.29.5"
+version: 0.3.42
+appVersion: "0.29.6"

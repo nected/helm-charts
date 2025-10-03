@@ -4,7 +4,7 @@ dependencies:
   version: 0.3.14
 - name: konark
   repository: https://charts.nected.io/
-  version: 0.3.23
+  version: 0.3.24
 - name: nalanda
   repository: https://charts.nected.io/
   version: 0.3.24
@@ -20,5 +20,5 @@ dependencies:
 - name: garuda
   repository: https://charts.nected.io/
   version: 0.3.4
-digest: sha256:f2fa163f9f12928bdc0c7be5d14993b416f9e41f242afaf226645704f5b9fbde
-generated: "2025-10-01T15:40:23.999234+05:30"
+digest: sha256:f1b29629c19cbb4db077989dcc200cb1a7a0fbdc874a0541f4433c46ccc47d54
+generated: "2025-10-03T18:41:28.082546+05:30"
