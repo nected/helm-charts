@@ -2,6 +2,11 @@
 postgresql:
   # false if wants to use external postgresql
   enabled: true
+  image:
+    registry: public.ecr.aws/f6k1n6r3
+    repository: postgres
+    tag: 16.2.0
+    pullPolicy: IfNotPresent
   global:
     postgresql:
       auth:
@@ -21,9 +26,23 @@ postgresql:
       limits:
         cpu: "500m"
         memory: "512Mi"
+  volumePermissions:
+    enabled: true
+    image:
+      registry: public.ecr.aws/f6k1n6r3
+      repository: postgres
+      tag: 12-os-shell
+      digest: ""
+      pullPolicy: IfNotPresent
+
 redis:
   # false if wants to use external redis
   enabled: true
+  image:
+    registry: public.ecr.aws/f6k1n6r3
+    repository: redis
+    tag: 8.2.1
+    pullPolicy: IfNotPresent
   master:
     resources:
       requests:
@@ -32,9 +51,10 @@ redis:
       limits:
         cpu: "200m"
         memory: "512Mi"
+
 elasticsearch:
   # false if wants to use external elastic
-  enabled: false
+  enabled: true
   secret:
     password: esPass123
   volumeClaimTemplate:
