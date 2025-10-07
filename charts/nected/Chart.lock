@@ -13,12 +13,12 @@ dependencies:
   version: 0.1.1
 - name: vidhaan-router
   repository: https://charts.nected.io/
-  version: 0.3.27
+  version: 0.3.28
 - name: vidhaan-executer
   repository: https://charts.nected.io/
-  version: 0.3.27
+  version: 0.3.28
 - name: garuda
   repository: https://charts.nected.io/
   version: 0.3.4
-digest: sha256:f1b29629c19cbb4db077989dcc200cb1a7a0fbdc874a0541f4433c46ccc47d54
-generated: "2025-10-03T18:41:28.082546+05:30"
+digest: sha256:3d97c42d7e963f0c0e55312419f4ca92b5e1440dafbef8678be98b1ef4e44ba1
+generated: "2025-10-07T20:15:40.04435+05:30"

@@ -36,11 +36,11 @@ dependencies:
     condition: medha.enabled
   - name: vidhaan-router
     repository: https://charts.nected.io/
-    version: 0.3.27
+    version: 0.3.28
     condition: vidhaan-router.enabled
   - name: vidhaan-executer
     repository: https://charts.nected.io/
-    version: 0.3.27
+    version: 0.3.28
     condition: vidhaan-executer.enabled
   - name: garuda
     repository: https://charts.nected.io/
@@ -48,5 +48,5 @@ dependencies:
     condition: garuda.enabled
 
 type: application
-version: 0.3.42
-appVersion: "0.29.6"
+version: 0.3.43
+appVersion: "0.29.7"
