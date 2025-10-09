@@ -96,6 +96,18 @@ NECTED_PG_PASSWORD: &pgPassword psqlPass123
 NECTED_PG_PORT: &pgPort "5432"
 NECTED_PG_SSL_MODE: &pgSslMode disable
 ```
+
+#### Azure PostgreSQL Flexible Server
+1. Go to the Azure Portal, Navigate to your PostgreSQL Flexible Server instance.
+2. Open "Server Parameters", In the left-side menu under Settings, click "Server Parameters".
+3. Find the azure.extensions parameter, Search for azure.extensions using the search bar.
+4. Add btree_gin to the list, If btree_gin is not already listed, append it to the existing list. 
+Example: hstore,pg_trgm,btree_gin
+5. Click Save, This change will not restart the server—it takes effect immediately. Create the Extension in Your Database.
+6. After enabling it in parameters:
+```
+CREATE EXTENSION IF NOT EXISTS btree_gin;
+```
 **Notes**: No changes required if using the Nected-provided datastore.
 
 ### 🧠 Configure Redis
