@@ -1,39 +1,8 @@
-# editor chart values to be updated
-editor:
-  envVars:
-    REACT_APP_ALLOWED_DOMAINS: {{ SCHEME }}://{{ UI_DOMAIN }}
-    REACT_APP_SQL_LINT: {{ SCHEME }}://{{ BACKEND_DOMAIN }}/misc/proxy/lint
-    REACT_APP_EXECUTE_JS_API: {{ SCHEME }}://{{ BACKEND_DOMAIN }}/integration/code/execute
-    REACT_APP_AI_SUGGESTION: {{ SCHEME }}://{{ BACKEND_DOMAIN }}/misc/proxy/suggestion
-    REACT_APP_NGINX_SERVER_NAME: {{ EDITOR_DOMAIN }}
-
-  ingress:
-    enabled: true
-    className: alb
-    annotations:
-      alb.ingress.kubernetes.io/load-balancer-name: {{ LB_NAME }}
-      alb.ingress.kubernetes.io/ip-address-type: ipv4
-      alb.ingress.kubernetes.io/group.name: nected-lb
-      alb.ingress.kubernetes.io/ssl-redirect: '443'
-      alb.ingress.kubernetes.io/healthcheck-path: /
-      alb.ingress.kubernetes.io/scheme: internet-facing
-      alb.ingress.kubernetes.io/target-type: ip
-      alb.ingress.kubernetes.io/listen-ports: '[{"HTTP": 80}, {"HTTPS": 443}]'
-      alb.ingress.kubernetes.io/certificate-arn: {{ CERTIFICATE_ARN }}
-      alb.ingress.kubernetes.io/subnets: {{ SUBNET_IDS }}
-      alb.ingress.kubernetes.io/security-groups: {{ LB_SG }}
-    hosts:
-      - host: {{ EDITOR_DOMAIN }}
-        paths:
-            - path: /
-              pathType: Prefix
-
 # konark chart values to be updated
 konark:
   envVars:
     VITE_API_HOST: {{ SCHEME }}://{{ BACKEND_DOMAIN }}
     VITE_GRAPHQL_URL: {{ SCHEME }}://{{ BACKEND_DOMAIN }}/graphql/query
-    VITE_EDITOR_URL: {{ SCHEME }}://{{ EDITOR_DOMAIN }}
     VITE_NGINX_SERVER_NAME: {{ UI_DOMAIN }}
 
   ingress:
@@ -61,7 +30,7 @@ konark:
 nalanda:
   replicaCount: 2
   envVars:
-    ALLOWED_CORS_ORIGIN: {{ SCHEME }}://{{ BACKEND_DOMAIN }},{{ SCHEME }}://{{ UI_DOMAIN }},{{ SCHEME }}://{{ EDITOR_DOMAIN }}
+    ALLOWED_CORS_ORIGIN: {{ SCHEME }}://{{ BACKEND_DOMAIN }},{{ SCHEME }}://{{ UI_DOMAIN }}
     ALLOWED_HOSTS: {{ BACKEND_DOMAIN }}
     BACKEND_URL: {{ SCHEME }}://{{ BACKEND_DOMAIN }}
 
@@ -95,6 +64,10 @@ nalanda:
     # konark
     ASSETS_BASE_URL: {{ SCHEME }}://{{ UI_DOMAIN }}/assets/konark
     KONARK_BASE_URL: {{ SCHEME }}://{{ UI_DOMAIN }}
+
+    # default user created on setup
+    NECTED_USER_EMAIL: {{ NECTED_USERNAME }}
+    NECTED_USER_PASSWORD: {{ NECTED_PASSWORD }}
 
     # default vidhaan settings
     DEFAULT_VIDHAAN_SCHEME: {{ SCHEME }}

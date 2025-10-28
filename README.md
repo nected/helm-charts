@@ -1,6 +1,6 @@
 # 🚀 Nected OnPremise Installation (via Helm Charts)
 
-![Nected OnPremise Architecture](https://assets.nected.ai/nalanda/nected-onpremise-arch.jpg)
+![Nected OnPremise Architecture](https://assets.nected.ai/nalanda/nected-onpremise-architecture.jpg)
 
 This guide walks you through deploying **Nected** on your own Kubernetes cluster using Helm charts.
 
@@ -11,12 +11,11 @@ This guide walks you through deploying **Nected** on your own Kubernetes cluster
 1. **Application Load Balancer**
 2. **Domain Setup & Ingress Configuration**
 
-You’ll need **four fully qualified domain names (FQDNs)** pointing to your cluster’s ingress controller:
+You’ll need **three fully qualified domain names (FQDNs)** pointing to your cluster’s ingress controller:
 
 | Service                  | Values Placeholder     | Example Domain     |
 |--------------------------|------------------------|--------------------|
 | `nected-konark`          | `<<ui-domain>>`        | `app.xyz.com`      |
-| `nected-editor`          | `<<editor-domain>>`    | `editor.xyz.com`   |
 | `nected-nalanda`         | `<<backend-domain>>`   | `api.xyz.com`      |
 | `nected-vidhaan-router`  | `<<router-domain>>`    | `router.xyz.com`   |
 
@@ -32,7 +31,6 @@ kubectl apply -f ingress.yaml
 Point each domain to your ingress controller’s external IP:
 
 - `app.xyz.com` → `<Ingress External IP>`
-- `editor.xyz.com` → `<Ingress External IP>`
 - `api.xyz.com` → `<Ingress External IP>`
 - `router.xyz.com` → `<Ingress External IP>`
 
@@ -65,7 +63,6 @@ In `nected-values.yaml`, replace the following placeholders:
 |----------------------|--------------------|
 | `<<scheme>>`         | `http` or `https`  |
 | `<<ui-domain>>`      | `app.xyz.com`      |
-| `<<editor-domain>>`  | `editor.xyz.com`   |
 | `<<backend-domain>>` | `api.xyz.com`      |
 | `<<router-domain>>`  | `router.xyz.com`   |
 
