@@ -18,35 +18,31 @@ sources:
   - https://charts.nected.io
 
 dependencies:
-  - name: editor
-    repository: https://charts.nected.io/
-    version: 0.3.14
-    condition: editor.enabled
   - name: konark
     repository: https://charts.nected.io/
-    version: 0.3.24
+    version: 0.4.3
     condition: konark.enabled
   - name: nalanda
     repository: https://charts.nected.io/
-    version: 0.3.24
+    version: 0.3.25
     condition: nalanda.enabled
   - name: medha
     repository: https://charts.nected.io/
-    version: 0.1.1
+    version: 0.1.2
     condition: medha.enabled
   - name: vidhaan-router
     repository: https://charts.nected.io/
-    version: 0.3.28
+    version: 0.3.29
     condition: vidhaan-router.enabled
   - name: vidhaan-executer
     repository: https://charts.nected.io/
-    version: 0.3.28
+    version: 0.3.29
     condition: vidhaan-executer.enabled
   - name: garuda
     repository: https://charts.nected.io/
-    version: 0.3.4
+    version: 0.3.5
     condition: garuda.enabled
 
 type: application
-version: 0.3.43
-appVersion: "0.29.7"
+version: 0.4.0
+appVersion: "0.30.0"

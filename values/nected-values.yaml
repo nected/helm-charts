@@ -42,32 +42,6 @@ existingSecretMap: &commonSecretMap {}
 #         name: encryption-at-rest-secret
 #         key: encryption-at-rest
 
-# editor chart values to be updated
-editor:
-  enabled: true
-  replicaCount: 1
-  envVars:
-    REACT_APP_ALLOWED_DOMAINS: <<scheme>>://<<ui-domain>>
-    REACT_APP_SQL_LINT: <<scheme>>://<<backend-domain>>/misc/proxy/lint
-    REACT_APP_EXECUTE_JS_API: <<scheme>>://<<backend-domain>>/integration/code/execute
-    REACT_APP_AI_SUGGESTION: <<scheme>>://<<backend-domain>>/misc/proxy/suggestion
-    REACT_APP_NGINX_SERVER_NAME: <<editor-domain>>
-
-  resources:
-    requests:
-      cpu: "250m"
-      memory: "512Mi"
-    limits:
-      cpu: "250m"
-      memory: "1024Mi"
-
-  autoscaling:
-    enabled: false
-    minReplicas: 1
-    maxReplicas: 1
-    targetCPUUtilizationPercentage: 80
-    targetMemoryUtilizationPercentage: 80
-
 # konark chart values to be updated
 konark:
   enabled: true
@@ -75,16 +49,12 @@ konark:
   envVars:
     VITE_API_HOST: <<scheme>>://<<backend-domain>>
     VITE_GRAPHQL_URL: <<scheme>>://<<backend-domain>>/graphql/query
-    VITE_EDITOR_URL: <<scheme>>://<<editor-domain>>
     VITE_NGINX_SERVER_NAME: <<ui-domain>>
 
   resources:
     requests:
       cpu: "350m"
       memory: "512Mi"
-    limits:
-      cpu: "700m"
-      memory: "1024Mi"
 
   autoscaling:
     enabled: false
@@ -99,7 +69,7 @@ nalanda:
   replicaCount: 1
   existingSecretMap: *commonSecretMap
   envVars:
-    ALLOWED_CORS_ORIGIN: <<scheme>>://<<backend-domain>>,<<scheme>>://<<ui-domain>>,<<scheme>>://<<editor-domain>>
+    ALLOWED_CORS_ORIGIN: <<scheme>>://<<backend-domain>>,<<scheme>>://<<ui-domain>>
     ALLOWED_HOSTS: <<backend-domain>>
     BACKEND_URL: <<scheme>>://<<backend-domain>>
 
@@ -175,9 +145,6 @@ nalanda:
     requests:
       cpu: "250m"
       memory: "512Mi"
-    limits:
-      cpu: "250m"
-      memory: "512Mi"
 
   autoscaling:
     enabled: false
@@ -227,9 +194,6 @@ vidhaan-executer:
     requests:
       cpu: "500m"
       memory: "512Mi"
-    limits:
-      cpu: "1000m"
-      memory: "1024Mi"
 
   autoscaling:
     enabled: false
@@ -249,9 +213,6 @@ vidhaan-router:
     requests:
       cpu: "250m"
       memory: "512Mi"
-    limits:
-      cpu: "250m"
-      memory: "1024Mi"
 
   autoscaling:
     enabled: false
@@ -268,9 +229,6 @@ medha:
   resources:
     requests:
       cpu: "600m"
-      memory: "1024Mi"
-    limits:
-      cpu: "1000m"
       memory: "1024Mi"
 
   autoscaling:
@@ -295,9 +253,6 @@ garuda:
   resources:
     requests:
       cpu: "400m"
-      memory: "1024Mi"
-    limits:
-      cpu: "700m"
       memory: "1024Mi"
 
   autoscaling:

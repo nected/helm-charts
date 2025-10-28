@@ -6,47 +6,12 @@
 #         key: encryption-at-rest
 existingSecretMap: &commonSecretMap {}
 
-# editor chart values to be updated
-editor:
-  enabled: true
-  replicaCount: 1
-  image:
-    tag: "op0.3.4-3"
-  envVars:
-    REACT_APP_ALLOWED_DOMAINS: http://konark.local
-    REACT_APP_SQL_LINT: http://nalanda.local/misc/proxy/lint
-    REACT_APP_EXECUTE_JS_API: http://nalanda.local/integration/code/execute
-    REACT_APP_AI_SUGGESTION: https://nalanda.local/misc/proxy/suggestion
-    REACT_APP_NGINX_SERVER_NAME: nected-editor.local
-
-  ingress:
-    enabled: false
-    className:
-    annotations: {}
-    hosts: []
-    tls: []
-
-  resources:
-    requests:
-      cpu: "250m"
-      memory: "512Mi"
-    limits:
-      cpu: "250m"
-      memory: "1024Mi"
-
-  autoscaling:
-    enabled: false
-    minReplicas: 1
-    maxReplicas: 1
-    targetCPUUtilizationPercentage: 80
-    targetMemoryUtilizationPercentage: 80
-
 # konark chart values to be updated
 konark:
   enabled: true
   replicaCount: 1
   image:
-    tag: "op0.11.8-3"
+    tag: "op0.12.1-2"
   envVars:
     # Authentication Configuration 
     VITE_ENABLE_MS_LOGIN: false
@@ -65,11 +30,13 @@ konark:
     VITE_WITH_CREDENTIALS: false
     VITE_GRAPHQL_URL: http://nalanda.local/graphql/query
     VITE_AUTH_CONFIG_ENABLED: true
+    VITE_SQL_LINT_URL: /misc/proxy/lint
+    VITE_EXECUTE_API_URL: /integration/code/execute
+    VITE_APP_AI_SUGGESTION: /misc/proxy/suggestion
 
     # Asset & CDN Configuration
     VITE_ASSETS_URL: /assets/konark/
     VITE_CDN_URL: ""
-    VITE_EDITOR_URL: http://nected-editor.local
     VITE_HELM_CHARTS_URL: https://charts.nected.io/
     VITE_NGINX_SERVER_NAME: konark.local
 
@@ -82,11 +49,8 @@ konark:
 
   resources:
     requests:
-      cpu: "350m"
+      cpu: "250m"
       memory: "512Mi"
-    limits:
-      cpu: "700m"
-      memory: "1024Mi"
 
   autoscaling:
     enabled: false
@@ -104,7 +68,7 @@ nalanda:
   existingSecretMap: *commonSecretMap
   envVars:
     # server config
-    ALLOWED_CORS_ORIGIN: http://nalanda.local,http://konark.local,http://nected-editor.local
+    ALLOWED_CORS_ORIGIN: http://nalanda.local,http://konark.local
     ALLOWED_HOSTS: nalanda.local
     BACKEND_URL: https://nalanda.local
 
@@ -236,9 +200,6 @@ nalanda:
     requests:
       cpu: "250m"
       memory: "512Mi"
-    limits:
-      cpu: "250m"
-      memory: "512Mi"
 
   autoscaling:
     enabled: false
@@ -296,9 +257,6 @@ vidhaan-executer:
     requests:
       cpu: "250m"
       memory: "512Mi"
-    limits:
-      cpu: "500m"
-      memory: "1024Mi"
 
   autoscaling:
     enabled: false
@@ -363,9 +321,6 @@ vidhaan-router:
     requests:
       cpu: "250m"
       memory: "512Mi"
-    limits:
-      cpu: "250m"
-      memory: "1024Mi"
 
   autoscaling:
     enabled: false
@@ -388,9 +343,6 @@ medha:
   resources:
     requests:
       cpu: "600m"
-      memory: "1024Mi"
-    limits:
-      cpu: "1000m"
       memory: "1024Mi"
 
   autoscaling:
@@ -417,9 +369,6 @@ garuda:
 
   resources:
     requests:
-      cpu: "400m"
-      memory: "1024Mi"
-    limits:
       cpu: "400m"
       memory: "1024Mi"
 
