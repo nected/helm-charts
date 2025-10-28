@@ -8,7 +8,7 @@ image:
   repository: public.ecr.aws/f6k1n6r3/konark
   pullPolicy: IfNotPresent
   # Overrides the image tag whose default is the chart appVersion.
-  tag: "op0.12.0"
+  tag: "op0.12.1"
 
 imagePullSecrets: []
 nameOverride: ""
@@ -52,9 +52,9 @@ envVars:
   VITE_GRAPHQL_URL: http://nalanda.local/graphql/query
   VITE_AUTH_CONFIG_ENABLED: true
   VITE_ENABLE_EVENT_API: false
-  VITE_SQL_LINT_URL: http://nalanda.local/misc/proxy/lint
-  VITE_EXECUTE_API_URL: http://nalanda.local/integration/code/execute
-  VITE_APP_AI_SUGGESTION: http://nalanda.local/misc/proxy/suggestion
+  VITE_SQL_LINT_URL: /misc/proxy/lint
+  VITE_EXECUTE_API_URL: /integration/code/execute
+  VITE_APP_AI_SUGGESTION: /misc/proxy/suggestion
 
   # Monitoring & Features
   VITE_SENTRY_DSN: ""
