@@ -90,9 +90,6 @@ resources:
   requests:
     cpu: "400m"
     memory: "1024Mi"
-  limits:
-    cpu: "400m"
-    memory: "1024Mi"
 
 livenessProbe:
   httpGet:
