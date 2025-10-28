@@ -8,7 +8,7 @@ image:
   repository: public.ecr.aws/f6k1n6r3/konark
   pullPolicy: IfNotPresent
   # Overrides the image tag whose default is the chart appVersion.
-  tag: "op0.12.1"
+  tag: "op0.12.1-2"
 
 imagePullSecrets: []
 nameOverride: ""
@@ -71,7 +71,6 @@ envVars:
   BASE_URL: "/"
   VITE_ASSETS_URL: /assets/konark/
   VITE_CDN_URL: ""
-  VITE_EDITOR_URL: http://nected-editor.local
   VITE_HELM_CHARTS_URL: https://charts.nected.io/
   VITE_NGINX_SERVER_NAME: konark.local
 
