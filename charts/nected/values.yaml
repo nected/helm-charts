@@ -11,7 +11,7 @@ konark:
   enabled: true
   replicaCount: 1
   image:
-    tag: "op0.12.1-4"
+    tag: "op0.12.2"
   envVars:
     # Authentication Configuration 
     VITE_ENABLE_MS_LOGIN: false
@@ -64,7 +64,7 @@ nalanda:
   enabled: true
   replicaCount: 1
   image:
-    tag: &nalandaTag "op0.3.20"
+    tag: &nalandaTag "op0.3.21"
   existingSecretMap: *commonSecretMap
   envVars:
     # server config
@@ -213,7 +213,7 @@ vidhaan-executer:
   enabled: true
   replicaCount: 1
   image:
-    tag: &vidhaanTag "op0.3.25"
+    tag: &vidhaanTag "op0.3.26"
   existingSecretMap: *commonSecretMap
   envVars:
     # Database
@@ -334,7 +334,7 @@ medha:
   enabled: true
   replicaCount: 1
   image:
-    tag: "op0.1.1"
+    tag: "op0.2.0"
   envVars:
     SENTRY_DSN: ""
     EDITOR_OPENAI_API_KEY: ""
