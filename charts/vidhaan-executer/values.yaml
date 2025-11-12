@@ -103,7 +103,7 @@ envVars:
   GARUDA_BASE_URL: http://nected-garuda:9090
 
   # Medha svc
-  MEDHA_BASE_URL: http://nected-medha:8000
+  MEDHA_BASE_URL: http://nected-medha
   MEDHA_AI_PATH_PREFIX: api/v1/ai
 
   # Sentry config
