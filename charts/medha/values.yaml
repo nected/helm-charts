@@ -8,7 +8,7 @@ image:
   repository: public.ecr.aws/f6k1n6r3/medha
   pullPolicy: IfNotPresent
   # Overrides the image tag whose default is the chart appVersion.
-  tag: "op0.1.1"
+  tag: "op0.2.0"
 
 imagePullSecrets: []
 nameOverride: ""
@@ -16,7 +16,7 @@ fullnameOverride: ""
 
 envVars:
   PROJECT_NAME: "Nected Medha"
-  VERSION: "1.0.0"
+  VERSION: "0.2.0"
   ENVIRONMENT: production
   DEPLOYMENT_REGION: op
   API_V1_PREFIX: /api/v1
@@ -29,6 +29,9 @@ envVars:
   SKIP_LOGS: "/health"
   SENTRY_DSN: ""
   REQUEST_SIZE: "5"
+  OCR_ENGINE: "tesseract"
+  USE_GPU: "false"
+  OCR_LANGS: "en,hi"
   EDITOR_EXCLUDED_RULES: "ST05,LT08,LT12"
   EDITOR_INCLUDED_RULES: "CV01,CV02,CV03,CV04,CV05,CV06,CV07,CV08,CV09,CV10,CV11,LT03,LT04,LT07,LT10,LT11,LT13,RF06,ST01,ST02,ST03,ST04,ST07,ST08,TQ01"
   EDITOR_ENABLED_DIALECTS: "mysql,postgres,redshift,oracle,snowflake"

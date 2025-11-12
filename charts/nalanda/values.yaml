@@ -7,7 +7,7 @@ replicaCount: 1
 image:
   repository:  &nalandaRepo public.ecr.aws/f6k1n6r3/nalanda
   pullPolicy:  IfNotPresent
-  tag: &nalandaTag "op0.3.20"
+  tag: &nalandaTag "op0.3.21"
 
 imagePullSecrets: []
 nameOverride: ""
@@ -35,6 +35,8 @@ envVars:
   SERVER_PORT: "8001"
   SERVER_TIMEZONE: UTC
   MAX_REQUEST_SIZE: "3145728"
+  ROUTER_TIMEOUT: "30s"
+  VIDHAAN_TEST_TIMEOUT: "900s"
   DEV_API_RPM_LIMIT: "10"
   DEV_API_MAX_RESPONSE_SIZE: "1048576"
   TASKS_CONCURRENCY: "5"

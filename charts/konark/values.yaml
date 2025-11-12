@@ -8,7 +8,7 @@ image:
   repository: public.ecr.aws/f6k1n6r3/konark
   pullPolicy: IfNotPresent
   # Overrides the image tag whose default is the chart appVersion.
-  tag: "op0.12.1-2"
+  tag: "op0.12.2"
 
 imagePullSecrets: []
 nameOverride: ""
@@ -105,6 +105,12 @@ envVars:
   VITE_WF_NODE_ASYNC_MIN_TIMEOUT: 1
   VITE_WF_NODE_ASYNC_DEFAULT_TIMEOUT: 20
   VITE_WF_NODE_ASYNC_MAX_TIMEOUT: 300
+  VITE_WF_HEAVY_NODE_MIN_TIMEOUT: 1
+  VITE_WF_HEAVY_NODE_DEFAULT_TIMEOUT: 30
+  VITE_WF_HEAVY_NODE_MAX_TIMEOUT: 900
+  VITE_WF_HEAVY_NODE_ASYNC_MIN_TIMEOUT: 1
+  VITE_WF_HEAVY_NODE_ASYNC_DEFAULT_TIMEOUT: 30
+  VITE_WF_HEAVY_NODE_ASYNC_MAX_TIMEOUT: 900
 
 serviceAccount:
   # Specifies whether a service account should be created

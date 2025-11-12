@@ -7,7 +7,7 @@ replicaCount: 1
 image:
   repository: public.ecr.aws/f6k1n6r3/vidhaan
   pullPolicy: IfNotPresent
-  tag: "op0.3.25"
+  tag: "op0.3.26"
   args: ["--executer"]
 
 imagePullSecrets: []
@@ -101,6 +101,10 @@ envVars:
   GARUDA_SVC_HOST: "nected-garuda"
   GARUDA_SVC_PORT: "9090"
   GARUDA_BASE_URL: http://nected-garuda:9090
+
+  # Medha svc
+  MEDHA_BASE_URL: http://nected-medha:8000
+  MEDHA_AI_PATH_PREFIX: api/v1/ai
 
   # Sentry config
   SENTRY_DSN: ""
