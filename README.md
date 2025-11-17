@@ -1,6 +1,6 @@
 # 🚀 Nected OnPremise Installation (via Helm Charts)
 
-![Nected OnPremise Architecture](https://assets.nected.ai/nalanda/nected-onpremise-architecture.jpg)
+![Nected OnPremise Architecture](https://assets.nected.ai/nalanda/Nected-Tech-Architecture.jpg)
 
 This guide walks you through deploying **Nected** on your own Kubernetes cluster using Helm charts.
 
