@@ -334,7 +334,7 @@ medha:
   enabled: true
   replicaCount: 1
   image:
-    tag: "op0.2.0"
+    tag: "op0.2.1"
   envVars:
     SENTRY_DSN: ""
     EDITOR_OPENAI_API_KEY: ""
