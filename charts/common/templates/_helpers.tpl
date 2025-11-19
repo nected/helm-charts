@@ -96,9 +96,6 @@ Create autosetup pod labels from values and include pod labels
 {{ end }}
 "helm.sh/hook": post-install,post-upgrade
 "helm.sh/hook-weight": "0"
-{{- if not .Values.autoSetup.debug }}
-"helm.sh/hook-delete-policy": hook-succeeded,hook-failed
-{{- end -}}
 {{- end -}}
 
 
