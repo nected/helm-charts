@@ -20,15 +20,15 @@ sources:
 dependencies:
   - name: konark
     repository: https://charts.nected.io/
-    version: 0.4.4
+    version: 0.4.5
     condition: konark.enabled
   - name: nalanda
     repository: https://charts.nected.io/
-    version: 0.3.27
+    version: 0.3.28
     condition: nalanda.enabled
   - name: medha
     repository: https://charts.nected.io/
-    version: 0.2.0
+    version: 0.2.1
     condition: medha.enabled
   - name: vidhaan-router
     repository: https://charts.nected.io/
@@ -44,5 +44,5 @@ dependencies:
     condition: garuda.enabled
 
 type: application
-version: 0.4.5
-appVersion: "0.30.3"
+version: 0.4.6
+appVersion: "0.30.4"
