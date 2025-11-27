@@ -1,10 +1,9 @@
-# existingSecretMap: &commonSecretMap
-#   - name: ENCRYPTKEY_EAR_1
-#     valueFrom:
-#       secretKeyRef:
-#         name: encryption-at-rest-secret
-#         key: encryption-at-rest
-existingSecretMap: &commonSecretMap {}
+existingSecretMap: &commonSecretMap
+    - name: ENCRYPTKEY_EAR_1
+      valueFrom:
+        secretKeyRef:
+          name: encryption-at-rest-secret
+          key: encryption-at-rest
 
 # konark chart values to be updated
 konark:
@@ -378,3 +377,55 @@ garuda:
     maxReplicas: 1
     targetCPUUtilizationPercentage: 80
     targetMemoryUtilizationPercentage: 80
+
+# adding service account for secret job
+serviceAccount:
+  create: true
+  automount: true
+  annotations: {}
+  name: common-secret
+
+# main nected job to setup secret
+autoSetup:
+  debug: false
+  enabled: true
+  image:
+    repository: public.ecr.aws/f6k1n6r3/openssl-kubectl
+    pullPolicy: IfNotPresent
+    tag: latest
+  command:
+  - /bin/sh
+  - -c
+  - |
+    SECRET_NAME="encryption-at-rest-secret"
+    KEY_FILE="/tmp/encryption-at-rest"
+
+    echo "Checking if secret '$SECRET_NAME' exists..."
+
+    if kubectl get secret "$SECRET_NAME" &> /dev/null; then
+        echo "Secret '$SECRET_NAME' already exists. Skipping creation."
+    else
+        echo "Secret '$SECRET_NAME' does not exist. Creating..."
+
+        echo "Generating RSA key..."
+        openssl genrsa -f4 -out "$KEY_FILE" 4096
+
+        if [ $? -eq 0 ]; then
+            echo "Creating secret..."
+            kubectl create secret generic "$SECRET_NAME" \
+              --from-file="$KEY_FILE"
+
+            if [ $? -eq 0 ]; then
+                echo "Key generated & secret created successfully."
+                # Clean up the temporary key file for security
+                rm -f "$KEY_FILE"
+            else
+                echo "Error: Failed to create secret."
+                exit 1
+            fi
+        else
+            echo "Error: Failed to generate RSA key."
+            exit 1
+        fi
+    fi
+  annotations: {}

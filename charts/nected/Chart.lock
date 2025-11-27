@@ -17,5 +17,8 @@ dependencies:
 - name: garuda
   repository: https://charts.nected.io/
   version: 0.3.5
-digest: sha256:e5dfca7cd41af3c4e215de42b3a07fd778bdb3196c6e839905a40a40d16c6d7d
-generated: "2025-11-20T18:27:29.323452+05:30"
+- name: common
+  repository: https://charts.nected.io/
+  version: 0.1.6
+digest: sha256:9d1b3e9a27f3fe8c75cf340d4590f469165eb4c476ce0b9052e8dc79a89e4505
+generated: "2025-11-27T23:44:49.293044+05:30"

@@ -29,19 +29,6 @@ NECTED_ELASTIC_API_KEY: &elasticAPiKey ""
 NECTED_ELASTIC_USER: &elasticUser elastic
 NECTED_ELASTIC_PASSWORD: &elasticPassword esPass123
 
-# to encrypt credentials and global variables before saving in db: create encryption key
-# openssl genrsa -f4 -out encryption-at-rest 4096
-# kubectl create secret generic encryption-at-rest-secret --from-file encryption-at-rest
-#
-existingSecretMap: &commonSecretMap {}
-# use below existingSecretMap value
-# existingSecretMap: &commonSecretMap
-#   - name: ENCRYPTKEY_EAR_1
-#     valueFrom:
-#       secretKeyRef:
-#         name: encryption-at-rest-secret
-#         key: encryption-at-rest
-
 # konark chart values to be updated
 konark:
   enabled: true
@@ -67,7 +54,6 @@ konark:
 nalanda:
   enabled: true
   replicaCount: 1
-  existingSecretMap: *commonSecretMap
   envVars:
     ALLOWED_CORS_ORIGIN: <<scheme>>://<<backend-domain>>,<<scheme>>://<<ui-domain>>
     ALLOWED_HOSTS: <<backend-domain>>
@@ -157,7 +143,6 @@ nalanda:
 vidhaan-executer:
   enabled: true
   replicaCount: 1
-  existingSecretMap: *commonSecretMap
   envVars: &vidhaanEnvVars
     # Database config
     DB_NAME: *pgDatabase
@@ -206,7 +191,6 @@ vidhaan-executer:
 vidhaan-router:
   enabled: true
   replicaCount: 1
-  existingSecretMap: *commonSecretMap
   envVars: *vidhaanEnvVars
 
   resources:

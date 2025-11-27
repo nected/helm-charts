@@ -139,14 +139,6 @@ NECTED_ELASTIC_ENABLED: &elasticEnabled "false"
 ```
 **Notes**: No changes required if using the Nected-provided datastore.
 
-### 🔐 Enable Credential Encryption at Rest
-1. Generate a private key and create a Kubernetes secret:
- ```
-openssl genrsa -f4 -out encryption-at-rest 4096
-kubectl create secret generic encryption-at-rest-secret --from-file encryption-at-rest
-```
-2. In `nected-values.yaml`, uncomment the `existingSecretMap` block to use the secret.
-
 ### 🚀 Install Nected Services
 1. Install **Temporal**:
     ```
