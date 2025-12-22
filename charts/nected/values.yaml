@@ -212,7 +212,7 @@ vidhaan-executer:
   enabled: true
   replicaCount: 1
   image:
-    tag: &vidhaanTag "op0.3.26"
+    tag: &vidhaanTag "op0.3.27"
   existingSecretMap: *commonSecretMap
   envVars:
     # Database
