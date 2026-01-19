@@ -10,33 +10,11 @@ konark:
   enabled: true
   replicaCount: 1
   image:
-    tag: "op0.12.2-2"
+    tag: "op0.13.4"
   envVars:
-    # Authentication Configuration 
-    VITE_ENABLE_MS_LOGIN: false
-    VITE_SIGNUP_FORM_ENABLED: false
-    VITE_ENABLE_AUTH_FORM: true
-    VITE_MICROSOFT_CLIENT_ID: ""
-    VITE_MICROSOFT_TENANT_ID: common
-    VITE_ENABLE_GOOGLE_LOGIN: false
-    VITE_GOOGLE_CLIENT_ID: ""
-
-    # Security & Compliance
-    VITE_RECAPTCHA_SITE_KEY: ""
-
     # API Configuration
     VITE_API_HOST: http://nalanda.local
-    VITE_WITH_CREDENTIALS: false
     VITE_GRAPHQL_URL: http://nalanda.local/graphql/query
-    VITE_AUTH_CONFIG_ENABLED: true
-    VITE_SQL_LINT_URL: /misc/proxy/lint
-    VITE_EXECUTE_API_URL: /integration/code/execute
-    VITE_APP_AI_SUGGESTION: /misc/proxy/suggestion
-
-    # Asset & CDN Configuration
-    VITE_ASSETS_URL: /assets/konark/
-    VITE_CDN_URL: ""
-    VITE_HELM_CHARTS_URL: https://charts.nected.io/
     VITE_NGINX_SERVER_NAME: konark.local
 
   ingress:
@@ -51,19 +29,12 @@ konark:
       cpu: "250m"
       memory: "512Mi"
 
-  autoscaling:
-    enabled: false
-    minReplicas: 1
-    maxReplicas: 1
-    targetCPUUtilizationPercentage: 80
-    targetMemoryUtilizationPercentage: 80
-
 # nalanda chart values to be updated
 nalanda:
   enabled: true
   replicaCount: 1
   image:
-    tag: &nalandaTag "op0.3.22"
+    tag: &nalandaTag "op0.3.24"
   existingSecretMap: *commonSecretMap
   envVars:
     # server config
@@ -141,15 +112,6 @@ nalanda:
     EMAIL_PASSWORD: ""
     DEVOPS_EMAIL: ""
 
-    # Recapcha config
-    RECAPTCHA_ENABLED: "false"
-    RECAPTCHA_SECRET: ""
-    RECAPTCHA_VERIFY_URL: ""
-    RECAPTCHA_MIN_SCORE: ""
-    RECAPTCHA_CHECK_PATH: ""
-    RECAPTCHA_CHECK_HOST: ""
-    RECAPTCHA_CHECK_SCORE: ""
-
     # JWT
     JWT_ACCESS_TOKEN_EXP_TIME: "10800"
     JWT_REFRESH_TOKEN_EXP_TIME: "1296000"
@@ -212,7 +174,7 @@ vidhaan-executer:
   enabled: true
   replicaCount: 1
   image:
-    tag: &vidhaanTag "op0.3.27"
+    tag: &vidhaanTag "op0.3.28"
   existingSecretMap: *commonSecretMap
   envVars:
     # Database
@@ -254,7 +216,7 @@ vidhaan-executer:
 
   resources:
     requests:
-      cpu: "250m"
+      cpu: "500m"
       memory: "512Mi"
 
   autoscaling:
