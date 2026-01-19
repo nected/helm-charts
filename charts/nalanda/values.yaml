@@ -7,7 +7,7 @@ replicaCount: 1
 image:
   repository:  &nalandaRepo public.ecr.aws/f6k1n6r3/nalanda
   pullPolicy:  IfNotPresent
-  tag: &nalandaTag "op0.3.22"
+  tag: &nalandaTag "op0.3.24"
 
 imagePullSecrets: []
 nameOverride: ""
@@ -40,6 +40,7 @@ envVars:
   DEV_API_RPM_LIMIT: "10"
   DEV_API_MAX_RESPONSE_SIZE: "1048576"
   TASKS_CONCURRENCY: "5"
+  MAX_BRANCH_ALLOWED: "5"
   UPLOAD_SIGNED_URL_DAY_LIMIT: "10"
 
   # Deployment customization
@@ -134,10 +135,10 @@ envVars:
 
   # Recapcha config
   RECAPTCHA_ENABLED: "false"
-  RECAPTCHA_SECRET: ""
-  RECAPTCHA_VERIFY_URL: ""
+  RECAPTCHA_APIKEY: ""
+  RECAPTCHA_SITEKEY: ""
+  RECAPTCHA_PROJECT: ""
   RECAPTCHA_MIN_SCORE: ""
-  RECAPTCHA_CHECK_PATH: ""
   RECAPTCHA_CHECK_HOST: ""
   RECAPTCHA_CHECK_SCORE: ""
 

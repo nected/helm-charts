@@ -7,7 +7,7 @@ replicaCount: 1
 image:
   repository: public.ecr.aws/f6k1n6r3/vidhaan
   pullPolicy: IfNotPresent
-  tag: "op0.3.26"
+  tag: "op0.3.28"
   args: ["--router"]
 
 imagePullSecrets: []
