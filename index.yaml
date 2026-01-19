@@ -3409,6 +3409,57 @@ entries:
     version: 0.1.2
   nected:
   - apiVersion: v2
+    appVersion: 0.30.6
+    created: "2026-01-19T14:00:15.759105092Z"
+    dependencies:
+    - condition: konark.enabled
+      name: konark
+      repository: https://charts.nected.io/
+      version: 0.4.6
+    - condition: nalanda.enabled
+      name: nalanda
+      repository: https://charts.nected.io/
+      version: 0.3.29
+    - condition: medha.enabled
+      name: medha
+      repository: https://charts.nected.io/
+      version: 0.2.2
+    - condition: vidhaan-router.enabled
+      name: vidhaan-router
+      repository: https://charts.nected.io/
+      version: 0.3.32
+    - condition: vidhaan-executer.enabled
+      name: vidhaan-executer
+      repository: https://charts.nected.io/
+      version: 0.3.32
+    - condition: garuda.enabled
+      name: garuda
+      repository: https://charts.nected.io/
+      version: 0.3.6
+    - name: common
+      repository: https://charts.nected.io/
+      tags:
+      - nected-common
+      version: 0.x.x
+    description: A Nected Services Helm chart
+    digest: 0a8012a5b7f6174024dcede1237753d25b91afdd1ce6bdc1de9babf8f94bce51
+    home: https://nected.ai/
+    keywords:
+    - nected
+    - workflow
+    - BRE
+    - DMS
+    maintainers:
+    - name: Socioverse Tech Private Ltd.
+      url: https://nected.ai/
+    name: nected
+    sources:
+    - https://charts.nected.io
+    type: application
+    urls:
+    - https://github.com/nected/helm-charts/releases/download/nected-0.4.12/nected-0.4.12.tgz
+    version: 0.4.12
+  - apiVersion: v2
     appVersion: 0.30.5
     created: "2025-12-22T13:08:02.239640037Z"
     dependencies:
@@ -9206,4 +9257,4 @@ entries:
     urls:
     - https://github.com/nected/helm-charts/releases/download/vidhaan-router-0.1.1/vidhaan-router-0.1.1.tgz
     version: 0.1.1
-generated: "2026-01-19T13:54:23.64760536Z"
+generated: "2026-01-19T14:00:15.759540709Z"
