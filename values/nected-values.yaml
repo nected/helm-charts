@@ -43,13 +43,6 @@ konark:
       cpu: "350m"
       memory: "512Mi"
 
-  autoscaling:
-    enabled: false
-    minReplicas: 1
-    maxReplicas: 1
-    targetCPUUtilizationPercentage: 80
-    targetMemoryUtilizationPercentage: 80
-
 # nalanda chart values to be updated
 nalanda:
   enabled: true
