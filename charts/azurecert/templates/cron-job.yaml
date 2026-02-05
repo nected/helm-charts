@@ -3,7 +3,7 @@ kind: CronJob
 metadata:
   name: keyvault-sync
 spec:
-  schedule: {{ .Values.SCHEDULE }}
+  schedule: "{{ .Values.SCHEDULE }}"
   concurrencyPolicy: Forbid
   jobTemplate:
     spec:
