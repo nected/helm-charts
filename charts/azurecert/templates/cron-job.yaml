@@ -3,7 +3,7 @@ kind: CronJob
 metadata:
   name: keyvault-sync
 spec:
-  schedule: "* * * * *"  # Every 6 hours
+  schedule: {{ .Values.SCHEDULE }}
   concurrencyPolicy: Forbid
   jobTemplate:
     spec:
