@@ -118,6 +118,6 @@ spec:
           volumes:
             - name: tls-secret-volume
               secret:
-                secretName: nected-tls-dev
+                secretName: {{ .Values.CERT_NAME }}
 
 
