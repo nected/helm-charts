@@ -1,0 +1,3 @@
+KEYVAULT_NAME: nectedcertsvaultdev
+CERT_NAME: tls-nected-cert
+CLIENT_ID: ""
