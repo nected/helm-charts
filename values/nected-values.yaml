@@ -210,7 +210,7 @@ medha:
     DB_USER: *pgUser
     DB_PASSWORD: *pgPassword
     DB_SSL_MODE: *pgSslMode
-    COPILOT_PDF_OCR: "false"
+    COPILOT_PDF_OCR: "true"
 
   resources:
     requests:
