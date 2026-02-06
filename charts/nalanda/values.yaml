@@ -7,7 +7,7 @@ replicaCount: 1
 image:
   repository:  &nalandaRepo public.ecr.aws/f6k1n6r3/nalanda
   pullPolicy:  IfNotPresent
-  tag: &nalandaTag "op0.3.24"
+  tag: &nalandaTag "op0.3.25"
 
 imagePullSecrets: []
 nameOverride: ""
@@ -35,16 +35,15 @@ envVars:
   SERVER_PORT: "8001"
   SERVER_TIMEZONE: UTC
   MAX_REQUEST_SIZE: "3145728"
-  ROUTER_TIMEOUT: "30s"
-  VIDHAAN_TEST_TIMEOUT: "900s"
   DEV_API_RPM_LIMIT: "10"
   DEV_API_MAX_RESPONSE_SIZE: "1048576"
   TASKS_CONCURRENCY: "5"
+  ROUTER_TIMEOUT: "30s"
+  VIDHAAN_TEST_TIMEOUT: "900s"
   MAX_BRANCH_ALLOWED: "5"
-  UPLOAD_SIGNED_URL_DAY_LIMIT: "10"
 
   # Deployment customization
-  WORKSPACE_WHITE_LABELLING_ALLOWED: "false"
+  WORKSPACE_WHITE_LABELLING_ALLOWED: "true"
   FULL_WHITE_LABELLING: "false"
   COMPANY_NAME: Nected
   LOGO_URL: https://assets.nected.ai/nalanda/logo.png
@@ -108,12 +107,12 @@ envVars:
   MICROSOFT_CLIENT_SECRET: ""
   MICROSOFT_TENANT_ID: ""
 
-  # aws s3 for asset upload
-  S3_AWS_ACCESS_KEY: ""
-  S3_AWS_SECRET_KEY: ""
-  S3_AWS_REGION: ""
-  S3_AWS_BUCKET_NAME: ""
-  S3_AWS_DOMAIN: ""
+  # Docuhub
+  DOCHUB_CONFIG_MAP: '{}'
+
+  # Copilot
+  COPILOT_CONFIG_MAP: '{}'
+  MEDHA_BASE_URL: http://nected-medha
 
   # aws ses credentials if EMAIL_PROVIDE: ses
   AWS_ACCESS_KEY: ""

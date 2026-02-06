@@ -8,7 +8,7 @@ image:
   repository: public.ecr.aws/f6k1n6r3/medha
   pullPolicy: IfNotPresent
   # Overrides the image tag whose default is the chart appVersion.
-  tag: "op0.2.1"
+  tag: "op0.2.2"
 
 imagePullSecrets: []
 nameOverride: ""
@@ -27,6 +27,21 @@ envVars:
   SERVER_PORT: "8000"
   LOG_LEVEL: INFO
   SKIP_LOGS: "/health"
+  DB_ENABLED: "true"
+  DB_HOST: datastore-postgresql
+  DB_PORT: "5432"
+  DB_DB: nected
+  DB_USER: nected
+  DB_PASSWORD: psqlPass123
+  DB_SSL_MODE: disable
+  DB_POOL_SIZE: "10"
+  DB_MAX_OVERFLOW: "5"
+  DB_POOL_TIMEOUT: "30"
+  DB_POOL_RECYCLE: "3600"
+  DB_ECHO: "false"
+  DB_CONNECT_RETRIES: "3"
+  DB_CONNECT_RETRY_DELAY: "2"
+  COPILOT_PDF_OCR: "false"
   SENTRY_DSN: ""
   REQUEST_SIZE: "5"
   OCR_ENGINE: "tesseract"
