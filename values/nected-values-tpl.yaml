@@ -150,3 +150,13 @@ vidhaan-router:
         paths:
             - path: /
               pathType: Prefix
+
+# medha chart to be updated
+medha:
+  envVars:
+    DB_ENABLED: "true"
+    DB_HOST: {{ DB_HOST }}
+    DB_DB: {{ NECTED_DB_NAME }}
+    DB_USER: {{ DB_USER }}
+    DB_PASSWORD: "{{ DB_PASSWORD }}"
+    DB_SSL_MODE: require
