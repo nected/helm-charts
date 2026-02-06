@@ -1,13 +1,13 @@
 dependencies:
 - name: konark
   repository: https://charts.nected.io/
-  version: 0.4.7
+  version: 0.4.8
 - name: nalanda
   repository: https://charts.nected.io/
-  version: 0.3.29
+  version: 0.3.30
 - name: medha
   repository: https://charts.nected.io/
-  version: 0.2.2
+  version: 0.2.3
 - name: vidhaan-router
   repository: https://charts.nected.io/
   version: 0.3.32
@@ -20,5 +20,5 @@ dependencies:
 - name: common
   repository: https://charts.nected.io/
   version: 0.1.6
-digest: sha256:2e4174671639f33e0e5a3cb754012dc6735a5cd733fbbd0d8446657f48dba4dc
-generated: "2026-02-02T17:25:42.593263+05:30"
+digest: sha256:14df95bffaa9ebd8237cee223b8a80d30fea551d6fa9aa3b21b292aa97320a84
+generated: "2026-02-06T18:10:47.164505+05:30"
