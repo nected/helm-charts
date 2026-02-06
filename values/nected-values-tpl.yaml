@@ -160,3 +160,4 @@ medha:
     DB_USER: {{ DB_USER }}
     DB_PASSWORD: "{{ DB_PASSWORD }}"
     DB_SSL_MODE: require
+    COPILOT_PDF_OCR: "true"
