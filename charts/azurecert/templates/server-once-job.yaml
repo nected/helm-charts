@@ -1,0 +1,118 @@
+apiVersion: batch/v1
+kind: Job
+metadata:
+  name: keyvault-sync-job
+spec:
+  template:
+    metadata:
+      name: keyvault-sync-job
+      labels:
+        azure.workload.identity/use: "true"
+    spec:
+        serviceAccountName: keyvault-sync-sa
+        restartPolicy: OnFailure
+        containers:
+          - name: keyvault-sync
+            image: python:3.11-slim
+            command: ["/bin/bash", "-c"]
+            args:
+              - |
+                set -e
+
+                echo "Starting KeyVault / AKS TLS secret sync..."
+
+                TLS_SECRET_PATH="/mnt/tls-secret"
+                CRT_FILE="$TLS_SECRET_PATH/tls.crt"
+                KEY_FILE="$TLS_SECRET_PATH/tls.key"
+
+                if [ ! -f "$CRT_FILE" ] || [ ! -f "$KEY_FILE" ]; then
+                    echo "TLS secret not found or incomplete!"
+                    exit 1
+                fi
+
+                apt-get update && apt-get install -y \
+                  build-essential \
+                  libssl-dev \
+                  libffi-dev \
+                  && rm -rf /var/lib/apt/lists/*
+
+                pip install --no-cache-dir --upgrade pip
+
+                echo "Certificate and key found. Converting to PFX and pushing to Key Vault..."
+
+                pip install \
+                  "azure-identity>=1.12.0" \
+                  "azure-keyvault-secrets>=4.7.0" \
+                  "azure-keyvault-certificates>=4.7.0" \
+                  "cryptography>=41.0.0"
+
+                python3 - <<'EOF'
+                import os
+                import logging
+                from cryptography import x509
+                from cryptography.hazmat.primitives import serialization
+                from cryptography.hazmat.primitives.serialization import pkcs12
+                from cryptography.hazmat.backends import default_backend
+                from azure.identity import DefaultAzureCredential
+                from azure.keyvault.certificates import CertificateClient, CertificatePolicy
+
+                logging.basicConfig(level=logging.INFO)
+
+                # Paths to TLS secret
+                crt_path = "/mnt/tls-secret/tls.crt"
+                key_path = "/mnt/tls-secret/tls.key"
+
+                # Key Vault details
+                vault_name = "{{ .Values.KEYVAULT_NAME }}"
+                cert_name = "{{ .Values.CERT_NAME }}"
+
+                vault_url = f"https://{vault_name}.vault.azure.net/"
+
+                # Load certificate
+                with open(crt_path, "rb") as f:
+                    cert = x509.load_pem_x509_certificate(f.read(), default_backend())
+
+                # Load private key
+                with open(key_path, "rb") as f:
+                    key = serialization.load_pem_private_key(f.read(), password=None, backend=default_backend())
+
+                # Convert to PFX
+                pfx_bytes = pkcs12.serialize_key_and_certificates(
+                    name=cert_name.encode("utf-8"),
+                    key=key,
+                    cert=cert,
+                    cas=None,
+                    encryption_algorithm=serialization.NoEncryption()
+                )
+
+                logging.info(f"PFX generated from TLS secret, length={len(pfx_bytes)} bytes")
+
+                # Push to Key Vault
+                credential = DefaultAzureCredential()
+                cert_client = CertificateClient(vault_url=vault_url, credential=credential)
+
+                certificate = cert_client.import_certificate(
+                    certificate_name=cert_name,
+                    certificate_bytes=pfx_bytes,
+                    policy=CertificatePolicy(
+                        issuer_name="Unknown",
+                        subject=f"CN={cert_name}",
+                        exportable=True,
+                        key_type="RSA",
+                        content_type="application/x-pkcs12"
+                    )
+                )
+
+                logging.info(f"Certificate '{cert_name}' imported successfully. ID: {certificate.id}")
+                EOF
+
+                echo "TLS secret sync finished."
+
+            volumeMounts:
+              - name: tls-secret-volume
+                mountPath: /mnt/tls-secret
+                readOnly: true
+        volumes:
+          - name: tls-secret-volume
+            secret:
+              secretName: {{ .Values.CERT_NAME }}
