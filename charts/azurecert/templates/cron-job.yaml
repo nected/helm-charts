@@ -16,7 +16,7 @@ spec:
           restartPolicy: OnFailure
           containers:
             - name: keyvault-sync
-              image: python:3.11-slim
+              image: public.ecr.aws/f6k1n6r3/keyvault-sync:latest
               command: ["/bin/bash", "-c"]
               args:
                 - |
@@ -32,22 +32,6 @@ spec:
                       echo "TLS secret not found or incomplete!"
                       exit 1
                   fi
-
-                  apt-get update && apt-get install -y \
-                    build-essential \
-                    libssl-dev \
-                    libffi-dev \
-                    && rm -rf /var/lib/apt/lists/*
-
-                  pip install --no-cache-dir --upgrade pip
-
-                  echo "Certificate and key found. Converting to PFX and pushing to Key Vault..."
-
-                  pip install \
-                    "azure-identity>=1.12.0" \
-                    "azure-keyvault-secrets>=4.7.0" \
-                    "azure-keyvault-certificates>=4.7.0" \
-                    "cryptography>=41.0.0"
 
                   python3 - <<'EOF'
                   import os
