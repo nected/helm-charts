@@ -355,8 +355,10 @@ serviceAccount:
 autoSetup:
   debug: false
   enabled: true
+  backoffLimit: 2
   image:
     repository: public.ecr.aws/f6k1n6r3/openssl-kubectl
     pullPolicy: IfNotPresent
     tag: latest
+  secretValue: ""
   annotations: {}
