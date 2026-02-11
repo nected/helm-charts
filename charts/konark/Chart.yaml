@@ -21,7 +21,7 @@ sources:
 
 appVersion: "op0.13.4-2"
 type: application
-version: 0.4.8
+version: 0.4.9
 
 dependencies:
 - name: common
