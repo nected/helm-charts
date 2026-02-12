@@ -2,7 +2,7 @@
 apiVersion: v1
 kind: ServiceAccount
 metadata:
-  name: {{ include "common.serviceAccountName" . }}
+  name: common-secret
   labels:
     {{- include "common.labels" . | nindent 4 }}
   annotations:
@@ -14,7 +14,7 @@ automountServiceAccountToken: true
 apiVersion: rbac.authorization.k8s.io/v1
 kind: Role
 metadata:
-  name: {{ include "common.serviceAccountName" . }}-role
+  name: common-secret-role
   annotations:
     helm.sh/hook: pre-install,pre-upgrade
     helm.sh/hook-weight: "-2"
@@ -27,16 +27,16 @@ rules:
 apiVersion: rbac.authorization.k8s.io/v1
 kind: RoleBinding
 metadata:
-  name: {{ include "common.serviceAccountName" . }}-binding
+  name: common-secret-binding
   annotations:
     helm.sh/hook: pre-install,pre-upgrade
     helm.sh/hook-weight: "-2"
 subjects:
 - kind: ServiceAccount
-  name: {{ include "common.serviceAccountName" . }}
+  name: common-secret
 roleRef:
   kind: Role
-  name: {{ include "common.serviceAccountName" . }}-role
+  name: common-secret-role
   apiGroup: rbac.authorization.k8s.io
 
 ---
@@ -57,7 +57,7 @@ spec:
       labels:
         {{- include "common.labels" . | nindent 8 }}
     spec:
-        serviceAccountName: {{ include "common.serviceAccountName" . }}
+        serviceAccountName: common-secret
         containers:
           - name: setup
             image: {{ .Values.autoSetup.image.repository }}:{{ .Values.autoSetup.image.tag }}
