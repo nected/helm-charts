@@ -96,7 +96,7 @@ nalanda:
 
 # vidhaan-executer chart to be updated
 vidhaan-executer:
-  replicaCount: 4
+  replicaCount: 3
   envVars: &vidhaanEnvVars
     # Database
     DB_NAME: {{ NECTED_DB_NAME }}
