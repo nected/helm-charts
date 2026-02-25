@@ -10,7 +10,7 @@ konark:
   enabled: true
   replicaCount: 1
   image:
-    tag: "op0.13.4-2"
+    tag: "op0.13.4-3"
   envVars:
     # API Configuration
     VITE_API_HOST: http://nalanda.local
@@ -174,7 +174,7 @@ vidhaan-executer:
   enabled: true
   replicaCount: 1
   image:
-    tag: &vidhaanTag "op0.3.30"
+    tag: &vidhaanTag "op0.3.31"
   existingSecretMap: *commonSecretMap
   envVars:
     # Database
