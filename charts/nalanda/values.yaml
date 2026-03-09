@@ -7,7 +7,7 @@ replicaCount: 1
 image:
   repository:  &nalandaRepo public.ecr.aws/f6k1n6r3/nalanda
   pullPolicy:  IfNotPresent
-  tag: &nalandaTag "op0.3.27"
+  tag: &nalandaTag "op0.3.28"
 
 imagePullSecrets: []
 nameOverride: ""
@@ -96,6 +96,7 @@ envVars:
   ELASTIC_API_KEY: ""
   ELASTIC_USER: elastic
   ELASTIC_PASSWORD: esPass123
+  ELASTIC_POLICY_CONFIG: '{"nPolicy":{"warm":"3d","delete":"5d"},"vPolicy":{"warm":"3d","delete":"5d"}}'
 
   # google auth
   GOOGLE_AUTH_ENABLED: "false"
