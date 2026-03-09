@@ -34,7 +34,7 @@ nalanda:
   enabled: true
   replicaCount: 1
   image:
-    tag: &nalandaTag "op0.3.27"
+    tag: &nalandaTag "op0.3.28"
   existingSecretMap: *commonSecretMap
   envVars:
     # server config
@@ -174,7 +174,7 @@ vidhaan-executer:
   enabled: true
   replicaCount: 1
   image:
-    tag: &vidhaanTag "op0.3.32"
+    tag: &vidhaanTag "op0.3.33"
   existingSecretMap: *commonSecretMap
   envVars:
     # Database
