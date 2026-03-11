@@ -1,4 +1,45 @@
 {{- if .Values.autoSetup.enabled }}
+apiVersion: v1
+kind: ServiceAccount
+metadata:
+  name: common-secret
+  labels:
+    {{- include "common.labels" . | nindent 4 }}
+  annotations:
+    helm.sh/hook: pre-install,pre-upgrade
+    helm.sh/hook-weight: "-2"
+automountServiceAccountToken: true
+
+---
+apiVersion: rbac.authorization.k8s.io/v1
+kind: Role
+metadata:
+  name: common-secret-role
+  annotations:
+    helm.sh/hook: pre-install,pre-upgrade
+    helm.sh/hook-weight: "-2"
+rules:
+- apiGroups: [""]
+  resources: ["secrets"]
+  verbs: ["get", "create"]
+
+---
+apiVersion: rbac.authorization.k8s.io/v1
+kind: RoleBinding
+metadata:
+  name: common-secret-binding
+  annotations:
+    helm.sh/hook: pre-install,pre-upgrade
+    helm.sh/hook-weight: "-2"
+subjects:
+- kind: ServiceAccount
+  name: common-secret
+roleRef:
+  kind: Role
+  name: common-secret-role
+  apiGroup: rbac.authorization.k8s.io
+
+---
 apiVersion: batch/v1
 kind: Job
 metadata:
@@ -16,22 +57,63 @@ spec:
       labels:
         {{- include "common.labels" . | nindent 8 }}
     spec:
-        serviceAccountName: {{ include "common.serviceAccountName" . }}
+        serviceAccountName: common-secret
         containers:
           - name: setup
             image: {{ .Values.autoSetup.image.repository }}:{{ .Values.autoSetup.image.tag }}
             imagePullPolicy: {{ .Values.autoSetup.image.pullPolicy }}
-            {{- with .Values.autoSetup.command }}
+            {{- if .Values.autoSetup.secretValue }}
+            env:
+              - name: SECRET_VALUE
+                value: {{ .Values.autoSetup.secretValue }}
+            {{- end }}
             command:
-              {{- toYaml . | nindent 14 }}
-            {{- end }}
-            {{- with .Values.autoSetup.args }}
-            args:
-              {{- toYaml . | nindent 14 }}
-            {{- end }}
-            {{- with .Values.autoSetup.resources }}
-            resources:
-              {{- toYaml . | nindent 14 }}
-            {{- end }}
+            - /bin/sh
+            - -c
+            - |
+              # SECRET_VALUE is the env variable used to reuse-secret-key
+
+              SECRET_NAME="encryption-at-rest-secret"
+              KEY_NAME=encryption-at-rest
+              KEY_FILE="./$KEY_NAME"
+
+              echo "Checking if secret '$SECRET_NAME' exists..."
+
+              if kubectl get secret "$SECRET_NAME" &> /dev/null; then
+                  echo "Secret '$SECRET_NAME' already exists. Skipping creation."
+              elif [ -n "$SECRET_VALUE" ]; then
+                  echo "Secret '$SECRET_NAME' does not exist. Using passed SECRET_VALUE..."
+                  kubectl apply -f - <<EOF
+              apiVersion: v1
+              kind: Secret
+              metadata:
+                name: "$SECRET_NAME"
+              type: Opaque
+              data:
+                "$KEY_NAME": "$SECRET_VALUE"
+              EOF
+              else
+                  echo "Secret '$SECRET_NAME' does not exist. Creating..."
+
+                  echo "Generating RSA key..."
+                  openssl genrsa -f4 -out "$KEY_FILE" 4096
+
+                  if [ $? -eq 0 ]; then
+                      echo "Creating secret..."
+                      kubectl create secret generic "$SECRET_NAME" --from-file="$KEY_FILE"
+
+                      if [ $? -eq 0 ]; then
+                          echo "Key generated & secret created successfully."
+                          # Clean up the temporary key file for security
+                          rm -f "$KEY_FILE"
+                      else
+                          echo "Error: Failed to create secret."
+                          exit 1
+                      fi
+                  else
+                      echo "Error: Failed to generate RSA key."
+                      exit 1
+                  fi
+              fi
         restartPolicy: OnFailure
 {{- end }}
