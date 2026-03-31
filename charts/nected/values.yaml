@@ -10,7 +10,7 @@ konark:
   enabled: true
   replicaCount: 1
   image:
-    tag: "op0.13.6"
+    tag: "op0.13.7"
   envVars:
     # API Configuration
     VITE_API_HOST: http://nalanda.local
@@ -34,7 +34,7 @@ nalanda:
   enabled: true
   replicaCount: 1
   image:
-    tag: &nalandaTag "op0.3.30"
+    tag: &nalandaTag "op0.3.31"
   existingSecretMap: *commonSecretMap
   envVars:
     # server config
@@ -295,7 +295,7 @@ medha:
   enabled: true
   replicaCount: 1
   image:
-    tag: "op0.2.2"
+    tag: "op0.2.3"
   envVars:
     DB_ENABLED: "false"
     COPILOT_PDF_OCR: "false"
