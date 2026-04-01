@@ -60,6 +60,10 @@ spec:
           env:
               {{- include "temporal.admintools-env" (list $ $store) | nindent 12 }}
               {{- with $.Values.admintools.additionalVolumeMounts }}
+            {{- with $.Values.schema.resources }}
+          resources:
+              {{- toYaml . | nindent 12 }}
+            {{- end }}
           volumeMounts:
                 {{- toYaml . | nindent 12 }}
               {{- end }}
