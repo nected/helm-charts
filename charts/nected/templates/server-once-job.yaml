@@ -1,4 +1,4 @@
-{{- if .Values.autoSetup.enabled }}
+{{- if .Values.commonSecret.enabled }}
 apiVersion: v1
 kind: ServiceAccount
 metadata:
@@ -8,6 +8,7 @@ metadata:
   annotations:
     helm.sh/hook: pre-install,pre-upgrade
     helm.sh/hook-weight: "-2"
+    helm.sh/hook-delete-policy: before-hook-creation
 automountServiceAccountToken: true
 
 ---
@@ -18,6 +19,7 @@ metadata:
   annotations:
     helm.sh/hook: pre-install,pre-upgrade
     helm.sh/hook-weight: "-2"
+    helm.sh/hook-delete-policy: before-hook-creation
 rules:
 - apiGroups: [""]
   resources: ["secrets"]
@@ -31,6 +33,7 @@ metadata:
   annotations:
     helm.sh/hook: pre-install,pre-upgrade
     helm.sh/hook-weight: "-2"
+    helm.sh/hook-delete-policy: before-hook-creation
 subjects:
 - kind: ServiceAccount
   name: common-secret
@@ -49,8 +52,10 @@ metadata:
   annotations:
     helm.sh/hook: pre-install,pre-upgrade
     helm.sh/hook-weight: "-1"
+    helm.sh/hook-delete-policy: before-hook-creation
 spec:
-  backoffLimit: {{ .Values.autoSetup.backoffLimit }}
+  ttlSecondsAfterFinished: 300
+  backoffLimit: {{ .Values.commonSecret.backoffLimit }}
   template:
     metadata:
       name: {{ include "common.fullname" . }}-secret
@@ -60,12 +65,16 @@ spec:
         serviceAccountName: common-secret
         containers:
           - name: setup
-            image: {{ .Values.autoSetup.image.repository }}:{{ .Values.autoSetup.image.tag }}
-            imagePullPolicy: {{ .Values.autoSetup.image.pullPolicy }}
-            {{- if .Values.autoSetup.secretValue }}
+            image: {{ .Values.commonSecret.image.repository }}:{{ .Values.commonSecret.image.tag }}
+            imagePullPolicy: {{ .Values.commonSecret.image.pullPolicy }}
+            {{- with .Values.commonSecret.resources }}
+            resources:
+              {{- toYaml . | nindent 14 }}
+            {{- end }}
+            {{- if .Values.commonSecret.secretValue }}
             env:
               - name: SECRET_VALUE
-                value: {{ .Values.autoSetup.secretValue }}
+                value: {{ .Values.commonSecret.secretValue }}
             {{- end }}
             command:
             - /bin/sh

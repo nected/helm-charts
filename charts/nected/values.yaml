@@ -352,7 +352,7 @@ serviceAccount:
   name: common-secret
 
 # main nected job to setup secret
-autoSetup:
+commonSecret:
   debug: false
   enabled: true
   backoffLimit: 2
@@ -362,3 +362,4 @@ autoSetup:
     tag: latest
   secretValue: ""
   annotations: {}
+  resources: {}
