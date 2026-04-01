@@ -7,7 +7,7 @@ replicaCount: 1
 image:
   repository:  &nalandaRepo public.ecr.aws/f6k1n6r3/nalanda
   pullPolicy:  IfNotPresent
-  tag: &nalandaTag "op0.3.30"
+  tag: &nalandaTag "op0.3.31"
 
 imagePullSecrets: []
 nameOverride: ""
@@ -263,6 +263,7 @@ autoSetup:
     cp /mnt/temp/envFile .env
     /app/nalanda init -e -j
   annotations: {}
+  resources: {}
 
 service:
   type: ClusterIP
@@ -277,10 +278,6 @@ ingress:
   tls: []
 
 resources:
-  # We usually recommend not to specify default resources and to leave this as a conscious
-  # choice for the user. This also increases chances charts run on environments with little
-  # resources, such as Minikube. If you do want to specify resources, uncomment the following
-  # lines, adjust them as necessary, and remove the curly braces after 'resources:'.
   requests:
     cpu: "250m"
     memory: "512Mi"

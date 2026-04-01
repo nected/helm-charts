@@ -8,6 +8,7 @@ metadata:
   annotations:
     {{- include "common.autoSetupPodAnnotationsHook" . | nindent 4 }}
 spec:
+  ttlSecondsAfterFinished: 300
   backoffLimit: {{ .Values.autoSetup.backoffLimit }}
   template:
     metadata:
