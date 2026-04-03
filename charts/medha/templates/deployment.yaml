@@ -40,6 +40,10 @@ spec:
           envFrom:
           - configMapRef:
               name: {{ include "common.fullname" . }}
+          {{- with .Values.existingSecret }}
+          - secretRef:
+              name: {{ . }}
+          {{- end }}
           ports:
             - name: http
               containerPort: {{ .Values.service.port }}

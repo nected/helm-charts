@@ -28,10 +28,20 @@ spec:
             args:
               {{- toYaml . | nindent 14 }}
             {{- end }}
-            {{- if not .Values.mountConfigMap }}
+            {{- with .Values.existingSecretMap }}
+            env:
+              {{- toYaml . | nindent 14 }}
+            {{- end }}
+            {{- if or (not .Values.mountConfigMap) .Values.existingSecret }}
             envFrom:
+            {{- if not .Values.mountConfigMap }}
             - configMapRef:
                 name: {{ include "common.fullname" . }}
+            {{- end }}
+            {{- with .Values.existingSecret }}
+            - secretRef:
+                name: {{ . }}
+            {{- end }}
             {{- end }}
             {{- with .Values.autoSetup.resources }}
             resources:

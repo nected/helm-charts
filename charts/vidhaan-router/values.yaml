@@ -14,13 +14,8 @@ imagePullSecrets: []
 nameOverride: ""
 fullnameOverride: ""
 
-# existingSecretMap:
-#   - name: ENCRYPTKEY_EAR_1
-#     valueFrom:
-#       secretKeyRef:
-#         name: encryption-at-rest-secret
-#         key: encryption-at-rest
 existingSecretMap: {}
+existingSecret: ""
 
 envVars:
   ENVFILE_DEFAULT_VALUE: ""

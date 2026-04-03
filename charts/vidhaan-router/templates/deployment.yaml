@@ -49,10 +49,16 @@ spec:
           env:
             {{- toYaml . | nindent 12 }}
           {{- end }}
-          {{- if not .Values.mountConfigMap }}
+          {{- if or (not .Values.mountConfigMap) .Values.existingSecret }}
           envFrom:
+          {{- if not .Values.mountConfigMap }}
           - configMapRef:
               name: {{ include "common.fullname" . }}
+          {{- end }}
+          {{- with .Values.existingSecret }}
+          - secretRef:
+              name: {{ . }}
+          {{- end }}
           {{- end }}
           {{- if .Values.service }}
           ports:
