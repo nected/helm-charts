@@ -24,23 +24,23 @@ dependencies:
     condition: konark.enabled
   - name: nalanda
     repository: https://charts.nected.io/
-    version: 0.3.36
+    version: 0.3.37
     condition: nalanda.enabled
   - name: medha
     repository: https://charts.nected.io/
-    version: 0.2.3
+    version: 0.2.4
     condition: medha.enabled
   - name: vidhaan-router
     repository: https://charts.nected.io/
-    version: 0.3.34
+    version: 0.3.35
     condition: vidhaan-router.enabled
   - name: vidhaan-executer
     repository: https://charts.nected.io/
-    version: 0.3.34
+    version: 0.3.35
     condition: vidhaan-executer.enabled
   - name: garuda
     repository: https://charts.nected.io/
-    version: 0.3.8
+    version: 0.3.9
     condition: garuda.enabled
   - name: common
     repository: https://charts.nected.io/
@@ -49,5 +49,5 @@ dependencies:
     version: 0.x.x
 
 type: application
-version: 0.4.27
+version: 0.4.28
 appVersion: "0.30.19"
