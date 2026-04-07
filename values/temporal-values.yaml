@@ -21,7 +21,7 @@ server:
   config:
     logLevel: "debug,info"
     # IMPORTANT: This value cannot be changed, once it's set.
-    numHistoryShards: 512
+    numHistoryShards: 256
     dcRedirectionPolicy:
       policy: "selected-apis-forwarding"
       toDC: ""
@@ -75,50 +75,44 @@ server:
     replicaCount: 1
     autoscaling:
       enabled: false
-      minReplicas: "1"
-      maxReplicas: "1"
-      targetCPU: "75"
-      targetMemory: "75"
+      minReplicas: "2"
+      maxReplicas: "4"
+      targetCPU: "85"
+      targetMemory: "85"
     resources:
       requests:
-        cpu: 400m
-        memory: 1024Mi
+        cpu: 250m
+        memory: 256Mi
   history:
     replicaCount: 1
-    autoscaling:
-      enabled: false
-      minReplicas: "1"
-      maxReplicas: "1"
-      targetCPU: "75"
-      targetMemory: "75"
     resources:
       requests:
-        cpu: 700m
-        memory: 2048Mi
+        cpu: 500m
+        memory: 1024Mi
   matching:
     replicaCount: 1
     autoscaling:
       enabled: false
-      minReplicas: "1"
-      maxReplicas: "1"
-      targetCPU: "75"
-      targetMemory: "75"
+      minReplicas: "2"
+      maxReplicas: "4"
+      targetCPU: "85"
+      targetMemory: "85"
     resources:
       requests:
-        cpu: 400m
-        memory: 1024Mi
+        cpu: 250m
+        memory: 256Mi
   worker:
     replicaCount: 1
     autoscaling:
       enabled: false
       minReplicas: "1"
-      maxReplicas: "1"
-      targetCPU: "75"
-      targetMemory: "75"
+      maxReplicas: "2"
+      targetCPU: "85"
+      targetMemory: "85"
     resources:
       requests:
-        cpu: 200m
-        memory: 512Mi
+        cpu: 250m
+        memory: 256Mi
 
 admintools:
   enabled: false

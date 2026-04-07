@@ -96,7 +96,7 @@ nalanda:
 
 # vidhaan-executer chart to be updated
 vidhaan-executer:
-  replicaCount: 3
+  replicaCount: 2
   envVars: &vidhaanEnvVars
     # Database
     DB_NAME: {{ NECTED_DB_NAME }}
@@ -153,6 +153,7 @@ vidhaan-router:
 
 # medha chart to be updated
 medha:
+  replicaCount: 2
   envVars:
     DB_ENABLED: "true"
     DB_HOST: {{ DB_HOST }}
