@@ -7,9 +7,9 @@ existingSecretMap: &commonSecretMap
 
 existingSecret: &commonSecret ""
 
-nodeSelector: &nodeSelector {}
-tolerations: &tolerations []
-affinity: &affinity {}
+nodeSelector: {}
+tolerations: []
+affinity: {}
 
 # konark chart values to be updated
 konark:
@@ -34,10 +34,6 @@ konark:
     requests:
       cpu: "250m"
       memory: "512Mi"
-
-  nodeSelector: *nodeSelector
-  tolerations: *tolerations
-  affinity: *affinity
 
 # nalanda chart values to be updated
 nalanda:
@@ -180,10 +176,6 @@ nalanda:
     targetCPUUtilizationPercentage: 80
     targetMemoryUtilizationPercentage: 80
 
-  nodeSelector: *nodeSelector
-  tolerations: *tolerations
-  affinity: *affinity
-
 # vidhaan-executer chart to be updated
 vidhaan-executer:
   enabled: true
@@ -241,10 +233,6 @@ vidhaan-executer:
     maxReplicas: 1
     targetCPUUtilizationPercentage: 80
     targetMemoryUtilizationPercentage: 80
-
-  nodeSelector: *nodeSelector
-  tolerations: *tolerations
-  affinity: *affinity
 
 # vidhaan-router chart to be updated
 vidhaan-router:
@@ -311,10 +299,6 @@ vidhaan-router:
     targetCPUUtilizationPercentage: 80
     targetMemoryUtilizationPercentage: 80
 
-  nodeSelector: *nodeSelector
-  tolerations: *tolerations
-  affinity: *affinity
-
 # sql-linter chart to be updated
 medha:
   enabled: true
@@ -340,10 +324,6 @@ medha:
     maxReplicas: 1
     targetCPUUtilizationPercentage: 80
     targetMemoryUtilizationPercentage: 80
-
-  nodeSelector: *nodeSelector
-  tolerations: *tolerations
-  affinity: *affinity
 
 # executer-tp chart to be updated
 garuda:
@@ -372,10 +352,6 @@ garuda:
     maxReplicas: 1
     targetCPUUtilizationPercentage: 80
     targetMemoryUtilizationPercentage: 80
-
-  nodeSelector: *nodeSelector
-  tolerations: *tolerations
-  affinity: *affinity
 
 # adding service account for secret job
 serviceAccount:
