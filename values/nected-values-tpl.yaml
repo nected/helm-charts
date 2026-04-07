@@ -9,12 +9,12 @@ konark:
     enabled: true
     className: alb
     annotations:
-      alb.ingress.kubernetes.io/load-balancer-name: {{ LB_NAME }}
+      # alb.ingress.kubernetes.io/load-balancer-name: {{ LB_NAME }}
       alb.ingress.kubernetes.io/ip-address-type: ipv4
       alb.ingress.kubernetes.io/group.name: nected-lb
       alb.ingress.kubernetes.io/ssl-redirect: '443'
       alb.ingress.kubernetes.io/healthcheck-path: /
-      alb.ingress.kubernetes.io/scheme: internet-facing
+      alb.ingress.kubernetes.io/scheme: {{ LB_SCHEME }}
       alb.ingress.kubernetes.io/target-type: ip
       alb.ingress.kubernetes.io/listen-ports: '[{"HTTP": 80}, {"HTTPS": 443}]'
       alb.ingress.kubernetes.io/certificate-arn: {{ CERTIFICATE_ARN }}
@@ -77,12 +77,12 @@ nalanda:
     enabled: true
     className: alb
     annotations:
-      alb.ingress.kubernetes.io/load-balancer-name: {{ LB_NAME }}
+      # alb.ingress.kubernetes.io/load-balancer-name: {{ LB_NAME }}
       alb.ingress.kubernetes.io/ip-address-type: ipv4
       alb.ingress.kubernetes.io/group.name: nected-lb
       alb.ingress.kubernetes.io/ssl-redirect: '443'
       alb.ingress.kubernetes.io/healthcheck-path: /
-      alb.ingress.kubernetes.io/scheme: internet-facing
+      alb.ingress.kubernetes.io/scheme: {{ LB_SCHEME }}
       alb.ingress.kubernetes.io/target-type: ip
       alb.ingress.kubernetes.io/listen-ports: '[{"HTTP": 80}, {"HTTPS": 443}]'
       alb.ingress.kubernetes.io/certificate-arn: {{ CERTIFICATE_ARN }}
@@ -96,7 +96,7 @@ nalanda:
 
 # vidhaan-executer chart to be updated
 vidhaan-executer:
-  replicaCount: 4
+  replicaCount: 2
   envVars: &vidhaanEnvVars
     # Database
     DB_NAME: {{ NECTED_DB_NAME }}
@@ -134,12 +134,12 @@ vidhaan-router:
     enabled: true
     className: alb
     annotations:
-      alb.ingress.kubernetes.io/load-balancer-name: {{ LB_NAME }}
+      # alb.ingress.kubernetes.io/load-balancer-name: {{ LB_NAME }}
       alb.ingress.kubernetes.io/ip-address-type: ipv4
       alb.ingress.kubernetes.io/group.name: nected-lb
       alb.ingress.kubernetes.io/ssl-redirect: '443'
       alb.ingress.kubernetes.io/healthcheck-path: /
-      alb.ingress.kubernetes.io/scheme: internet-facing
+      alb.ingress.kubernetes.io/scheme: {{ LB_SCHEME }}
       alb.ingress.kubernetes.io/target-type: ip
       alb.ingress.kubernetes.io/listen-ports: '[{"HTTP": 80}, {"HTTPS": 443}]'
       alb.ingress.kubernetes.io/certificate-arn: {{ CERTIFICATE_ARN }}
@@ -153,6 +153,7 @@ vidhaan-router:
 
 # medha chart to be updated
 medha:
+  replicaCount: 2
   envVars:
     DB_ENABLED: "true"
     DB_HOST: {{ DB_HOST }}

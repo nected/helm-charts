@@ -29,6 +29,8 @@ NECTED_ELASTIC_API_KEY: &elasticAPiKey ""
 NECTED_ELASTIC_USER: &elasticUser elastic
 NECTED_ELASTIC_PASSWORD: &elasticPassword esPass123
 
+existingSecret: &credentialSecret ""
+
 # konark chart values to be updated
 konark:
   enabled: true
@@ -40,13 +42,14 @@ konark:
 
   resources:
     requests:
-      cpu: "350m"
+      cpu: "250m"
       memory: "512Mi"
 
 # nalanda chart values to be updated
 nalanda:
   enabled: true
   replicaCount: 1
+  existingSecret: *credentialSecret
   envVars:
     ALLOWED_CORS_ORIGIN: <<scheme>>://<<backend-domain>>,<<scheme>>://<<ui-domain>>
     ALLOWED_HOSTS: <<backend-domain>>
@@ -123,19 +126,20 @@ nalanda:
   resources:
     requests:
       cpu: "250m"
-      memory: "512Mi"
+      memory: "256Mi"
 
   autoscaling:
     enabled: false
-    minReplicas: 1
-    maxReplicas: 1
-    targetCPUUtilizationPercentage: 80
-    targetMemoryUtilizationPercentage: 80
+    minReplicas: 2
+    maxReplicas: 3
+    targetCPUUtilizationPercentage: 85
+    targetMemoryUtilizationPercentage: 85
 
 # vidhaan-executer chart to be updated
 vidhaan-executer:
   enabled: true
   replicaCount: 1
+  existingSecret: *credentialSecret
   envVars: &vidhaanEnvVars
     # Database config
     DB_NAME: *pgDatabase
@@ -175,33 +179,35 @@ vidhaan-executer:
 
   autoscaling:
     enabled: false
-    minReplicas: 1
-    maxReplicas: 1
-    targetCPUUtilizationPercentage: 80
-    targetMemoryUtilizationPercentage: 80
+    minReplicas: 2
+    maxReplicas: 6
+    targetCPUUtilizationPercentage: 85
+    targetMemoryUtilizationPercentage: 85
 
 # vidhaan-router chart to be updated
 vidhaan-router:
   enabled: true
   replicaCount: 1
+  existingSecret: *credentialSecret
   envVars: *vidhaanEnvVars
 
   resources:
     requests:
       cpu: "250m"
-      memory: "512Mi"
+      memory: "256Mi"
 
   autoscaling:
     enabled: false
-    minReplicas: 1
-    maxReplicas: 1
-    targetCPUUtilizationPercentage: 80
-    targetMemoryUtilizationPercentage: 80
+    minReplicas: 2
+    maxReplicas: 4
+    targetCPUUtilizationPercentage: 85
+    targetMemoryUtilizationPercentage: 85
 
 # medha chart to be updated
 medha:
   enabled: true
   replicaCount: 1
+  existingSecret: *credentialSecret
   envVars:
     DB_ENABLED: "true"
     DB_HOST: *pgHost
@@ -214,19 +220,21 @@ medha:
 
   resources:
     requests:
-      cpu: "600m"
+      cpu: "500m"
       memory: "1024Mi"
 
   autoscaling:
     enabled: false
     minReplicas: 1
-    maxReplicas: 1
-    targetCPUUtilizationPercentage: 80
-    targetMemoryUtilizationPercentage: 80
+    maxReplicas: 2
+    targetCPUUtilizationPercentage: 85
+    targetMemoryUtilizationPercentage: 85
 
 # executer-tp chart to be updated
 garuda:
   enabled: false
+  replicaCount: 1
+  existingSecret: *credentialSecret
   envVars:
     REDIS_ENABLED: "true"
     REDIS_TLS_ENABLED: *redisTlsEnabled
@@ -238,12 +246,12 @@ garuda:
 
   resources:
     requests:
-      cpu: "400m"
+      cpu: "500m"
       memory: "1024Mi"
 
   autoscaling:
     enabled: false
     minReplicas: 1
     maxReplicas: 1
-    targetCPUUtilizationPercentage: 80
-    targetMemoryUtilizationPercentage: 80
+    targetCPUUtilizationPercentage: 85
+    targetMemoryUtilizationPercentage: 85

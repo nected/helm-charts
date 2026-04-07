@@ -8,8 +8,7 @@ This guide walks you through deploying **Nected** on your own Kubernetes cluster
 
 ## ✅ Pre-Requisites
 
-1. **Application Load Balancer**
-2. **Domain Setup & Ingress Configuration**
+### Domain Setup & Ingress Configuration
 
 You’ll need **three fully qualified domain names (FQDNs)** pointing to your cluster’s ingress controller:
 
@@ -19,7 +18,70 @@ You’ll need **three fully qualified domain names (FQDNs)** pointing to your cl
 | `nected-nalanda`         | `<<backend-domain>>`   | `api.xyz.com`      |
 | `nected-vidhaan-router`  | `<<router-domain>>`    | `router.xyz.com`   |
 
-> 💡 **Ingress Setup:**
+### Required Services
+
+| Service        | Requirement                         |
+|----------------|-------------------------------------|
+| PostgreSQL     | Database with create/read/write.    |
+| Redis          | Endpoint and authentication details |
+| Elasticsearch  | Endpoint and authentication details |
+
+#### 📌 PostgreSQL Notes
+- Nected services expect the **`nected` database to be pre-created**.
+- The configured user must have:
+  - Database connection privileges
+  - Permission to create tables, indexes, and extensions
+- Ensure network access is allowed from the Kubernetes cluster.
+
+#### Azure PostgreSQL Flexible Server
+1. Go to the Azure Portal, Navigate to your PostgreSQL Flexible Server instance.
+2. Open "Server Parameters", In the left-side menu under Settings, click "Server Parameters".
+3. Find the azure.extensions parameter, Search for azure.extensions using the search bar.
+4. Add btree_gin to the list, If btree_gin is not already listed, append it to the existing list.
+Example: hstore,pg_trgm,btree_gin
+5. Click Save, This change will not restart the server—it takes effect immediately. Create the Extension in Your Database.
+6. After enabling it in parameters:
+```
+CREATE EXTENSION IF NOT EXISTS btree_gin;
+```
+
+#### 📌 ElasticSearch Notes
+Ensure the configured user or API key has the following **cluster** and **index-level privileges**:
+```json
+{
+    "read-write-role": {
+        "cluster": [
+            "monitor",
+            "manage_ingest_pipelines",
+            "manage_transform",
+            "manage_ilm",
+            "manage_index_templates"
+        ],
+        "indices": [{
+            "names": ["*"],
+            "privileges": [
+                "read",
+                "write",
+                "create_index",
+                "manage",
+                "view_index_metadata",
+                "manage_ilm",
+                "monitor"
+            ]
+        }]
+    }
+}
+```
+
+> 💡 **For Dev Environments shortcut:**
+Use Nected’s datastore chart if you don’t have PostgreSQL, Redis, or Elasticsearch installed:
+- [Datastore values](https://charts.nected.io/values/datastore-values.yaml)
+- Install chart
+```
+helm upgrade -i datastore nected/datastore -f datastore-values.yaml
+```
+
+## 🌐 Ingress Setup
 - Create `ingress.yaml` for reference download sample file.
 - [Ingress config](https://charts.nected.io/values/azure-ingress-sample.yaml)
 - Setup ingress, once all services are deployed:
@@ -34,17 +96,7 @@ Point each domain to your ingress controller’s external IP:
 - `api.xyz.com` → `<Ingress External IP>`
 - `router.xyz.com` → `<Ingress External IP>`
 
-3. **PostgreSQL** - With DB/table creation privileges
-4. **Redis** - Endpoint and credentials
-5. **Elasticsearch / OpenSearch (Optional)**
-
-> 💡 **For Dev Environments:**
-Use Nected’s datastore chart if you don’t have PostgreSQL, Redis, or Elasticsearch installed:
-- [Datastore values](https://charts.nected.io/values/datastore-values.yaml)
-- Install chart
-```
-helm upgrade -i datastore nected/datastore -f datastore-values.yaml
-```
+---
 
 ## 🛠️ Installation Steps
 ### 📦 Add Helm Repo
@@ -94,19 +146,6 @@ NECTED_PG_PORT: &pgPort "5432"
 NECTED_PG_SSL_MODE: &pgSslMode disable
 ```
 
-#### Azure PostgreSQL Flexible Server
-1. Go to the Azure Portal, Navigate to your PostgreSQL Flexible Server instance.
-2. Open "Server Parameters", In the left-side menu under Settings, click "Server Parameters".
-3. Find the azure.extensions parameter, Search for azure.extensions using the search bar.
-4. Add btree_gin to the list, If btree_gin is not already listed, append it to the existing list. 
-Example: hstore,pg_trgm,btree_gin
-5. Click Save, This change will not restart the server—it takes effect immediately. Create the Extension in Your Database.
-6. After enabling it in parameters:
-```
-CREATE EXTENSION IF NOT EXISTS btree_gin;
-```
-**Notes**: No changes required if using the Nected-provided datastore.
-
 ### 🧠 Configure Redis
 In `nected-values.yaml`:
 ```
@@ -137,7 +176,53 @@ NECTED_ELASTIC_PASSWORD: &elasticPassword esPass123
 ```
 NECTED_ELASTIC_ENABLED: &elasticEnabled "false"
 ```
-**Notes**: No changes required if using the Nected-provided datastore.
+
+## ⚙️ Scaling & Secrets
+
+### Autoscaling
+
+Default:
+
+* Replica: 1
+* Autoscaling: Disabled
+
+Enable:
+
+```yaml
+autoscaling:
+  enabled: true
+  minReplicas: 2
+  maxReplicas: 4
+```
+
+### Secrets
+
+#### Default
+
+Uses ConfigMap:
+
+* REDIS_PASSWORD
+* ELASTIC_PASSWORD
+* ELASTIC_API_KEY
+* DB_PASSWORD
+* MASTER_DB_PASSWORD
+
+#### Recommended (Kubernetes Secret)
+
+```bash
+kubectl create secret generic nected-credential \
+  --from-literal=MASTER_DB_PASSWORD=psqlPass123 \
+  --from-literal=ELASTIC_PASSWORD=esPass123 \
+  --from-literal=DB_PASSWORD=psqlPass123 \
+  --from-literal=REDIS_PASSWORD=redisPass123 \
+  --from-literal=ELASTIC_API_KEY=your-api-key
+```
+
+Update `nected-values.yaml`:
+
+```yaml
+existingSecret: nected-credential
+```
 
 ### 🚀 Install Nected Services
 1. Install **Temporal**:
