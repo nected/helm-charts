@@ -242,6 +242,8 @@ NECTED_USER_EMAIL: dev@nected.ai
 NECTED_USER_PASSWORD: devPass123
 ```
 
+**Important:** username is always an email and password should be alphanumeric at least 8 characters
+
 ---
 ## 🤝 Community & Support
 For questions, feedback, or contributions:
