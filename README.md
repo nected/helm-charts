@@ -233,7 +233,7 @@ existingSecret: nected-credential
     ```
     helm upgrade -i nected nected/nected -f values/nected-values.yaml
     ```
-
+---
 ### ✅ Access the Application
 Visit the application via your configured `<<ui-domain>>`.
 Login using default credentials defined in `nected-values.yaml`:
