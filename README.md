@@ -101,7 +101,7 @@ Point each domain to your ingress controller’s external IP:
 ## 🛠️ Installation Steps
 ### 📦 Add Helm Repo
 ```
-helm repo add nected https://nected.github.io/helm-charts
+helm repo add nected https://charts.nected.io
 ```
 
 ### 📄 Download Sample Values Files
