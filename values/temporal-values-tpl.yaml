@@ -6,15 +6,15 @@ server:
   enabled: true
   dynamicConfig:
     matching.numTaskqueueReadPartitions:
-    - value: 20
+    - value: 10
       constraints: {}
     matching.numTaskqueueWritePartitions:
-    - value: 20
+    - value: 10
       constraints: {}
   config:
     logLevel: "debug,info"
     # IMPORTANT: This value cannot be changed, once it's set.
-    numHistoryShards: 256
+    numHistoryShards: 512
     dcRedirectionPolicy:
       policy: "selected-apis-forwarding"
       toDC: ""
