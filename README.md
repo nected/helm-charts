@@ -214,14 +214,28 @@ kubectl create secret generic nected-credential \
   --from-literal=MASTER_DB_PASSWORD=psqlPass123 \
   --from-literal=ELASTIC_PASSWORD=esPass123 \
   --from-literal=DB_PASSWORD=psqlPass123 \
-  --from-literal=REDIS_PASSWORD=redisPass123 \
-  --from-literal=ELASTIC_API_KEY=your-api-key
+  --from-literal=REDIS_PASSWORD=redisPass123
 ```
 
 Update `nected-values.yaml`:
 
 ```yaml
 existingSecret: nected-credential
+```
+
+Update `temproal-values.yaml` add existingSecret and secretKey in persistenet and visibility section:
+
+```yaml
+server:
+    persistence:
+        default:
+            sql:
+                existingSecret: nected-credential
+                secretKey: DB_PASSWORD
+        visibility:
+            sql:
+                existingSecret: nected-credential
+                secretKey: DB_PASSWORD
 ```
 
 ### 🚀 Install Nected Services
