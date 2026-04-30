@@ -16,7 +16,7 @@ konark:
   enabled: true
   replicaCount: 1
   image:
-    tag: "op0.13.7-7"
+    tag: "op0.13.7-11"
   envVars:
     # API Configuration
     VITE_API_HOST: http://nalanda.local
@@ -40,7 +40,7 @@ nalanda:
   enabled: true
   replicaCount: 1
   image:
-    tag: &nalandaTag "op0.3.38"
+    tag: &nalandaTag "op0.3.40"
   existingSecretMap: *commonSecretMap
   existingSecret: *commonSecret
   envVars:
@@ -181,7 +181,7 @@ vidhaan-executer:
   enabled: true
   replicaCount: 1
   image:
-    tag: &vidhaanTag "op0.3.37"
+    tag: &vidhaanTag "op0.3.38"
   existingSecretMap: *commonSecretMap
   existingSecret: *commonSecret
   envVars:
@@ -304,7 +304,7 @@ medha:
   enabled: true
   replicaCount: 1
   image:
-    tag: "op0.2.4"
+    tag: "op0.2.5"
   existingSecret: *commonSecret
   envVars:
     DB_ENABLED: "false"
@@ -330,7 +330,7 @@ garuda:
   enabled: false
   replicaCount: 1
   image:
-    tag: "op0.3.4"
+    tag: "op0.3.6"
   existingSecret: *commonSecret
   envVars:
     REDIS_ENABLED: "true"
