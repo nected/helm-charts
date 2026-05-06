@@ -16,7 +16,7 @@ konark:
   enabled: true
   replicaCount: 1
   image:
-    tag: "op0.13.7-11"
+    tag: "op0.13.7-12"
   envVars:
     # API Configuration
     VITE_API_HOST: http://nalanda.local
