@@ -94,6 +94,13 @@ nalanda:
             - path: /
               pathType: Prefix
 
+  autoscaling:
+    enabled: true
+    minReplicas: 2
+    maxReplicas: 3
+    targetCPUUtilizationPercentage: 85
+    targetMemoryUtilizationPercentage: 85
+
 # vidhaan-executer chart to be updated
 vidhaan-executer:
   replicaCount: 2
@@ -125,6 +132,13 @@ vidhaan-executer:
     # subdomains
     SKIP_SUBDOMAINS: {{ ROUTER_DOMAIN }}
 
+  autoscaling:
+    enabled: true
+    minReplicas: 2
+    maxReplicas: 8
+    targetCPUUtilizationPercentage: 85
+    targetMemoryUtilizationPercentage: 85
+
 # vidhaan-router chart to be updated
 vidhaan-router:
   replicaCount: 2
@@ -151,6 +165,13 @@ vidhaan-router:
             - path: /
               pathType: Prefix
 
+  autoscaling:
+    enabled: true
+    minReplicas: 2
+    maxReplicas: 5
+    targetCPUUtilizationPercentage: 85
+    targetMemoryUtilizationPercentage: 85
+
 # medha chart to be updated
 medha:
   replicaCount: 2
@@ -162,3 +183,10 @@ medha:
     DB_PASSWORD: "{{ DB_PASSWORD }}"
     DB_SSL_MODE: require
     COPILOT_PDF_OCR: "true"
+
+  autoscaling:
+    enabled: true
+    minReplicas: 2
+    maxReplicas: 4
+    targetCPUUtilizationPercentage: 85
+    targetMemoryUtilizationPercentage: 85

@@ -61,7 +61,7 @@ server:
   frontend:
     replicaCount: 2
     autoscaling:
-      enabled: false
+      enabled: true
       minReplicas: "2"
       maxReplicas: "4"
       targetCPU: "85"
@@ -79,7 +79,7 @@ server:
   matching:
     replicaCount: 2
     autoscaling:
-      enabled: false
+      enabled: true
       minReplicas: "2"
       maxReplicas: "4"
       targetCPU: "85"
@@ -91,7 +91,7 @@ server:
   worker:
     replicaCount: 2
     autoscaling:
-      enabled: false
+      enabled: true
       minReplicas: "2"
       maxReplicas: "4"
       targetCPU: "85"
