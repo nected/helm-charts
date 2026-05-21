@@ -6,7 +6,9 @@ metadata:
   labels:
     {{- include "common.labels" . | nindent 4 }}
   annotations:
-    {{- include "common.autoSetupPodAnnotationsHook" . | nindent 4 }}
+    {{- with .Values.autoSetup.annotations }}
+    {{- toYaml . | nindent 4 }}
+    {{- end }}
 spec:
   ttlSecondsAfterFinished: 300
   backoffLimit: {{ .Values.autoSetup.backoffLimit }}

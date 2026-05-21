@@ -7,7 +7,7 @@ replicaCount: 1
 image:
   repository:  &nalandaRepo public.ecr.aws/f6k1n6r3/nalanda
   pullPolicy:  IfNotPresent
-  tag: &nalandaTag "op0.3.36"
+  tag: &nalandaTag "op0.3.41"
 
 imagePullSecrets: []
 nameOverride: ""
@@ -256,7 +256,9 @@ autoSetup:
   - |
     cp /mnt/temp/envFile .env
     /app/nalanda init -e -j
-  annotations: {}
+  annotations:
+    helm.sh/hook: pre-install,pre-upgrade
+    helm.sh/hook-weight: "0"
   resources: {}
 
 service:
