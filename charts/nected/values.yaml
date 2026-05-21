@@ -40,7 +40,7 @@ nalanda:
   enabled: true
   replicaCount: 1
   image:
-    tag: &nalandaTag "op0.3.40"
+    tag: &nalandaTag "op0.3.41"
   existingSecretMap: *commonSecretMap
   existingSecret: *commonSecret
   envVars:
