@@ -50,6 +50,11 @@ konark:
       cpu: "250m"
       memory: "512Mi"
 
+  targetGroupBinding:
+    enabled: false
+    targetGroupARN: ""
+    targetType: ip
+
 # nalanda chart values to be updated
 nalanda:
   enabled: true
@@ -175,6 +180,11 @@ nalanda:
     annotations: {}
     hosts: []
     tls: []
+
+  targetGroupBinding:
+    enabled: false
+    targetGroupARN: ""
+    targetType: ip
 
   autoSetup:
     image:
@@ -304,6 +314,11 @@ vidhaan-router:
     annotations: {}
     hosts: []
     tls: []
+
+  targetGroupBinding:
+    enabled: false
+    targetGroupARN: ""
+    targetType: ip
 
   resources:
     requests:
