@@ -7,6 +7,21 @@ existingSecretMap: &commonSecretMap
 
 existingSecret: &commonSecret ""
 
+# Shared custom CA bundle injected into every service pod's system trust store.
+customCA: &commonCustomCA
+  enabled: false
+  secretName: ""
+  items: []
+  defaultMode: 0444
+  includeSystemBundle: true
+  trustBundlePaths:
+    - /etc/ssl/certs/ca-certificates.crt
+    - /etc/ssl/cert.pem
+  initContainer:
+    image: ""
+    imagePullPolicy: ""
+    resources: {}
+
 nodeSelector: {}
 tolerations: []
 affinity: {}
@@ -39,6 +54,7 @@ konark:
 nalanda:
   enabled: true
   replicaCount: 1
+  customCA: *commonCustomCA
   image:
     tag: &nalandaTag "op0.3.41"
   existingSecretMap: *commonSecretMap
@@ -180,6 +196,7 @@ nalanda:
 vidhaan-executer:
   enabled: true
   replicaCount: 1
+  customCA: *commonCustomCA
   image:
     tag: &vidhaanTag "op0.3.38"
   existingSecretMap: *commonSecretMap
@@ -238,6 +255,7 @@ vidhaan-executer:
 vidhaan-router:
   enabled: true
   replicaCount: 1
+  customCA: *commonCustomCA
   image:
     tag: *vidhaanTag
   existingSecretMap: *commonSecretMap
@@ -303,6 +321,7 @@ vidhaan-router:
 medha:
   enabled: true
   replicaCount: 1
+  customCA: *commonCustomCA
   image:
     tag: "op0.2.5"
   existingSecret: *commonSecret
@@ -329,6 +348,7 @@ medha:
 garuda:
   enabled: false
   replicaCount: 1
+  customCA: *commonCustomCA
   image:
     tag: "op0.3.6"
   existingSecret: *commonSecret
