@@ -207,6 +207,21 @@ volumeMounts: []
 # additional volumes setting to mount configMap
 mountConfigMap: false
 
+# Inject a custom CA bundle into the pod's system trust store
+customCA:
+  enabled: false
+  secretName: ""
+  items: []
+  defaultMode: 0444
+  includeSystemBundle: true
+  trustBundlePaths:
+    - /etc/ssl/certs/ca-certificates.crt
+    - /etc/ssl/cert.pem
+  initContainer:
+    image: ""
+    imagePullPolicy: ""
+    resources: {}
+
 nodeSelector: {}
 
 tolerations: []

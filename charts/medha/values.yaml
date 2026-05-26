@@ -139,6 +139,25 @@ volumes: []
 # Additional volumeMounts on the output Deployment definition.
 volumeMounts: []
 
+# Inject a custom CA bundle into the pod's system trust store
+# Note for Python (medha): stdlib `ssl` picks up the overlay automatically, but
+# the `requests` library defaults to certifi's bundled CA store. If medha (or a
+# dependency) uses `requests`, also set in envVars:
+#   REQUESTS_CA_BUNDLE: /etc/ssl/certs/ca-certificates.crt
+customCA:
+  enabled: false
+  secretName: ""
+  items: []
+  defaultMode: 0444
+  includeSystemBundle: true
+  trustBundlePaths:
+    - /etc/ssl/certs/ca-certificates.crt
+    - /etc/ssl/cert.pem
+  initContainer:
+    image: ""
+    imagePullPolicy: ""
+    resources: {}
+
 nodeSelector: {}
 
 tolerations: []
