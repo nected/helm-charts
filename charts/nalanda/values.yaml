@@ -273,6 +273,19 @@ ingress:
   hosts: []
   tls: []
 
+targetGroupBinding:
+  enabled: false
+  targetGroupARN: ""
+  targetType: ip
+  # Optional: restrict which sources can reach the pods through this TG
+  # networking:
+  #   ingress:
+  #     - from:
+  #         - securityGroup:
+  #             groupID: sg-xxxxxxxx
+  #       ports:
+  #         - protocol: TCP
+
 resources:
   requests:
     cpu: "250m"
