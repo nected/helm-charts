@@ -118,6 +118,13 @@ In `nected-values.yaml`, replace the following placeholders:
 | `<<backend-domain>>` | `api.xyz.com`      |
 | `<<router-domain>>`  | `router.xyz.com`   |
 
+### 🔐 License Key
+To generate your License Key, please use the link below:
+[Get Your License Key](https://www.nected.ai/?license_key=true)
+
+After generating the license key, update and uncomment the following configuration under both nalanda and vidhaan-executer:
+
+VIDHAAN_PRE_SHARED_KEY: <<LICENSE_KEY>>
 
 ### 🔐 Configure default user credentials
 In `nected-values.yaml`:

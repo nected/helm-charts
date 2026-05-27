@@ -51,6 +51,7 @@ nalanda:
   replicaCount: 1
   existingSecret: *credentialSecret
   envVars:
+    # VIDHAAN_PRE_SHARED_KEY: <<LICENSE_KEY>>
     ALLOWED_CORS_ORIGIN: <<scheme>>://<<backend-domain>>,<<scheme>>://<<ui-domain>>
     ALLOWED_HOSTS: <<backend-domain>>
     BACKEND_URL: <<scheme>>://<<backend-domain>>
@@ -141,6 +142,8 @@ vidhaan-executer:
   replicaCount: 1
   existingSecret: *credentialSecret
   envVars: &vidhaanEnvVars
+    # VIDHAAN_PRE_SHARED_KEY: <<LICENSE_KEY>>
+
     # Database config
     DB_NAME: *pgDatabase
     DB_USER: *pgUser
