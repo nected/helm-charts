@@ -61,7 +61,7 @@ nalanda:
   replicaCount: 1
   customCA: *commonCustomCA
   image:
-    tag: &nalandaTag "op0.3.41"
+    tag: &nalandaTag "op0.3.42"
   existingSecretMap: *commonSecretMap
   existingSecret: *commonSecret
   envVars:
