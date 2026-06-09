@@ -1035,6 +1035,35 @@ entries:
     version: 0.2.0
   garuda:
   - apiVersion: v2
+    appVersion: op0.3.8
+    created: "2026-06-09T05:46:19.75198266Z"
+    dependencies:
+    - name: common
+      repository: https://charts.nected.io/
+      tags:
+      - nected-common
+      version: 0.x.x
+    description: Nected garuda service
+    digest: d4c164612be099f30858edfe876fe2d79d0a44e6b0550c74e76afae14845d0ea
+    home: https://nected.ai/
+    keywords:
+    - Nected
+    - Workflow automation
+    - BRE, Business Rule Engine
+    - Decision management platform
+    - No-Code / Low-Code Rule Engine
+    - No-Code / Low-Code Workflow automation
+    maintainers:
+    - name: Socioverse Tech Private Ltd.
+      url: https://nected.ai/
+    name: garuda
+    sources:
+    - https://charts.nected.io
+    type: application
+    urls:
+    - https://github.com/nected/helm-charts/releases/download/garuda-0.3.11/garuda-0.3.11.tgz
+    version: 0.3.11
+  - apiVersion: v2
     appVersion: op0.3.4
     created: "2026-05-26T18:38:02.487861868Z"
     dependencies:
@@ -1354,6 +1383,35 @@ entries:
     - https://github.com/nected/helm-charts/releases/download/garuda-0.3.0/garuda-0.3.0.tgz
     version: 0.3.0
   konark:
+  - apiVersion: v2
+    appVersion: op0.13.8
+    created: "2026-06-09T05:46:19.907628753Z"
+    dependencies:
+    - name: common
+      repository: https://charts.nected.io/
+      tags:
+      - nected-common
+      version: 0.x.x
+    description: Konark, Nected fronend application
+    digest: 11ed7ff52a0ee11e7345e218a23038511a410373ab4358f0f4195219e1304f2d
+    home: https://nected.ai/
+    keywords:
+    - Nected
+    - Workflow automation
+    - BRE, Business Rule Engine
+    - Decision management platform
+    - No-Code / Low-Code Rule Engine
+    - No-Code / Low-Code Workflow automation
+    maintainers:
+    - name: Socioverse Tech Private Ltd.
+      url: https://nected.ai/
+    name: konark
+    sources:
+    - https://charts.nected.io
+    type: application
+    urls:
+    - https://github.com/nected/helm-charts/releases/download/konark-0.4.14/konark-0.4.14.tgz
+    version: 0.4.14
   - apiVersion: v2
     appVersion: op0.13.7
     created: "2026-05-26T18:49:00.786538659Z"
@@ -2596,6 +2654,35 @@ entries:
     version: 0.1.2
   medha:
   - apiVersion: v2
+    appVersion: op0.3.0
+    created: "2026-06-09T05:46:20.061695904Z"
+    dependencies:
+    - name: common
+      repository: https://charts.nected.io/
+      tags:
+      - nected-common
+      version: 0.x.x
+    description: Nected medha service
+    digest: c9f1e78931b95ac5eb572a736bb9eb998a32519ef74ed2e7046bbe0c3dc5dfd0
+    home: https://nected.ai/
+    keywords:
+    - Nected
+    - Workflow automation
+    - BRE, Business Rule Engine
+    - Decision management platform
+    - No-Code / Low-Code Rule Engine
+    - No-Code / Low-Code Workflow automation
+    maintainers:
+    - name: Socioverse Tech Private Ltd.
+      url: https://nected.ai/
+    name: medha
+    sources:
+    - https://charts.nected.io
+    type: application
+    urls:
+    - https://github.com/nected/helm-charts/releases/download/medha-0.2.6/medha-0.2.6.tgz
+    version: 0.2.6
+  - apiVersion: v2
     appVersion: op0.2.2
     created: "2026-05-26T18:38:02.724300981Z"
     dependencies:
@@ -2857,6 +2944,35 @@ entries:
     - https://github.com/nected/helm-charts/releases/download/medha-0.1.0/medha-0.1.0.tgz
     version: 0.1.0
   nalanda:
+  - apiVersion: v2
+    appVersion: op0.4.0
+    created: "2026-06-09T05:46:20.213449559Z"
+    dependencies:
+    - name: common
+      repository: https://charts.nected.io/
+      tags:
+      - nected-common
+      version: 0.x.x
+    description: Nalanda, Nected Backend API service
+    digest: f35b90ddb67a47e0578353982007400cf2d1e4ce2aefc5e0d4e6baee19cd1a87
+    home: https://nected.ai/
+    keywords:
+    - Nected
+    - Workflow automation
+    - BRE, Business Rule Engine
+    - Decision management platform
+    - No-Code / Low-Code Rule Engine
+    - No-Code / Low-Code Workflow automation
+    maintainers:
+    - name: Socioverse Tech Private Ltd.
+      url: https://nected.ai/
+    name: nalanda
+    sources:
+    - https://charts.nected.io
+    type: application
+    urls:
+    - https://github.com/nected/helm-charts/releases/download/nalanda-0.3.44/nalanda-0.3.44.tgz
+    version: 0.3.44
   - apiVersion: v2
     appVersion: op0.3.41
     created: "2026-05-26T19:51:11.02036302Z"
@@ -9641,6 +9757,35 @@ entries:
     version: 0.28.0
   vidhaan-executer:
   - apiVersion: v2
+    appVersion: op0.4.0
+    created: "2026-06-09T05:46:20.422845767Z"
+    dependencies:
+    - name: common
+      repository: https://charts.nected.io/
+      tags:
+      - nected-common
+      version: 0.x.x
+    description: Nected Vidhaan-executer (platform worker service)
+    digest: 79c8cd623d806ea1d5b628d2345ef1c8728b1e9f38804db7d1bdb424eea6622c
+    home: https://nected.ai/
+    keywords:
+    - Nected
+    - Workflow automation
+    - BRE, Business Rule Engine
+    - Decision management platform
+    - No-Code / Low-Code Rule Engine
+    - No-Code / Low-Code Workflow automation
+    maintainers:
+    - name: Socioverse Tech Private Ltd.
+      url: https://nected.ai/
+    name: vidhaan-executer
+    sources:
+    - https://charts.nected.io
+    type: application
+    urls:
+    - https://github.com/nected/helm-charts/releases/download/vidhaan-executer-0.3.38/vidhaan-executer-0.3.38.tgz
+    version: 0.3.38
+  - apiVersion: v2
     appVersion: op0.3.32
     created: "2026-05-26T18:38:03.119479289Z"
     dependencies:
@@ -10852,6 +10997,35 @@ entries:
     - https://github.com/nected/helm-charts/releases/download/vidhaan-executer-0.1.1/vidhaan-executer-0.1.1.tgz
     version: 0.1.1
   vidhaan-router:
+  - apiVersion: v2
+    appVersion: op0.4.0
+    created: "2026-06-09T05:46:20.572932071Z"
+    dependencies:
+    - name: common
+      repository: https://charts.nected.io/
+      tags:
+      - nected-common
+      version: 0.x.x
+    description: Nected vidhaan-router helm chart
+    digest: 56b2d08c9257d3c9994db0d009be3ce49cb315757d5ae583f8c9ac12ad6b8d7d
+    home: https://nected.ai/
+    keywords:
+    - Nected
+    - Workflow automation
+    - BRE, Business Rule Engine
+    - Decision management platform
+    - No-Code / Low-Code Rule Engine
+    - No-Code / Low-Code Workflow automation
+    maintainers:
+    - name: Socioverse Tech Private Ltd.
+      url: https://nected.ai/
+    name: vidhaan-router
+    sources:
+    - https://charts.nected.io
+    type: application
+    urls:
+    - https://github.com/nected/helm-charts/releases/download/vidhaan-router-0.3.38/vidhaan-router-0.3.38.tgz
+    version: 0.3.38
   - apiVersion: v2
     appVersion: op0.3.32
     created: "2026-05-26T18:49:01.278956273Z"
@@ -12150,4 +12324,4 @@ entries:
     urls:
     - https://github.com/nected/helm-charts/releases/download/vidhaan-router-0.1.1/vidhaan-router-0.1.1.tgz
     version: 0.1.1
-generated: "2026-06-04T17:21:28.298349435Z"
+generated: "2026-06-09T05:46:20.574542812Z"
