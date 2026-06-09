@@ -7,7 +7,7 @@ replicaCount: 1
 image:
   repository:  &nalandaRepo public.ecr.aws/f6k1n6r3/nalanda
   pullPolicy:  IfNotPresent
-  tag: &nalandaTag "op0.3.41"
+  tag: &nalandaTag "op0.4.0"
 
 imagePullSecrets: []
 nameOverride: ""
@@ -107,7 +107,6 @@ envVars:
 
   # Copilot
   COPILOT_CONFIG_MAP: '{}'
-  MEDHA_BASE_URL: http://nected-medha
 
   # aws ses credentials if EMAIL_PROVIDE: ses
   AWS_ACCESS_KEY: ""
@@ -185,11 +184,11 @@ envVars:
   CREDENTIAL_CONFIG_MAP: '{}'
   PROXY_SQL_LINT_URL: http://medha/api/v1/editor/lint
   PROXY_RULE_URL: ""
-  AI_SUGGESTION: http://medha/api/v1/editor/suggest
 
   # Licensing Config
   LICENSE_DURATION: ""
   LICENSE_KEY_PATH: ""
+  LICENSE_PRIVATE_KEY: ""
 
   # Workflow config
   WORKFLOW_NOT_TESTABLE_NODE_TYPE: trigger,addNode,delayNode,loopDoneNode,arrowNode

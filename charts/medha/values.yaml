@@ -8,7 +8,7 @@ image:
   repository: public.ecr.aws/f6k1n6r3/medha
   pullPolicy: IfNotPresent
   # Overrides the image tag whose default is the chart appVersion.
-  tag: "op0.2.2"
+  tag: "op0.3.0"
 
 imagePullSecrets: []
 nameOverride: ""
@@ -22,6 +22,8 @@ envVars:
   ENVIRONMENT: production
   DEPLOYMENT_REGION: op
   API_V1_PREFIX: /api/v1
+  VIDHAAN_AGENT_KEYS: afa8572b-facf-46ca-a40b-5cd23a3dbf02
+
   ALLOWED_HOSTS: "*"
   ALLOWED_METHODS: "*"
   ALLOWED_HEADERS: "*"
@@ -29,6 +31,7 @@ envVars:
   SERVER_PORT: "8000"
   LOG_LEVEL: INFO
   SKIP_LOGS: "/health"
+
   DB_ENABLED: "true"
   DB_HOST: datastore-postgresql
   DB_PORT: "5432"
@@ -43,17 +46,23 @@ envVars:
   DB_ECHO: "false"
   DB_CONNECT_RETRIES: "3"
   DB_CONNECT_RETRY_DELAY: "2"
-  COPILOT_PDF_OCR: "false"
+
+  COPILOT_PROVIDER: anthropic
+  COPILOT_MODEL: ""
+  COPILOT_API_KEY: ""
+
   SENTRY_DSN: ""
   REQUEST_SIZE: "5"
+
   OCR_ENGINE: "tesseract"
   USE_GPU: "false"
   OCR_LANGS: "en,hi"
+
   EDITOR_EXCLUDED_RULES: "ST05,LT08,LT12"
   EDITOR_INCLUDED_RULES: "CV01,CV02,CV03,CV04,CV05,CV06,CV07,CV08,CV09,CV10,CV11,LT03,LT04,LT07,LT10,LT11,LT13,RF06,ST01,ST02,ST03,ST04,ST07,ST08,TQ01"
   EDITOR_ENABLED_DIALECTS: "mysql,postgres,redshift,oracle,snowflake"
-  EDITOR_OPENAI_API_KEY: ""
-  EDITOR_OPENAI_MODEL: "" 
+  EDITOR_LINT_MAX_BYTE: "64"
+  EDITOR_LINT_TIMEOUT: "1"
 
 
 serviceAccount:

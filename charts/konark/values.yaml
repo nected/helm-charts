@@ -8,7 +8,7 @@ image:
   repository: public.ecr.aws/f6k1n6r3/konark
   pullPolicy: IfNotPresent
   # Overrides the image tag whose default is the chart appVersion.
-  tag: "op0.13.7"
+  tag: "op0.13.8"
 
 imagePullSecrets: []
 nameOverride: ""
@@ -55,7 +55,7 @@ autoSetup:
 service:
   type: ClusterIP
   port: 80
-  targetPort: 80
+  targetPort: 8080
 
 ingress:
   enabled: false
@@ -89,14 +89,14 @@ resources:
 livenessProbe:
   httpGet:
     path: /
-    port: 80
+    port: 8080
   initialDelaySeconds: 10
   failureThreshold: 10
   periodSeconds: 15
 readinessProbe:
   httpGet:
     path: /
-    port: 80
+    port: 8080
   initialDelaySeconds: 10
   failureThreshold: 10
   periodSeconds: 15
