@@ -36,7 +36,6 @@ jobs:
       
       - name: Initialize custom helm repo (Helm V3 Bug)
         run: |
-            helm repo add bitnami https://charts.bitnami.com/bitnami
             helm repo add nected https://charts.nected.io
             helm repo add lemontech https://charts.lemontech.engineering
             helm repo add incubator https://charts.helm.sh/incubator

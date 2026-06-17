@@ -4,6 +4,11 @@ fullnameOverride: ""
 # Postgresql Chart Values
 postgresql:
   enabled: true
+  image:
+    registry: public.ecr.aws/f6k1n6r3
+    repository: postgres
+    tag: 16.2.0
+    pullPolicy: IfNotPresent
   global:
     postgresql:
       auth:
@@ -22,19 +27,27 @@ postgresql:
       requests:
         cpu: "1000m"
         memory: "2Gi"
-      limits:
-        cpu: "1000m"
-        memory: "2Gi"
     persistentVolumeClaimRetentionPolicy:
       enabled: true
       whenScaled: Retain
       whenDeleted: Delete
   volumePermissions:
     enabled: true
+    image:
+      registry: public.ecr.aws/f6k1n6r3
+      repository: postgres
+      tag: 12-os-shell
+      digest: ""
+      pullPolicy: IfNotPresent
 
 # Redis Chart Values
 redis:
   enabled: true
+  image:
+    registry: public.ecr.aws/f6k1n6r3
+    repository: redis
+    tag: 8.2.1
+    pullPolicy: IfNotPresent
   architecture: standalone
   auth:
     enabled: false
@@ -45,9 +58,6 @@ redis:
       enabled: false
     resources:
       requests:
-        cpu: "500m"
-        memory: "512Mi"
-      limits:
         cpu: "500m"
         memory: "512Mi"
 
@@ -76,8 +86,5 @@ elasticsearch:
         storage: 30Gi
   resources:
     requests:
-      cpu: "1000m"
-      memory: "2Gi"
-    limits:
       cpu: "1000m"
       memory: "2Gi"

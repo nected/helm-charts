@@ -22,11 +22,11 @@ sources:
 dependencies:
   - name: postgresql
     version: "15.2.2"
-    repository: https://charts.bitnami.com/bitnami
+    repository: oci://registry-1.docker.io/bitnamicharts
     condition: postgresql.enabled
   - name: redis
     version: "19.0.2"
-    repository: https://charts.bitnami.com/bitnami
+    repository: oci://registry-1.docker.io/bitnamicharts
     condition: redis.enabled
   - name: elasticsearch
     version: "8.5.1"
@@ -34,5 +34,5 @@ dependencies:
     condition: elasticsearch.enabled
 
 type: application
-version: 0.1.2
-appVersion: "0.1.2"
+version: 0.1.3
+appVersion: "0.1.3"
