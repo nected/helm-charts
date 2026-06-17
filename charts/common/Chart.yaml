@@ -19,13 +19,13 @@ maintainers:
 sources:
   - https://charts.nected.io
 
-appVersion: "0.1.6"
+appVersion: "0.1.7"
 type: application
-version: 0.1.6
+version: 0.1.7
 
 dependencies:
   - name: common
-    repository: https://charts.bitnami.com/bitnami
+    repository: oci://registry-1.docker.io/bitnamicharts
     tags:
     - bitnami-common
     version: 2.x.x
