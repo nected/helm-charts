@@ -31,7 +31,7 @@ konark:
   enabled: true
   replicaCount: 1
   image:
-    tag: "op0.13.8"
+    tag: "op0.13.8-1"
   envVars:
     # API Configuration
     VITE_API_HOST: http://nalanda.local
@@ -61,7 +61,7 @@ nalanda:
   replicaCount: 1
   customCA: *commonCustomCA
   image:
-    tag: &nalandaTag "op0.4.0"
+    tag: &nalandaTag "op0.4.0-1"
   existingSecretMap: *commonSecretMap
   existingSecret: *commonSecret
   envVars:

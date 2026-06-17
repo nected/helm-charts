@@ -49,5 +49,5 @@ dependencies:
     version: 0.x.x
 
 type: application
-version: 0.4.45
-appVersion: "0.31.0"
+version: 0.4.46
+appVersion: "0.31.1"
