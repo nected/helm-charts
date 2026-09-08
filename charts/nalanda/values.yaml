@@ -7,7 +7,7 @@ replicaCount: 1
 image:
   repository:  &nalandaRepo public.ecr.aws/f6k1n6r3/nalanda
   pullPolicy:  IfNotPresent
-  tag: &nalandaTag "op0.4.0"
+  tag: &nalandaTag "op0.5.3"
 
 imagePullSecrets: []
 nameOverride: ""
@@ -216,6 +216,13 @@ envVars:
   VIDHAAN_INTERNAL_SVC_DOMAIN: nected-vidhaan-router
   PRODUCT_API_KEY: ""
   VIDHAAN_PRE_SHARED_KEY: 1182d659-8c9b-4541-90ac-8546372c326f
+
+  # Observability
+  OTEL_ENABLED: "false"
+  OTEL_EXPORTER_OTLP_PROTOCOL: "grpc"
+  OTEL_EXPORTER_OTLP_ENDPOINT:
+  OTEL_EXPORTER_OTLP_HEADERS:
+  OTEL_TRACES_SAMPLER_RATIO: "1.0"
 
 serviceAccount:
   # Specifies whether a service account should be created
