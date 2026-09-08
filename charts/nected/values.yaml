@@ -31,7 +31,7 @@ konark:
   enabled: true
   replicaCount: 1
   image:
-    tag: "op0.15.1"
+    tag: "op0.15.2"
   envVars:
     # API Configuration
     VITE_API_HOST: http://nalanda.local
@@ -61,7 +61,7 @@ nalanda:
   replicaCount: 1
   customCA: *commonCustomCA
   image:
-    tag: &nalandaTag "op0.5.2"
+    tag: &nalandaTag "op0.5.3"
   existingSecretMap: *commonSecretMap
   existingSecret: *commonSecret
   envVars:
@@ -173,6 +173,13 @@ nalanda:
     DEFAULT_VIDHAAN_DOMAIN: vidhaan.local
     DEFAULT_VIDHAAN_WHITELISTED_IPS: ""
 
+    # Observability
+    OTEL_ENABLED: "false"
+    OTEL_EXPORTER_OTLP_PROTOCOL: "grpc"
+    OTEL_EXPORTER_OTLP_ENDPOINT:
+    OTEL_EXPORTER_OTLP_HEADERS:
+    OTEL_TRACES_SAMPLER_RATIO: "1.0"
+
   ingress:
     enabled: false
     className:
@@ -207,7 +214,7 @@ vidhaan-executer:
   replicaCount: 1
   customCA: *commonCustomCA
   image:
-    tag: &vidhaanTag "op0.5.1"
+    tag: &vidhaanTag "op0.5.2"
   existingSecretMap: *commonSecretMap
   existingSecret: *commonSecret
   envVars:
@@ -241,6 +248,14 @@ vidhaan-executer:
     ELASTIC_API_KEY: ""
     ELASTIC_USERNAME: elastic
     ELASTIC_PASSWORD: esPass123
+
+    # Observability
+    OTEL_ENABLED: "false"
+    OTEL_EXPORTER_OTLP_PROTOCOL: "grpc"
+    OTEL_EXPORTER_OTLP_ENDPOINT:
+    OTEL_EXPORTER_OTLP_HEADERS:
+    OTEL_TRACES_SAMPLER_RATIO: "1.0"
+    ENABLE_PROMETHEUS: "false"
 
     # Audit log
     AUDIT_LOG_ENABLED: "true"
@@ -337,7 +352,7 @@ medha:
   replicaCount: 1
   customCA: *commonCustomCA
   image:
-    tag: "op0.3.0"
+    tag: "op0.3.1"
   existingSecret: *commonSecret
   envVars:
     DB_HOST: datastore-postgresql
@@ -353,6 +368,12 @@ medha:
     COPILOT_PROVIDER: anthropic
     COPILOT_MODEL: ""
     COPILOT_API_KEY: ""
+
+    OTEL_ENABLED: "false"
+    OTEL_EXPORTER_OTLP_PROTOCOL: "grpc"
+    OTEL_EXPORTER_OTLP_ENDPOINT:
+    OTEL_EXPORTER_OTLP_HEADERS:
+    OTEL_TRACES_SAMPLER_RATIO: "1.0"
 
   resources:
     requests:
@@ -372,7 +393,7 @@ garuda:
   replicaCount: 1
   customCA: *commonCustomCA
   image:
-    tag: "op0.3.6"
+    tag: "op0.3.9"
   existingSecret: *commonSecret
   envVars:
     REDIS_ENABLED: "true"
@@ -382,6 +403,12 @@ garuda:
     REDIS_USERNAME: ""
     REDIS_PASSWORD: ""
     REDIS_DB: "1"
+
+    OTEL_ENABLED: "false"
+    OTEL_EXPORTER_OTLP_PROTOCOL: "grpc"
+    OTEL_EXPORTER_OTLP_ENDPOINT:
+    OTEL_EXPORTER_OTLP_HEADERS:
+    OTEL_TRACES_SAMPLER_RATIO: "1.0"
 
   resources:
     requests:
