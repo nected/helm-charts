@@ -19,9 +19,9 @@ maintainers:
 sources:
   - https://charts.nected.io
 
-appVersion: "op0.13.8"
+appVersion: "op0.15.2"
 type: application
-version: 0.4.14
+version: 0.4.15
 
 dependencies:
 - name: common

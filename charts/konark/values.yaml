@@ -8,7 +8,7 @@ image:
   repository: public.ecr.aws/f6k1n6r3/konark
   pullPolicy: IfNotPresent
   # Overrides the image tag whose default is the chart appVersion.
-  tag: "op0.13.8"
+  tag: "op0.15.2"
 
 imagePullSecrets: []
 nameOverride: ""
@@ -19,6 +19,8 @@ envVars:
   VITE_API_HOST: http://nalanda.local
   VITE_GRAPHQL_URL: http://nalanda.local/graphql/query
   VITE_NGINX_SERVER_NAME: konark.local
+  VITE_WF_HEAVY_NODE_DEFAULT_TIMEOUT: 50
+  VITE_WF_HEAVY_NODE_ASYNC_DEFAULT_TIMEOUT: 180
 
 serviceAccount:
   # Specifies whether a service account should be created
