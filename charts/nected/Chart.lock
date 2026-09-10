@@ -4,21 +4,21 @@ dependencies:
   version: 0.4.15
 - name: nalanda
   repository: https://charts.nected.io/
-  version: 0.3.45
+  version: 0.3.46
 - name: medha
   repository: https://charts.nected.io/
-  version: 0.2.7
+  version: 0.2.8
 - name: vidhaan-router
   repository: https://charts.nected.io/
-  version: 0.3.39
+  version: 0.3.40
 - name: vidhaan-executer
   repository: https://charts.nected.io/
-  version: 0.3.39
+  version: 0.3.40
 - name: garuda
   repository: https://charts.nected.io/
-  version: 0.3.12
+  version: 0.3.13
 - name: common
   repository: https://charts.nected.io/
   version: 0.1.7
-digest: sha256:7254701369ff576bc2ac64dcc3f090a2ffac716b19ca213734f535ed66363ffb
-generated: "2026-09-08T12:41:12.968066+05:30"
+digest: sha256:80ccd77003420a765ddbd49191205614e02020ff8da1e691b57441d71778bd3d
+generated: "2026-09-11T01:01:16.806837+05:30"
