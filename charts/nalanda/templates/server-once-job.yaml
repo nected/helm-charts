@@ -1,4 +1,26 @@
 {{- if .Values.autoSetup.enabled }}
+{{/*
+Hook-owned copy of the app ConfigMap so the setup job can run as a
+pre-install/pre-upgrade hook. The regular ConfigMap does not exist yet
+(fresh install) or is stale (upgrade) when pre hooks run. Weight -1 keeps it
+before the setup job (0); the common-secret job in the parent chart is also
+at -1 and the secret it creates is only needed by the job itself.
+Only before-hook-creation is used: hook-succeeded would delete the ConfigMap
+right after creation, before the job pod is scheduled.
+*/}}
+apiVersion: v1
+kind: ConfigMap
+metadata:
+  name: {{ include "common.fullname" . }}-setup
+  labels:
+    {{- include "common.labels" . | nindent 4 }}
+  annotations:
+    helm.sh/hook: pre-install,pre-upgrade
+    helm.sh/hook-weight: "-1"
+    helm.sh/hook-delete-policy: before-hook-creation
+data:
+  {{- include "common.configMapData" . | nindent 2 }}
+---
 apiVersion: batch/v1
 kind: Job
 metadata:
@@ -38,7 +60,7 @@ spec:
             envFrom:
             {{- if not .Values.mountConfigMap }}
             - configMapRef:
-                name: {{ include "common.fullname" . }}
+                name: {{ include "common.fullname" . }}-setup
             {{- end }}
             {{- with .Values.existingSecret }}
             - secretRef:
@@ -58,7 +80,7 @@ spec:
         volumes:
           - name: {{ include "common.name" . }}-cm-volume
             configMap:
-              name: {{ include "common.fullname" . }}
+              name: {{ include "common.fullname" . }}-setup
               items:
                 - path: envFile
                   {{- if .Values.mountConfigMap }}

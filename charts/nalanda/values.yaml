@@ -262,9 +262,13 @@ autoSetup:
   - |
     cp /mnt/temp/envFile .env
     /app/nalanda init -e -j
+  # Runs as a pre hook: after the parent chart's common-secret job (weight -1)
+  # and before any Deployment is applied. Helm blocks until the job completes
+  # and aborts the install/upgrade (no rollout) if it fails.
   annotations:
-    helm.sh/hook: post-install,post-upgrade
+    helm.sh/hook: pre-install,pre-upgrade
     helm.sh/hook-weight: "0"
+    helm.sh/hook-delete-policy: before-hook-creation
   resources: {}
 
 service:
