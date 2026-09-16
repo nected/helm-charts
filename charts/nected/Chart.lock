@@ -4,7 +4,7 @@ dependencies:
   version: 0.4.15
 - name: nalanda
   repository: https://charts.nected.io/
-  version: 0.3.46
+  version: 0.3.47
 - name: medha
   repository: https://charts.nected.io/
   version: 0.2.8
@@ -20,5 +20,5 @@ dependencies:
 - name: common
   repository: https://charts.nected.io/
   version: 0.1.7
-digest: sha256:80ccd77003420a765ddbd49191205614e02020ff8da1e691b57441d71778bd3d
-generated: "2026-09-11T01:01:16.806837+05:30"
+digest: sha256:2efcdbc51d5a85136c1615bbd61a399a30f1fd4e659169a2487583a376a68714
+generated: "2026-09-16T21:48:22.129383+05:30"
