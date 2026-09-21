@@ -29,6 +29,15 @@ NECTED_ELASTIC_API_KEY: &elasticAPiKey ""
 NECTED_ELASTIC_USER: &elasticUser elastic
 NECTED_ELASTIC_PASSWORD: &elasticPassword esPass123
 
+# Observability
+OTEL_ENABLED: &otlpEnabled "false"
+OTEL_EXPORTER_OTLP_PROTOCOL: &otlpProtocol "grpc"
+OTEL_EXPORTER_OTLP_ENDPOINT_TRACE: &otlpEndpointTrace ""
+OTEL_EXPORTER_OTLP_ENDPOINT_METRIC: &otlpEndpointMetric ""
+OTEL_EXPORTER_OTLP_HEADERS: &otlpHeaders ""
+OTEL_TRACES_SAMPLER_RATIO: &otlpSamplerRatio "1.0"
+OTEL_EXPORTER_OTLP_METRICS_TEMPORALITY_PREFERENCE: &otlpTemporality "cumulative" # delta / cumulative
+
 existingSecret: &credentialSecret ""
 
 # konark chart values to be updated
@@ -124,6 +133,14 @@ nalanda:
     # k8s cluster gw ip
     DEFAULT_VIDHAAN_WHITELISTED_IPS: ""
 
+    OTEL_ENABLED: *otlpEnabled
+    OTEL_EXPORTER_OTLP_PROTOCOL: *otlpProtocol
+    OTEL_EXPORTER_OTLP_ENDPOINT_TRACE: *otlpEndpointTrace
+    OTEL_EXPORTER_OTLP_ENDPOINT_METRIC: *otlpEndpointMetric
+    OTEL_EXPORTER_OTLP_HEADERS: *otlpHeaders
+    OTEL_TRACES_SAMPLER_RATIO: *otlpSamplerRatio
+    OTEL_EXPORTER_OTLP_METRICS_TEMPORALITY_PREFERENCE: *otlpTemporality
+
   resources:
     requests:
       cpu: "250m"
@@ -175,6 +192,14 @@ vidhaan-executer:
     # subdomains
     SKIP_SUBDOMAINS: <<router-domain>>
 
+    OTEL_ENABLED: *otlpEnabled
+    OTEL_EXPORTER_OTLP_PROTOCOL: *otlpProtocol
+    OTEL_EXPORTER_OTLP_ENDPOINT_TRACE: *otlpEndpointTrace
+    OTEL_EXPORTER_OTLP_ENDPOINT_METRIC: *otlpEndpointMetric
+    OTEL_EXPORTER_OTLP_HEADERS: *otlpHeaders
+    OTEL_TRACES_SAMPLER_RATIO: *otlpSamplerRatio
+    OTEL_EXPORTER_OTLP_METRICS_TEMPORALITY_PREFERENCE: *otlpTemporality
+
   resources:
     requests:
       cpu: "500m"
@@ -224,6 +249,14 @@ medha:
     COPILOT_MODEL: ""
     COPILOT_API_KEY: ""
 
+    OTEL_ENABLED: *otlpEnabled
+    OTEL_EXPORTER_OTLP_PROTOCOL: *otlpProtocol
+    OTEL_EXPORTER_OTLP_ENDPOINT_TRACE: *otlpEndpointTrace
+    OTEL_EXPORTER_OTLP_ENDPOINT_METRIC: *otlpEndpointMetric
+    OTEL_EXPORTER_OTLP_HEADERS: *otlpHeaders
+    OTEL_TRACES_SAMPLER_RATIO: *otlpSamplerRatio
+    OTEL_EXPORTER_OTLP_METRICS_TEMPORALITY_PREFERENCE: *otlpTemporality
+
   resources:
     requests:
       cpu: "500m"
@@ -249,6 +282,14 @@ garuda:
     REDIS_USERNAME: *redisUser
     REDIS_PASSWORD: *redisPassword
     REDIS_DB: "2"
+
+    OTEL_ENABLED: *otlpEnabled
+    OTEL_EXPORTER_OTLP_PROTOCOL: *otlpProtocol
+    OTEL_EXPORTER_OTLP_ENDPOINT_TRACE: *otlpEndpointTrace
+    OTEL_EXPORTER_OTLP_ENDPOINT_METRIC: *otlpEndpointMetric
+    OTEL_EXPORTER_OTLP_HEADERS: *otlpHeaders
+    OTEL_TRACES_SAMPLER_RATIO: *otlpSamplerRatio
+    OTEL_EXPORTER_OTLP_METRICS_TEMPORALITY_PREFERENCE: *otlpTemporality
 
   resources:
     requests:

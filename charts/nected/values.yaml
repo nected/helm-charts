@@ -61,7 +61,7 @@ nalanda:
   replicaCount: 1
   customCA: *commonCustomCA
   image:
-    tag: &nalandaTag "op0.5.3"
+    tag: &nalandaTag "op0.5.4"
   existingSecretMap: *commonSecretMap
   existingSecret: *commonSecret
   envVars:
@@ -176,9 +176,11 @@ nalanda:
     # Observability
     OTEL_ENABLED: "false"
     OTEL_EXPORTER_OTLP_PROTOCOL: "grpc"
-    OTEL_EXPORTER_OTLP_ENDPOINT: ""
+    OTEL_EXPORTER_OTLP_ENDPOINT_TRACE: ""
+    OTEL_EXPORTER_OTLP_ENDPOINT_METRIC: ""
     OTEL_EXPORTER_OTLP_HEADERS: ""
     OTEL_TRACES_SAMPLER_RATIO: "1.0"
+    OTEL_EXPORTER_OTLP_METRICS_TEMPORALITY_PREFERENCE: "cumulative"
 
   ingress:
     enabled: false
@@ -214,7 +216,7 @@ vidhaan-executer:
   replicaCount: 1
   customCA: *commonCustomCA
   image:
-    tag: &vidhaanTag "op0.5.2"
+    tag: &vidhaanTag "op0.5.3"
   existingSecretMap: *commonSecretMap
   existingSecret: *commonSecret
   envVars:
@@ -252,9 +254,11 @@ vidhaan-executer:
     # Observability
     OTEL_ENABLED: "false"
     OTEL_EXPORTER_OTLP_PROTOCOL: "grpc"
-    OTEL_EXPORTER_OTLP_ENDPOINT: ""
+    OTEL_EXPORTER_OTLP_ENDPOINT_TRACE: ""
+    OTEL_EXPORTER_OTLP_ENDPOINT_METRIC: ""
     OTEL_EXPORTER_OTLP_HEADERS: ""
     OTEL_TRACES_SAMPLER_RATIO: "1.0"
+    OTEL_EXPORTER_OTLP_METRICS_TEMPORALITY_PREFERENCE: "cumulative"
     ENABLE_PROMETHEUS: "false"
 
     # Audit log
@@ -325,9 +329,12 @@ vidhaan-router:
     # Observability
     OTEL_ENABLED: "false"
     OTEL_EXPORTER_OTLP_PROTOCOL: "grpc"
-    OTEL_EXPORTER_OTLP_ENDPOINT: ""
+    OTEL_EXPORTER_OTLP_ENDPOINT_TRACE: ""
+    OTEL_EXPORTER_OTLP_ENDPOINT_METRIC: ""
     OTEL_EXPORTER_OTLP_HEADERS: ""
     OTEL_TRACES_SAMPLER_RATIO: "1.0"
+    OTEL_EXPORTER_OTLP_METRICS_TEMPORALITY_PREFERENCE: "cumulative"
+    ENABLE_PROMETHEUS: "false"
 
   ingress:
     enabled: false
@@ -359,7 +366,7 @@ medha:
   replicaCount: 1
   customCA: *commonCustomCA
   image:
-    tag: "op0.3.1"
+    tag: "op0.3.2"
   existingSecret: *commonSecret
   envVars:
     DB_HOST: datastore-postgresql
@@ -378,9 +385,11 @@ medha:
 
     OTEL_ENABLED: "false"
     OTEL_EXPORTER_OTLP_PROTOCOL: "grpc"
-    OTEL_EXPORTER_OTLP_ENDPOINT: ""
+    OTEL_EXPORTER_OTLP_ENDPOINT_TRACE: ""
+    OTEL_EXPORTER_OTLP_ENDPOINT_METRIC: ""
     OTEL_EXPORTER_OTLP_HEADERS: ""
     OTEL_TRACES_SAMPLER_RATIO: "1.0"
+    OTEL_EXPORTER_OTLP_METRICS_TEMPORALITY_PREFERENCE: "cumulative"
 
   resources:
     requests:
@@ -400,7 +409,7 @@ garuda:
   replicaCount: 1
   customCA: *commonCustomCA
   image:
-    tag: "op0.3.9"
+    tag: "op0.3.10"
   existingSecret: *commonSecret
   envVars:
     REDIS_ENABLED: "true"
@@ -413,9 +422,11 @@ garuda:
 
     OTEL_ENABLED: "false"
     OTEL_EXPORTER_OTLP_PROTOCOL: "grpc"
-    OTEL_EXPORTER_OTLP_ENDPOINT: ""
+    OTEL_EXPORTER_OTLP_ENDPOINT_TRACE: ""
+    OTEL_EXPORTER_OTLP_ENDPOINT_METRIC: ""
     OTEL_EXPORTER_OTLP_HEADERS: ""
     OTEL_TRACES_SAMPLER_RATIO: "1.0"
+    OTEL_EXPORTER_OTLP_METRICS_TEMPORALITY_PREFERENCE: "cumulative"
 
   resources:
     requests:
