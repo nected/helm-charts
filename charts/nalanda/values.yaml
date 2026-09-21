@@ -7,7 +7,7 @@ replicaCount: 1
 image:
   repository:  &nalandaRepo public.ecr.aws/f6k1n6r3/nalanda
   pullPolicy:  IfNotPresent
-  tag: &nalandaTag "op0.5.3"
+  tag: &nalandaTag "op0.5.4"
 
 imagePullSecrets: []
 nameOverride: ""
@@ -17,7 +17,6 @@ existingSecretMap: {}
 existingSecret: ""
 
 envVars:
-  ENVFILE_DEFAULT_VALUE: "sss"
   # server config
   ALLOWED_CORS_ORIGIN: http://nalanda.local,http://konark.local,http://nected-editor.local
   ALLOWED_HOSTS: nalanda.local
@@ -220,9 +219,11 @@ envVars:
   # Observability
   OTEL_ENABLED: "false"
   OTEL_EXPORTER_OTLP_PROTOCOL: "grpc"
-  OTEL_EXPORTER_OTLP_ENDPOINT: ""
+  OTEL_EXPORTER_OTLP_ENDPOINT_TRACE: ""
+  OTEL_EXPORTER_OTLP_ENDPOINT_METRIC: ""
   OTEL_EXPORTER_OTLP_HEADERS: ""
   OTEL_TRACES_SAMPLER_RATIO: "1.0"
+  OTEL_EXPORTER_OTLP_METRICS_TEMPORALITY_PREFERENCE: "cumulative"
 
 serviceAccount:
   # Specifies whether a service account should be created
@@ -260,7 +261,7 @@ autoSetup:
   - /bin/sh
   - -c
   - |
-    cp /mnt/temp/envFile .env
+    [ -f /mnt/temp/envFile ] && cp /mnt/temp/envFile .env
     /app/nalanda init -e -j
   # Runs as a pre hook: after the parent chart's common-secret job (weight -1)
   # and before any Deployment is applied. Helm blocks until the job completes

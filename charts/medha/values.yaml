@@ -8,7 +8,7 @@ image:
   repository: public.ecr.aws/f6k1n6r3/medha
   pullPolicy: IfNotPresent
   # Overrides the image tag whose default is the chart appVersion.
-  tag: "op0.3.1"
+  tag: "op0.3.2"
 
 imagePullSecrets: []
 nameOverride: ""
@@ -66,9 +66,11 @@ envVars:
 
   OTEL_ENABLED: "false"
   OTEL_EXPORTER_OTLP_PROTOCOL: "grpc"
-  OTEL_EXPORTER_OTLP_ENDPOINT: ""
+  OTEL_EXPORTER_OTLP_ENDPOINT_TRACE: ""
+  OTEL_EXPORTER_OTLP_ENDPOINT_METRIC: ""
   OTEL_EXPORTER_OTLP_HEADERS: ""
   OTEL_TRACES_SAMPLER_RATIO: "1.0"
+  OTEL_EXPORTER_OTLP_METRICS_TEMPORALITY_PREFERENCE: "cumulative"
 
 
 serviceAccount:

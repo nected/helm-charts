@@ -115,8 +115,10 @@ spec:
           resources:
             {{- toYaml .Values.resources | nindent 12 }}
           volumeMounts:
+            {{- if .Values.mountConfigMap }}
             - mountPath: /mnt/temp
               name: {{ include "common.name" . }}-cm-volume
+            {{- end }}
             {{- if .Values.customCA.enabled }}
             {{- range .Values.customCA.trustBundlePaths }}
             - name: ca-bundle
@@ -129,16 +131,14 @@ spec:
             {{- toYaml .Values.volumeMounts | nindent 12 }}
             {{- end}}
       volumes:
+        {{- if .Values.mountConfigMap }}
         - name: {{ include "common.name" . }}-cm-volume
           configMap:
             name: {{ include "common.fullname" . }}
             items:
               - path: envFile
-                {{- if .Values.mountConfigMap }}
                 key: envFile
-                {{- else }}
-                key: ENVFILE_DEFAULT_VALUE
-                {{- end }}
+        {{- end }}
         {{- if .Values.customCA.enabled }}
         - name: custom-ca
           secret:
