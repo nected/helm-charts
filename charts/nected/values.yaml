@@ -366,7 +366,7 @@ medha:
   replicaCount: 1
   customCA: *commonCustomCA
   image:
-    tag: "op0.3.2"
+    tag: "op0.3.3"
   existingSecret: *commonSecret
   envVars:
     DB_HOST: datastore-postgresql
