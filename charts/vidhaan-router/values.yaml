@@ -7,7 +7,7 @@ replicaCount: 1
 image:
   repository: public.ecr.aws/f6k1n6r3/vidhaan
   pullPolicy: IfNotPresent
-  tag: "op0.5.3"
+  tag: "op0.5.4"
   args: ["--router"]
 
 imagePullSecrets: []
@@ -81,6 +81,7 @@ envVars:
   #Temporal For Executer Workers
   TEMPORAL_EXECUTER_SERVER_HOST: nected-temporal-frontend:7233
   TEMPORAL_EXECUTER_NAMESPACE: default
+  TEMPORAL_EXECUTER_API_KEY: ""
   TEMPORAL_EXECUTER_RETENTION_PERIOD: 24h
   TEMPORAL_EXECUTER_WORKFLOW_TASK_POLLERS: "2"
   TEMPORAL_EXECUTER_ACTIVITY_TASK_POLLERS: "2"
