@@ -6,10 +6,10 @@ server:
   enabled: true
   dynamicConfig:
     matching.numTaskqueueReadPartitions:
-    - value: 10
+    - value: 5
       constraints: {}
     matching.numTaskqueueWritePartitions:
-    - value: 10
+    - value: 5
       constraints: {}
   config:
     logLevel: "debug,info"
@@ -43,6 +43,7 @@ server:
           port: 5432
           user: {{ DB_USER }}
           password: "{{ DB_PASSWORD }}"
+          maxIdleConns: 10
           tls:
            enabled: true
            enableHostVerification: false
@@ -55,6 +56,7 @@ server:
           port: 5432
           user: {{ DB_USER }}
           password: "{{ DB_PASSWORD }}"
+          maxIdleConns: 10
           tls:
            enabled: true
            enableHostVerification: false
