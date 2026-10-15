@@ -13,10 +13,10 @@ server:
   enabled: true
   dynamicConfig:
     matching.numTaskqueueReadPartitions:
-    - value: 20
+    - value: 5
       constraints: {}
     matching.numTaskqueueWritePartitions:
-    - value: 20
+    - value: 5
       constraints: {}
   config:
     logLevel: "debug,info"
@@ -47,6 +47,7 @@ server:
           driver: "postgres12"
           database: temporal
           maxConns: 20
+          maxIdleConns: 10
           maxConnLifetime: "1h"
           # if external use external host address & credentials
           host: *pgHost
@@ -62,6 +63,7 @@ server:
           driver: "postgres12"
           database: temporal_visibility
           maxConns: 20
+          maxIdleConns: 10
           maxConnLifetime: "1h"
           # if external use external host address & credentials
           host: *pgHost
