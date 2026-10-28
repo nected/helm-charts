@@ -1,0 +1,45 @@
+{{- if .Values.rbac.create }}
+{{/*
+Namespace-scoped only. No ClusterRole and no cross-namespace reach, which is
+the first thing a customer security review looks for.
+*/}}
+apiVersion: rbac.authorization.k8s.io/v1
+kind: Role
+metadata:
+  name: {{ include "secretsmanager.fullname" . }}
+  labels:
+    {{- include "secretsmanager.labels" . | nindent 4 }}
+  annotations:
+    helm.sh/hook: pre-install,pre-upgrade
+    helm.sh/hook-weight: "-10"
+    helm.sh/hook-delete-policy: before-hook-creation
+rules:
+  - apiGroups: [""]
+    resources: ["secrets"]
+    verbs: ["get", "create", "update", "patch"]
+  {{- if .Values.credentials.enabled }}
+  # Stamping the pod template is the only way an updated Secret reaches running
+  # pods, since env values are fixed when a container starts.
+  - apiGroups: ["apps"]
+    resources: ["deployments"]
+    verbs: ["get", "list", "patch"]
+  {{- end }}
+---
+apiVersion: rbac.authorization.k8s.io/v1
+kind: RoleBinding
+metadata:
+  name: {{ include "secretsmanager.fullname" . }}
+  labels:
+    {{- include "secretsmanager.labels" . | nindent 4 }}
+  annotations:
+    helm.sh/hook: pre-install,pre-upgrade
+    helm.sh/hook-weight: "-10"
+    helm.sh/hook-delete-policy: before-hook-creation
+subjects:
+  - kind: ServiceAccount
+    name: {{ .Values.serviceAccount.name }}
+roleRef:
+  kind: Role
+  name: {{ include "secretsmanager.fullname" . }}
+  apiGroup: rbac.authorization.k8s.io
+{{- end }}

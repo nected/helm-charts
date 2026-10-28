@@ -1,0 +1,187 @@
+# secretsmanager
+#
+# Install this BEFORE the temporal and nected releases. It runs one
+# pre-install/pre-upgrade job that:
+#
+#   1. ensures the encryption-at-rest key exists (restoring it from the vault
+#      if it is there, generating it if not) and backs it up
+#   2. reads the application credentials into a Kubernetes Secret
+#   3. rolls the workloads that consume them
+#
+# The app charts then consume the Secret through values they already have:
+# `existingSecret` in the nected chart, and `sql.existingSecret` /
+# `elasticsearch.existingSecret` in the temporal chart.
+#
+# Nothing here is a credential. Identity is bound out of band - EKS Pod
+# Identity, IRSA, or Azure Workload Identity - and resolved at runtime.
+
+nameOverride: ""
+fullnameOverride: ""
+
+# aws | azure
+provider: ""
+
+# Provider unreachable on an upgrade:
+#   true  -> warn and continue when the target Secret already exists
+#            (a first install has nothing to fall back on and still fails)
+#   false -> always fail the release
+failOpen: true
+
+aws:
+  region: ""
+  # Optional override for a VPC interface endpoint or a non-standard partition.
+  endpoint: ""
+
+azure:
+  # https://<vault>.vault.azure.net
+  vaultUrl: ""
+
+# ---------------------------------------------------------------------------
+# Application credentials
+# ---------------------------------------------------------------------------
+credentials:
+  enabled: true
+
+  # Secret this job writes. Point the app charts' existingSecret at it.
+  secret: nected-credential
+
+  # Remote items holding a flat JSON object of ENV_VAR -> value. Merged in
+  # order, later winning, so values with different rotation rules can live
+  # apart in the vault:
+  #   - a terraform-owned item that is rewritten wholesale on rotation
+  #   - an item seeded once, holding values that must never change (AES_SECRET)
+  #
+  # AWS: secret ids, e.g. nected/prod/app
+  # Azure: secret names. Key Vault allows [a-zA-Z0-9-] only, so the env var
+  #        names live inside the JSON, not in the secret name.
+  remoteKeys: []
+  #  - nected/prod/app
+  #  - nected/prod/immutable
+
+  # Copy one fetched value to a second key, as TARGET: SOURCE. Lets two env
+  # vars share a stored value so a rotation only has to update the vault once.
+  #
+  # Applied after the remote items are merged and before validation, so a
+  # target may appear in requiredKeys. If the target is already present in the
+  # vault with a different value the stored one wins and a warning is logged -
+  # an explicit value beats a derived copy.
+  aliases: {}
+  #   # nalanda reads MASTER_DB_PASSWORD, the vidhaan services and medha read
+  #   # DB_PASSWORD; both are the same Postgres password.
+  #   MASTER_DB_PASSWORD: DB_PASSWORD
+
+  # Checked against the MERGED payload before anything is written, so a key may
+  # come from either item. A missing key aborts the sync and leaves the running
+  # system untouched.
+  requiredKeys: []
+  #  - MASTER_DB_PASSWORD
+  #  - DB_PASSWORD
+  #  - ELASTIC_PASSWORD
+  #  - AES_SECRET
+  #  - JWT_SECRET
+
+  # Deployments rolled when the payload changes. Values taken from envFrom or
+  # secretKeyRef are fixed when a container starts, so a rotated Secret is
+  # invisible to running pods without this.
+  #
+  # Empty uses the defaults below, which assume the conventional release names.
+  restartTargets: []
+  #  - nected-nalanda
+  #  - nected-temporal-frontend
+
+  # Used when restartTargets is empty. Set the release names you actually use.
+  nectedReleaseName: nected
+  temporalFullname: nected-temporal
+
+# ---------------------------------------------------------------------------
+# Encryption-at-rest key
+#
+# The nected chart generates this key in-cluster and, on its own, the key then
+# exists ONLY there: lose the cluster and anything encrypted with it is
+# unrecoverable. Letting this chart manage it puts a copy in the vault.
+#
+# The nected chart's own job guards on the Secret already existing, so it
+# no-ops once this chart has run. Nothing needs to be removed there, and a
+# customer who does not install this chart is unaffected.
+# ---------------------------------------------------------------------------
+earKey:
+  # true = this chart ensures the Secret exists (restore from the vault, else
+  #        generate). false = leave it entirely to the nected chart.
+  manage: false
+
+  # Push a copy to the vault after the Secret is in place.
+  backup: false
+
+  # Remote item for the key. Used for both restore and backup.
+  #   AWS:   nected/prod/encryption-at-rest
+  #   Azure: nected-prod-encryption-at-rest
+  remoteKey: ""
+
+  # false leaves an existing remote value untouched. Overwriting is
+  # destructive: if another cluster stored its own key here, replacing it
+  # discards the only off-cluster copy of a key that may still decrypt live
+  # data. Turn it on deliberately, per environment.
+  overwrite: false
+
+  secretName: encryption-at-rest-secret
+  secretKey: encryption-at-rest
+
+# ---------------------------------------------------------------------------
+
+serviceAccount:
+  create: true
+
+  # The identity binding target. With EKS Pod Identity the IAM role is mapped
+  # to (namespace, this name) server-side, so the name is a prerequisite you
+  # publish rather than something the role is configured against here.
+  name: nected-secret-sync
+
+  # --- how the job gets credentials: pick ONE ---
+  #
+  # EKS Pod Identity  leave both of the fields below empty. The association is
+  #                   made with the AWS API against (namespace, name above):
+  #                     aws eks create-pod-identity-association   #                       --cluster-name <cluster> --namespace <ns>   #                       --service-account nected-secret-sync --role-arn <arn>
+  #
+  # EKS IRSA (OIDC)   set roleArn. The role's trust policy must allow
+  #                   sts:AssumeRoleWithWebIdentity from the cluster OIDC
+  #                   provider with sub = system:serviceaccount:<ns>:<name>.
+  roleArn: ""
+  #   e.g. arn:aws:iam::123456789012:role/nected-secret-sync
+  #
+  # Azure Workload    set clientId to the user-assigned managed identity's
+  # Identity          client id. Required: the webhook injects nothing without
+  #                   it. The pod label is added by the chart.
+  clientId: ""
+  #   e.g. bbe44a7a-e527-476a-9d4e-d5afd90443e0
+
+  # Anything else to put on the ServiceAccount. roleArn and clientId above
+  # render into this; set them there rather than here.
+  annotations: {}
+
+rbac:
+  create: true
+
+image:
+  # The shared utility image: openssl, kubectl, curl, jq and busybox. Nothing
+  # heavier is needed - the AWS CLI would add ~421MB and boto3 ~102MB, and
+  # requests are signed with openssl or curl --aws-sigv4 instead.
+  #
+  # Must be a registry your customers can pull from: this default ships in the
+  # published chart. Override it in your own values for a private mirror.
+  repository: public.ecr.aws/f6k1n6r3/openssl-kubectl
+
+  # `latest` plus IfNotPresent means a node that already cached the tag never
+  # re-pulls, so the job silently runs whatever that node fetched last. Always
+  # avoids that; the job runs once per helm upgrade, so the pull is cheap.
+  # Pin a version tag here instead once one is published, and drop back to
+  # IfNotPresent.
+  tag: latest
+  pullPolicy: Always
+
+backoffLimit: 2
+resources: {}
+podAnnotations: {}
+podLabels: {}
+nodeSelector: {}
+tolerations: []
+affinity: {}
