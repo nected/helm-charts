@@ -1,3 +1,4 @@
+{{- if include "secretsmanager.active" . }}
 {{- if .Values.rbac.create }}
 {{/*
 Namespace-scoped only. No ClusterRole and no cross-namespace reach, which is
@@ -14,10 +15,16 @@ metadata:
     helm.sh/hook-weight: "-10"
     helm.sh/hook-delete-policy: before-hook-creation
 rules:
+  # The encryption-at-rest key is only ever created, never replaced, so the
+  # local-only case needs nothing more than this.
   - apiGroups: [""]
     resources: ["secrets"]
-    verbs: ["get", "create", "update", "patch"]
+    verbs: ["get", "create"]
   {{- if .Values.credentials.enabled }}
+  # Re-writing the credentials Secret on a rotation needs update/patch.
+  - apiGroups: [""]
+    resources: ["secrets"]
+    verbs: ["update", "patch"]
   # Stamping the pod template is the only way an updated Secret reaches running
   # pods, since env values are fixed when a container starts.
   - apiGroups: ["apps"]
@@ -42,4 +49,5 @@ roleRef:
   kind: Role
   name: {{ include "secretsmanager.fullname" . }}
   apiGroup: rbac.authorization.k8s.io
+{{- end }}
 {{- end }}

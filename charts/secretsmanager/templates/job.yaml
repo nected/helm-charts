@@ -1,3 +1,4 @@
+{{- if include "secretsmanager.active" . }}
 {{/*
 Runs before everything else in this release, and this release installs before
 temporal and nected. Still a hook rather than a plain Job even as its own
@@ -27,3 +28,4 @@ spec:
       {{- end }}
     spec:
       {{- include "secretsmanager.podSpec" . | nindent 6 }}
+{{- end }}

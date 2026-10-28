@@ -22,6 +22,11 @@ app.kubernetes.io/instance: {{ .Release.Name }}
 app.kubernetes.io/managed-by: {{ .Release.Service }}
 {{- end }}
 
+{{/* True when this release has any secret work to do. */}}
+{{- define "secretsmanager.active" -}}
+{{- if or .Values.commonSecret.enabled .Values.credentials.enabled }}true{{- end }}
+{{- end -}}
+
 {{/* Fail the render rather than producing a job that cannot work. */}}
 {{- define "secretsmanager.validate" -}}
 {{/* The sample values file ships <<placeholder>> markers. Left unreplaced they
@@ -31,7 +36,7 @@ app.kubernetes.io/managed-by: {{ .Release.Service }}
       "aws.region"                 .Values.aws.region
       "azure.vaultUrl"             .Values.azure.vaultUrl
       "credentials.secret"         .Values.credentials.secret
-      "earKey.remoteKey"           .Values.earKey.remoteKey
+      "commonSecret.remoteKey"      .Values.commonSecret.remoteKey
       "serviceAccount.name"        .Values.serviceAccount.name }}
 {{- if and $value (regexMatch "<<.*>>" $value) }}
 {{- fail (printf "%s is still a placeholder (%q) - fill it in before installing" $field $value) }}
@@ -42,8 +47,17 @@ app.kubernetes.io/managed-by: {{ .Release.Service }}
 {{- fail (printf "credentials.remoteKeys contains a placeholder (%q) - fill it in before installing" $k) }}
 {{- end }}
 {{- end }}
-{{- if not (has .Values.provider (list "aws" "azure")) }}
-{{- fail "provider must be one of: aws, azure" }}
+{{- if not (has .Values.provider (list "" "aws" "azure")) }}
+{{- fail "provider must be empty (local only), aws, or azure" }}
+{{- end }}
+{{- if and .Values.credentials.enabled (not .Values.provider) }}
+{{- fail "credentials.enabled requires provider to be aws or azure" }}
+{{- end }}
+{{- if and .Values.commonSecret.backup (not .Values.provider) }}
+{{- fail "commonSecret.backup requires provider to be aws or azure" }}
+{{- end }}
+{{- if and .Values.commonSecret.backup (not .Values.commonSecret.remoteKey) }}
+{{- fail "commonSecret.backup requires commonSecret.remoteKey" }}
 {{- end }}
 {{- if and (eq .Values.provider "aws") (not .Values.aws.region) }}
 {{- fail "aws.region is required when provider is aws" }}
@@ -64,10 +78,7 @@ app.kubernetes.io/managed-by: {{ .Release.Service }}
 {{- fail "set either serviceAccount.roleArn (EKS IRSA) or serviceAccount.clientId (Azure), not both" }}
 {{- end }}
 {{- if and .Values.credentials.enabled (not .Values.credentials.remoteKeys) }}
-{{- fail "credentials.remoteKeys must list at least one remote item when credentials.enabled is true" }}
-{{- end }}
-{{- if and (or .Values.earKey.manage .Values.earKey.backup) (not .Values.earKey.remoteKey) }}
-{{- fail "earKey.remoteKey is required when earKey.manage or earKey.backup is true" }}
+{{- fail "credentials.enabled requires credentials.remoteKeys to list at least one item" }}
 {{- end }}
 {{/* Key Vault names allow [a-zA-Z0-9-] only, so an AWS-style path fails at
      runtime with an opaque 400. Catch it at render time instead. */}}
@@ -77,8 +88,8 @@ app.kubernetes.io/managed-by: {{ .Release.Service }}
 {{- fail (printf "credentials.remoteKeys: %q is not a valid Key Vault secret name (only letters, digits and hyphens)" $k) }}
 {{- end }}
 {{- end }}
-{{- if and .Values.earKey.remoteKey (not (regexMatch "^[a-zA-Z0-9-]{1,127}$" .Values.earKey.remoteKey)) }}
-{{- fail (printf "earKey.remoteKey: %q is not a valid Key Vault secret name (only letters, digits and hyphens)" .Values.earKey.remoteKey) }}
+{{- if and .Values.commonSecret.remoteKey (not (regexMatch "^[a-zA-Z0-9-]{1,127}$" .Values.commonSecret.remoteKey)) }}
+{{- fail (printf "commonSecret.remoteKey: %q is not a valid Key Vault secret name (only letters, digits and hyphens)" .Values.commonSecret.remoteKey) }}
 {{- end }}
 {{- end }}
 {{- end -}}
@@ -109,6 +120,10 @@ app.kubernetes.io/managed-by: {{ .Release.Service }}
   value: {{ .Values.failOpen | quote }}
 - name: SA_NAME
   value: {{ .Values.serviceAccount.name | quote }}
+- name: NAMESPACE
+  valueFrom:
+    fieldRef:
+      fieldPath: metadata.namespace
 {{- if eq .Values.provider "aws" }}
 - name: AWS_REGION
   value: {{ .Values.aws.region | quote }}
@@ -121,6 +136,26 @@ app.kubernetes.io/managed-by: {{ .Release.Service }}
 - name: AZURE_VAULT_URL
   value: {{ .Values.azure.vaultUrl | quote }}
 {{- end }}
+{{- if .Values.commonSecret.enabled }}
+- name: EAR_ENABLED
+  value: "true"
+- name: EAR_SECRET
+  value: {{ .Values.commonSecret.secretName | quote }}
+- name: EAR_KEY
+  value: {{ .Values.commonSecret.secretKey | quote }}
+- name: EAR_BACKUP
+  value: {{ .Values.commonSecret.backup | quote }}
+- name: EAR_OVERWRITE
+  value: {{ .Values.commonSecret.overwrite | quote }}
+{{- with .Values.commonSecret.remoteKey }}
+- name: EAR_REMOTE
+  value: {{ . | quote }}
+{{- end }}
+{{- with .Values.commonSecret.secretValue }}
+- name: EAR_VALUE
+  value: {{ . | quote }}
+{{- end }}
+{{- end }}
 {{- if .Values.credentials.enabled }}
 - name: CRED_SECRET
   value: {{ .Values.credentials.secret | quote }}
@@ -130,24 +165,10 @@ app.kubernetes.io/managed-by: {{ .Release.Service }}
   value: {{ join " " .Values.credentials.requiredKeys | quote }}
 {{- with .Values.credentials.aliases }}
 - name: CRED_ALIASES
-  value: {{ range $target, $source := . }}{{ $target }}={{ $source }} {{ end }}
+  value: {{ range $t, $src := . }}{{ $t }}={{ $src }} {{ end }}
 {{- end }}
 - name: RESTART_TARGETS
   value: {{ include "secretsmanager.restartTargets" . | quote }}
-{{- end }}
-- name: EAR_MANAGE
-  value: {{ .Values.earKey.manage | quote }}
-- name: EAR_BACKUP
-  value: {{ .Values.earKey.backup | quote }}
-- name: EAR_OVERWRITE
-  value: {{ .Values.earKey.overwrite | quote }}
-- name: EAR_SECRET
-  value: {{ .Values.earKey.secretName | quote }}
-- name: EAR_KEY
-  value: {{ .Values.earKey.secretKey | quote }}
-{{- with .Values.earKey.remoteKey }}
-- name: EAR_REMOTE
-  value: {{ . | quote }}
 {{- end }}
 {{- end -}}
 
