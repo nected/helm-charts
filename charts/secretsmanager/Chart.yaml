@@ -1,0 +1,22 @@
+apiVersion: v2
+name: secretsmanager
+description: Materialises Nected's Kubernetes Secrets from AWS Secrets Manager or Azure Key Vault
+
+home: https://nected.ai/
+
+keywords:
+  - nected
+  - secrets
+  - secrets-manager
+  - key-vault
+
+maintainers:
+  - name: Socioverse Tech Private Ltd.
+    url: https://nected.ai/
+
+sources:
+  - https://charts.nected.io
+
+type: application
+version: 0.2.0
+appVersion: "0.2.0"

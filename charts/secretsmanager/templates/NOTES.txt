@@ -1,0 +1,33 @@
+secretsmanager installed.
+
+The sync job runs as a pre-install/pre-upgrade hook, so it has already
+completed. To see what it did:
+
+  kubectl logs -n {{ .Release.Namespace }} job/{{ include "secretsmanager.fullname" . }}
+
+{{ if .Values.credentials.enabled -}}
+Point the app charts at the Secret it wrote:
+
+  nected-values.yaml:
+    existingSecret: {{ .Values.credentials.secret }}
+
+  temporal-values.yaml:
+    server.config.persistence.default.sql.existingSecret:    {{ .Values.credentials.secret }}
+    server.config.persistence.default.sql.secretKey:         MASTER_DB_PASSWORD
+    server.config.persistence.visibility.sql.existingSecret: {{ .Values.credentials.secret }}
+    server.config.persistence.visibility.sql.secretKey:      MASTER_DB_PASSWORD
+
+  With external OpenSearch, the visibility password comes from the
+  elasticsearch block instead:
+    elasticsearch.existingSecret: {{ .Values.credentials.secret }}
+    elasticsearch.secretKey:      ELASTIC_PASSWORD
+
+Then remove those keys from the envVars blocks. envVars render into a
+ConfigMap, so leaving them there keeps the plaintext readable via
+`kubectl get configmap -o yaml` even though the Secret wins at runtime.
+{{- end }}
+
+Install order:
+  1. {{ .Release.Name }} (this chart)
+  2. temporal
+  3. nected
