@@ -10776,6 +10776,29 @@ entries:
     urls:
     - https://github.com/nected/helm-charts/releases/download/nected-0.1.0/nected-0.1.0.tgz
     version: 0.1.0
+  secretsmanager:
+  - apiVersion: v2
+    appVersion: 0.3.0
+    created: "2026-11-02T12:07:39.709892835Z"
+    description: Materialises Nected's Kubernetes Secrets from AWS Secrets Manager
+      or Azure Key Vault
+    digest: bf80c0becc146672dfbede837feac6035715b82dee9e546863071113672cb08e
+    home: https://nected.ai/
+    keywords:
+    - nected
+    - secrets
+    - secrets-manager
+    - key-vault
+    maintainers:
+    - name: Socioverse Tech Private Ltd.
+      url: https://nected.ai/
+    name: secretsmanager
+    sources:
+    - https://charts.nected.io
+    type: application
+    urls:
+    - https://github.com/nected/helm-charts/releases/download/secretsmanager-0.3.0/secretsmanager-0.3.0.tgz
+    version: 0.3.0
   sql-linter:
   - apiVersion: v2
     appVersion: op0.2.1
@@ -14077,4 +14100,4 @@ entries:
     urls:
     - https://github.com/nected/helm-charts/releases/download/vidhaan-router-0.1.1/vidhaan-router-0.1.1.tgz
     version: 0.1.1
-generated: "2026-10-28T18:52:42.958759124Z"
+generated: "2026-11-02T12:07:39.710510787Z"
