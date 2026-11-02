@@ -49,11 +49,19 @@ azure:
 #
 # Precedence when the Kubernetes Secret does not yet exist:
 #   1. secretValue  - an operator's deliberate restore
-#   2. the vault    - automatic recovery after losing a cluster
+#   2. remoteKey    - a copy you previously stored in the vault
 #   3. generate     - first install
 #
 # An existing Kubernetes Secret is never touched, so a key that is already
 # decrypting data cannot be replaced by accident.
+#
+# KEEP A COPY. This job never writes to the vault, so a generated key lives
+# only in the Kubernetes Secret:
+#
+#   kubectl -n <ns> get secret encryption-at-rest-secret \
+#     -o jsonpath='{.data.encryption-at-rest}'
+#
+# Lose that and everything encrypted under it is unreadable.
 # ---------------------------------------------------------------------------
 commonSecret:
   # nected needs this; temporal does not.
@@ -64,20 +72,14 @@ commonSecret:
   # Takes precedence over the vault.
   secretValue: ""
 
-  # Vault item used to restore and to back up. Requires a provider.
+  # Vault item to RESTORE from. Requires a provider.
   #   aws:   nected/prod/encryption-at-rest
   #   azure: nected-prod-encryption-at-rest
+  #
+  # This job only reads it. Nothing here puts the key into the vault, so the
+  # item is whatever you or your pipeline stored under this name; leave it
+  # empty and a first install generates a key instead.
   remoteKey: ""
-
-  # Push a copy out after the Secret is in place, so the key survives the
-  # cluster. Without it the key exists only in the cluster that generated it.
-  backup: false
-
-  # false leaves an existing remote value untouched. Overwriting is
-  # destructive: if another cluster stored its own key under this name,
-  # replacing it discards the only off-cluster copy of a key that may still
-  # decrypt live data.
-  overwrite: false
 
   secretName: encryption-at-rest-secret
   secretKey: encryption-at-rest

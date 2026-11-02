@@ -143,11 +143,12 @@ here.
 
 Permissions needed:
 
-- **AWS:** `secretsmanager:GetSecretValue`, `DescribeSecret`, and — only if
-  `earKey.backup` is on — `CreateSecret` (plus `PutSecretValue` with
-  `earKey.overwrite`). Add `kms:Decrypt`/`GenerateDataKey` for a CMK.
-- **Azure:** `Key Vault Secrets User` to read. Backing the key up needs write,
-  so **Key Vault Secrets Officer** — *Secrets User is read-only*.
+Read-only, on both counts — as of 0.3.0 this job never writes to the vault:
+
+- **AWS:** `secretsmanager:GetSecretValue`. Add `kms:Decrypt` and
+  `kms:GenerateDataKey` for a customer-managed key. Secret ARNs carry a random
+  6-character suffix, so scope the policy with a trailing wildcard.
+- **Azure:** `Key Vault Secrets User`.
 
 ## Consuming the Secret
 
@@ -176,10 +177,14 @@ elasticsearch:
   secretKey: ELASTIC_PASSWORD
 ```
 
-Then **delete those keys from the `envVars` blocks.** `envVars` renders into a
-ConfigMap, so leaving them there keeps the plaintext readable via
-`kubectl get configmap -o yaml` even though the Secret wins at runtime. Setting
-`existingSecret` does not remove it.
+Then list those keys in `secretKeys`, which the app charts use to filter them
+out of the ConfigMap that `envVars` renders into. Leaving them in place keeps
+the plaintext readable via `kubectl get configmap -o yaml` even though the
+Secret wins at runtime, and setting `existingSecret` does not remove it.
+
+**Deleting them from `envVars` does not work.** Helm deep-merges values, so each
+subchart's own default reappears in the ConfigMap. Only the chart-side
+`secretKeys` filter actually removes them.
 
 ## Failure behaviour
 
@@ -188,13 +193,26 @@ the target Secret already exists, so a transient outage cannot block an
 upgrade. A first install has nothing to fall back on and always fails closed.
 `failOpen: false` always fails.
 
-The encryption-at-rest backup is always best effort: the key is already in the
-cluster by then, so a permission problem warns and the release continues.
+## Keeping a copy of the encryption-at-rest key
 
-`earKey.overwrite` defaults to `false`. If the vault already holds a value the
-job leaves it alone — were two clusters pointed at one `remoteKey`, overwriting
-would discard the only off-cluster copy of a key that may still decrypt live
-data.
+`commonSecret.remoteKey` is a **restore source only**. This job reads it and
+never writes it, so a key it generated exists in exactly one place: the
+Kubernetes Secret. Save it after the first install —
+
+```sh
+kubectl -n <ns> get secret encryption-at-rest-secret \
+  -o jsonpath='{.data.encryption-at-rest}'
+```
+
+— and keep that string somewhere durable. To restore, pass it as
+`commonSecret.secretValue`, or put it in the vault under `commonSecret.remoteKey`
+and this job picks it up on the next install.
+
+Lose both the cluster and that copy and everything encrypted under the key is
+unreadable. There is no recovery path.
+
+An existing Kubernetes Secret is never modified, so a key that is already
+decrypting data cannot be replaced by a later install.
 
 ## Diagnosing a failure
 

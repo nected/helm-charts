@@ -100,15 +100,12 @@ _aws_explain() {
   case "$_type" in
     *AccessDenied*|*UnrecognizedClient*|*InvalidSignature*)
       warn "  the identity resolved but is not allowed this call. Required:"
-      warn "    secretsmanager:GetSecretValue, secretsmanager:DescribeSecret"
-      warn "    secretsmanager:CreateSecret   (encryption-at-rest backup only)"
-      warn "    secretsmanager:PutSecretValue (only with commonSecret.overwrite)"
+      warn "    secretsmanager:GetSecretValue"
       warn "    kms:Decrypt, kms:GenerateDataKey (customer-managed key only)"
       warn "  Secret ARNs carry a random suffix, so scope the policy with a"
       warn "  wildcard: arn:aws:secretsmanager:${AWS_REGION}:<account>:secret:$(printf '%s' "$_id" | cut -d/ -f1)/*"
       ;;
     *ResourceNotFound*) warn "  no such secret in ${AWS_REGION}. Check the name and the region." ;;
-    *ResourceExists*)   warn "  the item already exists; nothing was overwritten." ;;
     *Validation*|*InvalidParameter*) warn "  the name is not valid for Secrets Manager." ;;
   esac
 }
@@ -119,23 +116,5 @@ provider_get() {
   if [ $? -eq 0 ]; then printf '%s' "$_r" | json_one SecretString; return 0; fi
   case "$_r" in *ResourceNotFoundException*) return 2 ;; esac
   _aws_explain GetSecretValue "$1" "$_r"
-  return 1
-}
-
-provider_exists() { aws_call DescribeSecret "{\"SecretId\":\"$1\"}" >/dev/null 2>&1; }
-
-provider_create() {
-  _r=$(aws_call CreateSecret \
-        "{\"Name\":\"$1\",\"ClientRequestToken\":\"$(new_uuid)\",\"SecretString\":\"$(cat "$2")\"}")
-  [ $? -eq 0 ] && return 0
-  _aws_explain CreateSecret "$1" "$_r"
-  return 1
-}
-
-provider_update() {
-  _r=$(aws_call PutSecretValue \
-        "{\"SecretId\":\"$1\",\"ClientRequestToken\":\"$(new_uuid)\",\"SecretString\":\"$(cat "$2")\"}")
-  [ $? -eq 0 ] && return 0
-  _aws_explain PutSecretValue "$1" "$_r"
   return 1
 }

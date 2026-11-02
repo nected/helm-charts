@@ -59,27 +59,3 @@ provider_get() {
   warn "  $(printf '%s' "$_r" | jq -r '.error.message // empty' 2>/dev/null | head -c 200)"
   return 1
 }
-
-provider_exists() {
-  http_send GET "$(_kv_url "$1")" "" -H "Authorization: Bearer ${AZ_TOKEN}" >/dev/null 2>&1
-}
-
-# Key Vault secrets are strings only, so the value is stored as the same base64
-# the Kubernetes Secret already holds. That also matches what
-# commonSecret.secretValue expects, keeping a restore a copy-paste.
-#
-# set-secret is the same PUT whether the item exists or not, so create and
-# update are one operation.
-_kv_set() {
-  jq -n --rawfile v "$2" '{value: $v}' > "$WORK/kv.body"
-  if http_send PUT "$(_kv_url "$1")" "$WORK/kv.body" \
-       -H "Authorization: Bearer ${AZ_TOKEN}" -H "Content-Type: application/json" >/dev/null; then
-    return 0
-  fi
-  warn "writing '$1' to Key Vault failed: HTTP $(http_status)"
-  warn "  Secrets User is read-only; a write needs the Key Vault Secrets Officer role."
-  return 1
-}
-
-provider_create() { _kv_set "$@"; }
-provider_update() { _kv_set "$@"; }

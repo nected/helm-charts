@@ -53,11 +53,13 @@ app.kubernetes.io/managed-by: {{ .Release.Service }}
 {{- if and .Values.credentials.enabled (not .Values.provider) }}
 {{- fail "credentials.enabled requires provider to be aws or azure" }}
 {{- end }}
-{{- if and .Values.commonSecret.backup (not .Values.provider) }}
-{{- fail "commonSecret.backup requires provider to be aws or azure" }}
+{{- if and .Values.commonSecret.remoteKey (not .Values.provider) }}
+{{- fail "commonSecret.remoteKey requires provider to be aws or azure" }}
 {{- end }}
-{{- if and .Values.commonSecret.backup (not .Values.commonSecret.remoteKey) }}
-{{- fail "commonSecret.backup requires commonSecret.remoteKey" }}
+{{/* Removed in 0.3.0. Helm ignores unknown values silently, so an operator
+     carrying these forward would quietly lose a backup they think they have. */}}
+{{- if or (hasKey .Values.commonSecret "backup") (hasKey .Values.commonSecret "overwrite") }}
+{{- fail "commonSecret.backup and commonSecret.overwrite were removed in secretsmanager 0.3.0: this job no longer writes to the vault. remoteKey is now a restore source only, so the encryption-at-rest key's only copy is the Kubernetes Secret - back it up yourself. Remove both keys from your values to continue." }}
 {{- end }}
 {{- if and (eq .Values.provider "aws") (not .Values.aws.region) }}
 {{- fail "aws.region is required when provider is aws" }}
@@ -143,10 +145,6 @@ app.kubernetes.io/managed-by: {{ .Release.Service }}
   value: {{ .Values.commonSecret.secretName | quote }}
 - name: EAR_KEY
   value: {{ .Values.commonSecret.secretKey | quote }}
-- name: EAR_BACKUP
-  value: {{ .Values.commonSecret.backup | quote }}
-- name: EAR_OVERWRITE
-  value: {{ .Values.commonSecret.overwrite | quote }}
 {{- with .Values.commonSecret.remoteKey }}
 - name: EAR_REMOTE
   value: {{ . | quote }}

@@ -27,8 +27,6 @@ EAR_SECRET="${EAR_SECRET:-encryption-at-rest-secret}"
 EAR_KEY="${EAR_KEY:-encryption-at-rest}"
 EAR_VALUE="${EAR_VALUE:-}"
 EAR_REMOTE="${EAR_REMOTE:-}"
-EAR_BACKUP="${EAR_BACKUP:-false}"
-EAR_OVERWRITE="${EAR_OVERWRITE:-false}"
 
 # credentials
 CRED_SECRET="${CRED_SECRET:-}"
@@ -117,33 +115,16 @@ ear_sync() {
     note "  created"
   fi
 
-  # Back it up. The Secret's .data value is already base64, which is exactly
-  # what gets stored - so the key is never written to disk in the clear and a
-  # restore is a paste into commonSecret.secretValue.
-  { [ "$EAR_BACKUP" = "true" ] && [ "$HAVE_PROVIDER" -eq 1 ] && [ -n "$EAR_REMOTE" ]; } || return 0
-
-  _cur=$(k8s_secret_value_b64 "$EAR_SECRET" "$EAR_KEY")
-  if [ -z "$_cur" ]; then
-    warn "  could not read the key back; skipping backup"
-    return 0
-  fi
-  printf '%s' "$_cur" > "$WORK/ear.push"
-
-  if provider_exists "$EAR_REMOTE"; then
-    if [ "$EAR_OVERWRITE" = "true" ]; then
-      provider_update "$EAR_REMOTE" "$WORK/ear.push" && note "  backup updated" \
-        || warn "  could not update the backup; continuing"
-    else
-      # Overwriting is destructive: if another cluster stored its own key here,
-      # replacing it discards the only off-cluster copy of a key that may still
-      # decrypt live data.
-      note "  '$EAR_REMOTE' already holds a value; leaving it untouched"
-      note "  (set commonSecret.overwrite=true to replace it)"
-    fi
-  else
-    provider_create "$EAR_REMOTE" "$WORK/ear.push" && note "  backup created" \
-      || warn "  could not create the backup; continuing"
-  fi
+  # No backup. remoteKey is a restore source only: this job never writes to
+  # the vault, so its identity needs read access and nothing more.
+  #
+  # That means the generated key's only copy is the Kubernetes Secret. To be
+  # able to rebuild this cluster, copy it out and keep it somewhere safe:
+  #
+  #   kubectl -n <ns> get secret $EAR_SECRET -o jsonpath='{.data.'"$EAR_KEY"'}'
+  #
+  # and feed it back through commonSecret.secretValue, or store it under
+  # commonSecret.remoteKey to have this job restore it automatically.
 }
 
 # ---------------------------------------------------------------------------

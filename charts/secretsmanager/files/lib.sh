@@ -15,16 +15,6 @@ require_tools() {
   done
 }
 
-# A v4 UUID. CreateSecret and PutSecretValue require a ClientRequestToken,
-# which the AWS SDKs generate automatically but a raw API caller must supply.
-new_uuid() {
-  if [ -r /proc/sys/kernel/random/uuid ]; then
-    cat /proc/sys/kernel/random/uuid
-  else
-    openssl rand -hex 16 | sed -E 's/(.{8})(.{4})(.{3})(.{3})(.{12})/\1-\2-4\3-a\4-\5/'
-  fi
-}
-
 # ---------- HTTP ----------
 #
 # curl, not wget: busybox wget discards the response body on a 4xx, which makes
@@ -119,11 +109,6 @@ k8s_secret_exists() { kubectl get secret "$1" >/dev/null 2>&1; }
 
 k8s_secret_hash() {
   kubectl get secret "$1" -o "jsonpath={.metadata.annotations['nected\.ai/payload-hash']}" 2>/dev/null
-}
-
-# Reads one key back out of a Secret, base64 as stored.
-k8s_secret_value_b64() {
-  kubectl get secret "$1" -o "jsonpath={.data['$2']}" 2>/dev/null
 }
 
 # Create or replace a Secret from a directory of files, one per key.
