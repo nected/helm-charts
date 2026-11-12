@@ -42,6 +42,7 @@ trap 'rm -rf "$WORK"; http_cleanup' EXIT INT TERM
 mkdir -p "$WORK" || die "cannot create a work directory"
 
 HAVE_PROVIDER=0
+PROVIDER_READY=0
 case "$PROVIDER" in
   "")          ;;
   aws|azure)   . "$LIB_DIR/${PROVIDER}.sh"; HAVE_PROVIDER=1 ;;
@@ -64,7 +65,16 @@ bail_or_continue() {
 
 if [ "$HAVE_PROVIDER" -eq 1 ]; then
   note "secretsmanager: provider $(provider_name)"
-  provider_init || bail_or_continue "could not initialise $(provider_name)"
+  if provider_init; then
+    PROVIDER_READY=1
+  else
+    # Not fatal on its own. The encryption-at-rest key never needs a vault, so
+    # a cluster with no Secrets Manager or Key Vault access must still be able
+    # to install - which is exactly what the job this replaced did. Only the
+    # credentials sync genuinely requires a provider, and that is gated below.
+    warn "could not initialise $(provider_name); continuing without it"
+    warn "  the encryption-at-rest key does not need a vault and is handled locally"
+  fi
 else
   note "secretsmanager: no provider configured (local mode)"
 fi
@@ -93,9 +103,23 @@ ear_sync() {
       _b64="$EAR_VALUE"; _from="commonSecret.secretValue"
       [ "$HAVE_PROVIDER" -eq 1 ] && [ -n "$EAR_REMOTE" ] \
         && warn "  secretValue is set, so the vault copy of '$EAR_REMOTE' is NOT used"
-    elif [ "$HAVE_PROVIDER" -eq 1 ] && [ -n "$EAR_REMOTE" ]; then
-      if _v=$(provider_get "$EAR_REMOTE" 2>/dev/null) && [ -n "$_v" ]; then
+    elif [ "$PROVIDER_READY" -eq 1 ] && [ -n "$EAR_REMOTE" ]; then
+      # stderr is left alone so the provider's own permission diagnostics show.
+      _v=$(provider_get "$EAR_REMOTE"); _rc=$?
+      if [ "$_rc" -eq 0 ] && [ -n "$_v" ]; then
         _b64="$_v"; _from="the vault item '$EAR_REMOTE'"
+      elif [ "$_rc" -eq 2 ]; then
+        note "  no vault item '$EAR_REMOTE' yet"
+      else
+        # The item may or may not hold a key: the read failed, so we cannot
+        # tell. Generating one now would orphan anything already encrypted
+        # under a stored key, and that is not reversible.
+        warn "  could not read '$EAR_REMOTE', so it is unknown whether a key is stored there"
+        [ "$FAIL_OPEN" = "true" ] \
+          || die "refusing to generate a new key while '$EAR_REMOTE' is unreadable (failOpen is false)"
+        warn "  failOpen is set, so a NEW key will be generated. If this cluster is a"
+        warn "  REBUILD, stop now and pass the previous key as commonSecret.secretValue:"
+        warn "  a new key cannot decrypt data written under the old one."
       fi
     fi
 
@@ -204,7 +228,15 @@ creds_sync() {
   fi
 }
 
+# The key first: it never depends on the provider, so it must not be skipped
+# by a provider problem that only affects the credentials sync.
 ear_sync
-creds_sync
+
+if [ -n "$CRED_SECRET" ]; then
+  [ "$PROVIDER_READY" -eq 1 ] \
+    || bail_or_continue "credentials need $(provider_name), which could not be initialised"
+  creds_sync
+fi
+
 note "done."
 exit 0
