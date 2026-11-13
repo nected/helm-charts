@@ -100,15 +100,40 @@ Create autosetup pod labels from values and include pod labels
 
 
 {{/*
+Keys supplied by a Secret, filtered out of envVars.
+
+envVars renders into a ConfigMap, so a credential left in it stays readable
+via `kubectl get configmap -o yaml` even when existingSecret overrides the
+value at container start. Removing the key from a values file is NOT enough:
+Helm deep-merges maps, so the subchart's own default survives and reappears in
+the ConfigMap. Only filtering here actually removes it.
+
+An empty secretKeys list changes nothing, so existing installs are unaffected.
+*/}}
+{{- define "common.appEnvVars" -}}
+{{- $secretKeys := default (list) .Values.secretKeys -}}
+{{- $out := dict -}}
+{{- range $key, $value := .Values.envVars -}}
+{{- if not (has $key $secretKeys) -}}
+{{- $_ := set $out $key $value -}}
+{{- end -}}
+{{- end -}}
+{{- toYaml $out -}}
+{{- end }}
+
+{{/*
 Common configMap data generator
 */}}
 {{- define "common.configMapData" -}}
+{{- $secretKeys := default (list) .Values.secretKeys -}}
 {{- if .Values.mountConfigMap }}
 envFile: |
   {{- range $key, $value := .Values.envVars }}
+  {{- if not (has $key $secretKeys) }}
   {{ $key }}={{ $value}}
   {{- end }}
+  {{- end }}
 {{- else }}
-{{- toYaml .Values.envVars }}
+{{- include "common.appEnvVars" . }}
 {{- end }}
 {{- end }}

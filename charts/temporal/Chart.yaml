@@ -12,6 +12,16 @@ maintainers:
 sources:
   - https://github.com/temporalio/temporal
 dependencies:
+  # Runs the secret sync as part of this release. Temporal has no other hooks,
+  # so this precedes the schema jobs that need the database password.
+  #
+  # Both this chart and the nected chart carry it on purpose: whichever release
+  # installs first creates the Secret, and the second sees an unchanged payload
+  # hash and exits without writing or restarting anything. Install order then
+  # does not matter.
+  - name: secretsmanager
+    repository: https://charts.nected.io/
+    version: 0.3.1
   - name: cassandra
     version: "0.14.3"
     repository: https://charts.helm.sh/incubator
@@ -39,7 +49,7 @@ dependencies:
 type: application
 # This is the chart version. This version number should be incremented each time you make changes
 # to the chart and its templates, including the app version.
-version: 0.54.2
+version: 0.54.3
 # This is the version number of the application being deployed. This version number should be
 # incremented each time you make changes to the application.
 appVersion: 1.26.4

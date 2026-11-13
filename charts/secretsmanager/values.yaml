@@ -17,6 +17,12 @@
 # the encryption-at-rest key is still generated locally, which is what the
 # nected chart's own job used to do.
 #
+# The same holds when a provider IS set but cannot be reached or the identity
+# has no access: the job warns, handles the encryption-at-rest key locally, and
+# only fails if credentials.enabled is true, since those genuinely need a
+# vault. Having no Secrets Manager or Key Vault access never blocks an install
+# that is only managing the key.
+#
 # Nothing renders unless commonSecret.enabled or credentials.enabled is true,
 # so there is no separate on/off flag to forget.
 
@@ -30,6 +36,12 @@ provider: ""
 #   true  -> warn and continue when the credentials Secret already exists
 #            (a first install has nothing to fall back on and still fails)
 #   false -> always fail the release
+#
+# It also decides what happens when commonSecret.remoteKey cannot be READ -
+# denied rather than absent - so it is unknown whether a key is stored there:
+#   true  -> generate a new key, with a loud warning
+#   false -> refuse, because a new key cannot decrypt data written under the old
+#            one. Use false if you restore clusters from backups.
 failOpen: true
 
 aws:
@@ -117,7 +129,20 @@ credentials:
   # password. Storing it once and aliasing means a rotation updates the vault
   # in one place. Set to {} if you store both keys explicitly.
   aliases:
+    # nalanda reads MASTER_DB_PASSWORD, the vidhaan services and medha read
+    # DB_PASSWORD; same Postgres password. Safe as a default because Postgres
+    # is mandatory, so DB_PASSWORD is always in the payload.
     MASTER_DB_PASSWORD: DB_PASSWORD
+    VIDHAAN_REDIS_PASSWORD: REDIS_PASSWORD
+    # NOT defaulted, though nalanda reads VIDHAAN_REDIS_PASSWORD while
+    # everything else reads REDIS_PASSWORD:
+    #
+    #   VIDHAAN_REDIS_PASSWORD: REDIS_PASSWORD
+    #
+    # A missing alias SOURCE aborts the sync, and Redis is optional, so a vault
+    # with no REDIS_PASSWORD would fail every first install. Add it yourself if
+    # you list VIDHAAN_REDIS_PASSWORD in the app charts' secretKeys - otherwise
+    # that key is stripped from the ConfigMap and supplied by nothing.
 
   # Checked against the MERGED payload before anything is written, so a key
   # may come from any item or an alias. A missing key aborts the sync and
@@ -174,7 +199,7 @@ image:
   #
   # This default ships in the published chart, so it has to be a registry your
   # customers can pull from. Override it for a private mirror.
-  repository: public.ecr.aws/f6k1n6r3/openssl-kubectl
+  repository: public.ecr.aws/f6k1n6r3/openssl-kubectl-v1
 
   # `latest` plus IfNotPresent means a node that already cached the tag never
   # re-pulls, so the job silently runs whatever that node fetched last. Always

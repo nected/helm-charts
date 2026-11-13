@@ -38,7 +38,102 @@ OTEL_EXPORTER_OTLP_HEADERS: &otlpHeaders ""
 OTEL_TRACES_SAMPLER_RATIO: &otlpSamplerRatio "1.0"
 OTEL_EXPORTER_OTLP_METRICS_TEMPORALITY_PREFERENCE: &otlpTemporality "cumulative" # delta / cumulative
 
+# Secret holding every credential. Set this and the matching keys below are
+# supplied from it instead of from envVars.
+#
+# IMPORTANT: envVars render into a ConfigMap. Setting existingSecret only makes
+# the Secret win at container start - it does NOT remove the plaintext from the
+# ConfigMap. Comment out or delete the password/secret entries in the envVars
+# blocks below as well.
+# Default is "" = credentials come from the inline values in this file, as
+# before. To use a Secret instead (the one secretsmanager writes below, or one
+# you create yourself):
+#   1. existingSecret: nected-credential
+#   2. list the keys it supplies in secretKeys, so they leave the ConfigMap
+#   3. blank the matching passwords at the top of this file
 existingSecret: &credentialSecret ""
+
+# Keys supplied by existingSecret, kept out of the ConfigMap. Shared by every
+# service below; a key a service does not use is ignored. Leave [] while
+# existingSecret is empty - the render fails if secretKeys is set without it.
+# Every key listed must exist in the Secret.
+secretKeys: &credentialSecretKeys []
+#  - AES_SECRET                  # nalanda
+#  - JWT_SECRET                  # nalanda
+#  - DEFAULT_VIDHAAN_SECRET_KEY  # nalanda
+#  - VIDHAAN_PRE_SHARED_KEY      # nalanda, vidhaan-*  (licence key)
+#  - MASTER_DB_PASSWORD          # nalanda
+#  - DB_PASSWORD                 # vidhaan-*, medha
+#  - REDIS_PASSWORD              # nalanda, vidhaan-*, garuda
+#  - VIDHAAN_REDIS_PASSWORD      # nalanda (not aliased by default; store it in the vault)
+#  - ELASTIC_PASSWORD            # nalanda, vidhaan-*
+#  - ELASTIC_API_KEY             # nalanda, vidhaan-*
+#  - NECTED_USER_PASSWORD        # nalanda
+#  - EMAIL_PASSWORD              # nalanda
+#  - AWS_SECRET_KEY              # nalanda
+#  - MICROSOFT_CLIENT_SECRET     # nalanda
+#  - PRODUCT_API_KEY             # nalanda
+#  - TEMPORAL_EXECUTER_API_KEY   # vidhaan-*
+#  - COPILOT_API_KEY             # medha
+
+# secretsmanager subchart: one job that runs as a pre-install/pre-upgrade hook
+# (weights -10/-5) ahead of the rest of THIS release, including nalanda's DB
+# setup job. Hooks only order within a release, so it is not guaranteed to run
+# before the temporal release; whichever release installs first writes the
+# Secret and the other sees an unchanged hash and does nothing.
+#
+# `provider` selects a vault, it does not switch the job on. With no provider
+# the encryption-at-rest key is still generated locally, as before.
+#
+# Requires a workload identity bound to service account `nected-secret-sync`
+# in this namespace (serviceAccount.roleArn / clientId below). No credentials
+# are configured here.
+secretsmanager:
+  provider: ""                     # "" = local only | aws | azure
+
+  # The encryption-at-rest key. Never replaced once the Secret exists.
+  commonSecret:
+    enabled: true
+    secretValue: ""                # base64 of the PEM; takes precedence over the vault
+    # Restore source only: the job reads this item and never writes it, so a
+    # generated key's only copy is the Kubernetes Secret. Save it yourself.
+    remoteKey: ""                  # aws: nected/prod/encryption-at-rest | azure: nected-prod-encryption-at-rest
+
+  # Application credentials -> the Secret named in existingSecret above.
+  credentials:
+    enabled: false                 # requires a provider
+    secret: nected-credential      # must equal existingSecret above
+    # Remote items holding a flat JSON of ENV_VAR -> value; merged in order,
+    # later wins. aws: nected/prod/app | azure: nected-prod-app
+    remoteKeys: []
+    # Verified before anything is written; a missing key aborts the sync and
+    # leaves the running system untouched.
+    requiredKeys: []
+    #  - MASTER_DB_PASSWORD
+    #  - DB_PASSWORD
+    #  - ELASTIC_PASSWORD
+    #  - AES_SECRET
+    #  - JWT_SECRET
+    # The chart defaults MASTER_DB_PASSWORD: DB_PASSWORD, so the vault needs
+    # DB_PASSWORD. `aliases: {}` does NOT clear it (Helm merges maps); use
+    # `aliases: null` if you store both keys explicitly.
+    #
+    # Deployments rolled when the payload changes. These names MUST match your
+    # release names, or the sync succeeds while pods keep stale credentials.
+    # Set restartTargets explicitly if your releases are not named
+    # `nected` / `nected-temporal`.
+    nectedReleaseName: nected
+    temporalFullname: nected-temporal
+    # restartTargets: [nected-nalanda, nected-vidhaan-router, nected-temporal-frontend]
+
+  aws:
+    region: ""                     # required when provider is aws
+  azure:
+    vaultUrl: ""                   # https://<vault>.vault.azure.net
+
+  serviceAccount:
+    roleArn: ""                    # EKS IRSA
+    clientId: ""                   # Azure Workload Identity
 
 # konark chart values to be updated
 konark:
@@ -59,6 +154,7 @@ nalanda:
   enabled: true
   replicaCount: 1
   existingSecret: *credentialSecret
+  secretKeys: *credentialSecretKeys
   envVars:
     # VIDHAAN_PRE_SHARED_KEY: <<LICENSE_KEY>>
     ALLOWED_CORS_ORIGIN: <<scheme>>://<<backend-domain>>,<<scheme>>://<<ui-domain>>
@@ -158,6 +254,7 @@ vidhaan-executer:
   enabled: true
   replicaCount: 1
   existingSecret: *credentialSecret
+  secretKeys: *credentialSecretKeys
   envVars: &vidhaanEnvVars
     # VIDHAAN_PRE_SHARED_KEY: <<LICENSE_KEY>>
 
@@ -217,6 +314,7 @@ vidhaan-router:
   enabled: true
   replicaCount: 1
   existingSecret: *credentialSecret
+  secretKeys: *credentialSecretKeys
   envVars: *vidhaanEnvVars
 
   resources:
@@ -236,6 +334,7 @@ medha:
   enabled: true
   replicaCount: 1
   existingSecret: *credentialSecret
+  secretKeys: *credentialSecretKeys
   envVars:
     DB_ENABLED: "true"
     DB_HOST: *pgHost
@@ -274,6 +373,7 @@ garuda:
   enabled: false
   replicaCount: 1
   existingSecret: *credentialSecret
+  secretKeys: *credentialSecretKeys
   envVars:
     REDIS_ENABLED: "true"
     REDIS_TLS_ENABLED: *redisTlsEnabled

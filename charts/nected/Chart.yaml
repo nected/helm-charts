@@ -24,30 +24,36 @@ dependencies:
     condition: konark.enabled
   - name: nalanda
     repository: https://charts.nected.io/
-    version: 0.3.49
+    version: 0.3.50
     condition: nalanda.enabled
   - name: medha
     repository: https://charts.nected.io/
-    version: 0.2.9
+    version: 0.2.10
     condition: medha.enabled
   - name: vidhaan-router
     repository: https://charts.nected.io/
-    version: 0.3.43
+    version: 0.3.44
     condition: vidhaan-router.enabled
   - name: vidhaan-executer
     repository: https://charts.nected.io/
-    version: 0.3.43
+    version: 0.3.44
     condition: vidhaan-executer.enabled
   - name: garuda
     repository: https://charts.nected.io/
-    version: 0.3.14
+    version: 0.3.15
     condition: garuda.enabled
   - name: common
     repository: https://charts.nected.io/
     tags:
     - nected-common
     version: 0.x.x
+  # Runs the secret sync as part of this release instead of a separate install.
+  # Its hooks sit at -10/-5, ahead of the encryption-at-rest job (-1) and
+  # nalanda's setup job (0), so the Secret exists before anything reads it.
+  - name: secretsmanager
+    repository: https://charts.nected.io/
+    version: 0.3.1
 
 type: application
-version: 0.4.66
+version: 0.4.67
 appVersion: "0.33.10"

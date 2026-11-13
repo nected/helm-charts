@@ -14,6 +14,12 @@ imagePullSecrets: []
 nameOverride: ""
 fullnameOverride: ""
 
+# Keys that a Secret supplies, so they are kept out of the ConfigMap that
+# envVars renders into. Deleting a key from envVars is not enough: Helm
+# deep-merges maps, so this chart's own default below would survive and leak.
+# Empty = unchanged behaviour.
+secretKeys: []
+
 existingSecretMap: {}
 existingSecret: ""
 
