@@ -20,7 +20,7 @@ sources:
 dependencies:
   - name: konark
     repository: https://charts.nected.io/
-    version: 0.4.17
+    version: 0.4.16
     condition: konark.enabled
   - name: nalanda
     repository: https://charts.nected.io/
