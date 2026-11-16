@@ -478,7 +478,19 @@ elasticsearch:
   version: "v7"
   logLevel: "error"
   username: ""
+  # Inline password. Leave empty and set existingSecret below to keep it out of
+  # the chart-rendered Secret.
   password: ""
+  # Read the password from a Secret managed elsewhere (the secret-manager hook,
+  # External Secrets, or kubectl) instead of rendering one from `password`.
+  #
+  # NOTE: elasticsearch.external or .enabled forces the visibility store onto
+  # the elasticsearch driver regardless of
+  # server.config.persistence.visibility.driver, so with external OpenSearch
+  # this is the field that controls the visibility password - not
+  # persistence.visibility.sql.existingSecret.
+  existingSecret: ""
+  secretKey: ""
   visibilityIndex: "temporal_visibility_v1_dev"
 prometheus:
   enabled: true
@@ -560,3 +572,34 @@ cassandra:
     type: ClusterIP
 mysql:
   enabled: false
+
+# ---------------------------------------------------------------------------
+# secretsmanager subchart
+#
+# Temporal has no encryption-at-rest key, so commonSecret stays off here and
+# nothing renders until credentials are enabled. Both charts carry the
+# subchart on purpose: whichever release installs first writes the Secret, and
+# the second sees an unchanged payload hash and exits.
+# ---------------------------------------------------------------------------
+secretsmanager:
+  provider: ""                      # "" = nothing renders | aws | azure
+
+  commonSecret:
+    enabled: false                  # nected owns this key
+
+  credentials:
+    enabled: false                  # requires a provider
+    secret: nected-credential
+    remoteKeys: []
+    requiredKeys: []
+    aliases: {}
+    temporalFullname: nected-temporal
+
+  aws:
+    region: ""
+  azure:
+    vaultUrl: ""
+
+  serviceAccount:
+    roleArn: ""
+    clientId: ""
