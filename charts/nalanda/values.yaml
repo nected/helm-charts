@@ -7,7 +7,7 @@ replicaCount: 1
 image:
   repository:  &nalandaRepo public.ecr.aws/f6k1n6r3/nalanda
   pullPolicy:  IfNotPresent
-  tag: &nalandaTag "op0.5.6"
+  tag: &nalandaTag "op0.5.10"
 
 imagePullSecrets: []
 nameOverride: ""
@@ -18,8 +18,6 @@ existingSecret: ""
 
 envVars:
   # server config
-  ALLOWED_CORS_ORIGIN: http://nalanda.local,http://konark.local,http://nected-editor.local
-  ALLOWED_HOSTS: nalanda.local
   BACKEND_URL: https://nalanda.local
   DEBUG: "false"
   DEPLOYMENT: production
@@ -29,6 +27,7 @@ envVars:
   SERVER_PORT: "8001"
   SERVER_TIMEZONE: UTC
   MAX_REQUEST_SIZE: "3145728"
+  SKIP_LOG_PATHS: /health/live,/health/ready
   DEV_API_RPM_LIMIT: "10"
   DEV_API_MAX_RESPONSE_SIZE: "1048576"
   TASKS_CONCURRENCY: "5"
@@ -47,6 +46,8 @@ envVars:
   # Security
   SECURITY_ENABLED: "false"
   CHECK_ALLOWED_HOSTS: "false"
+  ALLOWED_CORS_ORIGIN: http://nalanda.local,http://konark.local,http://nected-editor.local
+  ALLOWED_HOSTS: nalanda.local
   AES_SECRET: tfgoS4EzPPuBJjBLFgmlut9ukW9o2PYy
   ENCRYPTION_KEY: EAR
 
@@ -90,7 +91,7 @@ envVars:
   ELASTIC_API_KEY: ""
   ELASTIC_USER: elastic
   ELASTIC_PASSWORD: esPass123
-  ELASTIC_POLICY_CONFIG: '{"nPolicy":{"warm":"3d","delete":"5d"},"vPolicy":{"warm":"3d","delete":"5d"}}'
+  ELASTIC_POLICY_CONFIG: '{}'
 
   # google auth
   GOOGLE_AUTH_ENABLED: "false"
@@ -100,6 +101,21 @@ envVars:
   MICROSOFT_AUTH_ENABLED: "false"
   MICROSOFT_CLIENT_ID: ""
   MICROSOFT_TENANT_ID: ""
+
+  # generic oidc sso (CyberArk, Okta, Keycloak, Ping etc.)
+  OIDC_AUTH_ENABLED: "false"
+  # discovery doc is read from {OIDC_ISSUER_URL}/.well-known/openid-configuration
+  OIDC_ISSUER_URL: ""
+  OIDC_CLIENT_ID: ""
+  # keep empty for public client (PKCE only)
+  OIDC_CLIENT_SECRET: ""
+  OIDC_SCOPES: "openid profile email"
+  # optional, claim to read email from if not in email/preferred_username/upn
+  OIDC_EMAIL_CLAIM: ""
+  OIDC_REQUIRE_VERIFIED_EMAIL: "false"
+  # label & icon of login button
+  OIDC_DISPLAY_NAME: "SSO"
+  OIDC_ICON_URL: ""
 
   # Docuhub
   DOCHUB_CONFIG_MAP: '{}'
@@ -144,6 +160,12 @@ envVars:
   JWT_ACCESS_TOKEN_EXP_TIME: "10800"
   JWT_REFRESH_TOKEN_EXP_TIME: "1296000"
   JWT_SECRET: lsdnfYTYknn5432HGHY7w
+  OAUTH_AUTH_CODE_EXP_TIME: 5m
+  OAUTH_AUTH_REQUEST_EXP_TIME: 10m
+  OAUTH_REFRESH_TOKEN_EXP_TIME: 720h
+  OAUTH_ALLOW_INSECURE_REDIRECT_URI: "false"
+  OAUTH_ALLOW_INSECURE_CLIENT_URI: "false"
+  OAUTH_ALLOW_OFFLINE_ACCESS: "true"
 
   # konark
   ASSETS_BASE_URL: http://konark.local/assets/konark
@@ -162,7 +184,6 @@ envVars:
 
   # features flags
   EXTERNAL_PERMISSION_URL: ""
-  SKIP_LOG_PATHS: /health/live,/health/ready
   WORKSPACE_SUBDOMAIN_ENABLED: "false"
   SIGNUP_DOMAINS: ""
   SYNC_PLUGINS: mysql,mongodb,postgres,sqlserver,redshift,oracle,snowflake,restAPI,anthropic,googleai,openai,vertex,sagemaker
@@ -174,12 +195,12 @@ envVars:
 
   # Audit log
   AWS_TRACE_ID_KEY: X-Amzn-Trace-Id
-  ELASTIC_ADUIT_PATTERN: audit-*
-  ELASTIC_ENTITY_AUDIT_INDEX: audit-log-nalanda
+  USAGE_INDEX_PATTERN: usage-*
   ELASTIC_EVENT_LOG_INDEX: events-all-nalanda
   ELASTIC_TEMP_AUDIT_INDEX: audit-tmp-nalanda
-  USAGE_INDEX_PATTERN: usage-*
+  ELASTIC_ENTITY_AUDIT_INDEX: audit-log-nalanda
   VIDHAAN_AUDIT_LOG_INDEX: audit-all-vidhaan
+  VIDHAAN_ED_AUDIT_LOG_INDEX: audit-vidhaan-ed
   X_FORWARDED_HEADER_KEY: X-Forwarded-For
 
   # proxy url

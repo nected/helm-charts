@@ -7,7 +7,7 @@ replicaCount: 1
 image:
   repository: public.ecr.aws/f6k1n6r3/vidhaan
   pullPolicy: IfNotPresent
-  tag: "op0.5.4"
+  tag: "op0.5.8"
   args: ["--router"]
 
 imagePullSecrets: []
@@ -72,6 +72,8 @@ envVars:
   # Audit log
   AUDIT_LOG_ENABLED: "true"
   AUDIT_LOG_INDEX: audit-all-vidhaan
+  AUDIT_LOG_ED_INDEX: audit-vidhaan-ed
+  AUDIT_LOG_ED_DAILY_FREQ: "false"
   AWS_TRACE_ID_KEY: X-Amzn-Trace-Id
   X_FORWARDED_HEADER_KEY: X-Forwarded-For
 
