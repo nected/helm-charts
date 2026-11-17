@@ -591,7 +591,8 @@ secretsmanager:
     enabled: false                  # requires a provider
     secret: nected-credential
     remoteKeys: []
-    requiredKeys: []
+    requiredKeys:
+     - MASTER_DB_PASSWORD
     aliases: {}
     temporalFullname: nected-temporal
 
