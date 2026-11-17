@@ -73,7 +73,14 @@ if [ "$HAVE_PROVIDER" -eq 1 ]; then
     # to install - which is exactly what the job this replaced did. Only the
     # credentials sync genuinely requires a provider, and that is gated below.
     warn "could not initialise $(provider_name); continuing without it"
-    warn "  the encryption-at-rest key does not need a vault and is handled locally"
+    if [ -n "$EAR_REMOTE" ]; then
+      # Do NOT claim the key is handled locally here: commonSecret.remoteKey
+      # asked for it to come FROM the vault, so this failure is material. It is
+      # reported where it can be acted on, in ear_sync.
+      warn "  commonSecret.remoteKey is set, so the encryption-at-rest key IS affected"
+    else
+      warn "  the encryption-at-rest key does not need a vault and is handled locally"
+    fi
   fi
 else
   note "secretsmanager: no provider configured (local mode)"
@@ -89,6 +96,18 @@ fi
 #   4. generate                       - first install
 # then push a copy to the vault when a provider and remoteKey are configured.
 # ---------------------------------------------------------------------------
+# commonSecret.remoteKey asked for a restore but the vault could not answer -
+# either the provider never initialised or the read failed. Either way it is
+# unknown whether a key is stored there, so generating one risks orphaning
+# everything already encrypted under it, and that is not reversible.
+ear_unknown_remote() {
+  [ "$FAIL_OPEN" = "true" ] \
+    || die "refusing to generate a new key while '$EAR_REMOTE' cannot be read (failOpen is false)"
+  warn "  failOpen is set, so a NEW key will be generated. If this cluster is a"
+  warn "  REBUILD, stop now and pass the previous key as commonSecret.secretValue:"
+  warn "  a new key cannot decrypt data written under the old one."
+}
+
 ear_sync() {
   [ "$EAR_ENABLED" = "true" ] || return 0
   note "encryption-at-rest key:"
@@ -103,6 +122,13 @@ ear_sync() {
       _b64="$EAR_VALUE"; _from="commonSecret.secretValue"
       [ "$HAVE_PROVIDER" -eq 1 ] && [ -n "$EAR_REMOTE" ] \
         && warn "  secretValue is set, so the vault copy of '$EAR_REMOTE' is NOT used"
+    elif [ -n "$EAR_REMOTE" ] && [ "$PROVIDER_READY" -ne 1 ]; then
+      # The vault was never consulted, so this is the same unknown as a failed
+      # read. A render-time guard rejects remoteKey without a provider, so
+      # reaching here means the provider was configured and did not come up.
+      warn "  '$EAR_REMOTE' was NOT consulted: $(provider_name) could not be initialised"
+      warn "  so it is unknown whether a key is stored there"
+      ear_unknown_remote
     elif [ "$PROVIDER_READY" -eq 1 ] && [ -n "$EAR_REMOTE" ]; then
       # stderr is left alone so the provider's own permission diagnostics show.
       _v=$(provider_get "$EAR_REMOTE"); _rc=$?
@@ -115,11 +141,7 @@ ear_sync() {
         # tell. Generating one now would orphan anything already encrypted
         # under a stored key, and that is not reversible.
         warn "  could not read '$EAR_REMOTE', so it is unknown whether a key is stored there"
-        [ "$FAIL_OPEN" = "true" ] \
-          || die "refusing to generate a new key while '$EAR_REMOTE' is unreadable (failOpen is false)"
-        warn "  failOpen is set, so a NEW key will be generated. If this cluster is a"
-        warn "  REBUILD, stop now and pass the previous key as commonSecret.secretValue:"
-        warn "  a new key cannot decrypt data written under the old one."
+        ear_unknown_remote
       fi
     fi
 
@@ -240,3 +262,4 @@ fi
 
 note "done."
 exit 0
+
