@@ -475,11 +475,22 @@ secretsmanager:
 
   credentials:
     enabled: false                  # requires a provider
-    secret: nected-credential       # must match existingSecret above
+    secret: *commonSecret       # must match existingSecret above
     remoteKeys: []
-    requiredKeys: []
-    aliases: {}
-    #   MASTER_DB_PASSWORD: DB_PASSWORD
+    requiredKeys:
+      - MASTER_DB_PASSWORD
+      - DB_PASSWORD
+      - REDIS_PASSWORD
+      - VIDHAAN_REDIS_PASSWORD
+      - ELASTIC_PASSWORD
+      - AES_SECRET
+      - JWT_SECRET
+      - VIDHAAN_PRE_SHARED_KEY
+      - NECTED_USER_PASSWORD
+      - EMAIL_PASSWORD
+    aliases:
+      MASTER_DB_PASSWORD: DB_PASSWORD
+      VIDHAAN_REDIS_PASSWORD: REDIS_PASSWORD
 
   aws:
     region: ""
