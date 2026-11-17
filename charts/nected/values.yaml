@@ -7,6 +7,23 @@ existingSecretMap: &commonSecretMap
 
 existingSecret: &commonSecret ""
 
+# Every key listed must be present in existingSecret, or the service will start
+# without it.
+
+secretKeys: &commonSecretKeys []
+#  - AES_SECRET                  # nalanda  - ships a working default
+#  - JWT_SECRET                  # nalanda  - ships a working default
+#  - DEFAULT_VIDHAAN_SECRET_KEY  # nalanda  - ships a working default
+#  - VIDHAAN_PRE_SHARED_KEY      # nalanda, vidhaan-* - licence key
+#  - MASTER_DB_PASSWORD          # nalanda
+#  - DB_PASSWORD                 # vidhaan-*, medha
+#  - REDIS_PASSWORD              # nalanda, vidhaan-*, garuda
+#  - VIDHAAN_REDIS_PASSWORD      # nalanda
+#  - ELASTIC_PASSWORD            # nalanda, vidhaan-*
+#  - ELASTIC_API_KEY             # nalanda, vidhaan-*
+#  - NECTED_USER_PASSWORD        # nalanda  - ships a working default
+#  - EMAIL_PASSWORD              # nalanda
+
 # Shared custom CA bundle injected into every service pod's system trust store.
 customCA: &commonCustomCA
   enabled: false
@@ -64,6 +81,7 @@ nalanda:
     tag: &nalandaTag "op0.5.9-2"
   existingSecretMap: *commonSecretMap
   existingSecret: *commonSecret
+  secretKeys: *commonSecretKeys
   envVars:
     # server config
     ALLOWED_CORS_ORIGIN: http://nalanda.local,http://konark.local
@@ -219,6 +237,7 @@ vidhaan-executer:
     tag: &vidhaanTag "op0.5.7-1"
   existingSecretMap: *commonSecretMap
   existingSecret: *commonSecret
+  secretKeys: *commonSecretKeys
   envVars:
     # Database
     DB_NAME: nected
@@ -288,6 +307,7 @@ vidhaan-router:
     tag: *vidhaanTag
   existingSecretMap: *commonSecretMap
   existingSecret: *commonSecret
+  secretKeys: *commonSecretKeys
   envVars:
     # Database
     DB_NAME: nected
@@ -368,6 +388,7 @@ medha:
   image:
     tag: "op0.3.5"
   existingSecret: *commonSecret
+  secretKeys: *commonSecretKeys
   envVars:
     DB_HOST: datastore-postgresql
     DB_PORT: "5432"
@@ -411,6 +432,7 @@ garuda:
   image:
     tag: "op0.3.10"
   existingSecret: *commonSecret
+  secretKeys: *commonSecretKeys
   envVars:
     REDIS_ENABLED: "true"
     REDIS_TLS_ENABLED: "false"
@@ -440,24 +462,41 @@ garuda:
     targetCPUUtilizationPercentage: 80
     targetMemoryUtilizationPercentage: 80
 
-# adding service account for secret job
-serviceAccount:
-  create: false
-  automount: false
-  annotations:
-    helm.sh/hook: pre-install,pre-upgrade
-    helm.sh/hook-weight: "-2"
-  name: common-secret
+# ---------------------------------------------------------------------------
+# secretsmanager subchart
+# ---------------------------------------------------------------------------
+secretsmanager:
+  provider: ""                      # "" = local only | aws | azure
 
-# main nected job to setup secret
-commonSecret:
-  debug: false
-  enabled: true
-  backoffLimit: 2
-  image:
-    repository: public.ecr.aws/f6k1n6r3/openssl-kubectl
-    pullPolicy: IfNotPresent
-    tag: latest
-  secretValue: ""
-  annotations: {}
-  resources: {}
+  commonSecret:
+    enabled: true                   # the encryption-at-rest key
+    secretValue: ""
+    remoteKey: ""
+
+  credentials:
+    enabled: false                  # requires a provider
+    secret: *commonSecret       # must match existingSecret above
+    remoteKeys: []
+    requiredKeys:
+      - MASTER_DB_PASSWORD
+      - DB_PASSWORD
+      - REDIS_PASSWORD
+      - VIDHAAN_REDIS_PASSWORD
+      - ELASTIC_PASSWORD
+      - AES_SECRET
+      - JWT_SECRET
+      - VIDHAAN_PRE_SHARED_KEY
+      - NECTED_USER_PASSWORD
+      - EMAIL_PASSWORD
+    aliases:
+      MASTER_DB_PASSWORD: DB_PASSWORD
+      VIDHAAN_REDIS_PASSWORD: REDIS_PASSWORD
+
+  aws:
+    region: ""
+  azure:
+    vaultUrl: ""
+
+  serviceAccount:
+    roleArn: ""                     # EKS IRSA
+    clientId: ""                    # Azure Workload Identity

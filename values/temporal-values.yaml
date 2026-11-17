@@ -53,7 +53,11 @@ server:
           host: *pgHost
           port: *pgPort
           user: *pgUser
+          # Inline password. Prefer existingSecret below: it suppresses the
+          # chart-rendered Secret entirely.
           password: *pgPassword
+          # existingSecret: nected-credential
+          # secretKey: MASTER_DB_PASSWORD
           tls:
            enabled: *pgTlsEnabled
            enableHostVerification: *pgHostVerification
@@ -70,6 +74,8 @@ server:
           port: *pgPort
           user: *pgUser
           password: *pgPassword
+          # existingSecret: nected-credential
+          # secretKey: MASTER_DB_PASSWORD
           tls:
             enabled: *pgTlsEnabled
             enableHostVerification: *pgHostVerification
@@ -132,6 +138,55 @@ schema:
 elasticsearch:
   external: false
   enabled: false
+  # IMPORTANT: setting external: true (or enabled: true) forces the visibility
+  # store onto the elasticsearch driver, regardless of
+  # server.config.persistence.visibility.driver. With external OpenSearch the
+  # visibility password therefore comes from HERE, not from the sql block above.
+  # host: search.example.com
+  # scheme: https
+  # port: 443
+  # version: v7
+  # username: nected
+  # password: esPass123
+  # existingSecret: nected-credential
+  # secretKey: ELASTIC_PASSWORD
+
+# secretsmanager subchart. Temporal has no encryption-at-rest key, so
+# commonSecret stays off and nothing renders until credentials are enabled.
+#
+# The nected chart carries the same subchart. Hooks only order within a
+# release, so install order is not guaranteed; whichever release runs first
+# writes the Secret and the other sees an unchanged hash and does nothing.
+# credentials.enabled must therefore be true in BOTH values files, or the
+# temporal pods fail with `secret not found` when temporal installs first.
+secretsmanager:
+  provider: ""                     # "" = nothing renders | aws | azure
+
+  commonSecret:
+    enabled: false                 # nected owns this key
+
+  credentials:
+    enabled: false                 # requires a provider
+    secret: nected-credential      # what existingSecret above points at
+    remoteKeys: []                 # aws: nected/prod/app | azure: nected-prod-app
+    requiredKeys: []
+    #  - MASTER_DB_PASSWORD
+    #  - ELASTIC_PASSWORD          # when using the elasticsearch block above
+    # Names of the Deployments to roll when the payload changes. Must match
+    # your release names or pods keep stale credentials silently.
+    nectedReleaseName: nected
+    temporalFullname: nected-temporal
+    # restartTargets: [nected-nalanda, nected-temporal-frontend]
+
+  aws:
+    region: ""
+  azure:
+    vaultUrl: ""
+
+  serviceAccount:
+    roleArn: ""                    # EKS IRSA
+    clientId: ""                   # Azure Workload Identity
+
 prometheus:
   enabled: false
 grafana:
