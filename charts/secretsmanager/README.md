@@ -188,10 +188,37 @@ subchart's own default reappears in the ConfigMap. Only the chart-side
 
 ## Failure behaviour
 
+### No vault access at all
+
+The encryption-at-rest key never needs a vault, so losing access to one does
+not stop it being created. If `provider` is set but the identity cannot be
+resolved or has no permissions, the job warns, falls back to handling the key
+locally, and carries on — the same outcome as `provider: ""`. This is what the
+job it replaced did, and installing with no Secrets Manager or Key Vault access
+is supported.
+
+Credentials are the exception: they can only come from a vault, so
+`credentials.enabled: true` with no working provider fails, subject to
+`failOpen` below. The key is written *before* that check, so it exists even
+when the credentials sync then fails.
+
+### failOpen
+
 `failOpen: true` (default) continues when the provider is unreachable **and**
 the target Secret already exists, so a transient outage cannot block an
 upgrade. A first install has nothing to fall back on and always fails closed.
 `failOpen: false` always fails.
+
+It also decides one case that is easy to miss. If `commonSecret.remoteKey` is
+set and the read is *denied* rather than returning "no such item", the job
+cannot tell whether a key is stored there. Generating one would orphan anything
+already encrypted under the stored key:
+
+- `failOpen: true` — generate, with a warning naming the rebuild risk
+- `failOpen: false` — refuse and fail the release
+
+Set `failOpen: false` if you rebuild clusters from backups, where quietly
+minting a second key is worse than a failed install.
 
 ## Keeping a copy of the encryption-at-rest key
 
