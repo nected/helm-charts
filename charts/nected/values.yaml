@@ -462,28 +462,6 @@ garuda:
     targetCPUUtilizationPercentage: 80
     targetMemoryUtilizationPercentage: 80
 
-# adding service account for secret job
-serviceAccount:
-  create: false
-  automount: false
-  annotations:
-    helm.sh/hook: pre-install,pre-upgrade
-    helm.sh/hook-weight: "-2"
-  name: common-secret
-
-# main nected job to setup secret
-commonSecret:
-  debug: false
-  enabled: true
-  backoffLimit: 2
-  image:
-    repository: public.ecr.aws/f6k1n6r3/openssl-kubectl
-    pullPolicy: IfNotPresent
-    tag: latest
-  secretValue: ""
-  annotations: {}
-  resources: {}
-
 # ---------------------------------------------------------------------------
 # secretsmanager subchart
 # ---------------------------------------------------------------------------
