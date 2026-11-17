@@ -1,5 +1,0 @@
-# {{/*
-# No resources: this exists so the guards in _migration.tpl are evaluated on
-# every render, whatever is enabled.
-# */}}
-# {{- include "temporal.migrationGuards" . -}}
