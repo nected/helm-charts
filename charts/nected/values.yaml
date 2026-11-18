@@ -61,7 +61,7 @@ nalanda:
   replicaCount: 1
   customCA: *commonCustomCA
   image:
-    tag: &nalandaTag "op0.5.12"
+    tag: &nalandaTag "op0.5.14"
   existingSecretMap: *commonSecretMap
   existingSecret: *commonSecret
   envVars:
@@ -216,7 +216,7 @@ vidhaan-executer:
   replicaCount: 1
   customCA: *commonCustomCA
   image:
-    tag: &vidhaanTag "op0.5.9"
+    tag: &vidhaanTag "op0.5.10"
   existingSecretMap: *commonSecretMap
   existingSecret: *commonSecret
   envVars:
