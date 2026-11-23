@@ -216,7 +216,7 @@ vidhaan-executer:
   replicaCount: 1
   customCA: *commonCustomCA
   image:
-    tag: &vidhaanTag "op0.5.11"
+    tag: &vidhaanTag "op0.5.12"
   existingSecretMap: *commonSecretMap
   existingSecret: *commonSecret
   envVars:
